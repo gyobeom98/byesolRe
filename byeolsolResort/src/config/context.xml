@@ -37,6 +37,7 @@
 	<value>classpath:model/mapper/answerMapper.xml</value>
 	<value>classpath:model/mapper/roomMapper.xml</value>
 	<value>classpath:model/mapper/reservMapper.xml</value>
+	<value>classpath:model/mapper/removeMapper.xml</value>
 	</list>
 	</property>
 	</bean>

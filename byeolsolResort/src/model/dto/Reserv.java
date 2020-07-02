@@ -88,9 +88,15 @@ public class Reserv {
 	public void setPeopleCount(int peopleCount) {
 		this.peopleCount = peopleCount;
 	}
+	
+	public String getState() {
+		return state;
+	}
 
-	
-	
+	public void setState(String state) {
+		this.state = state;
+	}
+
 	public LocalDateTime getRegDate() {
 		return regDate;
 	}

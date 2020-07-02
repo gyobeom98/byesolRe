@@ -27,5 +27,9 @@ public interface BoardMapper {
 	
 	public List<Board> selectBoardListAdmain();
 	
+	public void deleteBoardByUserId(String userId);
+
+	public List<Board> selectBoardListByUserId(String userId);
+	
 	
 }

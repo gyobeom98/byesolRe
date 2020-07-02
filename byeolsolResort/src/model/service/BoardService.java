@@ -152,6 +152,11 @@ public class BoardService {
 		return "board/" + addTime + "/" + uploadFile.getOriginalFilename();
 		
 	}
+
+	public List<Board> selectBoardListByUserId(String userId) {
+		return boardMapper.selectBoardListByUserId(userId);
+		
+	}
 	
 	
 }

@@ -34,6 +34,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import model.dto.Customer;
 import model.dto.CustomerVO;
+import model.service.BoardService;
 import model.service.CustomerService;
 import model.service.ReservService;
 
@@ -311,5 +312,42 @@ public class CustomerController {
 			return "redirect:/index/main";
 		}
 	}
+	
+	@GetMapping("/deleteCustomer")
+	public String deleteCustomerForm(HttpSession session, Model m) {
+		if(session.getAttribute("userId")!=null) {
+			return "deleteForm";
+		}else {
+			m.addAttribute("errorMessage","로그인이 되어 있지 않습니다.");
+			return "redirect:/index/main";
+		}
+	}
+	
+	
+	@PostMapping("/deleteCustomer")
+	public String deleteCustomer(HttpSession session, String userId, String password,Model m) {
+		if(session.getAttribute("userId")!=null) {
+			String sessionUserId = (String)session.getAttribute("userId");
+			Customer sessionCustoemr = customerService.getCustomerById(sessionUserId);
+			if(sessionCustoemr.getPassword().equals(password)) {
+				customerService.deleteCustomerWithAllInfor(sessionCustoemr);
+				session.setAttribute("userId", null);
+				session.setAttribute("userName", null);
+				session.setAttribute("state", null);
+				session.setAttribute("userEmail", null);
+				m.addAttribute("deleteMessage","계정을 탈퇴 하였습니다");
+				return "redirect:/index/main";
+			}else {
+				m.addAttribute("errorMessage","비밀번호를 확인해 주세요");
+				return "redirect:/cus/deleteCustomer";
+			}
+		}else {
+			m.addAttribute("errorMessage","로그인이 되어 있지 않습니다.");
+			return "redirect:/index/main";
+		}
+		
+		
+	}
+	
 
 }

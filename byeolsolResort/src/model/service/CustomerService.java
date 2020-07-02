@@ -1,6 +1,7 @@
 package model.service;
 
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 
 import javax.mail.internet.MimeMessage;
 
@@ -10,14 +11,33 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import model.dto.Board;
 import model.dto.Customer;
+import model.dto.Remove;
+import model.dto.Reserv;
+import model.mapper.BoardMapper;
+import model.mapper.CommentMapper;
 import model.mapper.CustomerMapper;
+import model.mapper.RemoveMapper;
+import model.mapper.ReservMapper;
 
 @Service("customerService")
 public class CustomerService {
 
 	@Autowired
 	CustomerMapper customerMapper;
+	
+	@Autowired
+	BoardService boardService;
+	
+	@Autowired
+	CommentMapper commentMapper;
+	
+	@Autowired
+	RemoveMapper removeMapper;
+	
+	@Autowired
+	ReservMapper reservMapper;
 	
 	public void register(Customer customer) {
 		System.out.println("회원가입 넘어 오는지 확인 : " + customer);
@@ -97,6 +117,36 @@ public class CustomerService {
 
 	public void updateCustomer(Customer cust) {
 		customerMapper.updateCustomer(cust);
+	}
+
+	public void deleteCustomerWithAllInfor(Customer customer) {
+
+		List<Board> boardList =  boardService.selectBoardListByUserId(customer.getUserId());
+		
+		for (Board board : boardList) {
+			boardService.deleteBoard(board.getId(), customer.getUserId());
+		}
+		
+		commentMapper.deleteCommentByUserId(customer.getUserId());
+		
+		List<Reserv> reservList = reservMapper.selectReservByUserId(customer.getUserId());
+		
+		for (Reserv reserv : reservList) {
+			if(reserv.getState().equals("입금")) {
+			removeMapper.insertRemove(
+					new Remove(0, customer.getUserId(),
+							reserv.getRoomId(),
+							reserv.getStartDate(),
+							reserv.getEndDate(),
+							reserv.getTotalPrice()-(int)(reserv.getTotalPrice()/10),
+							customer.getName(),
+							customer.getPhone(),
+							null));
+			}
+			reservMapper.deleteReserv(reserv.getId());
+		}
+		
+		
 	}
 
 		

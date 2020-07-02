@@ -23,6 +23,8 @@ public interface CommentMapper {
 	public int commentCount(int boardId);
 	
 	public List<Comment> commentListView(@Param("boardId") int boardId , @Param("firstRow")int firstRow, @Param("commentCountPerPage") int commentCountPerPage);
+
+	public void deleteCommentByUserId(String userId);
 }
 
 

@@ -26,5 +26,7 @@ public interface ReservMapper {
 	public void deleteReservByState();
 	
 	public int reservCount();
+
+	public List<Reserv> selectReservByUserId(String userId);
 	
 }

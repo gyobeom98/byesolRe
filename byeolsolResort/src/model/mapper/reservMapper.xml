@@ -37,4 +37,8 @@ select * from reserv where id = #{reservId}
 select count(*) from reserv
 </select>
 
+<select id="selectReservByUserId" resultType="Reserv">
+select * from reserv where user_id = #{userId}
+</select>
+
 </mapper>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+  
+  <configuration>
+  
+  <settings><setting name="mapUnderscoreToCamelCase" value="true"/> </settings>
+  
+  <typeAliases>
+  <typeAlias type="model.dto.Customer" alias="Customer"/>
+  <typeAlias type="model.dto.Board" alias="Board"/>
+  <typeAlias type="model.dto.Comment" alias="Comment"/>
+  <typeAlias type="model.dto.Event" alias="Event"/>
+  <typeAlias type="model.dto.Question" alias="Question"/>
+  <typeAlias type="model.dto.Answer" alias="Answer"/>
+  <typeAlias type="model.dto.Room" alias="Room"/>
+  <typeAlias type="model.dto.Reserv" alias="Reserv"/>
+  </typeAliases>
+  
+  </configuration>
+  

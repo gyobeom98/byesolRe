@@ -17,10 +17,13 @@ import model.dto.ErrorMessage;
 import model.dto.Reserv;
 import model.dto.Room;
 import model.mapper.ReservMapper;
+import model.view.ReservView;
 
 @Service("reservService")
 public class ReservService {
 
+	private static final int RESERV_COUNT_PER_PAGE = 5;
+	
 	@Autowired
 	ReservMapper reservMapper;
 
@@ -30,6 +33,13 @@ public class ReservService {
 		else
 			return true;
 	}
+	public boolean reservUpdateCheck(int roomId, LocalDate startDate, LocalDate endDate, int reservId) {
+		Reserv reserv = reservMapper.selectReservById(reservId);
+			if(reserv.equals(reservMapper.selectReservByRoomIdWithDate(roomId, startDate, endDate))) {
+				return true;
+			}else return false;
+	}
+	
 
 	public Reserv getReservCheck(int roomId, LocalDate startDate, LocalDate endDate) {
 		return reservMapper.selectReservByRoomIdWithDate(roomId, startDate, endDate);
@@ -54,35 +64,30 @@ public class ReservService {
 			if (customer.getEmailState().equals("인증")) {
 				LocalDate start = startDate.toLocalDate();
 				LocalDate end = endDate.toLocalDate();
-				if (start.compareTo(LocalDate.now()) > 3) {
-					int dv = end.compareTo(start);
-					if (dv > 0) {
-						if (dateCheck(start, end)) {
-							if (peopleCount >= room.getMinPeople() && peopleCount <= room.getMaxPeople()) {
-								int totalPrice = getTotalPrice(start, end, room);
-								Reserv reserv = new Reserv(0, "test", room.getId(), start, end, totalPrice, peopleCount,
-										null, null);
-								if (reservCheck(1, start, end)) {
-									System.out.println("확인함");
-									addReserv(reserv);
-									return new ErrorMessage(null, "redirect:/reserv/main", 0);
-								} else {
-									System.out.println("실패함");
-									return new ErrorMessage("해당 날짜는 예약 하실수 없습니다.", "redirect:/reserv/addReserv",
-											roomNum);
-								}
+				int dv = end.compareTo(start);
+				if (dv >= 0) {
+					if (dateCheck(start, end)) {
+						if (peopleCountCheck(room, peopleCount)) {
+							int totalPrice = getTotalPrice(start, end, room);
+							Reserv reserv = new Reserv(0, "test", room.getId(), start, end, totalPrice, peopleCount,
+									null, null);
+							if (reservCheck(1, start, end)) {
+								System.out.println("확인함");
+								addReserv(reserv);
+								return new ErrorMessage(null, "redirect:/reserv/main", 0);
 							} else {
-								return new ErrorMessage("해당 인원은 이 방을 예약 하실 수 없습니다. 해당 방을 예약하시려면 관리자에게 문의 해주세요",
-										"redirect:/reserv/addreserv", roomNum);
+								System.out.println("실패함");
+								return new ErrorMessage("해당 날짜는 예약 하실수 없습니다.", "redirect:/reserv/addReserv", roomNum);
 							}
 						} else {
-							return new ErrorMessage("예약 가능 범위를 벗어났습니다.", "redirect:/reserv/addReserv", roomNum);
+							return new ErrorMessage("해당 인원은 이 방을 예약 하실 수 없습니다. 해당 방을 예약하시려면 관리자에게 문의 해주세요",
+									"redirect:/reserv/addreserv", roomNum);
 						}
 					} else {
-						return new ErrorMessage("종료날짜가 시작 날짜보다 빠를 수 없습니다.", "redirect:/reserv/addReserv", roomNum);
+						return new ErrorMessage("예약 가능 범위를 벗어났습니다.", "redirect:/reserv/addReserv", roomNum);
 					}
 				} else {
-					return new ErrorMessage("시작날짜는 오늘 날짜의 3일 이후 부터 선택 가능합니다.", "redirect:/reserv/addReserv", roomNum);
+					return new ErrorMessage("종료날짜가 시작 날짜 이전일 수 없습니다.", "redirect:/reserv/addReserv", roomNum);
 				}
 			} else {
 				return new ErrorMessage("이메일 인증이 되어있지 않은 계정입니다.", "redirect:/index/main", 0);
@@ -110,12 +115,36 @@ public class ReservService {
 		return reservMapper.selectReservById(reservId);
 	}
 
-	public void updateReserv(HttpSession session, int reservId, Date startDate, Date endDate, int roomNum,
+	public ErrorMessage updateReserv(HttpSession session, int reservId, Date startDate, Date endDate, int roomNum,
 			int peopleCount, int totalPrice) {
+		if (session.getAttribute("userId") != null) {
+			String userId = (String) session.getAttribute("userId");
+			Room room = roomService.getRoomByRoomNum(roomNum);
+			if (peopleCountCheck(room, peopleCount)) {
+				if (dateCheck(startDate.toLocalDate(), endDate.toLocalDate())) {
+					if(reservUpdateCheck(room.getId(), startDate.toLocalDate(), endDate.toLocalDate(),reservId)) {
+						int total = getTotalPrice(startDate.toLocalDate(), endDate.toLocalDate(), room);
+						Reserv reserv = new 
+								Reserv(reservId, userId, room.getId(), startDate.toLocalDate(), endDate.toLocalDate(), total, peopleCount, null, null);
+						reservMapper.updateReserv(reserv);
+						return new ErrorMessage(null, "redirect:/reserv/main", 0);
+					}else {
+						return new ErrorMessage("예약 불가능한 날짜 입니다.", "redirect:/reserv/addReserv", roomNum);
+					}
+				} else {
+					return new ErrorMessage("예약 가능 범위를 벗어났습니다.", "redirect:/reserv/addReserv", roomNum);
+				}
+			} else {
+				return new ErrorMessage("해당 인원은 이 방을 예약 하실 수 없습니다. 해당 방을 예약하시려면 관리자에게 문의 해주세요",
+						"redirect:/reserv/addreserv", roomNum);
+			}
+		} else {
+			return new ErrorMessage("로그인이 되어 있지 않습니다.", "redirect:/index/main", 0);
+		}
 
 	}
 
-	public int getTotalPrice(LocalDate startDate, LocalDate endDate,Room room) {
+	public int getTotalPrice(LocalDate startDate, LocalDate endDate, Room room) {
 		int totalPrice = 0;
 		int dv = endDate.compareTo(startDate);
 		List<LocalDate> days = new ArrayList<LocalDate>();
@@ -134,28 +163,62 @@ public class ReservService {
 		return totalPrice;
 	}
 
-	
-
 	public boolean dateCheck(LocalDate startDate, LocalDate endDate) {
 		int hour = LocalDateTime.now().getHour();
 		int minute = LocalDateTime.now().getMinute();
 		if (startDate.compareTo(LocalDate.now()) >= 0 && startDate.compareTo(LocalDate.now()) <= 60) {
 			if (endDate.compareTo(startDate) >= 0 && endDate.compareTo(startDate) <= 15) {
-					if(startDate.compareTo(LocalDate.now())==0) {
-						if(hour<11 || hour==11 && minute<=30) {
-							return true;
-						}else {
-							return false;
-						}
+				if (startDate.compareTo(LocalDate.now()) == 0) {
+					if (hour < 11 || hour == 11 && minute <= 30) {
+						return true;
+					} else {
+						return false;
 					}
+				}
 				return true;
 			} else {
 				return false;
 			}
-			
+
 		} else {
 			return false;
 		}
+	}
+
+	public boolean peopleCountCheck(Room room, int peopleCount) {
+		int max = room.getMaxPeople();
+		int min = room.getMinPeople();
+
+		if (peopleCount >= min && peopleCount <= max) {
+			return true;
+		} else {
+			return false;
+		}
+
+	}
+	public boolean roomNumCheck(int roomNum) {
+		if(roomNum>=101 && roomNum<=105 || roomNum<=201 && roomNum>=205 || roomNum<=301 && roomNum>=305)
+			return true;
+		else return false;
+	}
+	public void deleteReserv(int reservId) {
+		reservMapper.deleteReserv(reservId);
+	}
+	
+	public ReservView getReservView(int pageNum , String userId) {
+		ReservView reservView = null;
+		
+		int firstRow = 0;
+		List<Reserv> reservList = null;
+		int reservCnt = reservMapper.reservCount();
+		if(reservCnt>0) {
+			firstRow = (pageNum-1) * RESERV_COUNT_PER_PAGE;
+			reservList = reservMapper.selectReservListByUserIdWithLimit(userId, firstRow, RESERV_COUNT_PER_PAGE);
+		}else {
+			pageNum = 0;
+		}
+		reservView = new ReservView(reservCnt, pageNum, firstRow, RESERV_COUNT_PER_PAGE, reservList);
+		return reservView;
 	}
 
 }

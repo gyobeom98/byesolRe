@@ -51,6 +51,7 @@
 	
 	<mvc:resources location="file:C:/Users/tjoeun/byeolsolResort/" mapping="/img/**"></mvc:resources>
 	
+	
 	<!-- <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
 	<property name="defaultEncoding" value="utf-8"/>
 	<property name="basenames">

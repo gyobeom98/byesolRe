@@ -3,6 +3,7 @@ package controller;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.Enumeration;
 import java.util.List;
 
@@ -34,6 +35,7 @@ import org.springframework.web.servlet.ModelAndView;
 import model.dto.Customer;
 import model.dto.CustomerVO;
 import model.service.CustomerService;
+import model.service.ReservService;
 
 @Controller
 @RequestMapping("/cus")
@@ -56,54 +58,72 @@ public class CustomerController {
 		}
 	}
 
+	private static final String DEFAULT_BIRTH_DATE = "1850-01-01";
+
 	@PostMapping("/regis")
 	public String getResultRegis(HttpServletRequest resq, @ModelAttribute("CustomerVo") @Valid CustomerVO customerVo,
-			BindingResult result, Date birth, Model m, HttpSession session) {
+			BindingResult result, @RequestParam(defaultValue = DEFAULT_BIRTH_DATE) Date birth, Model m,
+			HttpSession session) {
 		if (session.getAttribute("userId") == null) {
 			customerVo.setId(0);
-			customerVo.setBirthDate(birth.toLocalDate());
+			if (!birth.toString().equals(DEFAULT_BIRTH_DATE)) {
+				customerVo.setBirthDate(birth.toLocalDate());
 
-			System.out.println(customerVo);
+				System.out.println(customerVo);
 
-			if (result.hasErrors()) {
-				List<FieldError> errors = result.getFieldErrors();
-				for (FieldError fe : errors) {
-					m.addAttribute("e" + fe.getField(), fe.getField());
-					System.out.println(fe);
-				}
-				return "registForm";
-			} else {
-
-				String idCheck = customerService.idCheck(customerVo.getUserId());
-				if (idCheck.equals("중복")) {
-					m.addAttribute("errorMessage","id가 중복되었습니다.");
-					return "redirect/cus/regis";
-
+				if (result.hasErrors()) {
+					List<FieldError> errors = result.getFieldErrors();
+					for (FieldError fe : errors) {
+						m.addAttribute("e" + fe.getField(), fe.getField());
+						System.out.println(fe);
+					}
+					return "registForm";
 				} else {
-					String emailCheck = customerService.emailCheck(customerVo.getEmail());
-					if (!emailCheck.equals("중복")) {
-						if(!customerService.phoneCheck(customerVo.getPhone()).equals("중복")) {
-						Customer customer = new Customer(customerVo.getId(), customerVo.getUserId(),
-								customerVo.getPassword(), customerVo.getName(), customerVo.getZipCode(),
-								customerVo.getEmail(), customerVo.getAddress(), customerVo.getAddressDetail(),
-								customerVo.getPhone(), customerVo.getEmailState(), customerVo.getBirthDate());
-						customerService.register(customer);
-						m.addAttribute("registEmail", customer.getEmail());
-						return "redirect:/cus/mailCheck";
-						}else {
-							m.addAttribute("errorMessage","전화번호가 중복되었습니다.");
+
+					String idCheck = customerService.idCheck(customerVo.getUserId());
+					if (idCheck.equals("중복")) {
+						m.addAttribute("errorMessage", "id가 중복되었습니다.");
+						return "redirect/cus/regis";
+
+					} else {
+						String emailCheck = customerService.emailCheck(customerVo.getEmail());
+						if (!emailCheck.equals("중복")) {
+							if (!customerService.phoneCheck(customerVo.getPhone()).equals("중복")) {
+								if (LocalDate.now().getYear()-birth.toLocalDate().getYear()>=5) {
+									System.out.println("맞음");
+									Customer customer = new Customer(customerVo.getId(), customerVo.getUserId(),
+											customerVo.getPassword(), customerVo.getName(), customerVo.getZipCode(),
+											customerVo.getEmail(), customerVo.getAddress(),
+											customerVo.getAddressDetail(), customerVo.getPhone(),
+											customerVo.getEmailState(), customerVo.getBirthDate());
+									customerService.register(customer);
+									m.addAttribute("registEmail", customer.getEmail());
+									return "redirect:/cus/mailCheck";
+								} else {
+									System.out.println(LocalDate.now().compareTo(birth.toLocalDate()));
+									m.addAttribute("errorMessage", "생년월일을 확인 해주세요");
+									return "redirect:/cus/regis";
+								}
+							} else {
+								m.addAttribute("errorMessage", "전화번호가 중복되었습니다.");
+								return "redirect:/cus/regis";
+							}
+						} else {
+							m.addAttribute("errorMessage", "email이 중복 되었습니다.");
 							return "redirect:/cus/regis";
 						}
-					}else {
-						m.addAttribute("errorMessage","email이 중복 되었습니다.");
-						return "redirect/cus/regis";
 					}
 				}
+			}else {
+				m.addAttribute("errorMessage","생년월일을 다시 확인 해주세요");
+				return "redirect:/cus/regis";
 			}
+
 		} else {
 			m.addAttribute("errorMessage", "잘못된 접근 입니다.");
 			return "redirect:/index/main";
 		}
+
 	}
 
 	@PostMapping(value = "/idcheck", produces = "application/text; charset=utf-8")
@@ -118,13 +138,13 @@ public class CustomerController {
 		System.out.println(email);
 		return customerService.emailCheck(email);
 	}
-	
-	@PostMapping(value= "/phoneCheck", produces = "application/text; charset=utf-8")
+
+	@PostMapping(value = "/phoneCheck", produces = "application/text; charset=utf-8")
 	@ResponseBody
 	public String getPhoneCheck(String phone) {
 		return customerService.phoneCheck(phone);
 	}
-	
+
 	@GetMapping("/login")
 	public String loginForm(HttpSession session, Model m) {
 		if (session.getAttribute("userId") == null) {
@@ -180,6 +200,59 @@ public class CustomerController {
 
 	}
 
+	@PostMapping("/updateCustomer")
+	public String updateCustomer(HttpSession session, Model m,
+			@ModelAttribute("CustomerVo") @Valid CustomerVO customerVo, BindingResult result, Date birth) {
+		System.out.println(birth);
+		if (session.getAttribute("userId") != null) {
+			String userId = (String) session.getAttribute("userId");
+			Customer cust = new Customer();
+			if (customerVo.getUserId().equals(userId)) {
+				Customer customer = customerService.getCustomerById(userId);
+				cust.setId(customer.getId());
+				cust.setUserId(userId);
+				if (result.hasErrors()) {
+					List<FieldError> errors = result.getFieldErrors();
+					for (FieldError fe : errors) {
+						m.addAttribute("e" + fe.getField(), fe.getField());
+						System.out.println(fe);
+					}
+					return "redirect:/cus/myPage";
+				} else {
+					if (customerService.phoneCheck(customerVo.getPhone()).equals("중복")) {
+						if (customer.getPhone().equals(customerVo.getPhone())) {
+							cust.setPhone(customerVo.getPhone());
+						}
+					} else {
+						cust.setPhone(customerVo.getPhone());
+					}
+					if (LocalDate.now().getYear()-birth.toLocalDate().getYear()>=5) {
+						cust.setBirthDate(birth.toLocalDate());
+					}
+					cust.setAddress(customerVo.getAddress());
+					cust.setAddressDetail(customerVo.getAddressDetail());
+					cust.setEmailState(customer.getEmailState());
+					cust.setEmail(customer.getEmail());
+					cust.setName(customerVo.getName());
+					cust.setPassword(customerVo.getPassword());
+					cust.setZipCode(customerVo.getZipCode());
+					System.out.println(cust.getPhone());
+					System.out.println(cust);
+					cust.setId(customer.getId());
+					customerService.updateCustomer(cust);
+					return "redirect:/cus/myPage";
+				}
+
+			} else {
+				m.addAttribute("errorMessage", "권한이 없습니다.");
+				return "redirect:/index/main";
+			}
+		} else {
+			m.addAttribute("errorMessage", "로그인이 되어 있지 않습니다.");
+			return "redirect:/index/main";
+		}
+	}
+
 	@Autowired
 	private JavaMailSender mailSender;
 
@@ -216,6 +289,27 @@ public class CustomerController {
 			return "redirect:/cus/mailCheck";
 		}
 
+	}
+
+	@Autowired
+	ReservService reservService;
+
+	@GetMapping("/myReserv")
+	public String myReservPage(HttpSession session, int pageNum, Model m) {
+		if (session.getAttribute("userId") != null) {
+			String userId = (String) session.getAttribute("userId");
+			Customer customer = customerService.getCustomerById(userId);
+			if (customer.getEmailState().equals("인증")) {
+				m.addAttribute("reservView", reservService.getReservView(pageNum, userId));
+				return "myReservPage";
+			} else {
+				m.addAttribute("errorMessage", "이메일 인증이 되어있지 않은 계정입니다.");
+				return "redirect:/cus/myPage";
+			}
+		} else {
+			m.addAttribute("errorMessage", "로그인이 되어있지 않습니다.");
+			return "redirect:/index/main";
+		}
 	}
 
 }

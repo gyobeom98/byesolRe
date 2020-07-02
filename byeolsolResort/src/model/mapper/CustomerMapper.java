@@ -23,5 +23,7 @@ public interface CustomerMapper {
 	public Customer selectCustomerByEmailAndEmailState(@Param("email")String email,@Param("emailState")String emailState);
 
 	public Customer selectCustomerByPhone(String phone);
+
+	public void updateCustomer(Customer cust);
 	
 }

@@ -94,6 +94,12 @@ public class CustomerService {
 		return "중복 아님";
 		else return "중복";
 	}
+
+	public void updateCustomer(Customer cust) {
+		customerMapper.updateCustomer(cust);
+	}
+
+		
 	
 	
 }

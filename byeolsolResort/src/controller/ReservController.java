@@ -35,7 +35,7 @@ public class ReservController {
 
 	@GetMapping("/addReserv")
 	public String goAddReservForm(HttpSession session, @RequestParam(required = false, defaultValue = "0") int roomNum,
-			Model m ) {
+			Model m) {
 		if (roomNum >= 101 && roomNum <= 105 || roomNum >= 201 && roomNum <= 205 || roomNum >= 301 && roomNum <= 305) {
 			if (session.getAttribute("userId") != null) {
 				String userId = (String) session.getAttribute("userId");
@@ -57,23 +57,23 @@ public class ReservController {
 		}
 
 	}
-	
+
 	@GetMapping("/printTotalPrice")
 	public String errorTotalPrice(Model m) {
 		m.addAttribute("잘못된 접근 입니다.");
 		return "redirect:/index/main";
 	}
-	
+
 	@PostMapping("/printTotalPrice")
 	@ResponseBody
-	public String getTotalPrice(Date startDate, Date endDate , int roomNum) {
+	public String getTotalPrice(Date startDate, Date endDate, int roomNum) {
 		LocalDate start = startDate.toLocalDate();
 		LocalDate end = endDate.toLocalDate();
-		Room room =roomService.getRoomByRoomNum(roomNum);
-		if(reservService.dateCheck(start, end)) {
-			int totalPrice = reservService.getTotalPrice(start,end,room);
-			return totalPrice+"";
-		}else {
+		Room room = roomService.getRoomByRoomNum(roomNum);
+		if (reservService.dateCheck(start, end)) {
+			int totalPrice = reservService.getTotalPrice(start, end, room);
+			return totalPrice + "";
+		} else {
 			return "0";
 		}
 	}
@@ -84,7 +84,8 @@ public class ReservController {
 	@PostMapping("/addReserv")
 	public String addResrv(@RequestParam(defaultValue = DEFAULT_START_DATE) Date startDate,
 			@RequestParam(defaultValue = DEFAULT_END_DATE) Date endDate, int roomNum, HttpSession session,
-			@RequestParam(defaultValue = "0") int peopleCount, Model m, @RequestParam(defaultValue = "0")int totalPrice) {
+			@RequestParam(defaultValue = "0") int peopleCount, Model m,
+			@RequestParam(defaultValue = "0") int totalPrice) {
 		if (!startDate.equals(Date.valueOf(DEFAULT_START_DATE)) || !endDate.equals(Date.valueOf(DEFAULT_END_DATE))) {
 			ErrorMessage errorMessage = reservService.totalAddResrv(startDate, endDate, roomNum, session, peopleCount);
 			if (!reservService.isNullFromErrorMessage(errorMessage)) {
@@ -131,11 +132,50 @@ public class ReservController {
 			return "redirect:/index/main";
 		}
 	}
-	
+
 	@PostMapping("/updateReserv")
-	public String updateReserv(@RequestParam(defaultValue = "0")int roomNum, @RequestParam(defaultValue = DEFAULT_START_DATE)Date startDate, @RequestParam(defaultValue = DEFAULT_END_DATE)Date endDate , @RequestParam(defaultValue = "0")int peopleCount){
-		
-		return "";
+	public String updateReserv(@RequestParam(defaultValue = "0") int roomNum,
+			@RequestParam(defaultValue = DEFAULT_START_DATE) Date startDate,
+			@RequestParam(defaultValue = DEFAULT_END_DATE) Date endDate,
+			@RequestParam(defaultValue = "0") int peopleCount, HttpSession session,
+			@RequestParam(defaultValue = "0") int reservId, int totalPrice, Model m) {
+		if (reservService.roomNumCheck(roomNum) && !startDate.equals(DEFAULT_START_DATE)
+				&& !endDate.equals(DEFAULT_END_DATE)) {
+			ErrorMessage errorMessage = reservService.updateReserv(session, reservId, startDate, endDate, roomNum,
+					peopleCount, totalPrice);
+			if (errorMessage.getErrorMessage() != null) {
+				m.addAttribute("errorMessage", errorMessage.getErrorMessage());
+			}
+			if (errorMessage.getRoomNum() > 0) {
+				m.addAttribute("roomNum", errorMessage.getRoomNum());
+			}
+			return errorMessage.getResult();
+		} else {
+			m.addAttribute("errorMessage", "잘못된 접근 입니다");
+			return "redirect:/index/main";
+		}
 	}
+
+	@GetMapping("/deleteReserv")
+	public String deleteReserv(HttpSession session, int reservId, Model m) {
+		if (session.getAttribute("userId") != null) {
+			String userId = (String) session.getAttribute("userId");
+			Reserv reserv = reservService.getReservById(reservId);
+			if (reserv.getUserId().equals(userId) || userId.equals("admin")) {
+				reservService.deleteReserv(reservId);
+				return "redirect:/index/main";
+			} else {
+				m.addAttribute("errorMessage","권한이 없습니다.");
+				return "redirect:/index/main";
+			}
+		} else {
+			m.addAttribute("errorMessage","로그인이 되어 있지 않습니다.");
+			return "redirect:/index/main";
+		}
+	}
+	
+	
+	
+	
 
 }

@@ -65,6 +65,7 @@ public class BoardController {
 			if (board.getTitle().equals("") || board.getContent().equals("")) {
 				m.addAttribute("errorMessage","공백이 있습니다.");
 				return "redirect:/board/addBoard";
+				
 			} else {
 				String addTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH_mm_ss_SSSS"));
 				if (!uploadFile[0].isEmpty()) {

@@ -9,6 +9,93 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript" src="../script/header.js"></script>
+<script type="text/javascript">
+
+function check() {
+
+	// 정규식
+	var passwordPattern = /^[A-Za-z0-9]{9,14}$/;
+	var namePattern = /^[가-힣]{2,6}|[a-zA-Z]{2,10}$/;
+	var phonePattern = /^\d{3}\d{3,4}\d{4}$/;
+
+	// 비밀번호 공백 확인
+	if ($("#password").val() == "") {
+		alert("비밀번호를 입력하세요");
+		$("#password").focus();
+		return false;
+	}
+	// 비밀번호 유효성 검사
+	if (!passwordPattern.test($("#password").val())) {
+		alert("비밀번호 형식에 맞게 입력해주세요");
+		$("#password").val("");
+		$("#password").focus();
+		return false;
+	}
+
+	// 아이디랑 비밀번호랑 같은지
+	if ($("#userId").val() == ($("#password").val())) {
+		alert("ID와 비밀번호를 다르게 입력하세요");
+		$("#password").val("");
+		$("#password").focus();
+	}
+	// 비밀번호확인 공백 확인
+	if ($("#passwordCheck").val() == "") {
+		alert("비밀번호를 확인하세요");
+		$("#passwordCheck").focus();
+		return false;
+	}
+	// 비밀번호 똑같은지
+	if ($("#password").val() != ($("#passwordCheck").val())) {
+		alert("비밀번호가 같지 않습니다.");
+		$("#password").val("");
+		$("#passwordCheck").val("");
+		$("#passwordCheck").focus();
+		return false;
+	}
+	// 이름 공백확인
+	if ($("#name").val() == "") {
+		alert("이름을 입력하세요");
+		$("#name").focus();
+		return false;
+	}
+	// 이름 유효성
+	if (!namePattern.test($("#name").val())) {
+		alert("이름을 올바르게 입력하세요.");
+		$("#name").val("");
+		$("#name").focus();
+		return false;
+	}
+
+	// 주소 공백 확인
+	if ($("#sample6_postcode").val() == "") {
+		alert("주소를 입력해주세요");
+		$("#sample6_postcode").focus();
+		return false;
+	}
+	// 전화번호 공백 확인
+	if ($("#phone").val() == "") {
+		alert("전화번호를 입력해주세요");
+		$("#phone").focus();
+		return false;
+	}
+	// 전화번호 유효성 검사
+	if (!phonePattern.test($("#phone").val())) {
+		alert("전화번호 형식에 맞게 입력해주세요")
+		$("#phone").val("");
+		$("#phone").focus();
+		return false;
+	}
+	// 생일 공백 확인
+	if ($("#birth").val() == "") {
+		alert("생년월일을 입력해주세요");
+		$("#birth").focus();
+		return false;
+	}
+}
+
+
+</script>
+
 </head>
 <body>
 	<div class="allwrap">
@@ -77,7 +164,7 @@
 						<h3>개인정보수정</h3>
 					</div>
 				</div>
-				<form onsubmit="return check()" id="regis">
+				<form onsubmit="return check()" id="regis" method="post" action="/cus/updateCustomer">
 						<div class="content_foot">
 							<ul class="flotBox_my_tap">
 								<li><a href="마이페이지(업데이트폼)">개인정보</a></li>
@@ -94,7 +181,7 @@
 						<table>
 							<tr>
 								<td class="formTd1">아이디</td>
-								<td class="formTd2">${customer.userId }</td>
+								<td class="formTd2"> <input type="text" value="${customer.userId }" name="userId" readonly="readonly"></td>
 							</tr>
 							<tr>
 								<td class="formTd1">* 비밀번호</td>
@@ -108,32 +195,31 @@
 							</tr>
 							<tr>
 								<td class="formTd1">* 이름</td>
-								<td class="formTd2">(이름 가져오기)</td>
+								<td class="formTd2"><input type="text" name="name" value="${customer.name}"></td>
 							</tr>
 							<tr>
 								<td class="formTd1">* 이메일</td>
-								<td class="formTd2"><input type="email" name="email" id="email">
-									<p>예 : abc@abc.com</p></td>
+								<td class="formTd2"><input type ="email" value="${customer.email}" readonly="readonly"></td>
 							</tr>
 							<tr>
 								<td class="formTd1">* 주소</td>
 								<td class="formTd2"><input type="text" id="sample6_postcode"
-									placeholder="우편번호" name="zipCode"> <input type="button"
+									placeholder="우편번호" name="zipCode" value="${customer.zipCode }"> <input type="button"
 									onclick="sample6_execDaumPostcode()" value="우편번호 찾기">
 									<br>
 									<input type="text" id="sample6_address"
-									placeholder="주소" name="address">
+									placeholder="주소" name="address" value="${customer.address}">
 									<input type="text" id="sample6_detailAddress"
-									placeholder="상세주소" name="addressDetail">
+									placeholder="상세주소" name="addressDetail" value="${customer.addressDetail }">
 								</td>
 							</tr>
 							<tr>
 								<td class="formTd1">* 전화번호</td>
-								<td class="formTd2"><input type="text" name="phone" id="phone"></td>
+								<td class="formTd2"><input type="text" name="phone" id="phone" value="${customer.phone }"></td>
 							</tr>
 							<tr>
 								<td class="formTd1">* 생일</td>
-								<td class="formTd2"><input type="date" name="birth" id="birth"></td>
+								<td class="formTd2"><input type="date" name="birth" id="birth" value="${customer.birthDate }"></td>
 							</tr>
 						</table>
 

@@ -16,10 +16,11 @@ public class CustomerVO {
 	@Pattern(regexp = "[a-z0-9]{5,12}")
 	private String userId;
 
-	
+	@NotEmpty
 	@Pattern(regexp = "^(?=.*[a-zA-Z])((?=.*\\d)|(?=.*\\W)).{6,20}$")
 	private String password;
 	
+	@NotEmpty
 	@Pattern(regexp = "^[가-힣]{2,6}|[a-zA-Z]{2,10}\\s[a-zA-Z]{2,10}$")
 	private String name;
 	
@@ -30,6 +31,7 @@ public class CustomerVO {
 	@NotEmpty(message = "공백이 되면 안됩니다.")
 	private String address;
 	private String addressDetail;
+	@NotEmpty
 	@Pattern(regexp = "^01([0|1|6|7|8|9]?)([0-9]{3,4})([0-9]{4})$")
 	private String phone;
 	private String emailState;

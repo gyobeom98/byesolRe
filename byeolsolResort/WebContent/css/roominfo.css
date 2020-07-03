@@ -28,10 +28,8 @@ header>div::after{
 }
 
 header:hover{
-	height: 450px;
-	border-bottom: 1px solid lightgrey;
-	/* background: linear-gradient(to bottom, white 70% , rgba(255, 255, 255, 0.7) ); */
-	background: white;
+	height: 350px;
+  background: linear-gradient(to bottom, white 70% , rgba(255, 255, 255, 0.7) );
 	position: fixed;
 	transition: 1.5s;
 }
@@ -207,7 +205,7 @@ header:hover #logo>a{
 
 .route{
 	display: flex;
-	padding-left: 650px;
+	padding-left: 780px;
 	font-size: 14px;
 }
 .route>ul>li{
@@ -237,25 +235,27 @@ header:hover #logo>a{
 }
 
 .sibtitle{
-	padding: 10px 50px 30px 0;
+	padding: 10px 0 30px 0;
 	font-size: 35px;
+	width: 1100px;
 }
 
 .img_slide{
-	width: 1000px;
+	width: 1100px;
 	overflow: hidden;
 	position: relative;
 }
 .img_slide>ul{
-	width: 3000px;
+	width: 3300px;
 	height:auto;
 	display: flex;
 	align-items: baseline;
 }
 
 .img_slide>ul>li>img{
-	width: 1000px;
+	width: 1100px;
 	height: 800px;
+
 }
 
 .slidebtn{
@@ -294,7 +294,7 @@ header:hover #logo>a{
 	align-items: center;
 	text-align: center;
 	font-size: 13px;
-	margin-top: 60px;
+	margin-top: 80px;
 }
 
 .table>div>table{
@@ -322,8 +322,7 @@ th{
 .map>tbody>tr>td>img{
 	width: 500px;
 	height: 400px;
-	padding-bottom: 20px;
-	padding-top:20px;
+	padding:20px;
 }
 
 .foot_right{

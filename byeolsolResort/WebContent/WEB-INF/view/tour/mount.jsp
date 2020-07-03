@@ -1,15 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-
+<html>
 <head>
-  <meta charset="utf-8">
-  <title>별솔리조트</title>
-<link rel="stylesheet" href="../css/qna.css">
+<meta charset="UTF-8">
+<title>별솔리조트</title>
+<link rel="stylesheet" href="../css/test1.css">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" src="../script/sub.js"></script>
-<script type="text/javascript" src="../script/qna.js"></script>
 </head>
 <body>
 	<div class="allwrap">
@@ -55,11 +54,11 @@
 					</div>
 					<div id="side">
 						<ul>
-							<li><a href="../mypage/qna.jsp">고객센터</a></li>
+							<li><a href="../sideform/qna.jsp">고객센터</a></li>
 							<li><span>｜</span></li>
-							<li><a href="../sideform/login.jsp">로그아웃</a></li>
+							<li><a href="../sideform/login.jsp">로그인</a></li>
 							<li><span>｜</span></li>
-							<li><a href="../mypage/mypage.jsp">마이페이지</a></li>
+							<li><a href="../sideform/signup.jsp">회원가입</a></li>
 						</ul>
 					</div>
 				</div>
@@ -73,49 +72,14 @@
 						<ul>
 							<li>HOME</li>
 							<li>》</li>
-							<li>고객센터</li>
+							<li>주변관광지</li>
 							<li>》</li>
-							<li>고객의 소리</li>
+							<li>등산코스</li>
 						</ul>
 					</div>
 					<div class="sibtitle">
-						<h3 class="stitle">고객의 소리</h3>
+						<h3 class="stitle">등산코스</h3>
 					</div>
-				</div>
-				<div class="qNa_form">
-					<div class="qNa_info">
-						<br> 고객의 소리함을 통해 고객 여러분의 문의, 제안, 칭찬 등을 접수합니다.<br>
-						<br> 접수된 글은 마이페이지 나의 Q&A 확인 가능하며,<br>
-						<br> 메일 또는 유선을 통해 빠른 시간 내에 답변해 드립니다.<br>
-						<br>
-					</div>
-					<form onsubmit="return check()" nama="qNa_write" id="qNa_write" action="/question/addQuestion" method="post">
-						<table>
-							<tr>
-								<td class="formTd1">제목</td>
-								<td><input type="text" id="qNa_title" name="qNa_write"></td>
-							</tr>
-							<tr>
-								<td class="formTd1">분류</td>
-								<td><select name="qNa_select">
-										<option value="기타">기타</option>
-										<option value="예약">예약문의</option>
-										<option value="객실">객실문의</option>
-										<option value="식음시설">식음시설</option>
-										<option value="관광정보">관광정보</option>
-									</select></td>
-							</tr>
-							<tr>
-								<td class="formTd1">파일첨부</td>
-								<td><input type="file" name="file_input"></td>
-							</tr>
-							<tr>
-								<td class="formTd1">내용</td>
-								<td><textarea name="textarea" id="textarea" rows="8" cols="80"></textarea></td>
-							</tr>
-						</table>
-						<input type="submit" id="qNa_submit" value="등록">
-					</form>
 				</div>
 			</section>
 			<footer>

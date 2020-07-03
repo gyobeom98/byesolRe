@@ -67,7 +67,7 @@ public class BoardController {
 				return "redirect:/board/addBoard";
 				
 			} else {
-				String addTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH_mm_ss_SSSS"));
+				String addTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy_MM_dd_HH_mm_ss_SSSS"));
 				if (!uploadFile[0].isEmpty()) {
 					for (int i = 0; i < uploadFile.length; i++) {
 						System.out.println(i);
@@ -137,7 +137,7 @@ public class BoardController {
 			@RequestParam(required = false) MultipartFile uploadFile02,
 			@RequestParam(required = false) MultipartFile uploadFile03) {
 		if (session.getAttribute("userId") != null) {
-			String updateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH_mm_ss_SSSS"));
+			String updateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy_MM_dd_HH_mm_ss_SSSS"));
 			Board b = boardService.selectBoard(board.getId());
 			System.out.println(b);
 			if (b.getUserId().equals((String) session.getAttribute("userId"))) {

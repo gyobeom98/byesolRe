@@ -13,11 +13,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import model.dto.Board;
 import model.dto.Customer;
+import model.dto.Question;
 import model.dto.Remove;
 import model.dto.Reserv;
+import model.mapper.AnswerMapper;
 import model.mapper.BoardMapper;
 import model.mapper.CommentMapper;
 import model.mapper.CustomerMapper;
+import model.mapper.QuestionMapper;
 import model.mapper.RemoveMapper;
 import model.mapper.ReservMapper;
 
@@ -38,6 +41,13 @@ public class CustomerService {
 	
 	@Autowired
 	ReservMapper reservMapper;
+	
+	@Autowired
+	AnswerMapper answerMapper;
+	
+	@Autowired
+	QuestionMapper questionMapper;
+	
 	
 	public void register(Customer customer) {
 		System.out.println("회원가입 넘어 오는지 확인 : " + customer);
@@ -119,6 +129,7 @@ public class CustomerService {
 		customerMapper.updateCustomer(cust);
 	}
 
+	@Transactional
 	public void deleteCustomerWithAllInfor(Customer customer) {
 
 		List<Board> boardList =  boardService.selectBoardListByUserId(customer.getUserId());
@@ -145,7 +156,12 @@ public class CustomerService {
 			}
 			reservMapper.deleteReserv(reserv.getId());
 		}
-		
+		List<Question> questionList = questionMapper.selectQuestionByWriter();
+		for (Question question : questionList) {
+			answerMapper.deleteAnswerByQuestionId(question.getId());
+			questionMapper.deleteQuestion(question.getId());
+		}
+		customerMapper.deleteCustomerById(customer.getId());
 		
 	}
 

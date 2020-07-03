@@ -21,6 +21,8 @@ public interface QuestionMapper {
 	public List<Question> selectQuestionList();
 	
 	public int countQuestion();
+
+	public List<Question> selectQuestionByWriter();
 	
 	
 }

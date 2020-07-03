@@ -3,6 +3,7 @@ package model.service;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.InputStreamReader;
 
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
@@ -95,6 +96,7 @@ public class FtpService {
 			FileOutputStream fos = new FileOutputStream(file);
 			fos.write(uploadFile.getBytes());
 			fos.close();
+			
 			// FTPClient를 생성합니다.
 			ftp = new FTPClient();
 			// 원하시는 인코딩 타입
@@ -124,6 +126,10 @@ public class FtpService {
 			} else {
 				System.out.println("실패");
 			}
+			fis.close();
+			fos.close();
+			System.out.println(file.exists());
+			System.out.println(file.delete());
 			// storeFile Method는 파일 송신결과를 boolean값으로 리턴합니다
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -180,6 +186,10 @@ public class FtpService {
 			} else {
 				System.out.println("실패");
 			}
+			fis.close();
+			fos.close();
+			System.out.println(file.exists());
+			System.out.println(file.delete());
 			// storeFile Method는 파일 송신결과를 boolean값으로 리턴합니다
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -237,6 +247,10 @@ public class FtpService {
 			} else {
 				System.out.println("실패");
 			}
+			fis.close();
+			fos.close();
+			System.out.println(file.exists());
+			System.out.println(file.delete());
 			// storeFile Method는 파일 송신결과를 boolean값으로 리턴합니다
 		} catch (Exception e) {
 			e.printStackTrace();

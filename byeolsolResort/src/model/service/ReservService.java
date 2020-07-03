@@ -3,6 +3,7 @@ package model.service;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -144,17 +145,19 @@ public class ReservService {
 
 	}
 
+	@Autowired
+	HolyDayService holyDayService;
+	
 	public int getTotalPrice(LocalDate startDate, LocalDate endDate, Room room) {
 		int totalPrice = 0;
 		int dv = endDate.compareTo(startDate);
+		if(dv>1) dv--;
 		List<LocalDate> days = new ArrayList<LocalDate>();
 		for (int i = 0; i <= dv; i++) {
 			days.add(startDate.plusDays(i));
 		}
 		for (LocalDate localDate : days) {
-			if (localDate.getDayOfWeek().toString().equals("FRIDAY")
-					|| localDate.getDayOfWeek().toString().equals("SATURDAY")
-					|| localDate.getDayOfWeek().toString().equals("SUNDAY"))
+			if (isWeekend(localDate.getDayOfWeek().toString()) || isHolyDay(localDate))
 				totalPrice += room.getWeekendPrice();
 			else
 				totalPrice += room.getDayPrice();
@@ -162,6 +165,39 @@ public class ReservService {
 
 		return totalPrice;
 	}
+	
+	private boolean isWeekend(String dayofWeek) {
+		if(dayofWeek.equals("FRIDAY")|| dayofWeek.equals("SATURDAY") || dayofWeek.equals("SUNDAY")) {
+			return true;
+		}else return false;
+	}
+	
+	private boolean isHolyDay(LocalDate localDate) {
+		int y = localDate.getYear();
+		int m = localDate.getMonthValue();
+		boolean ish = false;
+		List<String> isHoly =  holyDayService.get(y, m);
+		if(isHoly.size()>0 && !isHoly.get(0).equals("error")) {
+			String dateFormmat = localDate.format(DateTimeFormatter.ofPattern("YYYYMMdd"));
+			for (String holy : isHoly) {
+				if(holy.equals(dateFormmat)) {
+					ish = true;
+					break;
+				}
+			}
+			
+			if(ish) {
+				return true;
+			}else {
+				return false;
+			}
+			
+		}else {
+			return false;
+		}
+		
+	}
+	
 
 	public boolean dateCheck(LocalDate startDate, LocalDate endDate) {
 		int hour = LocalDateTime.now().getHour();

@@ -129,7 +129,11 @@ public class EventService {
 		eventMapper.updateEvent(event);
 	}
 
+	
 	public void removeEvent(int id) {
+		Event event = eventMapper.selectEventById(id);
+		String Time = event.getImgPath().substring(event.getImgPath().indexOf('/',46)+1,event.getImgPath().lastIndexOf('/'));
+		ftpService.ftpdeleteEvent(event.getImgPath(), Time);
 		eventMapper.deleteEvent(id);
 	}
 	

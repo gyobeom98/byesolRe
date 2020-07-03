@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import model.dto.Question;
 import model.mapper.AnswerMapper;
@@ -50,7 +51,13 @@ public class QuestionService {
 		questionMapper.updateQuestion(question);
 	}
 
+	@Autowired
+	AnswerMapper answerMapper;
+	
+	@Transactional
 	public void deleteQuestion(int id) {
+		Question question = questionMapper.selectQuestion(id);
+		answerMapper.deleteAnswerByQuestionId(id);
 		questionMapper.deleteQuestion(id);
 	}
 	

@@ -25,5 +25,7 @@ public interface CustomerMapper {
 	public Customer selectCustomerByPhone(String phone);
 
 	public void updateCustomer(Customer cust);
+
+	public void deleteCustomerById(int id);
 	
 }

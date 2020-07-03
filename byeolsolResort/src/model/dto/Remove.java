@@ -8,7 +8,7 @@ public class Remove {
 	private String userId;
 	private int roomId;
 	private LocalDate startDate;
-	private LocalDate endDaet;
+	private LocalDate endDate;
 	private int totalPrice;
 	private String userName;
 	private String userPhone;
@@ -16,14 +16,14 @@ public class Remove {
 
 	public Remove() {}
 
-	public Remove(int id, String userId, int roomId, LocalDate startDate, LocalDate endDaet, int totalPrice,
+	public Remove(int id, String userId, int roomId, LocalDate startDate, LocalDate endDate, int totalPrice,
 			String userName, String userPhone, String state) {
 		super();
 		this.id = id;
 		this.userId = userId;
 		this.roomId = roomId;
 		this.startDate = startDate;
-		this.endDaet = endDaet;
+		this.endDate = endDate;
 		this.totalPrice = totalPrice;
 		this.userName = userName;
 		this.userPhone = userPhone;
@@ -62,12 +62,12 @@ public class Remove {
 		this.startDate = startDate;
 	}
 
-	public LocalDate getEndDaet() {
-		return endDaet;
+	public LocalDate getEndDate() {
+		return endDate;
 	}
 
-	public void setEndDaet(LocalDate endDaet) {
-		this.endDaet = endDaet;
+	public void setEndDate(LocalDate endDate) {
+		this.endDate = endDate;
 	}
 
 	public int getTotalPrice() {
@@ -101,11 +101,13 @@ public class Remove {
 	public void setState(String state) {
 		this.state = state;
 	}
+	
+	
 
 	@Override
 	public String toString() {
 		return "Remove [id=" + id + ", userId=" + userId + ", roomId=" + roomId + ", startDate=" + startDate
-				+ ", endDaet=" + endDaet + ", totalPrice=" + totalPrice + ", userName=" + userName + ", userPhone="
+				+ ", endDate=" + endDate + ", totalPrice=" + totalPrice + ", userName=" + userName + ", userPhone="
 				+ userPhone + ", state=" + state + "]";
 	}
 

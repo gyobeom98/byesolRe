@@ -6,7 +6,7 @@
 <mapper namespace="model.mapper.RemoveMapper">
 
 <insert id="insertRemove" parameterType="Remove">
-insert into remove(user_id,room_id,start_date,end_date,total_price,user_name,user_phone) values(userId,roomId,startDate,endDate,totalPrice,userName,userPhone)
+insert into remove(user_id,room_id,start_date,end_date,total_price,user_name,user_phone) values(#{userId},#{roomId},#{startDate},#{endDate},#{totalPrice},#{userName},#{userPhone})
 </insert>
 
 <update id="updateRemoveState">

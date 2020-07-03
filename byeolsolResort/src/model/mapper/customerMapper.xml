@@ -51,5 +51,9 @@
    where id = #{id}
   </update>
   
+  <delete id="deleteCustomerById">
+  delete from customer where id = #{id}
+  </delete>
+  
   
   </mapper>

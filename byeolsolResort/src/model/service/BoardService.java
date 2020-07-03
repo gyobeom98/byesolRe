@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import model.dto.Board;
@@ -43,13 +44,22 @@ public class BoardService {
 		return boardMapper.selectBoard(id);
 	}
 	
+	@Autowired
+	FtpService ftpService;
+	
+	@Transactional
 	public String deleteBoard(int id , String userId) {
-		
 		Board b = boardMapper.selectBoard(id);
-		
 		if(b.getUserId().equals(userId) || userId.equals("admin")) {
 			commentMapper.deleteBoardComment(id);
 			boardMapper.deleteBoard(id);
+			
+			String Time = b.getFirstPath().substring(b.getFirstPath().indexOf('/', 46) + 1,
+					b.getFirstPath().lastIndexOf('/'));
+			ftpService.ftpdelete(b.getFirstPath(), Time);
+			ftpService.ftpdelete(b.getSecondPath(), Time);
+			ftpService.ftpdelete(b.getThirdPath(), Time);
+			
 			return "삭제 완료";
 		}else {
 			return "게시글을 삭제할 권한이 없음";
@@ -80,10 +90,10 @@ public class BoardService {
 	}
 	
 	public boolean checkImg(MultipartFile uploadFile) {
-
 		String fileType = uploadFile.getOriginalFilename().substring(uploadFile.getOriginalFilename().indexOf('.'),
 				uploadFile.getOriginalFilename().length());
-		if (fileType.equals(".jpg") || fileType.equals(".png") || fileType.equals(".jpeg")) {
+		System.out.println(fileType);
+		if (fileType.equals(".jpg") || fileType.equals(".png") || fileType.equals(".jpeg") || fileType.equals(".PNG") || fileType.equals(".JPG") || fileType.equals(".JPEG")) {
 			return true;
 		} else
 			return false;

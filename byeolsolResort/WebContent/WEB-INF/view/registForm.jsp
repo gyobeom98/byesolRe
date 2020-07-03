@@ -25,11 +25,7 @@ $(function(){
 			type:"post",
 			data: {"userId" : data},
 			success : function(d){
-				if(d=="중복"){
-					//document.querySelector("button[name=submit]").disabled = 'disabled';
-				}else{
-					//document.querySelector("button[name=submit]").disabled = '';
-				}
+				alert(d);
 			}
 		}) 
 		

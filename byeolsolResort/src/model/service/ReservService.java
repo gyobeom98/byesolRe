@@ -157,7 +157,7 @@ public class ReservService {
 			days.add(startDate.plusDays(i));
 		}
 		for (LocalDate localDate : days) {
-			if (isWeekend(localDate.getDayOfWeek().toString()) || isHolyDay(localDate))
+			if (isWeekend(localDate.getDayOfWeek().toString()) || isHolyDay(localDate) || isPeekSeason(localDate))
 				totalPrice += room.getWeekendPrice();
 			else
 				totalPrice += room.getDayPrice();
@@ -256,5 +256,17 @@ public class ReservService {
 		reservView = new ReservView(reservCnt, pageNum, firstRow, RESERV_COUNT_PER_PAGE, reservList);
 		return reservView;
 	}
-
+	
+	
+	private boolean isPeekSeason(LocalDate localDate) {
+		if((localDate.getMonthValue()==7 && localDate.getDayOfMonth()>=17 && localDate.getDayOfMonth()<=31) || 
+			(localDate.getMonthValue()==8 && localDate.getDayOfMonth()>=1 && localDate.getDayOfMonth()<=17)) {
+			return true;
+		}else {
+			return false;
+		}
+		
+	}
+	
+	
 }

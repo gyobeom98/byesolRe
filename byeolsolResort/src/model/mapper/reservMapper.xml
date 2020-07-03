@@ -41,4 +41,8 @@ select count(*) from reserv
 select * from reserv where user_id = #{userId}
 </select>
 
+<select id="selectReservListByUserIdWithLimit" resultType="Reserv">
+select * from reserv where user_id = #{userId} limit #{firstRow},#{reservCountPerPage}
+</select>
+
 </mapper>

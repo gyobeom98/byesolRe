@@ -4,19 +4,27 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class Reserv {
-
+	
 	private int id;
+	
 	private String userId;
+	
 	private int roomId;
+	
 	private LocalDate startDate;
+	
 	private LocalDate endDate;
+	
 	private int totalPrice;
+	
 	private int peopleCount;
+	
 	private LocalDateTime regDate;
+	
 	private String state;
 	
 	public Reserv() {}
-	
+
 	public Reserv(int id, String userId, int roomId, LocalDate startDate, LocalDate endDate, int totalPrice,
 			int peopleCount, LocalDateTime regDate, String state) {
 		super();
@@ -30,7 +38,6 @@ public class Reserv {
 		this.regDate = regDate;
 		this.state = state;
 	}
-
 
 
 	public int getId() {
@@ -81,14 +88,14 @@ public class Reserv {
 		this.totalPrice = totalPrice;
 	}
 
-	public int getPeopleCount() {
-		return peopleCount;
+	public LocalDateTime getRegDate() {
+		return regDate;
 	}
 
-	public void setPeopleCount(int peopleCount) {
-		this.peopleCount = peopleCount;
+	public void setRegDate(LocalDateTime regDate) {
+		this.regDate = regDate;
 	}
-	
+
 	public String getState() {
 		return state;
 	}
@@ -97,12 +104,12 @@ public class Reserv {
 		this.state = state;
 	}
 
-	public LocalDateTime getRegDate() {
-		return regDate;
+	public int getPeopleCount() {
+		return peopleCount;
 	}
 
-	public void setRegDate(LocalDateTime regDate) {
-		this.regDate = regDate;
+	public void setPeopleCount(int peopleCount) {
+		this.peopleCount = peopleCount;
 	}
 
 	@Override
@@ -112,8 +119,9 @@ public class Reserv {
 				+ regDate + ", state=" + state + "]";
 	}
 
+	
+	
+	
+	
 
-	
-	
-	
 }

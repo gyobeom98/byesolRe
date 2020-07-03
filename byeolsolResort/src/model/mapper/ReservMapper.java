@@ -29,4 +29,6 @@ public interface ReservMapper {
 
 	public List<Reserv> selectReservByUserId(String userId);
 	
+	
+	
 }

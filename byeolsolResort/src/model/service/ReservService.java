@@ -70,7 +70,7 @@ public class ReservService {
 					if (dateCheck(start, end)) {
 						if (peopleCountCheck(room, peopleCount)) {
 							int totalPrice = getTotalPrice(start, end, room);
-							Reserv reserv = new Reserv(0, "test", room.getId(), start, end, totalPrice, peopleCount,
+							Reserv reserv = new Reserv(0, userId, room.getId(), start, end, totalPrice, peopleCount,
 									null, null);
 							if (reservCheck(1, start, end)) {
 								System.out.println("확인함");

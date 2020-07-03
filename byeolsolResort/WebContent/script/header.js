@@ -1,4 +1,5 @@
 $(function() {
+	
 	$('#manu>ul>li>a').css('color', '#FFFFFF');
 	$('#manu>ul>li>a').css('font-size', '18px');
 
@@ -32,9 +33,10 @@ $(function() {
 						.children().children("a").css("font-size", "18px");
 
 			})
-	$("header").hover(function() {
-		$(this).parent().children().eq(2).hide(1000);
-	}, function() {
-		$(this).parent().children().eq(2).show(1000);
-	});
+			$("header").mouseover(function(){
+				$(this).parent().children().eq(2).fadeOut(2000);
+			});
+			$("header").mouseleave(function(){
+				$(this).parent().children().eq(2).fadeIn(2000);
+			});
 });

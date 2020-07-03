@@ -33,4 +33,12 @@ select * from reserv where room_id = #{roomId} and start_date between #{startDat
 select * from reserv where id = #{reservId}
 </select>
 
+<select id="reservCount" resultType="int">
+select count(*) from reserv
+</select>
+
+<select id="selectReservByUserId" resultType="Reserv">
+select * from reserv where user_id = #{userId}
+</select>
+
 </mapper>

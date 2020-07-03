@@ -359,9 +359,8 @@ table {
 	height: 95px;
 }
 
-.li1 {
-	background-color: rgb(138, 141, 143);
-	color: rgb(255, 255, 255);
+a.li1 {
+	color: #fff;
 }
 
 td {

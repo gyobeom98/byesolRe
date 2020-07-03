@@ -37,6 +37,10 @@
 	select * from comment where board_id = #{boardId} limit #{firstRow},#{commentCountPerPage}
 	</select>
 	
+	
+	<delete id="deleteCommentByUserId">
+	delete from comment where user_id = #{userId}
+	</delete>
 
 
 </mapper>

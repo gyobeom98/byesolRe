@@ -52,6 +52,14 @@
 	<select id="selectBoardListAdmain" resultType="Board">
 	select * from board where state = "admin" order by w_date desc limit 0,5	
 	</select>
+	
+	<delete id="deleteBoardByUserId">
+	delete from board where user_id = #{userId}
+	</delete>
+	
+	<select id="selectBoardListByUserId" resultType="Board">
+	select * from board where user_id = #{userId}
+	</select>
 
 
 </mapper>

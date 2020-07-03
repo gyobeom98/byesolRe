@@ -31,7 +31,6 @@ $(function() {
 				$(this).children().children().eq(1).children().children()
 						.children().children("a").css("font-size", "18px");
 			})
-
 	$("#birth").datepicker(
 			{
 				buttonImage : "/application/db/jquery/images/calendar.gif", // 버튼
@@ -63,18 +62,49 @@ $(function() {
 				,
 				maxDate : "D" // 최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)
 			});
-});
+	var btn = $("button").eq(0);
+	btn.on("click", function() {
+		var data = $("input[name=userId]").val();
+		$.ajax({
+			url : "/cus/idcheck",
+			type : "post",
+			data : {
+				"userId" : data
+			},
+			success : function(d) {
+				alert(d);
+			}
+		})
 
-function password() {
-	document.getElementById("password").focus();
-}
+	})
 
-function passwordCheck() {
-	document.getElementById("passwordCheck").focus();
+	var inptEmail = $("input[name=email]").on("focus", function() {
+		var data = inptEmail.val();
+		console.log(data)
+		$.ajax({
+			url : "/cus/eamilcheck",
+			type : "post",
+			data : {
+				"email" : data
+			},
+			success : function(d) {
+				alert(d);
+			}
+		})
+	})
+
+})
+
+function userId() {
+	document.getElementById("userId").focus();
 }
 
 function name() {
 	document.getElementById("name").focus();
+}
+
+function emailCheck() {
+	document.getElementById("email").focus();
 }
 
 function address() {
@@ -103,44 +133,25 @@ function dbclick() {
 function check() {
 
 	// 정규식
-	var passwordPattern = /^[A-Za-z0-9]{9,14}$/;
+	var userIdPattern = /^[a-zA-Z0-9]{4,12}$/;
 	var namePattern = /^[가-힣]{2,6}|[a-zA-Z]{2,10}$/;
+	var emailPattern = /^[A-Za-z0-9]([-_.]?[A-Za-z0-9])*@[a-zA-Z0-9]([-_.]?[a-zA-Z0-9])*.[a-zA-Z]{2,3}$/i;
 	var phonePattern = /^\d{3}-\d{3,4}-\d{4}$/;
-
-	// 비밀번호 공백 확인
-	if ($("#password").val() == "") {
-		alert("비밀번호를 입력하세요");
-		$("#password").focus();
-		return false;
-	}
-	// 비밀번호 유효성 검사
-	if (!passwordPattern.test($("#password").val())) {
-		alert("비밀번호 형식에 맞게 입력해주세요");
-		$("#password").val("");
-		$("#password").focus();
+	// 아이디 공백확인
+	if ($("#userId").val() == "") {
+		alert("아이디를 입력해주세요.");
+		$("#userId").focus();
 		return false;
 	}
 
-	// 아이디랑 비밀번호랑 같은지
-	if ($("#userId").val() == ($("#password").val())) {
-		alert("ID와 비밀번호를 다르게 입력하세요");
-		$("#password").val("");
-		$("#password").focus();
-	}
-	// 비밀번호확인 공백 확인
-	if ($("#passwordCheck").val() == "") {
-		alert("비밀번호를 확인하세요");
-		$("#passwordCheck").focus();
+	// 아이디의 유효성 검사
+	if (!userIdPattern.test($("#userId").val())) {
+		alert("아이디를 올바르게 입력해주세요.");
+		$("#userId").val("");
+		$("#userId").focus();
 		return false;
 	}
-	// 비밀번호 똑같은지
-	if ($("#password").val() != ($("#passwordCheck").val())) {
-		alert("비밀번호가 같지 않습니다.");
-		$("#password").val("");
-		$("#passwordCheck").val("");
-		$("#passwordCheck").focus();
-		return false;
-	}
+
 	// 이름 공백확인
 	if ($("#name").val() == "") {
 		alert("이름을 입력하세요");
@@ -155,6 +166,20 @@ function check() {
 		return false;
 	}
 
+	// 이메일 공백 확인
+	if ($("#email").val() == "") {
+		alert("이메일을 입력해주세요");
+		$("#email").focus();
+		return false;
+	}
+
+	// 이메일 유효성 검사
+	if (!emailPattern.test($("#email").val())) {
+		alert("이메일형식에 맞게 입력해주세요")
+		$("#email").val("");
+		$("#email").focus();
+		return false;
+	}
 	// 주소 공백 확인
 	if ($("#sample6_postcode").val() == "") {
 		alert("주소를 입력해주세요");
@@ -180,6 +205,7 @@ function check() {
 		$("#birth").focus();
 		return false;
 	}
+
 }
 
 function sample6_execDaumPostcode() {

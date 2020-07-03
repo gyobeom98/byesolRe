@@ -46,5 +46,14 @@
   select * from customer where phone = #{phone}
   </select>
   
+  <update id="updateCustomer" parameterType="Customer">
+  update customer set password = #{password}, name=#{name}, zip_code=#{zipCode}, address=#{address}, address_detail=#{addressDetail},phone= #{phone},birth_date = #{birthDate}
+   where id = #{id}
+  </update>
+  
+  <delete id="deleteCustomerById">
+  delete from customer where id = #{id}
+  </delete>
+  
   
   </mapper>

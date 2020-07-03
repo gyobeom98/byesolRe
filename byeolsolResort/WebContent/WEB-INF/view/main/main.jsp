@@ -116,17 +116,17 @@
 			</div>
 			<div id="roomInfo">
 				<ul>
-					<li id="room1"><a href="객실1">
+					<li id="room1"><a href="/index/roomInfo_01">
 							<p>
 								<span><i class="fas fa-door-closed"></i></span> <br> <span>ROOM1</span>
 							</p>
 					</a></li>
-					<li id="room2"><a href="객실2">
+					<li id="room2"><a href="/index/roomInfo_02">
 							<p>
 								<span><i class="fas fa-door-closed"></i></span><br> <span>ROOM2</span>
 							</p>
 					</a></li>
-					<li id="room3"><a href="객실3">
+					<li id="room3"><a href="/index/roomInfo_03">
 							<p>
 								<span><i class="fas fa-door-closed"></i></span><br> <span>ROOM3</span>
 							</p>

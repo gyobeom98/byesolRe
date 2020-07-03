@@ -16,6 +16,7 @@
   <typeAlias type="model.dto.Answer" alias="Answer"/>
   <typeAlias type="model.dto.Room" alias="Room"/>
   <typeAlias type="model.dto.Reserv" alias="Reserv"/>
+  <typeAlias type="model.dto.Remove" alias="Remove"/>
   </typeAliases>
   
   </configuration>

@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>별솔리조트</title>
-<link rel="stylesheet" href="https://byeolsol.000webhostapp.com/css/roominfo.css">
+<link rel="stylesheet" href="/css/roominfo.css">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
 	//

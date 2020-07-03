@@ -1,4 +1,39 @@
 $(function() {
+	var btn = $(".checkbtn");
+	btn.on("click",function(){
+		var data  = $("input[name=userId]").val();
+		$.ajax({
+			url:"/cus/idcheck",
+			type:"post",
+			data: {"userId" : data},
+			success : function(d){
+				if(d=="중복"){
+					alert("중복되었습니다. 아이디를 확인해주세요")
+					document.querySelector("input[type=submit]").disabled = 'disabled';
+				}else{
+					document.querySelector("input[type=submit]").disabled = '';
+				}
+			}
+		}) 
+		
+	})
+	
+	var inptEmail = $("input[name=email]").on("focusout",function(){
+		var data = inptEmail.val();
+		console.log(data)
+		$.ajax({
+			url:"/cus/eamilcheck",
+			type:"post",
+			data: {"email" : data},
+			success : function(d){
+				alert(d);
+			}
+		})
+	})
+})
+
+
+$(function() {
 	$("#birth").datepicker(
 			{
 				buttonImage : "/application/db/jquery/images/calendar.gif", // 버튼
@@ -30,38 +65,9 @@ $(function() {
 				,
 				maxDate : "D" // 최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)
 			});
-	var btn = $("button").eq(0);
-	btn.on("click", function() {
-		var data = $("input[name=userId]").val();
-		$.ajax({
-			url : "/cus/idcheck",
-			type : "post",
-			data : {
-				"userId" : data
-			},
-			success : function(d) {
-				alert(d);
-			}
-		})
-
-	})
-
-	var inptEmail = $("input[name=email]").on("focus", function() {
-		var data = inptEmail.val();
-		console.log(data)
-		$.ajax({
-			url : "/cus/eamilcheck",
-			type : "post",
-			data : {
-				"email" : data
-			},
-			success : function(d) {
-				alert(d);
-			}
-		})
-	})
-
 })
+
+
 
 function userId() {
 	document.getElementById("userId").focus();
@@ -115,6 +121,8 @@ function check() {
 	var namePattern = /^[가-힣]{2,6}|[a-zA-Z]{2,10}$/;
 	var emailPattern = /^[A-Za-z0-9]([-_.]?[A-Za-z0-9])*@[a-zA-Z0-9]([-_.]?[a-zA-Z0-9])*.[a-zA-Z]{2,3}$/i;
 	var phonePattern = /^\d{3}-\d{3,4}-\d{4}$/;
+	
+	
 	// 아이디 공백확인
 	if ($("#userId").val() == "") {
 		alert("아이디를 입력해주세요.");
@@ -129,6 +137,7 @@ function check() {
 		$("#userId").focus();
 		return false;
 	}
+	
 	// 비밀번호 공백 확인
 	if ($("#password").val() == "") {
 		alert("비밀번호를 입력하세요");

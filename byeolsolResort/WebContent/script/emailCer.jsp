@@ -1,17 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+	pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>별솔리조트</title>
-<link rel="stylesheet" href="/css/admin.css">
-<script
-	src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<link rel="stylesheet" href="/css/mypage.css">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script type="text/javascript" src="/script/admin.js"></script>
+<script type="text/javascript" src="/script/certi.js"></script>
 </head>
 <body>
 	<div class="allwrap">
@@ -19,8 +17,8 @@
 			<header class="header">
 				<div class="main">
 					<div id="logo">
-						<a id="logoimg" href="/index/main">
-						<img class="logo1" src="https://byeolsol.000webhostapp.com/css/title2.png"> 
+						<a id="logoimg" href="/index/main"> <img class="logo1"
+							src="https://byeolsol.000webhostapp.com/css/title2.png">
 						</a>
 					</div>
 					<div class="navi">
@@ -28,8 +26,7 @@
 							<ul>
 								<li><a href="/index/byeolsolInfo">별솔리조트</a>
 									<ul>
-										<li><a class="topmargin"
-											href="/index/byeolsolInfo">별솔리조트란?</a></li>
+										<li><a class="topmargin" href="/index/byeolsolInfo">별솔리조트란?</a></li>
 										<li><a href="/index/roomMain">객실소개</a></li>
 										<li><a href="/index/fee">이용안내</a></li>
 										<li><a href="/index/map">오시는길</a></li>
@@ -41,8 +38,7 @@
 									</ul></li>
 								<li><a href="">회원 서비스</a>
 									<ul>
-										<li><a class="topmargin"
-											href="/index/leftover">객실예약</a></li>
+										<li><a class="topmargin" href="/index/leftover">객실예약</a></li>
 										<li><a href="/index/guestroom">객실현황</a></li>
 										<li><a href="/index/board">후기게시판</a></li>
 									</ul></li>
@@ -57,37 +53,25 @@
 					</div>
 					<div id="side">
 						<ul>
-							<li>
-							<c:if test="${userId==null}">
-							<a href="/cus/login" >고객센터</a>
-							</c:if>
-							<c:if test="${userId!=null}">
-							<a href="/question/addQuestion">고객센터</a>
-							</c:if>
-							</li>
-							<li>
-							<span>｜</span>
-							</li>
-							<li>
-							<c:if test="${userId==null}">
-							<a href="/cus/login" >로그인</a>
-							</c:if>
-							<c:if test="${userId!=null}">
-							<a href="/cus/logout">로그아웃</a>
-							</c:if>
-							</li>
+							<li><c:if test="${userId==null}">
+									<a href="/cus/login">고객센터</a>
+								</c:if> <c:if test="${userId!=null}">
+									<a href="/question/addQuestion">고객센터</a>
+								</c:if></li>
 							<li><span>｜</span></li>
-							<li>
-							<c:if test="${userId==null}">
-							<a href="/cus/regis" >회원가입</a>
-							</c:if>
-							<c:if test='${userId!=null && userId!="admin"}'>
-							<a href="/cus/myPage">마이페이지</a>
-							</c:if>
-							<c:if test='${userId=="admin"}'>
-							<a href="/index/adminUser">관리자페이지</a>
-							</c:if>
-							</li>
+							<li><c:if test="${userId==null}">
+									<a href="/cus/login">로그인</a>
+								</c:if> <c:if test="${userId!=null}">
+									<a href="/cus/logout">로그아웃</a>
+								</c:if></li>
+							<li><span>｜</span></li>
+							<li><c:if test="${userId==null}">
+									<a href="/cus/regis">회원가입</a>
+								</c:if> <c:if test='${userId!=null && userId!="admin"}'>
+									<a href="/cus/myPage">마이페이지</a>
+								</c:if> <c:if test='${userId=="admin"}'>
+									<a href="/index/adminUser">관리자페이지</a>
+								</c:if></li>
 						</ul>
 					</div>
 				</div>
@@ -101,24 +85,18 @@
 						<ul>
 							<li>HOME</li>
 							<li>》</li>
-							<li>관리자페이지</li>
-							<li>》</li>
-							<li>Q&A현황</li>
+							<li>이메일인증</li>
 						</ul>
 					</div>
 					<div class="sibtitle">
-						<h3 class="stitle">Q&A현황</h3>
+						<h3 class="stitle">이메일인증</h3>
 					</div>
+					<form action="">
+						<button>이메일인증번호 보내기</button>
+						<input type="number" placeholder="인증번호를 입력해주세요">
+						<input type="submit" placeholder="확인">
+					</form>
 				</div>
-				<form onsubmit="return check()" id="regis">
-					<div class="content_foot">
-						<ul class="flotBox_my_tap">
-							<li><a href="/index/adminUser" class="li3">유저정보관리</a></li>
-							<li><a href="/index/adminRoom" class="li2">객실정보관리</a></li>
-							<li><a href="/index/adminQnA" class="li1">Q&A관리</a></li>
-						</ul>
-					</div>
-				</form>
 			</section>
 			<footer>
 				<div id="fnb">

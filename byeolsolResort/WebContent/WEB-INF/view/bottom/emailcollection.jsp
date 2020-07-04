@@ -113,11 +113,11 @@
 			<footer>
 				<div id="fnb">
 					<ul>
-						<li><a href="../bottom/about.jsp">회사소개</a></li>
-						<li><a class="bold" href="../bottom/privacy.jsp">개인정보처리방침</a></li>
-						<li><a class="bold" href="../bottom/operation.jsp">영상정보처리기기운영관리방침</a></li>
-						<li><a href="../bottom/termsofuse.jsp">이용약관</a></li>
-						<li><a href="../bottom/emailcollection.jsp">이메일무단수집거부</a></li>
+						<li><a href="/index/about">회사소개</a></li>
+						<li><a class="bold" href="/index/privacy">개인정보처리방침</a></li>
+						<li><a class="bold" href="/index/operation">영상정보처리기기운영관리방침</a></li>
+						<li><a href="/index/termsofuse">이용약관</a></li>
+						<li><a href="/index/emailcollection">이메일무단수집거부</a></li>
 					</ul>
 				</div>
 				<address class="address">

@@ -159,7 +159,7 @@ public class IndexController {
 	@GetMapping("/privacy")
 	public String privacyPage() {
 		return "/bottom/privacy";
-	} 
+	}
 	
 	//영상정보처리기기
 	@GetMapping("/operation")
@@ -177,5 +177,11 @@ public class IndexController {
 	@GetMapping("/emailcollection")
 	public String emailcollectionPage() {
 		return "/bottom/emailcollection";
+	}
+	
+	//이메일 인증
+	@GetMapping("/emailCertification")
+	public String emailCertificationPage() {
+		return "/mypage/emailCertification";
 	}
 }

@@ -198,11 +198,11 @@
 			<footer>
 				<div id="fnb">
 					<ul>
-						<li><a href="회사소개">회사소개</a></li>
-						<li><a class="bold" href="개인정보처리방침">개인정보처리방침</a></li>
-						<li><a class="bold" href="영상정보처리기기운영관리방침">영상정보처리기기운영관리방침</a></li>
-						<li><a href="이용약관">이용약관</a></li>
-						<li><a href="이메일무단수집거부">이메일무단수집거부</a></li>
+						<li><a href="/index/about">회사소개</a></li>
+						<li><a class="bold" href="/index/privacy">개인정보처리방침</a></li>
+						<li><a class="bold" href="/index/operation">영상정보처리기기운영관리방침</a></li>
+						<li><a href="/index/termsofuse">이용약관</a></li>
+						<li><a href="/index/emailcollection">이메일무단수집거부</a></li>
 					</ul>
 				</div>
 				<address class="address">

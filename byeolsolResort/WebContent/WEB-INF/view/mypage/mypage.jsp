@@ -116,9 +116,9 @@
 				<form onsubmit="return check()" id="regis">
 					<div class="content_foot">
 						<ul class="flotBox_my_tap">
-							<li><a href="../mypage/mypage.jsp" class="li1">개인정보</a></li>
-							<li><a href="../mypage/myQnA.jsp" class="li2">나의 Q&A</a></li>
-							<li><a href="../mypage/myRoom.jsp" class="li3">나의 예약</a></li>
+							<li><a href="/index/mypage.jsp" class="li1">개인정보</a></li>
+							<li><a href="/index/myQnA.jsp" class="li2">나의 Q&A</a></li>
+							<li><a href="/index/myRoom.jsp" class="li3">나의 예약</a></li>
 						</ul>
 					</div>
 					<h3 class="tit_3">
@@ -189,11 +189,11 @@
 			<footer>
 				<div id="fnb">
 					<ul>
-						<li><a href="../bottom/about.jsp">회사소개</a></li>
-						<li><a class="bold" href="../bottom/privacy.jsp">개인정보처리방침</a></li>
-						<li><a class="bold" href="../bottom/operation.jsp">영상정보처리기기운영관리방침</a></li>
-						<li><a href="../bottom/termsofuse.jsp">이용약관</a></li>
-						<li><a href="../bottom/emailcollection.jsp">이메일무단수집거부</a></li>
+						<li><a href="/index/about">회사소개</a></li>
+						<li><a class="bold" href="/index/privacy">개인정보처리방침</a></li>
+						<li><a class="bold" href="/index/operation">영상정보처리기기운영관리방침</a></li>
+						<li><a href="/index/termsofuse">이용약관</a></li>
+						<li><a href="/index/emailcollection">이메일무단수집거부</a></li>
 					</ul>
 				</div>
 				<address class="address">

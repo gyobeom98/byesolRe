@@ -137,6 +137,7 @@ public class CustomerController {
 	@PostMapping(value = "/idcheck", produces = "application/text; charset=utf-8")
 	@ResponseBody
 	public String getIdCheck(String userId) {
+		System.out.println("체크");
 		return customerService.idCheck(userId);
 	}
 

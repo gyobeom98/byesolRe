@@ -11,6 +11,7 @@ $(function() {
 					alert("중복되었습니다. 아이디를 확인해주세요")
 					document.querySelector("input[type=submit]").disabled = 'disabled';
 				}else{
+					alert("사용할 수 있는 아이디 입니다.")
 					document.querySelector("input[type=submit]").disabled = '';
 				}
 			}
@@ -120,7 +121,7 @@ function check() {
 	var passwordPattern = /^[A-Za-z0-9]{9,14}$/;
 	var namePattern = /^[가-힣]{2,6}|[a-zA-Z]{2,10}$/;
 	var emailPattern = /^[A-Za-z0-9]([-_.]?[A-Za-z0-9])*@[a-zA-Z0-9]([-_.]?[a-zA-Z0-9])*.[a-zA-Z]{2,3}$/i;
-	var phonePattern = /^\d{3}-\d{3,4}-\d{4}$/;
+	var phonePattern = /^\d{3}\d{3,4}\d{4}$/;
 	
 	
 	// 아이디 공백확인

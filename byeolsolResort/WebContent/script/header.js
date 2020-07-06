@@ -2,7 +2,7 @@ $(function() {
 	
 	$('#manu>ul>li>a').css('color', '#FFFFFF');
 	$('#manu>ul>li>a').css('font-size', '18px');
-
+	
 	$('#manu>ul>li>a').hover(function() {
 		$(this).css('color', '#435F5A');
 	}, function() {
@@ -39,4 +39,7 @@ $(function() {
 			$("header").mouseleave(function(){
 				$(this).parent().children().eq(2).fadeIn(2000);
 			});
+
 });
+
+

@@ -5,9 +5,11 @@
   
   <configuration>
   
+ 	<!-- camel 표현식으로 셋팅 -->  
   <settings><setting name="mapUnderscoreToCamelCase" value="true"/> </settings>
   
   <typeAliases>
+  <!-- dto 들을 alias 로 만듬 -->
   <typeAlias type="model.dto.Customer" alias="Customer"/>
   <typeAlias type="model.dto.Board" alias="Board"/>
   <typeAlias type="model.dto.Comment" alias="Comment"/>

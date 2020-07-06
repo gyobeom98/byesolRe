@@ -116,9 +116,9 @@
 				<form onsubmit="return check()" id="regis">
 					<div class="content_foot">
 						<ul class="flotBox_my_tap">
-							<li><a href="/index/mypage.jsp" class="li1">개인정보</a></li>
-							<li><a href="/index/myQnA.jsp" class="li2">나의 Q&A</a></li>
-							<li><a href="/index/myRoom.jsp" class="li3">나의 예약</a></li>
+							<li><a href="/cus/myPage" class="li1">개인정보</a></li>
+							<li><a href="/question/list" class="li2">나의 Q&A</a></li>
+							<li><a href="/cus/myReserv" class="li3">나의 예약</a></li>
 						</ul>
 					</div>
 					<h3 class="tit_3">
@@ -128,7 +128,7 @@
 					<table>
 						<tr class="tableTr">
 							<td class="formTd1">아이디</td>
-							<td class="formTd2">(id가져오기)</td>
+							<td class="formTd2"> <input type="text" value="${customer.userId}" readonly="readonly" name="userId"></td>
 						</tr>
 						<tr class="tableTr">
 							<td onclick="password()" class="formTd1">* 비밀번호</td>
@@ -143,31 +143,31 @@
 						</tr>
 						<tr class="tableTr">
 							<td onclick="name()" class="formTd1">* 이름</td>
-							<td class="formTd2"><input type="text" name="name" id="name"></td>
+							<td class="formTd2"><input type="text" name="name" id="name" value="${customer.name }"></td>
 						</tr>
 						<tr class="tableTr">
 							<td class="formTd1">이메일</td>
-							<td class="formTd2">(이메일 가져오기)</td>
+							<td class="formTd2"> <input type="email" value="${customer.email}" name="email"> </td>
 						</tr>
 						<tr class="tableTr">
 							<td onclick="address()" class="formTd1">* 주소</td>
 							<td class="formTd2"><input type="text" id="sample6_postcode"
-								placeholder="우편번호" name="zipCode"> <input id="address" type="button"
+								placeholder="우편번호" value="${customer.zipCode}" name="zipCode"> <input id="address" type="button"
 								onclick="sample6_execDaumPostcode()" value="우편번호 찾기"> <br>
 								<input type="text" id="sample6_address" placeholder="주소"
-								name="address"> <input type="text"
+								name="address" value="${customer.address}"> <input type="text"
 								id="sample6_detailAddress" placeholder="상세주소"
-								name="addressDetail"></td>
+								name="addressDetail" value="${customer.addressDetail }"></td>
 						</tr>
 						<tr class="tableTr">
 							<td onclick="phone()" class="formTd1">* 전화번호</td>
 							<td class="formTd2"><input type="text" name="phone"
-								id="phone"></td>
+								id="phone" value="${customer.phone }"></td>
 						</tr>
 						<tr class="tableTr">
 							<td id="birth1" class="formTd1" onclick="dbclick()">* 생일</td>
 							<td class="formTd2">
-							<input type="date"  name="birth" id="birth" readonly="readonly">
+							<input type="date"  name="birth" id="birth" readonly="readonly" value="${customer.birthDate }">
 							</td>
 						</tr>
 					</table>

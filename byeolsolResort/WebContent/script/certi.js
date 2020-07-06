@@ -1,4 +1,4 @@
-$(function(){
+$(function() {
 	var btn = $("button[name=mailCertification]");
 	btn.on("click",function(){
 	var data = $("input[name=userEmail]").val();
@@ -12,3 +12,4 @@ $(function(){
 		})		
 	})	
 })
+

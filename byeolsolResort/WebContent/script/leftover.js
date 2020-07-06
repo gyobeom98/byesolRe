@@ -27,6 +27,7 @@ $(function() {
 																		// default
 				}
 			});
+	$('#date1').datepicker('setDate', 'toda');
 	// 종료일
 	$('#date2').datepicker(
 			{

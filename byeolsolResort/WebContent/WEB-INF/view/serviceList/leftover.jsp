@@ -140,16 +140,18 @@
 									</tr>
 									<tr>
 										<td class="tdForm">인원</td>
-										<td class="tdForm1"><select class="person" id="person"
-											name="peopleCount">
+										<td class="tdForm1">
+										<select class="person" id="person" name="peopleCount">
 												<option value="인원" selected>인원</option>
 												<option value="4">4명</option>
 												<option value="5">5명</option>
 												<option value="6">6명</option>
+												<option value="7">7명</option>
+												<option value="8">8명</option>
 										</select></td>
 									</tr>
-									<tr>
-										<td>
+									<tr style="border-style:none">
+										<td colspan="2">
 											<button type="submit">예약</button>
 										</td>
 									</tr>

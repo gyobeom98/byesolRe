@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,15 +11,7 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://kit.fontawesome.com/c945c12587.js"
 	crossorigin="anonymous"></script>
-<script type="text/javascript" src="/script/header.js"></script>
-
-<script type="text/javascript">
-if("${errorMessage}"!=""){
-alert("${errorMessage}")
-location.href="/index/main"
-}
-</script>
-
+<script type="text/javascript" src="/script/main.js"></script>
 </head>
 <body>
 	<div class="allwrap">
@@ -27,9 +19,10 @@ location.href="/index/main"
 			<header class="header">
 				<div class="main">
 					<div id="logo">
-						<a id="logoimg" href="/index/main">
-						<img class="logo1" src="https://byeolsol.000webhostapp.com/css/title1.png"> 
-						<img class="logo2" src="https://byeolsol.000webhostapp.com/css/title2.png">
+						<a id="logoimg" href="/index/main"> <img class="logo1"
+							src="https://byeolsol.000webhostapp.com/css/title1.png"> <img
+							class="logo2"
+							src="https://byeolsol.000webhostapp.com/css/title2.png">
 						</a>
 					</div>
 					<div class="navi">
@@ -37,8 +30,7 @@ location.href="/index/main"
 							<ul>
 								<li><a href="/index/byeolsolInfo">별솔리조트</a>
 									<ul>
-										<li><a class="topmargin"
-											href="/index/byeolsolInfo">별솔리조트란?</a></li>
+										<li><a class="topmargin" href="/index/byeolsolInfo">별솔리조트란?</a></li>
 										<li><a href="/index/roomMain">객실소개</a></li>
 										<li><a href="/index/fee">이용안내</a></li>
 										<li><a href="/index/map">오시는길</a></li>
@@ -50,8 +42,7 @@ location.href="/index/main"
 									</ul></li>
 								<li><a href="">회원 서비스</a>
 									<ul>
-										<li><a class="topmargin"
-											href="/index/leftover">객실예약</a></li>
+										<li><a class="topmargin" href="/index/leftover">객실예약</a></li>
 										<li><a href="/index/guestroom">객실현황</a></li>
 										<li><a href="/index/board">후기게시판</a></li>
 									</ul></li>
@@ -66,37 +57,25 @@ location.href="/index/main"
 					</div>
 					<div id="side">
 						<ul>
-							<li>
-							<c:if test="${userId==null}">
-							<a href="/cus/login" >고객센터</a>
-							</c:if>
-							<c:if test="${userId!=null}">
-							<a href="/question/addQuestion">고객센터</a>
-							</c:if>
-							</li>
-							<li>
-							<span>｜</span>
-							</li>
-							<li>
-							<c:if test="${userId==null}">
-							<a href="/cus/login" >로그인</a>
-							</c:if>
-							<c:if test="${userId!=null}">
-							<a href="/cus/logout">로그아웃</a>
-							</c:if>
-							</li>
+							<li><c:if test="${userId==null}">
+									<a href="/cus/login">고객센터</a>
+								</c:if> <c:if test="${userId!=null}">
+									<a href="/question/addQuestion">고객센터</a>
+								</c:if></li>
 							<li><span>｜</span></li>
-							<li>
-							<c:if test="${userId==null}">
-							<a href="/cus/regis" >회원가입</a>
-							</c:if>
-							<c:if test='${userId!=null && userId!="admin"}'>
-							<a href="/cus/myPage">마이페이지</a>
-							</c:if>
-							<c:if test='${userId=="admin"}'>
-							<a href="/index/adminUser">관리자페이지</a>
-							</c:if>
-							</li>
+							<li><c:if test="${userId==null}">
+									<a href="/cus/login">로그인</a>
+								</c:if> <c:if test="${userId!=null}">
+									<a href="/cus/logout">로그아웃</a>
+								</c:if></li>
+							<li><span>｜</span></li>
+							<li><c:if test="${userId==null}">
+									<a href="/cus/regis">회원가입</a>
+								</c:if> <c:if test='${userId!=null && userId!="admin"}'>
+									<a href="/cus/myPage">마이페이지</a>
+								</c:if> <c:if test='${userId=="admin"}'>
+									<a href="/index/adminUser">관리자페이지</a>
+								</c:if></li>
 						</ul>
 					</div>
 				</div>
@@ -108,8 +87,7 @@ location.href="/index/main"
 							<div class="img1title">ROOM 1</div>
 							<br>
 							<div>
-								룸1설명설명설명설명 설명설명설명설명<br> 설명설명설 명설명설명설명설 명설명설명설명설명설명<br>
-								설명설명설명설명설명설명설명설명설명설명설명설명<br> 설명설명설명설명 설명설명설명설명설명설명설명설명<br>
+								힐링룸 입니다.
 							</div>
 							<div class="centerlink">
 								<a href="룸1설명">More Info</a><br> <a href="룸1이벤트">Related
@@ -118,25 +96,24 @@ location.href="/index/main"
 						</div>
 
 					</div>
-					<img id="img1"
-						src="https://byeolsol.000webhostapp.com/css/img/img5.jpg" alt=""></img>
+					<div id="img1"></div>
 				</div>
 			</div>
 			<div id="roomInfo">
 				<ul>
 					<li id="room1"><a href="/index/roomInfo_01">
 							<p>
-								<span><i class="fas fa-door-closed"></i></span> <br> <span>ROOM1</span>
+								<span><i class="fas fa-door-closed"></i></span> <br> <span>힐링룸</span>
 							</p>
 					</a></li>
 					<li id="room2"><a href="/index/roomInfo_02">
 							<p>
-								<span><i class="fas fa-door-closed"></i></span><br> <span>ROOM2</span>
+								<span><i class="fas fa-door-closed"></i></span><br> <span>키즈룸</span>
 							</p>
 					</a></li>
 					<li id="room3"><a href="/index/roomInfo_03">
 							<p>
-								<span><i class="fas fa-door-closed"></i></span><br> <span>ROOM3</span>
+								<span><i class="fas fa-door-closed"></i></span><br> <span>게임룸</span>
 							</p>
 					</a></li>
 				</ul>

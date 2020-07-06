@@ -93,9 +93,10 @@
 					</div>
 					<form action="mailCheck" method="post">
 						<input type="text" name="userEmail" value="${userEmail}"
-							readonly="readonly"> <input type="text" name="mailCode">
-						<input type="submit">
+							readonly="readonly"> 
 						<button type="button" name="mailCertification">인증 코드 보내기</button>
+						<input type="text" name="mailCode">
+						<input type="submit">
 					</form>
 				</div>
 			</section>

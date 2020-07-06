@@ -6,7 +6,7 @@ import model.dto.Answer;
 
 public class AnswerView {
 
-	// 메시지의 총 수
+	// 정보의 총 수
 	private int answerCnt;
 	// 현제 페이지 번호
 	private int currentPageNum;
@@ -29,9 +29,13 @@ public class AnswerView {
 		this.answerCountPerPage = answerCountPerPage;
 		this.answerList = answerList;
 		
+		// 정보의 수가 0보다 크다면
 		if(answerCnt>0) {
+			// 페이지 총 수  = 정보의 수 / 페이지당 보여줄 정보의 수
 			pageTotalCount = answerCnt/answerCountPerPage;
+			// 정보의 수 % 페이지당 보여줄 정보의 수 가 0보다 크면 
 			if(answerCnt%answerCountPerPage>0) {
+				// 총 페이지 수 +1
 				pageTotalCount++;
 			}
 		}else {

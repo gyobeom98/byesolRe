@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import model.dto.Reserv;
 import model.mapper.ReservMapper;
@@ -18,7 +19,8 @@ public class ScheduleService {
 	@Autowired
 	ReservMapper reservMapper;
 
-	public void test() {
+	@Transactional
+	public void deleteReserv() {
 		List<Reserv> reservList = reservMapper.selectReservList();
 		if (reservList.size() > 0) {
 			LocalDate now = LocalDate.now();

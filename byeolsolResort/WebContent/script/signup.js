@@ -1,44 +1,80 @@
+var idCheck = false;
+var idCheckClick = false;
+var emailCheck = false;
+var phoneCheck = false;
 $(function() {
 	var btn = $(".checkbtn");
-	btn.on("click",function(){
-		var data  = $("input[name=userId]").val();
+	btn.on("click",function() {
+						idCheckClick = true;
+						var data = $("input[name=userId]").val();
+						$
+								.ajax({
+									url : "/cus/idcheck",
+									type : "post",
+									data : {
+										"userId" : data
+									},
+									success : function(d) {
+										if (d == "중복") {
+											alert("중복되었습니다. 아이디를 확인해주세요")
+											document
+													.querySelector("input[type=submit]").disabled = 'disabled';
+										} else {
+											alert("사용가능합니다.")
+											idCheck= true;
+											document
+													.querySelector("input[type=submit]").disabled = '';
+										}
+									}
+								})
+
+					})
+					
+	$("#email").on("focusout",function(){
 		$.ajax({
-			url:"/cus/idcheck",
-			type:"post",
-			data: {"userId" : data},
+			url : "/cus/eamilcheck",
+			type : "post",
+			data : { "email" :  $("#email").val()},
 			success : function(d){
-				if(d=="중복"){
-					alert("중복되었습니다. 아이디를 확인해주세요")
-					document.querySelector("input[type=submit]").disabled = 'disabled';
-				}else{
-					alert("사용할 수 있는 아이디 입니다.")
-					document.querySelector("input[type=submit]").disabled = '';
-				}
+				console.log(d)
+				if(d=="중복")console.log("a")
+				if(d!="중복")emailCheck = true;
 			}
-		}) 
+				
+		})
 		
 	})
 	
-	var inptEmail = $("input[name=email]").on("focusout",function(){
-		var data = inptEmail.val();
-		console.log(data)
+	
+	
+	$("#phone").on("focusout",function(){
 		$.ajax({
-			url:"/cus/eamilcheck",
-			type:"post",
-			data: {"email" : data},
+			url : "/cus/phoneCheck",
+			type : "post",
+			data : { "phone" :  $("#phone").val()},
 			success : function(d){
-				alert(d);
+				if(d!="중복"){
+					phoneCheck = true;}
+				else {
+					phoneCheck = false;
+				}
 			}
+				
 		})
+		
+		
 	})
-})
+	
+	console.dir(document.querySelector("input[name=phone]"));
+					
 
+})
 
 $(function() {
 	$("#birth").datepicker(
 			{
 				buttonImage : "/application/db/jquery/images/calendar.gif", // 버튼
-																			// 이미지
+				// 이미지
 				buttonImageOnly : true, // 버튼에 있는 이미지만 표시한다.
 				changeMonth : true, // 월을 바꿀수 있는 셀렉트 박스를 표시한다.
 				changeYear : true, // 년을 바꿀 수 있는 셀렉트 박스를 표시한다.
@@ -46,10 +82,10 @@ $(function() {
 				nextText : '다음 달', // next 아이콘의 툴팁.
 				prevText : '이전 달', // prev 아이콘의 툴팁.
 				numberOfMonths : [ 1, 1 ], // 한번에 얼마나 많은 월을 표시할것인가. [2,3] 일 경우,
-											// 2(행) x 3(열) = 6개의 월을 표시한다.
+				// 2(행) x 3(열) = 6개의 월을 표시한다.
 				stepMonths : 1, // next, prev 버튼을 클릭했을때 얼마나 많은 월을 이동하여 표시하는가.
 				yearRange : 'c-100:c+10', // 년도 선택 셀렉트박스를 현재 년도에서 이전, 이후로 얼마의
-											// 범위를 표시할것인가.
+				// 범위를 표시할것인가.
 				showButtonPanel : true, // 캘린더 하단에 버튼 패널을 표시한다.
 				currentText : '오늘 날짜', // 오늘 날짜로 이동하는 버튼 패널
 				closeText : '닫기', // 닫기 버튼 패널
@@ -57,8 +93,8 @@ $(function() {
 				showAnim : "slide", // 애니메이션을 적용한다.
 				showMonthAfterYear : true, // 월, 년순의 셀렉트 박스를 년,월 순으로 바꿔준다.
 				dayNamesMin : [ '월', '화', '수', '목', '금', '토', '일' ], // 요일의
-																		// 한글
-																		// 형식.
+				// 한글
+				// 형식.
 				monthNamesShort : [ '1월', '2월', '3월', '4월', '5월', '6월', '7월',
 						'8월', '9월', '10월', '11월', '12월' ] // 월의 한글 형식.
 				,
@@ -67,8 +103,6 @@ $(function() {
 				maxDate : "D" // 최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)
 			});
 })
-
-
 
 function userId() {
 	document.getElementById("userId").focus();
@@ -100,30 +134,28 @@ function phone() {
 
 var click = true;
 
-function dbclick(){
+function dbclick() {
 	if (click) {
 		document.getElementById("birth").focus();
-        click = !click;
-        // 타이밍 추가
-        setTimeout(function () {
-            click = true;
-        }, 1000)
-        
-     } else {
-     }
+		click = !click;
+		// 타이밍 추가
+		setTimeout(function() {
+			click = true;
+		}, 1000)
+
+	} else {
+	}
 }
 
-
 function check() {
-
+	var email = $("#email");
 	// 정규식
 	var userIdPattern = /^[a-zA-Z0-9]{4,12}$/;
 	var passwordPattern = /^[A-Za-z0-9]{9,14}$/;
 	var namePattern = /^[가-힣]{2,6}|[a-zA-Z]{2,10}$/;
 	var emailPattern = /^[A-Za-z0-9]([-_.]?[A-Za-z0-9])*@[a-zA-Z0-9]([-_.]?[a-zA-Z0-9])*.[a-zA-Z]{2,3}$/i;
 	var phonePattern = /^\d{3}\d{3,4}\d{4}$/;
-	
-	
+
 	// 아이디 공백확인
 	if ($("#userId").val() == "") {
 		alert("아이디를 입력해주세요.");
@@ -138,7 +170,7 @@ function check() {
 		$("#userId").focus();
 		return false;
 	}
-	
+
 	// 비밀번호 공백 확인
 	if ($("#password").val() == "") {
 		alert("비밀번호를 입력하세요");
@@ -226,7 +258,44 @@ function check() {
 		$("#birth").focus();
 		return false;
 	}
-
+	
+	if(!idCheckClick){
+		alert("아이디 중복 확인을 해주세요.");
+		$("#userId").focus();
+		return false;
+	}
+	
+	if(!idCheck){
+		alert("아이디가 중복 되었습니다.")
+		$("#userId").focus();
+		return false;
+	}
+	
+	if ($("#check_1").is(":checked") == false) {
+		alert("모든 약관에 동의 하셔야 다음 단계로 진행 가능합니다.");
+		return false;
+	} else if ($("#check_2").is(":checked") == false) {
+		alert("모든 약관에 동의 하셔야 다음 단계로 진행 가능합니다..");
+		return false;
+	} else if ($("#check_3").is(":checked") == false) {
+		alert("모든 약관에 동의 하셔야 다음 단계로 진행 가능합니다...");
+		return false;
+	}
+	
+	
+	if(!emailCheck){
+		alert("이메일이 중복 되었습니다.")
+		$("#email").focus();
+		return false;
+	}
+	console.log(phoneCheck)
+	if(!phoneCheck){
+		alert("전화번호가 중복 되었습니다.")
+		$("#phone").focus();
+		return false;
+	}
+	
+	
 }
 
 function sample6_execDaumPostcode() {
@@ -262,19 +331,4 @@ function sample6_execDaumPostcode() {
 				}
 			}).open();
 }
-$(document).ready(function() {
-	$("#nextBtn").click(function() {
-		if ($("#check_1").is(":checked") == false) {
-			alert("모든 약관에 동의 하셔야 다음 단계로 진행 가능합니다.");
-			return false;
-		} else if ($("#check_2").is(":checked") == false) {
-			alert("모든 약관에 동의 하셔야 다음 단계로 진행 가능합니다..");
-			return false;
-		} else if ($("#check_3").is(":checked") == false) {
-			alert("모든 약관에 동의 하셔야 다음 단계로 진행 가능합니다...");
-			return false;
-		} else {
-			$("#regis").submit();
-		}
-	});
-});
+

@@ -89,15 +89,15 @@
 						<br> 메일 또는 유선을 통해 빠른 시간 내에 답변해 드립니다.<br>
 						<br>
 					</div>
-					<form onsubmit="return check()" nama="qNa_write" id="qNa_write" action="/question/addQuestion" method="post" enctype="multipart/form-data">
+					<form onsubmit="return check()" nama="qNa_write" id="qNa_write" action="/question/addQuestion" method="post">
 						<table>
 							<tr>
 								<td class="formTd1">제목</td>
-								<td><input type="text" id="qNa_title" name="title"></td>
+								<td><input type="text" id="qNa_title" name="qNa_write"></td>
 							</tr>
 							<tr>
 								<td class="formTd1">분류</td>
-								<td><select name="division">
+								<td><select name="qNa_select">
 										<option value="기타">기타</option>
 										<option value="예약">예약문의</option>
 										<option value="객실">객실문의</option>
@@ -107,11 +107,11 @@
 							</tr>
 							<tr>
 								<td class="formTd1">파일첨부</td>
-								<td><input type="file" name="uploadFile"></td>
+								<td><input type="file" name="file_input"></td>
 							</tr>
 							<tr>
 								<td class="formTd1">내용</td>
-								<td><textarea name="message" id="textarea" rows="8" cols="80"></textarea></td>
+								<td><textarea name="textarea" id="textarea" rows="8" cols="80"></textarea></td>
 							</tr>
 						</table>
 						<input type="submit" id="qNa_submit" value="등록">

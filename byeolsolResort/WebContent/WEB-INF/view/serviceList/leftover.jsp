@@ -11,8 +11,11 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" src="/script/sub.js"></script>
 <script type="text/javascript" src="/script/leftover.js"></script>
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />  
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>  
+<link rel="stylesheet"
+	href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css"
+	type="text/css" />
+<script
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
 </head>
 <body>
@@ -21,8 +24,8 @@
 			<header class="header">
 				<div class="main">
 					<div id="logo">
-						<a id="logoimg" href="/index/main">
-						<img class="logo1" src="https://byeolsol.000webhostapp.com/css/title2.png"> 
+						<a id="logoimg" href="/index/main"> <img class="logo1"
+							src="https://byeolsol.000webhostapp.com/css/title2.png">
 						</a>
 					</div>
 					<div class="navi">
@@ -30,8 +33,7 @@
 							<ul>
 								<li><a href="/index/byeolsolInfo">별솔리조트</a>
 									<ul>
-										<li><a class="topmargin"
-											href="/index/byeolsolInfo">별솔리조트란?</a></li>
+										<li><a class="topmargin" href="/index/byeolsolInfo">별솔리조트란?</a></li>
 										<li><a href="/index/roomMain">객실소개</a></li>
 										<li><a href="/index/fee">이용안내</a></li>
 										<li><a href="/index/map">오시는길</a></li>
@@ -43,8 +45,7 @@
 									</ul></li>
 								<li><a href="">회원 서비스</a>
 									<ul>
-										<li><a class="topmargin"
-											href="/index/leftover">객실예약</a></li>
+										<li><a class="topmargin" href="/index/leftover">객실예약</a></li>
 										<li><a href="/index/guestroom">객실현황</a></li>
 										<li><a href="/index/board">후기게시판</a></li>
 									</ul></li>
@@ -59,37 +60,25 @@
 					</div>
 					<div id="side">
 						<ul>
-							<li>
-							<c:if test="${userId==null}">
-							<a href="/cus/login" >고객센터</a>
-							</c:if>
-							<c:if test="${userId!=null}">
-							<a href="/question/addQuestion">고객센터</a>
-							</c:if>
-							</li>
-							<li>
-							<span>｜</span>
-							</li>
-							<li>
-							<c:if test="${userId==null}">
-							<a href="/cus/login" >로그인</a>
-							</c:if>
-							<c:if test="${userId!=null}">
-							<a href="/cus/logout">로그아웃</a>
-							</c:if>
-							</li>
+							<li><c:if test="${userId==null}">
+									<a href="/cus/login">고객센터</a>
+								</c:if> <c:if test="${userId!=null}">
+									<a href="/question/addQuestion">고객센터</a>
+								</c:if></li>
 							<li><span>｜</span></li>
-							<li>
-							<c:if test="${userId==null}">
-							<a href="/cus/regis" >회원가입</a>
-							</c:if>
-							<c:if test='${userId!=null && userId!="admin"}'>
-							<a href="/cus/myPage">마이페이지</a>
-							</c:if>
-							<c:if test='${userId=="admin"}'>
-							<a href="/index/adminUser">관리자페이지</a>
-							</c:if>
-							</li>
+							<li><c:if test="${userId==null}">
+									<a href="/cus/login">로그인</a>
+								</c:if> <c:if test="${userId!=null}">
+									<a href="/cus/logout">로그아웃</a>
+								</c:if></li>
+							<li><span>｜</span></li>
+							<li><c:if test="${userId==null}">
+									<a href="/cus/regis">회원가입</a>
+								</c:if> <c:if test='${userId!=null && userId!="admin"}'>
+									<a href="/cus/myPage">마이페이지</a>
+								</c:if> <c:if test='${userId=="admin"}'>
+									<a href="/index/adminUser">관리자페이지</a>
+								</c:if></li>
 						</ul>
 					</div>
 				</div>
@@ -120,12 +109,13 @@
 								<table>
 									<tr>
 										<td class="tdForm">입실날짜</td>
-										<td class="tdForm1"><input type="date" name="startDate" id="date1" class="date" readonly="readonly">
+										<td class="tdForm1"><input type="date" name="startDate"
+											id="date1" class="date" readonly="readonly">
 									</tr>
 									<tr>
 										<td class="tdForm">퇴실날짜</td>
-										<td class="tdForm1"><input type="date" name="endDate" id="date2" class="date" readonly="readonly">
-										</td>
+										<td class="tdForm1"><input type="date" name="endDate"
+											id="date2" class="date" readonly="readonly">
 									</tr>
 									<tr>
 										<td class="tdForm">객실</td>
@@ -146,19 +136,24 @@
 												<option value="303">room303</option>
 												<option value="304">room304</option>
 												<option value="305">room305</option>
-											</select></td>
+										</select></td>
 									</tr>
 									<tr>
 										<td class="tdForm">인원</td>
-										<td class="tdForm1"><select class="person" id="person" name="peopleCount">
+										<td class="tdForm1"><select class="person" id="person"
+											name="peopleCount">
 												<option value="인원" selected>인원</option>
 												<option value="4">4명</option>
 												<option value="5">5명</option>
 												<option value="6">6명</option>
-											</select></td>
+										</select></td>
+									</tr>
+									<tr>
+										<td>
+											<button type="submit">예약</button>
+										</td>
 									</tr>
 								</table>
-								<button type="submit">예약</button>
 							</div>
 						</div>
 					</div>

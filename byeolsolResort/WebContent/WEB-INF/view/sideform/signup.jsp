@@ -324,7 +324,7 @@
 						</div>
 					</article>
 					<br>
-					<a href="/index/emailCertification">
+					<a href="/index/emailCer">
 					<input type="submit" id="nextBtn" value="회원가입">
 					</a>
 				</form>

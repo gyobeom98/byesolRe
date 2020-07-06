@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>별솔리조트</title>
-<link rel="stylesheet" href="/css/test1.css">
+<link rel="stylesheet" href="/css/byeolsolInfo.css">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" src="/script/sub.js"></script>
@@ -125,11 +125,14 @@
 							</div>
 							<div class="infoImg__2">소개 밑에 넣을 사진</div>
 							<ul class="concept">
-								<li class="c01"><strong>에코힐링 리조트</strong>
+								<li class="c01"><strong>에코힐링 리조트</strong><br />
+								<img src="https://byeolsol.000webhostapp.com/image/nature.jpg"/>
 									<p>자연과의 살아있는 교감을 통해 건강한 삶의 방식을 배우고 누를 수 있는 곳</p></li>
-								<li class="c02"><strong>스파 리조트</strong>
+								<li class="c02"><strong>스파 리조트</strong><br />
+								<img src="https://byeolsol.000webhostapp.com/image/spa.jpg" />
 									<p>해발고도 500m 숲 한가운데서 노천 스파를 즐길 수 있는 곳</p></li>
-								<li class="c-3"><strong>가족사랑 리조트</strong>
+								<li class="c-3"><strong>가족사랑 리조트</strong><br />
+								<img src="https://byeolsol.000webhostapp.com/image/family.jpg"/>
 									<p>차별화된 가족끼리의 쉼의 가치를 경험할수 있는 곳</p></li>
 							</ul>
 						</div>

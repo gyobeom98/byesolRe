@@ -324,7 +324,7 @@
 						</div>
 					</article>
 					<br>
-					<input type="submit" id="nextBtn" value="회원가입">
+					<input type="submit" id="nextBtn" value="회원가입" onclick="emailCer()">
 				</form>
 			</section>
 			<footer>

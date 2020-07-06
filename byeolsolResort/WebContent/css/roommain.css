@@ -1,5 +1,4 @@
 @charset "UTF-8";
-
 a:link { color: #5c5c5c; text-decoration: none;}
 a:visited { color: #5c5c5c; text-decoration: none;}
 * {font-family:'맑은 고딕', '굴림', 'Arial', sans-serif;}
@@ -10,6 +9,7 @@ ul{list-style: none;}
 .bold{font-weight: bold;}
 .line{border-right: 1px solid grey;}
 
+
 header{
 	position:fixed;
 	width:100%;
@@ -17,6 +17,7 @@ header{
 	left:0;
 	height: 150px;
 	z-index: 50;
+	background-color: white;
 }
 
 header>div{
@@ -27,8 +28,8 @@ header>div::after{
 }
 
 header:hover{
-	height: 340px;
-	background: linear-gradient(to bottom, white 70% , rgba(255, 255, 255, 0.7) );
+	height: 350px;
+  background: linear-gradient(to bottom, white 70% , rgba(255, 255, 255, 0.7) );
 	position: fixed;
 	transition: 1.5s;
 }
@@ -42,22 +43,6 @@ header:hover{
 	top: 30px; left: 100px;
 	width: 180px;
 	height: 70px;
-	opacity: 1;
-}
-
-.logo2{
-	position: absolute;
-	top: 30px; left: 100px;
-	width: 180px;
-	height: 70px;
-	opacity: 0;
-}
-
-header:hover .logo1{
-	opacity: 0;
-}
-
-header:hover .logo2{
 	opacity: 1;
 }
 
@@ -85,13 +70,14 @@ header:hover .logo2{
 	clear: both;
 }
 
-#manu>ul>li>a{ /*대분류*/
+#manu>ul>li>a{ /*헤더대분류*/
 	padding: 7px 30px 10px;
+	color: #48474A;
 	font-weight: bold;
 }
 
 
-#manu>ul>li>ul>li>a{ /*소분류*/
+#manu>ul>li>ul>li>a{ /*헤더소분류*/
 	display: none;
 	animation: listshow 0.8s ease normal;
 	padding: 7px 5px 14px;
@@ -116,21 +102,16 @@ header:hover .logo2{
 
 header:hover #manu>ul>li>ul>li>a{
 	text-decoration:none;
+	z-index: 77;
 	display: inherit;
 }
 
-header:hover #side>ul>li>a{
-	color:#48474A;
-}
 
 header:hover #logo>a{
 	color:#48474A;
 }
 
 
-header:hover #side>ul>li>span{
-	color:#48474A;
-}
 
 #side>ul{
 	margin: 0;
@@ -179,11 +160,11 @@ header:hover #side>ul>li>span{
 }
 #side>ul>li>a{
 	font-weight:bold;
-	color: white;
+	color: #48474A;
 }
 
 #side>ul>li>span{
-	color:white;
+	color: #48474A
 }
 
 @media(max-width:1200px) {
@@ -211,148 +192,98 @@ header:hover #side>ul>li>span{
 
 }
 
-.mainImg{
+.subbanner{
+	margin-top: 150px;
 	width: 100%;
-	background: url("https://byeolsol.000webhostapp.com/css/img/img4.jpg");
-	background-position: 0 0;
-	background-size:cover;
-	min-height: 980px;
-	overflow: hidden;
-	position: relative;
-	display: flex;
-	justify-content: center;
-	align-items: center;
+	height: 300px;
 }
 
-#center{
+
+.sibtitle{
 	display: flex;
-	justify-content: center;
-	align-items: center;
 }
 
-#center>div{
-	color:white;
+.route{
 	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-
-.centerlink{
-	margin-top: 20px;
+	padding-left: 850px;
 	font-size: 14px;
 }
-.centerlink>a{
-	color: white;
-}
-
-#img1{
-	display: flex;
-	width: 600px;
-	height: 700px;
-	margin-top: 200px;
-	background-size:100% 100%;
-	background-image: url("https://byeolsol.000webhostapp.com/css/img/room1img/img7-3.jpg");
-}
-
-.img1info{
-	display: flex;
-	width: 600px;
-	height: 700px;
-	margin-top: 200px;
-	background-color: rgba(12,16,33,0.7);
-}
-
-.img1title{
-	font-size: 50px;
-	font-weight:550;
-	letter-spacing : -2px;
-}
-
-#img1>div{
-	display: flex;
-}
-
-
-#roomInfo{
-	width: 18%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	position: absolute;
-	top: 250px;
-	left: 30%;
-}
-
-#roomInfo>ul{
-	display: flex;
-	text-align: center;
-}
-
-#roomInfo>ul>li{
+.route>ul>li{
 	display: flex;
 	float: left;
-	margin-left: 30px;
-	margin-bottom: 30px;
+	padding: 5px;
 }
-
-#roomInfo>ul>li>a{
-	color: white;
-	font-weight: bold;
-	opacity: 0.7;
-	margin: 0 auto;
-}
-
-#roomInfo>ul>li>a:hover{
-	opacity: 1;
-}
-
-
-.scrolldown{
-	width: 100%;
-	text-align: center;
-	font-size: 11px;
-	font-weight: bold;
-	color: white;
-	position: absolute;
-	bottom: 30px;
-}
-
-
-#mainNotice{
-	width: auto;
-	height: 70px;
-	overflow: hidden;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	border-bottom: 0.5px solid lightgrey;
-}
-
-#mainNotice>div{
-	float: left;
-	font-size: 14px;
-	font-weight: bold;
-	color: #2D2F38;
-}
-#mainNotice>div::after{
+.route>ul>li::after{
 	clear: both;
 }
 
-#mainNotice>.inbox{
-	padding: 0 0 0 80px;
+.roomInfo_01_info{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
 
-#mainNotice>.mainNotic_list{
-	display: block;
-	line-height: 70px;
-	padding: 0 400px 0 200px;
+.writ{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 50px;
 }
+
+.sibtitle{
+	padding: 20px 0 50px 0;
+	font-size: 35px;
+	width: 1100px;
+  margin-left: 200px;
+}
+
+.room_content>li>img{
+  width: 900px;
+  height: 700px;
+  position: relative;
+}
+.roomname{
+  position: absolute;
+  padding: 15px;
+  font-size: 30px;
+  font-weight: bold;
+  color: white;
+  z-index: 40;
+  background: rgba(0, 0, 0, 0.5);
+  letter-spacing :-0.8px;
+}
+.roomcom{
+    padding: 10px 0px 10px 0px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #302E2E;
+    border-top: solid #E9E5E3;
+    line-height: 30px;
+    border-bottom: solid #E9E5E3;
+    width: 900px;
+    margin: 40px 0;
+}
+}
+.roomcom>a{
+  font-size: 12px;
+  font-weight: bold;
+
+}
+.roomcom>i{
+  font-size: 20px;
+  color:#C0D2CC;
+  margin-left:10px;
+}
+
+
+
 
 footer{
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	padding: 20px;
+	border-top: 0.5px solid lightgrey;
 }
 
 #fnb{

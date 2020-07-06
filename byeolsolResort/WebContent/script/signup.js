@@ -11,7 +11,7 @@ $(function() {
 					alert("중복되었습니다. 아이디를 확인해주세요")
 					document.querySelector("input[type=submit]").disabled = 'disabled';
 				}else{
-					alert("사용할 수 있는 아이디 입니다.")
+					alert("사용가능합니다.")
 					document.querySelector("input[type=submit]").disabled = '';
 				}
 			}

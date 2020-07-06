@@ -31,9 +31,7 @@
 					}
 				})
 			}
-
 		})
-
 	})
 </script>
 <title>Insert title here</title>

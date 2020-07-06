@@ -374,14 +374,11 @@ input {
 	height: 30px;
 }
 
-input[type="submit"] {
-	background-color: rgb(138, 141, 143);
-	color: rgb(255, 255, 255);
-}
-
-input[type="reset"] {
-	background-color: rgb(255, 255, 255);
-	;
+button{
+	width: 170px;
+	height: 34px;
+	font-size: 15px;
+	font-weight: bolder;
 }
 
 input[type="submit"] {
@@ -392,6 +389,8 @@ input[type="submit"] {
 	border: 1px solid #e6e6e6;
 	font-weight: bold;
 	font-size: 15px;
+	background-color: rgb(138, 141, 143);
+	color: rgb(255, 255, 255);
 }
 
 .tit_3 {

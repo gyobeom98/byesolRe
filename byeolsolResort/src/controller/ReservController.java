@@ -34,11 +34,14 @@ public class ReservController {
 	CustomerService customerService;
 
 	@GetMapping("/addReserv")
-	public String goAddreservForm(HttpSession session, Model m) {
+	public String goAddreservForm(HttpSession session, Model m, @RequestParam(defaultValue = "101")int roomNum) {
 		if (session.getAttribute("userId") != null) {
 			String userId = (String) session.getAttribute("userId");
 			Customer customer = customerService.getCustomerById(userId);
 			if (customer.getEmailState().equals("인증")) {
+				if(roomNum>=101 && roomNum<= 105 || roomNum>=201 && roomNum<=205 || roomNum>=301 && roomNum<=305) {
+					m.addAttribute("roomNum",roomNum);
+				}
 				return "/serviceList/leftover";
 			} else {
 				m.addAttribute("errorMessage", "이메일 인증이 되어 있지 않은 계정입니다.");

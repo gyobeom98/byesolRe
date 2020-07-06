@@ -90,24 +90,24 @@ public class EventService {
 		return "event/" + addTime + "/" + uploadFile.getOriginalFilename();
 	}
 	
-	public String updateImage(MultipartFile uploadFile , String path) {
-		String upPath = path.substring(0, path.lastIndexOf('/'));
-		File file = new File(FILE_FOLDER_PATH + path);
-		System.out.println("file path : " + FILE_FOLDER_PATH+path);
-		if (file.canRead()) {
-			file.delete();
-			File file01 = new File(FILE_FOLDER_PATH+ upPath, uploadFile.getOriginalFilename());
-			System.out.println("file.getName : "+file.getName());
-			System.out.println("file.getPath : " +file.getPath());
-			try {
-				uploadFile.transferTo(file01);
-			} catch (IllegalStateException | IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		} 
-		return upPath + "/" + uploadFile.getOriginalFilename();
-	}
+//	public String updateImage(MultipartFile uploadFile , String path) {
+//		String upPath = path.substring(0, path.lastIndexOf('/'));
+//		File file = new File(FILE_FOLDER_PATH + path);
+//		System.out.println("file path : " + FILE_FOLDER_PATH+path);
+//		if (file.canRead()) {
+//			file.delete();
+//			File file01 = new File(FILE_FOLDER_PATH+ upPath, uploadFile.getOriginalFilename());
+//			System.out.println("file.getName : "+file.getName());
+//			System.out.println("file.getPath : " +file.getPath());
+//			try {
+//				uploadFile.transferTo(file01);
+//			} catch (IllegalStateException | IOException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//		} 
+//		return upPath + "/" + uploadFile.getOriginalFilename();
+//	}
 	
 	public Event getEvent(int id) {
 		return eventMapper.selectEventById(id);

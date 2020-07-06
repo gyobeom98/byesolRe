@@ -11,12 +11,15 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
 import model.dto.Customer;
 import model.dto.ErrorMessage;
+import model.dto.Remove;
 import model.dto.Reserv;
 import model.dto.Room;
+import model.mapper.RemoveMapper;
 import model.mapper.ReservMapper;
 import model.view.ReservView;
 
@@ -27,6 +30,9 @@ public class ReservService {
 	
 	@Autowired
 	ReservMapper reservMapper;
+	
+	@Autowired
+	RemoveMapper removeMapper;
 
 	public boolean reservCheck(int roomId, LocalDate startDate, LocalDate endDate) {
 		if (reservMapper.selectReservByRoomIdWithDate(roomId, startDate, endDate) != null)
@@ -203,7 +209,7 @@ public class ReservService {
 		int hour = LocalDateTime.now().getHour();
 		int minute = LocalDateTime.now().getMinute();
 		if (startDate.compareTo(LocalDate.now()) >= 0 && startDate.compareTo(LocalDate.now()) <= 60) {
-			if (endDate.compareTo(startDate) >= 0 && endDate.compareTo(startDate) <= 15) {
+			if (endDate.compareTo(startDate) >= 0 && endDate.compareTo(startDate) <= 8) {
 				if (startDate.compareTo(LocalDate.now()) == 0) {
 					if (hour < 11 || hour == 11 && minute <= 30) {
 						return true;
@@ -237,7 +243,17 @@ public class ReservService {
 			return true;
 		else return false;
 	}
+	
+	
+	@Transactional
 	public void deleteReserv(int reservId) {
+		Reserv reserv = reservMapper.selectReservById(reservId);
+		if(reserv.getState().equals("입금")) {
+			Customer customer = customerService.getCustomerById(reserv.getUserId());
+			Remove remove = new Remove(0, reserv.getUserId(), reserv.getRoomId(), reserv.getStartDate(), reserv.getEndDate(), reserv.getTotalPrice(),customer.getName(), customer.getPhone(), null);
+			removeMapper.insertRemove(remove);
+		}
+		
 		reservMapper.deleteReserv(reservId);
 	}
 	

@@ -47,11 +47,17 @@ public class IndexController {
 		return "/adminPage/adminUser";
 	}
 	
-
+	@Autowired
+	FtpService ftpService;
+	
 	//메인페이지
 	@GetMapping("/main")
 	public String mainPage(@RequestParam(required = false) String errorMessage, Model m) {
 		m.addAttribute("errorMessage", errorMessage);
+		List<String> imgPath =  ftpService.ftpImgPath("logo");
+		for (String path : imgPath) {
+			System.out.println(path);
+		}
 		return "/main/main";
 	}
 	

@@ -60,6 +60,12 @@
 	<select id="selectBoardListByUserId" resultType="Board">
 	select * from board where user_id = #{userId}
 	</select>
+	
+	<select id="selectBoardListWithAdminPage" resultType="Board">
+	select * from board where state = "admin" limit #{firstRow}, #{boardPerPageCount}
+	</select>
+
+	
 
 
 </mapper>

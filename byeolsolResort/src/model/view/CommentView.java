@@ -16,7 +16,6 @@ public class CommentView {
 	// 몇번 부터 조회할 지 정하는 수
 	private int firstRow;
 	
-	private int endRow;
 	// 페이지당 보여줄 정보의 수
 	private int commentCountperPage;
 	
@@ -24,13 +23,12 @@ public class CommentView {
 	
 	public CommentView() {}
 
-	public CommentView(int commentCnt, int currentPageNum, int firstRow, int endRow,
+	public CommentView(int commentCnt, int currentPageNum, int firstRow,
 			int commentCountperPage, List<Comment> commentList) {
 		super();
 		this.commentCnt = commentCnt;
 		this.currentPageNum = currentPageNum;
 		this.firstRow = firstRow;
-		this.endRow = endRow;
 		this.commentCountperPage = commentCountperPage;
 		this.commentList = commentList;
 		
@@ -75,14 +73,6 @@ public class CommentView {
 		this.firstRow = firstRow;
 	}
 
-	public int getEndRow() {
-		return endRow;
-	}
-
-	public void setEndRow(int endRow) {
-		this.endRow = endRow;
-	}
-
 	public int getCommentCountperPage() {
 		return commentCountperPage;
 	}
@@ -102,7 +92,7 @@ public class CommentView {
 	@Override
 	public String toString() {
 		return "CommentView [commentCnt=" + commentCnt + ", currentPageNum=" + currentPageNum + ", pageTotalCount="
-				+ pageTotalCount + ", firstRow=" + firstRow + ", endRow=" + endRow + ", commentCountperPage="
+				+ pageTotalCount + ", firstRow=" + firstRow + ", commentCountperPage="
 				+ commentCountperPage + ", commentList=" + commentList + "]";
 	}
 	

@@ -27,5 +27,9 @@ public interface CustomerMapper {
 	public void updateCustomer(Customer cust);
 
 	public void deleteCustomerById(int id);
+
+	public int countCustomer();
+	
+	public List<Customer> selectCustomerListWithLimit (@Param("firstRow")int firstRow, @Param("customerCountPerPage")int customerCountPerPage);
 	
 }

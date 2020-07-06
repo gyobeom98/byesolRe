@@ -14,7 +14,6 @@ public class BoardView {
 		private int pageTotalCount;
 		// 몇번 부터 조회할 지 정하는 수
 		private int firstRow;
-		private int endRow;
 		// 페이지당 보여줄 정보의 수
 		private int boardCountperPage;
 		// 페이지의 보여줄 정보의 리스트
@@ -22,13 +21,12 @@ public class BoardView {
 		
 		public BoardView() {}
 
-		public BoardView(int boardCnt, int currentPageNum, int firstRow, int endRow,
+		public BoardView(int boardCnt, int currentPageNum, int firstRow, 
 				int boardCountperPage, List<Board> boardList) {
 			super();
 			this.boardCnt = boardCnt;
 			this.currentPageNum = currentPageNum;
 			this.firstRow = firstRow;
-			this.endRow = endRow;
 			this.boardCountperPage = boardCountperPage;
 			this.boardList = boardList;
 			
@@ -75,14 +73,6 @@ public class BoardView {
 			this.firstRow = firstRow;
 		}
 
-		public int getEndRow() {
-			return endRow;
-		}
-
-		public void setEndRow(int endRow) {
-			this.endRow = endRow;
-		}
-
 		public int getBoardCountperPage() {
 			return boardCountperPage;
 		}
@@ -102,7 +92,7 @@ public class BoardView {
 		@Override
 		public String toString() {
 			return "BoardView [boardCnt=" + boardCnt + ", currentPageNum=" + currentPageNum + ", pageTotalCount="
-					+ pageTotalCount + ", firstRow=" + firstRow + ", endRow=" + endRow + ", boardCountperPage="
+					+ pageTotalCount + ", firstRow=" + firstRow + ", boardCountperPage="
 					+ boardCountperPage + ", boardList=" + boardList + "]";
 		}
 

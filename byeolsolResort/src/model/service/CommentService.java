@@ -49,8 +49,7 @@ public class CommentService {
 		}else {
 			pageNum=0;
 		}
-		int endRow = firstRow+COMMENT_COUNT_PER_PAGE;
-		commentView = new CommentView(commentCnt, pageNum, firstRow, endRow, COMMENT_COUNT_PER_PAGE, commentList);
+		commentView = new CommentView(commentCnt, pageNum, firstRow, COMMENT_COUNT_PER_PAGE, commentList);
 		return commentView;
 	}
 	

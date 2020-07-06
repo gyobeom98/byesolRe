@@ -23,6 +23,10 @@ public interface QuestionMapper {
 	public int countQuestion();
 
 	public List<Question> selectQuestionByWriter();
+
+	public void updateQuestionByIdWithState(@Param("id")int id , @Param("state")String state);
+	
+	public List<Question> selectQuestionListByStateWithLimit(@Param("firstRow")int firstRow, @Param("questionCountPerPage")int questionCountPerPage);
 	
 	
 }

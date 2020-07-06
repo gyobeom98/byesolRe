@@ -6,16 +6,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import model.dto.Answer;
+import model.dto.Question;
 import model.mapper.AnswerMapper;
+import model.mapper.QuestionMapper;
 import model.view.AnswerView;
 
 @Service("answerServicec")
 public class AnswerService {
-
 	private static final int ANSWER_COUNT_PER_PAGE = 5;
 	
 	@Autowired
 	AnswerMapper answerMapper;
+	
+	@Autowired
+	QuestionMapper questionMapper;
 	
 	public AnswerView getAnswerView(int pageNum, int questionId) {
 		AnswerView answerView = null;
@@ -34,6 +38,12 @@ public class AnswerService {
 	}
 
 	public void addAnswer(Answer answer) {
+		Question question = questionMapper.selectQuestion(answer.getQuestionId());
+		if(answer.getWriter().equals("admin")) {
+			questionMapper.updateQuestionByIdWithState(question.getId(),"cea");
+		}else if(answer.getWriter().equals(question.getWriter())) {
+			questionMapper.updateQuestionByIdWithState(question.getId(), "yet");
+		}
 		answerMapper.insertAnswer(answer);
 	}
 	

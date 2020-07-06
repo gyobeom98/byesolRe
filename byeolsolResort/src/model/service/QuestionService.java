@@ -15,34 +15,34 @@ import model.view.QuestionView;
 public class QuestionService {
 
 	private static final int QUESTION_COUNT_PER_PAGE = 5;
-	
+
 	@Autowired
 	QuestionMapper questionMapper;
-	
-	
-	public QuestionView getQuestionView(int pageNum , String writer) {
+
+	public QuestionView getQuestionView(int pageNum, String writer) {
 		QuestionView questionView = null;
-		
+
 		int firstRow = 0;
 		List<Question> questionList = null;
-		
+
 		int questionCnt = questionMapper.countQuestion();
-		
-		if(questionCnt > 0) {
-			firstRow = (pageNum-1) * QUESTION_COUNT_PER_PAGE;
-			questionList = questionMapper.selectQuestionListByWriterWithLimit(writer, firstRow, QUESTION_COUNT_PER_PAGE);
+
+		if (questionCnt > 0) {
+			firstRow = (pageNum - 1) * QUESTION_COUNT_PER_PAGE;
+			questionList = questionMapper.selectQuestionListByWriterWithLimit(writer, firstRow,
+					QUESTION_COUNT_PER_PAGE);
 		} else {
 			pageNum = 0;
 		}
-		
+
 		questionView = new QuestionView(questionCnt, pageNum, firstRow, QUESTION_COUNT_PER_PAGE, questionList);
 		return questionView;
 	}
-	
+
 	public void addQuestion(Question question) {
 		questionMapper.insertQuestion(question);
 	}
-	
+
 	public Question selectQuestionById(int id) {
 		return questionMapper.selectQuestion(id);
 	}
@@ -53,13 +53,27 @@ public class QuestionService {
 
 	@Autowired
 	AnswerMapper answerMapper;
-	
+
 	@Transactional
 	public void deleteQuestion(int id) {
 		Question question = questionMapper.selectQuestion(id);
 		answerMapper.deleteAnswerByQuestionId(id);
 		questionMapper.deleteQuestion(id);
 	}
-	
-	
+
+	public QuestionView getQuestionViewWithState(int pageNum) {
+		QuestionView questionView = null;
+		int firstRow = 0;
+		List<Question> questionList = null;
+		int questionCnt = questionMapper.countQuestion();
+		if (questionCnt > 0) {
+			firstRow = (pageNum - 1) * QUESTION_COUNT_PER_PAGE;
+			questionList = questionMapper.selectQuestionListByStateWithLimit(firstRow, QUESTION_COUNT_PER_PAGE);
+		} else {
+			pageNum = 0;
+		}
+		questionView = new QuestionView(questionCnt, pageNum, firstRow, QUESTION_COUNT_PER_PAGE, questionList);
+		return questionView;
+	}
+
 }

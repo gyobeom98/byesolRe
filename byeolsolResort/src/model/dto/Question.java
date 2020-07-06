@@ -16,9 +16,13 @@ public class Question {
 	
 	private LocalDateTime regDate;
 	
+	private String state;
+	
 	public Question() {}
 
-	public Question(int id, String title, String message, String division, String writer, LocalDateTime regDate) {
+	
+	public Question(int id, String title, String message, String division, String writer, LocalDateTime regDate,
+			String state) {
 		super();
 		this.id = id;
 		this.title = title;
@@ -26,7 +30,11 @@ public class Question {
 		this.division = division;
 		this.writer = writer;
 		this.regDate = regDate;
+		this.state = state;
 	}
+
+
+
 
 	public int getId() {
 		return id;
@@ -76,11 +84,23 @@ public class Question {
 		this.regDate = regDate;
 	}
 
+
+	public String getState() {
+		return state;
+	}
+
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+
 	@Override
 	public String toString() {
 		return "Question [id=" + id + ", title=" + title + ", message=" + message + ", division=" + division
-				+ ", writer=" + writer + ", regDate=" + regDate + "]";
+				+ ", writer=" + writer + ", regDate=" + regDate + ", state=" + state + "]";
 	}
+
 	
 	
 	

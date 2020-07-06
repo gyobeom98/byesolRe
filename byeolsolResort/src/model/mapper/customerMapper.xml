@@ -55,5 +55,13 @@
   delete from customer where id = #{id}
   </delete>
   
+  <select id="countCustomer" resultType="int">
+  select count(*) from customer;
+  </select>
+  
+  <select id="selectCustomerListWithLimit" resultType="Customer">
+  select * from customer limit #{firstRow},#{customerCountPerPage}
+  </select>
+  
   
   </mapper>

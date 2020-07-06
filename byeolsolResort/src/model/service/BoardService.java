@@ -85,9 +85,8 @@ public class BoardService {
 		}else {
 			pageNum=0;
 		}
-		int endRow = firstRow+BOARD_COUNT_PER_PAGE;
 		
-		boardView = new BoardView(boardCnt, pageNum, firstRow, endRow, BOARD_COUNT_PER_PAGE, boardList);
+		boardView = new BoardView(boardCnt, pageNum, firstRow, BOARD_COUNT_PER_PAGE, boardList);
 		
 		return boardView;
 	}
@@ -105,7 +104,7 @@ public class BoardService {
 		}
 		int endRow = firstRow+BOARD_COUNT_PER_PAGE;
 		
-		boardView = new BoardView(boardCnt, pageNum, firstRow, endRow, BOARD_COUNT_PER_PAGE, boardList);
+		boardView = new BoardView(boardCnt, pageNum, firstRow, BOARD_COUNT_PER_PAGE, boardList);
 		
 		return boardView;
 	}

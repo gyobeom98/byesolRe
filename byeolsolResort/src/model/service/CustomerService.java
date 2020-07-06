@@ -23,9 +23,12 @@ import model.mapper.CustomerMapper;
 import model.mapper.QuestionMapper;
 import model.mapper.RemoveMapper;
 import model.mapper.ReservMapper;
+import model.view.CustomerView;
 
 @Service("customerService")
 public class CustomerService {
+	
+	private static final int CUSTOMER_COUNT_PER_PAGE = 10;
 
 	@Autowired
 	CustomerMapper customerMapper;
@@ -164,6 +167,22 @@ public class CustomerService {
 		customerMapper.deleteCustomerById(customer.getId());
 		
 	}
+	
+	public CustomerView getCustomerView(int pageNum) {
+		CustomerView customerView = null;
+		int firstRow = 0;
+		List<Customer> customerList = null;
+		int customerCnt = customerMapper.countCustomer();
+		if(customerCnt>0) {
+			firstRow = (pageNum-1)*CUSTOMER_COUNT_PER_PAGE;
+			customerList = customerMapper.selectCustomerListWithLimit(firstRow, CUSTOMER_COUNT_PER_PAGE);
+		}else {
+			pageNum = 0;
+		}
+		customerView = new CustomerView(customerCnt, pageNum, firstRow, CUSTOMER_COUNT_PER_PAGE, customerList);
+		return customerView;
+	}
+	
 
 		
 	

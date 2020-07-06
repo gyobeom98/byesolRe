@@ -72,10 +72,10 @@ public class ReservService {
 							int totalPrice = getTotalPrice(start, end, room);
 							Reserv reserv = new Reserv(0, userId, room.getId(), start, end, totalPrice, peopleCount,
 									null, null);
-							if (reservCheck(1, start, end)) {
+							if (reservCheck(room.getId(), start, end)) {
 								System.out.println("확인함");
 								addReserv(reserv);
-								return new ErrorMessage(null, "redirect:/reserv/main", 0);
+								return new ErrorMessage(null, "redirect:/index/main", 0);
 							} else {
 								System.out.println("실패함");
 								return new ErrorMessage("해당 날짜는 예약 하실수 없습니다.", "redirect:/reserv/addReserv", roomNum);
@@ -267,6 +267,8 @@ public class ReservService {
 		}
 		
 	}
+
+
 	
 	
 }

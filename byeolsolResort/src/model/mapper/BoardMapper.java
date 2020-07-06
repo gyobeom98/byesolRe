@@ -30,6 +30,8 @@ public interface BoardMapper {
 	public void deleteBoardByUserId(String userId);
 
 	public List<Board> selectBoardListByUserId(String userId);
+
+	public List<Board> selectBoardListWithAdminPage(int firstRow, int boardCountPerPage);
 	
 	
 }

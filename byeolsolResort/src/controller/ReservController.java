@@ -34,25 +34,55 @@ public class ReservController {
 	CustomerService customerService;
 
 	@GetMapping("/addReserv")
-	public String goAddReservForm(HttpSession session, @RequestParam(required = false, defaultValue = "0") int roomNum,
-			Model m) {
-		if (roomNum >= 101 && roomNum <= 105 || roomNum >= 201 && roomNum <= 205 || roomNum >= 301 && roomNum <= 305) {
-			if (session.getAttribute("userId") != null) {
-				String userId = (String) session.getAttribute("userId");
-				Customer customer = customerService.getCustomerById(userId);
-				if (customer.getEmailState().equals("인증")) {
-					m.addAttribute("roomNum", roomNum);
-					return "addReservForm";
-				} else {
-					m.addAttribute("errorMessage", "이메일 인증이 되어있지 않은 계정입니다.");
-					return "redirect:/index/main";
-				}
+	public String goAddreservForm(HttpSession session, Model m) {
+		if (session.getAttribute("userId") != null) {
+			String userId = (String) session.getAttribute("userId");
+			Customer customer = customerService.getCustomerById(userId);
+			if (customer.getEmailState().equals("인증")) {
+				return "/serviceList/leftover";
 			} else {
-				m.addAttribute("errorMessage", "로그인이 되어 있지 않습니다.");
+				m.addAttribute("errorMessage", "이메일 인증이 되어 있지 않은 계정입니다.");
 				return "redirect:/index/main";
 			}
 		} else {
-			m.addAttribute("errorMessage", "잘못된 접근 방식 입니다.");
+			m.addAttribute("errorMessage", "로그인이 되어 있지 않습니다.");
+			return "redirect:/index/main";
+		}
+
+	}
+
+	@PostMapping("/addReserv")
+	public String addReservResult(HttpSession session, Model m,
+			@RequestParam(defaultValue = DEFAULT_START_DATE) Date startDate,
+			@RequestParam(defaultValue = DEFAULT_END_DATE) Date endDate, @RequestParam(defaultValue = "0") int roomNum,
+			@RequestParam(defaultValue = "0") int peopleCount) {
+		if (session.getAttribute("userId") != null) {
+			String userId = (String) session.getAttribute("userId");
+			Customer customer = customerService.getCustomerById(userId);
+			if (customer.getEmailState().equals("인증")) {
+				if(!startDate.toString().equals(DEFAULT_START_DATE) && !endDate.toString().equals(DEFAULT_END_DATE) && roomNum!=0 && peopleCount !=0) {
+					ErrorMessage errorMessage = reservService.totalAddResrv(startDate, endDate, roomNum, session, peopleCount);
+					if(errorMessage.getErrorMessage()!=null) {
+						m.addAttribute("errorMessage",errorMessage.getErrorMessage());
+					}
+					if(errorMessage.getRoomNum()>0) {
+						m.addAttribute("roomNum",errorMessage.getRoomNum());
+					}
+					return errorMessage.getResult();
+				}else {
+					m.addAttribute("errorMessage","예약 정보를 다시 확인 해 주세요");
+					
+					return "redirect:/reserv/addReserv";
+					
+				}
+				
+			} else {
+				m.addAttribute("errorMessage", "이메일 인증이 되어 있지 않은 계정입니다.");
+				return "redirect:/index/main";
+			}
+
+		} else {
+			m.addAttribute("errorMessage", "로그인이 되어 있지 않습니다.");
 			return "redirect:/index/main";
 		}
 
@@ -80,25 +110,6 @@ public class ReservController {
 
 	private final String DEFAULT_START_DATE = "1980-08-08";
 	private final String DEFAULT_END_DATE = "1980-08-08";
-
-	@PostMapping("/addReserv")
-	public String addResrv(@RequestParam(defaultValue = DEFAULT_START_DATE) Date startDate,
-			@RequestParam(defaultValue = DEFAULT_END_DATE) Date endDate, int roomNum, HttpSession session,
-			@RequestParam(defaultValue = "0") int peopleCount, Model m,
-			@RequestParam(defaultValue = "0") int totalPrice) {
-		if (!startDate.equals(Date.valueOf(DEFAULT_START_DATE)) || !endDate.equals(Date.valueOf(DEFAULT_END_DATE))) {
-			ErrorMessage errorMessage = reservService.totalAddResrv(startDate, endDate, roomNum, session, peopleCount);
-			if (!reservService.isNullFromErrorMessage(errorMessage)) {
-				m.addAttribute("errorMessage", errorMessage.getErrorMessage());
-			}
-			if (!reservService.isHaveRoomNumber(errorMessage))
-				m.addAttribute("roomNum", errorMessage.getRoomNum());
-			return errorMessage.getResult();
-		} else {
-			m.addAttribute("errorMessage", "필수 입력 정보는 모두 입력 하여 주세요");
-			return "redirect:/reserv/addReserv?roomNum=" + roomNum;
-		}
-	}
 
 	@Autowired
 	RoomService roomService;
@@ -165,17 +176,13 @@ public class ReservController {
 				reservService.deleteReserv(reservId);
 				return "redirect:/index/main";
 			} else {
-				m.addAttribute("errorMessage","권한이 없습니다.");
+				m.addAttribute("errorMessage", "권한이 없습니다.");
 				return "redirect:/index/main";
 			}
 		} else {
-			m.addAttribute("errorMessage","로그인이 되어 있지 않습니다.");
+			m.addAttribute("errorMessage", "로그인이 되어 있지 않습니다.");
 			return "redirect:/index/main";
 		}
 	}
-	
-	
-	
-	
 
 }

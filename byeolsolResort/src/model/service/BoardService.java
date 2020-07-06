@@ -32,6 +32,11 @@ public class BoardService {
 		return boardMapper.selectBoardList();
 	}
 	
+	public List<Board> selectBoardListByUserId(String userId) {
+		return boardMapper.selectBoardListByUserId(userId);
+		
+	}
+	
 	public void addBoard(Board board) {
 		boardMapper.insertBoard(board);
 	}
@@ -67,6 +72,26 @@ public class BoardService {
 		
 	}
 	
+	
+	public BoardView getAdminBoardView(int pageNum) {
+		
+		BoardView boardView = null;
+		int firstRow = 0;
+		List<Board> boardList = null;
+		int boardCnt = boardMapper.countBoard(); 
+		if(boardCnt>0) {
+			firstRow = (pageNum-1)*BOARD_COUNT_PER_PAGE;
+			boardList = boardMapper.selectBoardListWithAdminPage(firstRow,BOARD_COUNT_PER_PAGE);
+		}else {
+			pageNum=0;
+		}
+		int endRow = firstRow+BOARD_COUNT_PER_PAGE;
+		
+		boardView = new BoardView(boardCnt, pageNum, firstRow, endRow, BOARD_COUNT_PER_PAGE, boardList);
+		
+		return boardView;
+	}
+	
 	public BoardView getView(int pageNum) {
 		BoardView boardView = null;
 		int firstRow = 0;
@@ -100,73 +125,46 @@ public class BoardService {
 
 	}
 	
-	public String updateImg(MultipartFile uploadFile, String path, String updateTime) {
-		System.out.println("upPath : " + path);
-		if(path != null) {
-			String upPath = path.substring(0, path.lastIndexOf('/'));
-		File file = new File(FILE_FOLDER_PATH + path);
-		System.out.println("file path : " + FILE_FOLDER_PATH+path);
-		if (file.canRead()) {
-			file.delete();
-			File file01 = new File(FILE_FOLDER_PATH+ upPath, uploadFile.getOriginalFilename());
-			System.out.println("file.getName : "+file.getName());
-			System.out.println("file.getPath : " +file.getPath());
-			try {
-				uploadFile.transferTo(file01);
-			} catch (IllegalStateException | IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		} 
-		return upPath + "/" + uploadFile.getOriginalFilename();
-		
-		}else {
-			String upPath = FILE_FOLDER_PATH +"board/"+updateTime;
-			File file01 = new File(upPath);
-			if (file01.mkdir()) {
-				System.out.println("test");
-			}
-			File file02 = new File(upPath, uploadFile.getOriginalFilename());
-			try {
-				uploadFile.transferTo(file02);
-			} catch (IllegalStateException | IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return "board/"+updateTime+"/"+uploadFile.getOriginalFilename();
-		}
-
-	}
+	/*
+	 * public String updateImg(MultipartFile uploadFile, String path, String
+	 * updateTime) { System.out.println("upPath : " + path); if(path != null) {
+	 * String upPath = path.substring(0, path.lastIndexOf('/')); File file = new
+	 * File(FILE_FOLDER_PATH + path); System.out.println("file path : " +
+	 * FILE_FOLDER_PATH+path); if (file.canRead()) { file.delete(); File file01 =
+	 * new File(FILE_FOLDER_PATH+ upPath, uploadFile.getOriginalFilename());
+	 * System.out.println("file.getName : "+file.getName());
+	 * System.out.println("file.getPath : " +file.getPath()); try {
+	 * uploadFile.transferTo(file01); } catch (IllegalStateException | IOException
+	 * e) { // TODO Auto-generated catch block e.printStackTrace(); } } return
+	 * upPath + "/" + uploadFile.getOriginalFilename();
+	 * 
+	 * }else { String upPath = FILE_FOLDER_PATH +"board/"+updateTime; File file01 =
+	 * new File(upPath); if (file01.mkdir()) { System.out.println("test"); } File
+	 * file02 = new File(upPath, uploadFile.getOriginalFilename()); try {
+	 * uploadFile.transferTo(file02); } catch (IllegalStateException | IOException
+	 * e) { // TODO Auto-generated catch block e.printStackTrace(); } return
+	 * "board/"+updateTime+"/"+uploadFile.getOriginalFilename(); }
+	 * 
+	 * }
+	 */
 	
-	public String addImage(MultipartFile uploadFile,String addTime) {
-		String boardPath = FILE_FOLDER_PATH + "board";
-		File fileBoard = new File(boardPath);
-		if(fileBoard.mkdir()) {
-			
-		}
-		String path = boardPath+"/"+addTime;
-		System.out.println("path : " + path);
-		File file01 = new File(path);
-		if (file01.mkdir()) {
-			System.out.println("test");
-		}
-		File file = new File(path, uploadFile.getOriginalFilename());
-		
-		try {
-			uploadFile.transferTo(file);
-		} catch (IllegalStateException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		return "board/" + addTime + "/" + uploadFile.getOriginalFilename();
-		
-	}
+	/*
+	 * public String addImage(MultipartFile uploadFile,String addTime) { String
+	 * boardPath = FILE_FOLDER_PATH + "board"; File fileBoard = new File(boardPath);
+	 * if(fileBoard.mkdir()) {
+	 * 
+	 * } String path = boardPath+"/"+addTime; System.out.println("path : " + path);
+	 * File file01 = new File(path); if (file01.mkdir()) {
+	 * System.out.println("test"); } File file = new File(path,
+	 * uploadFile.getOriginalFilename());
+	 * 
+	 * try { uploadFile.transferTo(file); } catch (IllegalStateException |
+	 * IOException e) { // TODO Auto-generated catch block e.printStackTrace(); }
+	 * 
+	 * return "board/" + addTime + "/" + uploadFile.getOriginalFilename();
+	 * 
+	 * }
+	 */
 
-	public List<Board> selectBoardListByUserId(String userId) {
-		return boardMapper.selectBoardListByUserId(userId);
-		
-	}
-	
 	
 }

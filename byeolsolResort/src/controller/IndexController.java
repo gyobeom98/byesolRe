@@ -114,7 +114,7 @@ public class IndexController {
 	//객실예약
 	@GetMapping("/leftover")
 	public String leftoverPage() {
-		return "/serviceList/leftover";
+		return "redirect:/reserv/addReserv";
 	}
 	
 	//객실현황
@@ -180,8 +180,8 @@ public class IndexController {
 	}
 	
 	//이메일 인증
-	@GetMapping("/emailCertification")
+	@GetMapping("/emailCer")
 	public String emailCertificationPage() {
-		return "/mypage/emailCertification";
+		return "redirect:/cus/mailCheck";
 	}
 }

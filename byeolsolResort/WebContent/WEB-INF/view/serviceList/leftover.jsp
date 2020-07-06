@@ -112,7 +112,7 @@
 						<h3 class="stitle">객실예약</h3>
 					</div>
 				</div>
-				<form class="btn" action="#" method="post">
+				<form class="btn" action="/reserv/addReserv" method="post">
 					<div class="res_title">
 						<h2>예약</h2>
 						<div class="res_main">
@@ -120,28 +120,38 @@
 								<table>
 									<tr>
 										<td class="tdForm">입실날짜</td>
-										<td class="tdForm1"><input type="date" name="inDate" id="date1" class="date" readonly="readonly">
+										<td class="tdForm1"><input type="date" name="startDate" id="date1" class="date" readonly="readonly">
 									</tr>
 									<tr>
 										<td class="tdForm">퇴실날짜</td>
-										<td class="tdForm1"><input type="date" name="outDate" id="date2" class="date" readonly="readonly">
+										<td class="tdForm1"><input type="date" name="endDate" id="date2" class="date" readonly="readonly">
 										</td>
 									</tr>
 									<tr>
 										<td class="tdForm">객실</td>
-										<td class="tdForm1"><select class="room" name="room">
+										<td class="tdForm1"><select class="room" name="roomNum">
 												<option value="객실종류">객실선택</option>
-												<option value="r1">room1</option>
-												<option value="r2">room2</option>
-												<option value="r3">room3</option>
+												<option value="101">room101</option>
+												<option value="102">room102</option>
+												<option value="103">room103</option>
+												<option value="104">room104</option>
+												<option value="105">room105</option>
+												<option value="201">room201</option>
+												<option value="202">room202</option>
+												<option value="203">room203</option>
+												<option value="204">room204</option>
+												<option value="205">room205</option>
+												<option value="301">room301</option>
+												<option value="302">room302</option>
+												<option value="303">room303</option>
+												<option value="304">room304</option>
+												<option value="305">room305</option>
 											</select></td>
 									</tr>
 									<tr>
 										<td class="tdForm">인원</td>
-										<td class="tdForm1"><select class="person" id="person">
+										<td class="tdForm1"><select class="person" id="person" name="peopleCount">
 												<option value="인원" selected>인원</option>
-												<option value="2">2명</option>
-												<option value="3">3명</option>
 												<option value="4">4명</option>
 												<option value="5">5명</option>
 												<option value="6">6명</option>

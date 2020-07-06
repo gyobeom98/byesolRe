@@ -91,11 +91,11 @@
 					<div class="sibtitle">
 						<h3 class="stitle">이메일인증</h3>
 					</div>
-					<form action="">
-						<button>이메일인증번호 보내기</button>
-						<input type="number" placeholder="인증번호를 입력해주세요">
-						<br>
-						<input type="submit" placeholder="확인">
+					<form action="mailCheck" method="post">
+						<input type="text" name="userEmail" value="${userEmail}"
+							readonly="readonly"> <input type="text" name="mailCode">
+						<input type="submit">
+						<button type="button" name="mailCertification">인증 코드 보내기</button>
 					</form>
 				</div>
 			</section>

@@ -277,10 +277,10 @@ public class CustomerController {
 	@GetMapping(value = "/mailCheck", produces = "application/text; charset=utf-8")
 	public String mailSending(@RequestParam(required = false) String registEmail, HttpSession session, Model m) {
 		if (session.getAttribute("userEmail") != null) {
-			return "EmailCheckForm";
+			return "/mypage/mailCer";
 		} else if (registEmail != null) {
 			m.addAttribute("userEmail", registEmail);
-			return "EmailCheckForm";
+			return "/mypage/mailCer";
 		} else {
 			m.addAttribute("errorMessage", "잘못된 접근 입니다.");
 			return "redirect:/index/main";
@@ -308,7 +308,7 @@ public class CustomerController {
 		} else {
 			customerService.updateCustomerEmailState(userEmail, "미인증");
 			m.addAttribute("errorMessage", "인증코드와 일치하지 않습니다.");
-			return "redirect:/cus/mailCheck";
+			return "redirect:/index/mailCer";
 		}
 
 	}

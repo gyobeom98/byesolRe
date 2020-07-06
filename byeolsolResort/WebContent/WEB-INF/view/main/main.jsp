@@ -12,6 +12,14 @@
 <script src="https://kit.fontawesome.com/c945c12587.js"
 	crossorigin="anonymous"></script>
 <script type="text/javascript" src="/script/header.js"></script>
+
+<script type="text/javascript">
+if("${errorMessage}"!=""){
+alert("${errorMessage}")
+location.href="/index/main"
+}
+</script>
+
 </head>
 <body>
 	<div class="allwrap">

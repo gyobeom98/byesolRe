@@ -371,9 +371,50 @@ public class CustomerController {
 			m.addAttribute("errorMessage", "로그인이 되어 있지 않습니다.");
 			return "redirect:/index/main";
 		}
-
 	}
 	
+	@GetMapping("/findId")
+	public String findIdForm(HttpSession session, Model m) {
+		if(session.getAttribute("userId")==null) {
+			return "";
+		}else {
+			m.addAttribute("errorMessage","잘못된 접근 입니다.");
+			return "redirect:/index/main";
+		}
+	}
+	
+	@PostMapping("/findId")
+	public String findId(HttpSession session, Model m , String email, String name) {
+		if(session.getAttribute("userId")==null) {
+			m.addAttribute("errorMessage",customerService.mailSendWithId(mailSender, email, name));
+			return "redirect:/index/main";
+		}else {
+			m.addAttribute("errorMessage","잘못된 접근 입니다.");
+			return "redirect:/index/main";
+		}
+	}
+	
+	
+	@GetMapping("/findPassword")
+	public String findPassword(HttpSession session , Model m) {
+		if(session.getAttribute("userId")==null) {
+			return "";
+		}else {
+			m.addAttribute("errorMessage","잘못된 접근 입니다.");
+			return "redirect:/index/main";
+		}
+	}
+	
+	@PostMapping("/findPassword")
+	public String findPassword(HttpSession session, Model m,String email,String userId) {
+		if(session.getAttribute("userId")==null) {
+		m.addAttribute("errorMessage",customerService.mailSendByPassword(mailSender, email, userId));
+		return "redirect:/index/main";
+		}else {
+			m.addAttribute("errorMessage","잘못된 접근 입니다.");
+			return "redirect:/index/main";
+		}
+	}
 	
 
 }

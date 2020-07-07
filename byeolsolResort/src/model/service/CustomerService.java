@@ -180,8 +180,8 @@ public class CustomerService {
 		return customerView;
 	}
 
-	public String mailSendByPassword(JavaMailSender mailSender, String email, String userId) {
-		if (isCheck(email, userId)) {
+	public String mailSendByPassword(JavaMailSender mailSender, String email, String userId, String name) {
+		if (isCheck(email, userId, name)) {
 			String temporaryPassword = randomTemporaryPassword();
 			String setfrom = "byeolsol6@gmail.com";
 			try {
@@ -209,8 +209,9 @@ public class CustomerService {
 	}
 
 	public String mailSendWithId(JavaMailSender mailSender, String email, String name) {
-
+		System.out.println(email+","+name);
 		Customer customer = customerMapper.selectCustomerWithEmail(email);
+		System.out.println(customer);
 		if (customer != null) {
 			if (customer.getName().equals(name)) {
 				String setfrom = "byeolsol6@gmail.com";
@@ -240,11 +241,11 @@ public class CustomerService {
 
 	}
 
-	public boolean isCheck(String email, String userId) {
+	public boolean isCheck(String email, String userId, String name) {
 
 		Customer customer = customerMapper.selectCustomerWithId(userId);
 		if (customer != null) {
-			if (customer.getEmail().equals(email)) {
+			if (customer.getEmail().equals(email) && customer.getName().equals(name)) {
 				return true;
 			} else {
 				return false;

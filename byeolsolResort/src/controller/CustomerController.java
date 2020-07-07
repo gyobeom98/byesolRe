@@ -207,7 +207,7 @@ public class CustomerController {
 			String userId = (String) session.getAttribute("userId");
 			Customer customer = customerService.getCustomerById(userId);
 			m.addAttribute("customer", customer);
-			return "mypage/mypage";
+			return "/mypage/mypage";
 		} else {
 			m.addAttribute("errorMessage", "로그인을 해주세요");
 			return "redirect:/index/main";
@@ -376,7 +376,7 @@ public class CustomerController {
 	@GetMapping("/findId")
 	public String findIdForm(HttpSession session, Model m) {
 		if(session.getAttribute("userId")==null) {
-			return "";
+			return "/mypage/findInfo";
 		}else {
 			m.addAttribute("errorMessage","잘못된 접근 입니다.");
 			return "redirect:/index/main";
@@ -387,7 +387,7 @@ public class CustomerController {
 	public String findId(HttpSession session, Model m , String email, String name) {
 		if(session.getAttribute("userId")==null) {
 			m.addAttribute("errorMessage",customerService.mailSendWithId(mailSender, email, name));
-			return "redirect:/index/main";
+			return "redirect:/cus/login";
 		}else {
 			m.addAttribute("errorMessage","잘못된 접근 입니다.");
 			return "redirect:/index/main";
@@ -398,7 +398,7 @@ public class CustomerController {
 	@GetMapping("/findPassword")
 	public String findPassword(HttpSession session , Model m) {
 		if(session.getAttribute("userId")==null) {
-			return "";
+			return "/mypage/findInfo";
 		}else {
 			m.addAttribute("errorMessage","잘못된 접근 입니다.");
 			return "redirect:/index/main";
@@ -406,15 +406,13 @@ public class CustomerController {
 	}
 	
 	@PostMapping("/findPassword")
-	public String findPassword(HttpSession session, Model m,String email,String userId) {
+	public String findPassword(HttpSession session, Model m,String email,String userId, String name) {
 		if(session.getAttribute("userId")==null) {
-		m.addAttribute("errorMessage",customerService.mailSendByPassword(mailSender, email, userId));
-		return "redirect:/index/main";
+		m.addAttribute("errorMessage",customerService.mailSendByPassword(mailSender, email, userId, name));
+		return "redirect:/cus/login";
 		}else {
 			m.addAttribute("errorMessage","잘못된 접근 입니다.");
 			return "redirect:/index/main";
 		}
 	}
-	
-
 }

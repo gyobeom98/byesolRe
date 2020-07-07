@@ -154,8 +154,9 @@ public class FtpService {
 		// 받는 변수는 request를 보낸 것에 맞게 받으시면 됩니다.
 		// 웹에서 받은 MultipartFile을 File로 변환시켜줍니다.
 		FTPClient ftp = null;
+		String sysId = System.getProperty("user.name");
 		try {
-			File file = new File("C:\\Users\\tjoeun\\Desktop\\project" + uploadFile.getOriginalFilename());
+			File file = new File("C:\\Users\\"+sysId+"\\Desktop" + uploadFile.getOriginalFilename());
 			if (file.createNewFile()) {
 				System.out.println("생성");
 			}

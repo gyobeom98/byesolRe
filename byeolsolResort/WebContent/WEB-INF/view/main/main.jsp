@@ -84,7 +84,7 @@
 				<div id="center">
 					<div class="img1info">
 						<div>
-							<div class="img1title">ROOM 1</div>
+							<div class="img1title">CONCEPT 1</div>
 							<br>
 							<div>
 								힐링룸 입니다.

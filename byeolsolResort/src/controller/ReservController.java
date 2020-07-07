@@ -100,6 +100,7 @@ public class ReservController {
 	@PostMapping("/printTotalPrice")
 	@ResponseBody
 	public String getTotalPrice(Date startDate, Date endDate, int roomNum) {
+		System.out.println("a");
 		LocalDate start = startDate.toLocalDate();
 		LocalDate end = endDate.toLocalDate();
 		Room room = roomService.getRoomByRoomNum(roomNum);

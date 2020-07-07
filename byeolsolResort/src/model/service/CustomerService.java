@@ -179,7 +179,8 @@ public class CustomerService {
 		customerView = new CustomerView(customerCnt, pageNum, firstRow, CUSTOMER_COUNT_PER_PAGE, customerList);
 		return customerView;
 	}
-
+	
+	@Transactional
 	public String mailSendByPassword(JavaMailSender mailSender, String email, String userId, String name) {
 		if (isCheck(email, userId, name)) {
 			String temporaryPassword = randomTemporaryPassword();
@@ -197,7 +198,9 @@ public class CustomerService {
 								+ "</span></div>",
 						true); // 메일 내용
 				mailSender.send(message);
-				customerMapper.updateStateByEmail(email, temporaryPassword);
+				Customer customer = customerMapper.selectCustomerWithId(userId);
+				customer.setPassword(temporaryPassword);
+				customerMapper.updateCustomer(customer);
 				return "이메일로 임시 비밀번호를 보냈습니다. 확인하여 주세요";
 			} catch (Exception e) {
 				System.out.println(e);
@@ -207,7 +210,8 @@ public class CustomerService {
 			return "잘못된 정보 입니다. 확인 해 주세요";
 		}
 	}
-
+	
+	@Transactional
 	public String mailSendWithId(JavaMailSender mailSender, String email, String name) {
 		System.out.println(email+","+name);
 		Customer customer = customerMapper.selectCustomerWithEmail(email);

@@ -1,4 +1,6 @@
+
 $(function() {
+	
 	$.datepicker.setDefaults($.datepicker.regional['ko']);
 	// 시작일(date1)은 종료일(date2) 이후 날짜 선택 불가
 	// 종료일(date2)은 시작일(date1) 이전 날짜 선택 불가
@@ -14,7 +16,7 @@ $(function() {
 				buttonText : "날짜선택", // 버튼의 대체 텍스트
 				dateFormat : "yy-mm-dd", // 날짜의 형식
 				changeMonth : true, // 월을 이동하기 위한 선택상자 표시여부
-				minDate : '+2D',
+				minDate : 0,
 				maxDate : '+1M',
 				onClose : function(selectedDate) {
 					// 시작일(date1) datepicker가 닫힐때
@@ -23,11 +25,11 @@ $(function() {
 					var date = $(this).datepicker('getDate');
 					date.setDate(date.getDate() + 7); // Add 7 days
 					$('#date2').datepicker("option", "maxDate", date); // Set
-																		// as
-																		// default
+					// as
+					// default
 				}
 			});
-	$('#date1').datepicker('setDate', 'toda');
+	
 	// 종료일
 	$('#date2').datepicker(
 			{
@@ -44,6 +46,9 @@ $(function() {
 					$("#date1").datepicker("option", "maxDate", selectedDate);
 				}
 			});
+	$('#date1').datepicker('setDate', new Date());
+	$('#date1').datepicker("show");
+	$('#date1').datepicker("hide");
 
 	var room = $("select[name=roomNum]");
 	room.change(function() {
@@ -60,10 +65,24 @@ $(function() {
 						"roomNum" : $(this).val()
 					},
 					success : function(d) {
-						alert(d)
+						$("#price").html(d);
 					}
 				})
 
+			}
+		})
+		$.ajax({
+			url : "/room/getPeopleCount",
+			type : "post",
+			data : {
+				"roomNum" : $(this).val()
+			},
+			success : function(d) {
+				$('#person').empty();
+				for (var i = 4; i <= d; i++) {
+					var option = $('<option value="'+i+'">'+i+'명</option>')
+					$('#person').append(option);
+				}
 			}
 		})
 	})

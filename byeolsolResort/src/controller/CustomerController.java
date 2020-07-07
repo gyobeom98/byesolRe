@@ -59,6 +59,7 @@ public class CustomerController {
 	@GetMapping("/regis")
 	public String getRegisForm(HttpSession session, Model m) {
 		if (session.getAttribute("userId") == null) {
+			System.out.println("aa");
 			return "registForm";
 		} else {
 			m.addAttribute("errorMessage", "잘못된 접근 입니다.");
@@ -206,7 +207,7 @@ public class CustomerController {
 			String userId = (String) session.getAttribute("userId");
 			Customer customer = customerService.getCustomerById(userId);
 			m.addAttribute("customer", customer);
-			return "mypage";
+			return "mypage/mypage";
 		} else {
 			m.addAttribute("errorMessage", "로그인을 해주세요");
 			return "redirect:/index/main";
@@ -322,7 +323,7 @@ public class CustomerController {
 			Customer customer = customerService.getCustomerById(userId);
 			if (customer.getEmailState().equals("인증")) {
 				m.addAttribute("reservView", reservService.getReservView(pageNum, userId));
-				return "myReservPage";
+				return "/mypage/myRoom";
 			} else {
 				m.addAttribute("errorMessage", "이메일 인증이 되어있지 않은 계정입니다.");
 				return "redirect:/cus/myPage";
@@ -373,60 +374,6 @@ public class CustomerController {
 
 	}
 	
-	@GetMapping("/idFind")
-	public String idFindForm(HttpSession session , Model m) {
-		if(session.getAttribute("userId")==null) {
-			return "";
-		}else {
-			m.addAttribute("errorMessage","잘못된 접근 입니다.");
-			return "redirect:/index/main";
-		}
-	}
-	
-	@PostMapping("/idFind")
-	public String idFind(HttpSession session, Model m, @RequestParam(defaultValue = "demail@naver.com")String email, @RequestParam(defaultValue = "deName")String name) {
-		if(session.getAttribute("userId")==null) {
-			if(!email.equals("demail@naver.com") && !name.equals("deName")) {
-				m.addAttribute("errorMessage",customerService.mailSendWithId(mailSender, email, name));
-				return "redirect:/cus/login";
-			}else {
-				m.addAttribute("errorMessage","정보를 다시 확인하여 주세요");
-				return "redirect:/cus/login";
-			}
-		}else {
-			m.addAttribute("errorMessage","잘못된 접근 입니다.");
-			return "redirect:/index/main";
-		}
-	}
-	
-	@GetMapping("/passwordFind")
-	public String passwordFindForm(HttpSession session , Model m) {
-		if(session.getAttribute("userId")==null) {
-			return "";
-		}else {
-			m.addAttribute("errorMessage","잘못된 접근 입니다.");
-			return "redirect:/index/main";
-		}
-	}
-	
-	@PostMapping("/passwordFind")
-	public String passwordFind(HttpSession session, Model m, @RequestParam(defaultValue = "deUserId")String userId, @RequestParam(defaultValue = "deEmail")String email) {
-		if(session.getAttribute("userId")==null) {
-			if(!userId.equals("deUserId") && !email.equals("deEmail")) {
-				m.addAttribute("errorMessage",customerService.mailSendByPassword(mailSender, email, userId));
-				return "redirect:/cus/login";
-			}else {
-				m.addAttribute("errorMessage","정보를 확인 해 주세요");
-				return "redirect:/cus/login";
-			}
-			
-		}else {
-			m.addAttribute("errorMessage","잘못된 접근 입니다.");
-			return "redirect:/index/main";
-		}
-		
-		
-	}
 	
 
 }

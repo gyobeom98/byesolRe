@@ -119,7 +119,8 @@
 									</tr>
 									<tr>
 										<td class="tdForm">객실</td>
-										<td class="tdForm1"><select class="room" name="roomNum">
+										<td class="tdForm1">
+										<select class="room" name="roomNum">
 												<option value="객실종류">객실선택</option>
 												<option value="101">room101</option>
 												<option value="102">room102</option>
@@ -143,16 +144,17 @@
 										<td class="tdForm1">
 										<select class="person" id="person" name="peopleCount">
 												<option value="인원" selected>인원</option>
-												<option value="4">4명</option>
-												<option value="5">5명</option>
-												<option value="6">6명</option>
-												<option value="7">7명</option>
-												<option value="8">8명</option>
-										</select></td>
+										</select>
+										</td>
 									</tr>
 									<tr style="border-style:none">
 										<td colspan="2">
 											<button type="submit">예약</button>
+										</td>
+									</tr>
+									<tr>
+										<td colspan="2" >
+											<span id="price">0</span>
 										</td>
 									</tr>
 								</table>

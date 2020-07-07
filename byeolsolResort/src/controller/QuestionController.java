@@ -56,7 +56,7 @@ public class QuestionController {
 				if (customerservice.getCustomerById(userId) != null) {
 					QuestionView questionView = questionService.getQuestionView(pageNum, userId);
 					m.addAttribute("questionView", questionView);
-					return "myQuestion";
+					return "/mypage/myQnA";
 				} else {
 					m.addAttribute("errorMessage", "잘못된 접근 입니다");
 					return "redirect:/index/main";

@@ -34,12 +34,6 @@ $(function() {
 						.children().children("a").css("font-size", "18px");
 
 			})
-			$("header").mouseover(function(){
-				$(this).parent().children().eq(2).fadeOut(2000);
-			});
-			$("header").mouseleave(function(){
-				$(this).parent().children().eq(2).fadeIn(2000);
-			});
 	$("#room1").hover(function() {
 		$(this).parent().parent().parent().children().eq(1).children().children().eq(1).css("background-image",'url("http://tjteam.dothome.co.kr/byeolsolResort/healingRoom/img7-3.jpg")');
 		$(this).parent().parent().parent().children().eq(1).children().children().eq(0).children().children().eq(0).html("CONCEPT 1");

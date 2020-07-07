@@ -32,7 +32,6 @@ public class RoomController {
 	public int sendMaxPeopleCount(int roomNum) {
 		Room room =roomService.getRoomByRoomNum(roomNum);
 		return room.getMaxPeople();
-		
 	}
 	
 	

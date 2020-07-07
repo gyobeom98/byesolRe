@@ -111,15 +111,38 @@
 							<li><a href="/cus/myReserv" class="li1">나의 예약</a></li>
 						</ul>
 					</div>
+					<table>
+						<tr>
+							<td>가격</td>
+							<td>입실예약날짜</td>
+							<td>퇴실날짜</td>
+							<td>예약인원</td>
+							<td>입금상태</td>
+							<td>접수일</td>
+						</tr>
 					<c:forEach var="i" items="${reservView.reservList }">
-						가격 : ${i.totalPrice } <br>
-						예약일 : ${i.startDate } -
-						${i.endDate}<br>
-						예약 인원수 : ${i.peopleCount }<br>
-						입금 상태 : ${i.state}
-						<br>
-						<jt:format value="${i.regDate}" pattern="YYYY-MM-dd HH:mm:ss" />
+						<tr>
+							<td>
+								${i.totalPrice }
+							</td>
+							<td>
+								${i.startDate }
+							</td>
+							<td>
+								${i.endDate}	
+							</td>
+							<td>
+								${i.peopleCount }
+							</td>
+							<td>
+								${i.state}
+							</td>
+							<td>
+								<jt:format value="${i.regDate}" pattern="YYYY-MM-dd HH:mm:ss" />
+							</td>
+						</tr>
 					</c:forEach>
+					</table>
 				</form>
 			</section>
 			<footer>

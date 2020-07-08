@@ -45,4 +45,8 @@ select * from reserv where user_id = #{userId}
 select * from reserv where user_id = #{userId} limit #{firstRow},#{reservCountPerPage}
 </select>
 
+<select id="selectReservWithLimit" resultType="Reserv">
+select * from reserv #{firstRow},#{reservCountPerPage}
+</select>
+
 </mapper>

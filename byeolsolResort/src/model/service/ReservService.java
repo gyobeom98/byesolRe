@@ -18,9 +18,12 @@ import model.dto.Customer;
 import model.dto.ErrorMessage;
 import model.dto.Remove;
 import model.dto.Reserv;
+import model.dto.ReservInfo;
 import model.dto.Room;
+import model.mapper.CustomerMapper;
 import model.mapper.RemoveMapper;
 import model.mapper.ReservMapper;
+import model.view.ReservInfoView;
 import model.view.ReservView;
 
 @Service("reservService")
@@ -123,7 +126,7 @@ public class ReservService {
 	}
 
 	public ErrorMessage updateReserv(HttpSession session, int reservId, Date startDate, Date endDate, int roomNum,
-			int peopleCount, int totalPrice) {
+			int peopleCount) {
 		if (session.getAttribute("userId") != null) {
 			String userId = (String) session.getAttribute("userId");
 			Room room = roomService.getRoomByRoomNum(roomNum);
@@ -283,7 +286,30 @@ public class ReservService {
 		}
 		
 	}
-
+	
+	@Autowired
+	CustomerMapper customerMapper;
+	
+	public ReservInfoView getReservInfoView(int pageNum) {
+		
+		ReservInfoView reservInfoView = null;
+		
+		int firstRow = 0;
+		List<ReservInfo> reservInfoList = new ArrayList<ReservInfo>();
+		int reservCnt = reservMapper.reservCount();
+		
+		if(reservCnt>0) {
+			List<Reserv> reservList = reservMapper.selectReservWithLimit(firstRow, RESERV_COUNT_PER_PAGE);
+			for (Reserv reserv : reservList) {
+			Customer customer = customerMapper.selectCustomerWithId(reserv.getUserId());
+			Room room = roomService.getRoomById(reserv.getRoomId());
+			reservInfoList.add(new ReservInfo(reserv.getUserId(), room.getConcept(),
+					customer.getName(), reserv.getStartDate(),reserv.getEndDate(), reserv.getTotalPrice(), reserv.getPeopleCount()));
+			}
+		}
+		reservInfoView = new ReservInfoView(reservCnt, pageNum, firstRow, RESERV_COUNT_PER_PAGE, reservInfoList);
+		return reservInfoView;
+	}
 
 	
 	

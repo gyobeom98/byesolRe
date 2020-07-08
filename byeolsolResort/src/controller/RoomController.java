@@ -29,9 +29,13 @@ public class RoomController {
 	
 	@PostMapping("/getPeopleCount")
 	@ResponseBody
-	public int sendMaxPeopleCount(int roomNum) {
+	public int sendMaxPeopleCount(@RequestParam(defaultValue = "0")int roomNum) {
+		if(roomNum !=0) {
 		Room room =roomService.getRoomByRoomNum(roomNum);
 		return room.getMaxPeople();
+		}else {
+			return 0;
+		}
 	}
 	
 	

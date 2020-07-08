@@ -35,10 +35,25 @@ public class IndexController {
 		return "/adminPage/adminQnA";
 	}
 	
+	@Autowired
+	ReservService reservService;
+	
 	//객실정보관리
 	@GetMapping("/adminRoom")
-	public String adminRoomPage() {
-		return "adminPage/adminRoom";
+	public String adminRoomPage(HttpSession session , Model m , @RequestParam(defaultValue = "1")int pageNum) {
+		if(session.getAttribute("userId")!=null) {
+			String userId = (String)session.getAttribute("userId");
+			if(userId.equals("admin")) {
+				m.addAttribute("reservInfoView",reservService.getReservInfoView(pageNum));
+				return "adminPage/adminRoom";
+			}else {
+				m.addAttribute("errorMessage","권한이 없는 접근 입니다.");
+				return "redirect:/index/main";
+			}
+		}else {
+			m.addAttribute("errorMessage","로그인이 되어있지 않습니다.");
+			return "redirect:/index/main";
+		}
 	}
 	
 	//유저정보관리
@@ -47,17 +62,11 @@ public class IndexController {
 		return "/adminPage/adminUser";
 	}
 	
-	@Autowired
-	FtpService ftpService;
 	
 	//메인페이지
 	@GetMapping("/main")
 	public String mainPage(@RequestParam(required = false) String errorMessage, Model m) {
 		m.addAttribute("errorMessage", errorMessage);
-		List<String> imgPath =  ftpService.ftpImgPath("logo");
-		for (String path : imgPath) {
-			System.out.println(path);
-		}
 		return "/main/main";
 	}
 	

@@ -28,6 +28,8 @@ public interface ReservMapper {
 	public int reservCount();
 
 	public List<Reserv> selectReservByUserId(String userId);
+
+	public List<Reserv> selectReservWithLimit(@Param("firstRow")int firstRow, @Param("reservCountPerPage")int reservCountPerPage);
 	
 	
 	

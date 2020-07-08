@@ -26,8 +26,6 @@
 				<div class="main">
 					<div id="logo">
 						<a id="logoimg" href="/index/main"> <img class="logo1"
-							src="https://byeolsol.000webhostapp.com/css/title1.png"> <img
-							class="logo2"
 							src="https://byeolsol.000webhostapp.com/css/title2.png">
 						</a>
 					</div>
@@ -48,7 +46,11 @@
 									</ul></li>
 								<li><a href="">회원 서비스</a>
 									<ul>
-										<li><a class="topmargin" href="/index/leftover">객실예약</a></li>
+										<li><c:if test="${userId==null }">
+												<a class="topmargin" href="/cus/login">객실예약</a>
+											</c:if> <c:if test="${userId!=null }">
+												<a class="topmargin" href="/index/leftover">객실예약</a>
+											</c:if></li>
 										<li><a href="/index/guestroom">객실현황</a></li>
 										<li><a href="/board/list">후기게시판</a></li>
 									</ul></li>
@@ -111,6 +113,47 @@
 							<li><a href="/index/adminRoom" class="li2">객실정보관리</a></li>
 							<li><a href="/index/adminQnA" class="li3">Q&A관리</a></li>
 						</ul>
+					</div>
+					<div class="user_form">
+						<div class="keywordForm">
+							이름 : <input type="text" id="keyword_name">
+						</div>
+						<table id="user_list">
+							<thead>
+								<tr>
+									<td>id</td>
+									<td>user_id</td>
+									<td>password</td>
+									<td>name</td>
+									<td>email</td>
+									<td>zipcode</td>
+									<td>address</td>
+									<td>phone</td>
+									<td>email_state</td>
+									<td>birth_date</td>
+									<td colspan="2" style="text-align: center;">수정 / 삭제</td>
+									<td></td>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>1</td>
+									<td>아이디가져오기</td>
+									<td>비번가져오기</td>
+									<td>이름가져오기</td>
+									<td>이메일가져오기</td>
+									<td>우편번호</td>
+									<td>주소</td>
+									<td>폰번호</td>
+									<td>이멜인증여부</td>
+									<td>생일</td>
+									<td><input type="button"
+										onclick="location.href=(어드민회원수정폼)" value="수정"></td>
+									<td><input type="button"
+										onclick="location.href=(어드민회원삭제폼)" value="삭제"></td>
+								</tr>
+							</tbody>
+						</table>
 					</div>
 				</form>
 			</section>

@@ -6,11 +6,10 @@
 <head>
 <meta charset="UTF-8">
 <title>별솔리조트</title>
-<link rel="stylesheet" href="/css/login.css">
+<link rel="stylesheet" href="/css/addBoard.css">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" src="/script/sub.js"></script>
-<script type="text/javascript" src="/script/login.js"></script>
 </head>
 <body>
 	<div class="allwrap">
@@ -18,8 +17,8 @@
 			<header class="header">
 				<div class="main">
 					<div id="logo">
-						<a id="logoimg" href="/index/main">
-						<img class="logo1" src="https://byeolsol.000webhostapp.com/css/title2.png"> 
+						<a id="logoimg" href="/index/main"> <img class="logo1"
+							src="https://byeolsol.000webhostapp.com/css/title2.png">
 						</a>
 					</div>
 					<div class="navi">
@@ -27,8 +26,7 @@
 							<ul>
 								<li><a href="/index/byeolsolInfo">별솔리조트</a>
 									<ul>
-										<li><a class="topmargin"
-											href="/index/byeolsolInfo">별솔리조트란?</a></li>
+										<li><a class="topmargin" href="/index/byeolsolInfo">별솔리조트란?</a></li>
 										<li><a href="/index/roomMain">객실소개</a></li>
 										<li><a href="/index/fee">이용안내</a></li>
 										<li><a href="/index/map">오시는길</a></li>
@@ -40,10 +38,13 @@
 									</ul></li>
 								<li><a href="">회원 서비스</a>
 									<ul>
-										<li><a class="topmargin"
-											href="/index/leftover">객실예약</a></li>
+										<li><c:if test="${userId==null }">
+												<a class="topmargin" href="/cus/login">객실예약</a>
+											</c:if> <c:if test="${userId!=null }">
+												<a class="topmargin" href="/index/leftover">객실예약</a>
+											</c:if></li>
 										<li><a href="/index/guestroom">객실현황</a></li>
-										<li><a href="/index/board">후기게시판</a></li>
+										<li><a href="/board/list">후기게시판</a></li>
 									</ul></li>
 								<li><a href="">주변관광지</a>
 									<ul>
@@ -56,37 +57,25 @@
 					</div>
 					<div id="side">
 						<ul>
-							<li>
-							<c:if test="${userId==null}">
-							<a href="/cus/login" >고객센터</a>
-							</c:if>
-							<c:if test="${userId!=null}">
-							<a href="/question/addQuestion">고객센터</a>
-							</c:if>
-							</li>
-							<li>
-							<span>｜</span>
-							</li>
-							<li>
-							<c:if test="${userId==null}">
-							<a href="/cus/login" >로그인</a>
-							</c:if>
-							<c:if test="${userId!=null}">
-							<a href="/cus/logout">로그아웃</a>
-							</c:if>
-							</li>
+							<li><c:if test="${userId==null}">
+									<a href="/cus/login">고객센터</a>
+								</c:if> <c:if test="${userId!=null}">
+									<a href="/question/addQuestion">고객센터</a>
+								</c:if></li>
 							<li><span>｜</span></li>
-							<li>
-							<c:if test="${userId==null}">
-							<a href="/cus/regis" >회원가입</a>
-							</c:if>
-							<c:if test='${userId!=null && userId!="admin"}'>
-							<a href="/cus/myPage">마이페이지</a>
-							</c:if>
-							<c:if test='${userId=="admin"}'>
-							<a href="/index/adminUser">관리자페이지</a>
-							</c:if>
-							</li>
+							<li><c:if test="${userId==null}">
+									<a href="/cus/login">로그인</a>
+								</c:if> <c:if test="${userId!=null}">
+									<a href="/cus/logout">로그아웃</a>
+								</c:if></li>
+							<li><span>｜</span></li>
+							<li><c:if test="${userId==null}">
+									<a href="/cus/regis">회원가입</a>
+								</c:if> <c:if test='${userId!=null && userId!="admin"}'>
+									<a href="/cus/myPage">마이페이지</a>
+								</c:if> <c:if test='${userId=="admin"}'>
+									<a href="/index/adminUser">관리자페이지</a>
+								</c:if></li>
 						</ul>
 					</div>
 				</div>
@@ -100,39 +89,29 @@
 						<ul>
 							<li>HOME</li>
 							<li>》</li>
-							<li>로그인</li>
+							<li>회원서비스</li>
+							<li>》</li>
+							<li>후기게시판</li>
+							<li>》</li>
+							<li>후기작성하기</li>
 						</ul>
 					</div>
 					<div class="sibtitle">
-						<h3 class="stitle">로그인</h3>
+						<h3 class="stitle">후기작성하기</h3>
 					</div>
-					<div class="loginForm">
-						<div>
-							<form action="/cus/login" method="post">
-							<div class="log_idpw">
-								<div class="logo_img">
-								</div>
-								<div class="id_pwd">
-									<table>
-										<tr>
-											<td class="firstTd"><strong>ID</strong></td>
-											<td><input type="text" name="userId"></td>
-										</tr>
-										<tr>
-											<td class="firstTd"><strong>PW</strong></td>
-											<td><input type="password" name="password"></td>
-										</tr>
-									</table>
-									<input type="submit" value="로그인">
-								</div>
-							</div>
-							</form>
-						</div>
-						<div class="loginForm_foot">
-							<button type="button" name="find_id_pwd" onclick="idpw()">ID / 비밀번호 찾기</button>
-							<button type="button" name="newregis" onclick="signup()">회원가입</button>
-						</div>
-					</div>
+					<form action="/board/updateBoard" method="post"
+						enctype="multipart/form-data">
+						<input type="number" value="${board.id}" name="id"
+							readonly="readonly"> <input type="text"
+							value="${board.title}" name="title"> <input type="text"
+							value="${board.content}" name="content"> <img alt=""
+							src="${board.firstPath }" height="50px"> <input type="file"
+							name="uploadFile01"> <img alt=""
+							src="${board.secondPath }" height="50px"> <input
+							type="file" name="uploadFile02"> <img alt=""
+							src="${board.thirdPath }" height="50px"> <input type="file"
+							name="uploadFile03"> <input type="submit">
+					</form>
 				</div>
 			</section>
 			<footer>

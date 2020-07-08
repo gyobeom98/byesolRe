@@ -1,16 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>별솔리조트</title>
-<link rel="stylesheet" href="/css/qna.css">
+<link rel="stylesheet" href="/css/board.css">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" src="/script/sub.js"></script>
-<script type="text/javascript" src="/script/qna.js"></script>
 </head>
 <body>
 	<div class="allwrap">
@@ -39,14 +38,11 @@
 									</ul></li>
 								<li><a href="">회원 서비스</a>
 									<ul>
-										<li>
-										<c:if test="${userId==null }">
-										<a class="topmargin" href="/cus/login">객실예약</a>
-										</c:if>
-										<c:if test="${userId!=null }">
-										<a class="topmargin" href="/index/leftover">객실예약</a>
-										</c:if>
-										</li>
+										<li><c:if test="${userId==null }">
+												<a class="topmargin" href="/cus/login">객실예약</a>
+											</c:if> <c:if test="${userId!=null }">
+												<a class="topmargin" href="/index/leftover">객실예약</a>
+											</c:if></li>
 										<li><a href="/index/guestroom">객실현황</a></li>
 										<li><a href="/board/list">후기게시판</a></li>
 									</ul></li>
@@ -93,48 +89,116 @@
 						<ul>
 							<li>HOME</li>
 							<li>》</li>
-							<li>고객센터</li>
+							<li>회원서비스</li>
 							<li>》</li>
-							<li>고객의 소리</li>
+							<li>후기게시판</li>
 						</ul>
 					</div>
-					<div class="sibtitle">
-						<h3 class="stitle">고객의 소리</h3>
+					<div>
+						<c:if test="${userId==board.userId}">
+							<button type="button">수정</button>
+						</c:if>
 					</div>
-				</div>
-				<div class="qNa_form">
-					<div class="qNa_info">
-						<br> 고객의 소리함을 통해 고객 여러분의 문의, 제안, 칭찬 등을 접수합니다.<br>
-						<br> 접수된 글은 마이페이지 나의 Q&A 확인 가능하며,<br>
-						<br> 메일 또는 유선을 통해 빠른 시간 내에 답변해 드립니다.<br>
-						<br>
-					</div>
-					<form onsubmit="return check()" nama="qNa_write" id="qNa_write" action="#" method="post">
+					<table>
+						<tr>
+							<td>${board.title }</td>
+						</tr>
+						<tr>
+							<td>${board.userId}</td>
+						</tr>
+						<tr>
+							<td>${board.content}</td>
+						</tr>
+					</table>
+					<br>
+					<table>
+						<tr>
+							<td colspan="2">댓글</td>
+						</tr>
+						<c:if test="${commentView.commentCnt >0 }">
+							<c:forEach var="q" items="${commentView.commentList }">
+								<tr>
+									<td>${q.userId}</td>
+									<td>${q.message }</td>
+								</tr>
+							</c:forEach>
+						</c:if>
+					</table>
+					<!-- 현재 페이지가 총 페이지 수와 보다 작거나 같으면 -->
+					<c:if
+						test="${commentView.currentPageNum<commentView.pageTotalCount+1}">
+						<!-- 현재 페이지가 1보다 크고 현재 페이지가 총 페이지의 수보다 작거나 같으 -->
+						<c:if
+							test="${commentView.currentPageNum>1 && commentView.currentPageNum<=commentView.pageTotalCount}">
+							<!-- get 방식의 get요청(인자로 현재 페이지의 전번 페이지로 이동) -->
+							<a
+								href="/board/detailBoard?pageNum=${commentView.currentPageNum-1}&boardId=${board.id}">이전</a>
+						</c:if>
+
+						<!-- 만약 현재 페이지가 1이면 -->
+						<c:if test="${commentView.currentPageNum==1}">
+
+							<!-- 1부터 페이지 총 수 만큼 반복문을 돌리면서 -->
+							<c:forEach var="k" begin="1" end="${commentView.pageTotalCount }">
+								<!-- 1~5까지 출력  get 방식의 get요청(인자로 각 수의 페이지 로)-->
+								<c:if test="${k<6}">
+									<a href="/board/detailBoard?pageNum=${k}&boardId=${board.id}">${k}</a>
+								</c:if>
+							</c:forEach>
+						</c:if>
+						<!-- 현제 페이지가 1이 아니면 -->
+						<c:if test="${commentView.currentPageNum!=1}">
+
+							<c:if
+								test="${commentView.pageTotalCount-commentView.currentPageNum >=3 && commentView.currentPageNum !=1 }">
+								<c:forEach var="j" begin="${commentView.currentPageNum-1}"
+									end="${commentView.currentPageNum+3}">
+									<a href="/board/detailBoard?pageNum=${j}&boardId=${board.id}">${j}</a>
+								</c:forEach>
+							</c:if>
+							<c:if
+								test="${commentView.pageTotalCount-commentView.currentPageNum<3}">
+								<c:if
+									test="${(commentView.currentPageNum-(4-(commentView.pageTotalCount-commentView.currentPageNum)))<0}">
+									<c:forEach var="j" begin="0"
+										end="${commentView.pageTotalCount }">
+										<c:if test="${j>0 }">
+											<a href="/board/detailBoard?pageNum=${j}&boardId=${board.id}">${j}</a>
+										</c:if>
+									</c:forEach>
+								</c:if>
+								<c:if
+									test="${(commentView.currentPageNum-(4-(commentView.pageTotalCount-commentView.currentPageNum)))>=0}">
+									<c:forEach var="j"
+										begin="${commentView.currentPageNum-(4-(commentView.pageTotalCount-commentView.currentPageNum))}"
+										end="${commentView.pageTotalCount }">
+										<c:if test="${j>0 }">
+											<a href="/board/detailBoard?pageNum=${j}&boardId=${board.id}">${j}</a>
+										</c:if>
+									</c:forEach>
+								</c:if>
+							</c:if>
+						</c:if>
+						<c:if
+							test="${commentView.currentPageNum <commentView.pageTotalCount }">
+							<a
+								href="/board/detailBoard?pageNum=${commentView.currentPageNum+1}&boardId=${board.id}">다음</a>
+						</c:if>
+					</c:if>
+
+					<c:if test="${commentView.commentCnt<=0 }">
+
+					정보가 없습니다.
+					</c:if>
+
+					<form action="/board/addComment" method="post">
 						<table>
 							<tr>
-								<td class="formTd1">제목</td>
-								<td><input type="text" id="qNa_title" name="qNa_write"></td>
-							</tr>
-							<tr>
-								<td class="formTd1">분류</td>
-								<td><select name="qNa_select">
-										<option value="기타">기타</option>
-										<option value="예약">예약문의</option>
-										<option value="객실">객실문의</option>
-										<option value="식음시설">식음시설</option>
-										<option value="관광정보">관광정보</option>
-									</select></td>
-							</tr>
-							<tr>
-								<td class="formTd1">파일첨부</td>
-								<td><input type="file" name="file_input"></td>
-							</tr>
-							<tr>
-								<td class="formTd1">내용</td>
-								<td><textarea name="textarea" id="textarea" rows="8" cols="80"></textarea></td>
+								<td>message</td>
+								<td><textarea rows="5" cols="20" name="message"></textarea></td>
 							</tr>
 						</table>
-						<input type="submit" id="qNa_submit" value="등록">
+						<input type="submit">
 					</form>
 				</div>
 			</section>

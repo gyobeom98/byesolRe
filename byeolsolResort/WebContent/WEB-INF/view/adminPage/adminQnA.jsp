@@ -20,8 +20,6 @@
 				<div class="main">
 					<div id="logo">
 						<a id="logoimg" href="/index/main"> <img class="logo1"
-							src="https://byeolsol.000webhostapp.com/css/title1.png"> <img
-							class="logo2"
 							src="https://byeolsol.000webhostapp.com/css/title2.png">
 						</a>
 					</div>
@@ -106,6 +104,42 @@
 							<li><a href="/index/adminQnA" class="li1">Q&A관리</a></li>
 						</ul>
 					</div>
+					<div class="tag">
+						<select name="select_qNa" id="select_qNa">
+							<option value="전체">전체</option>
+							<option value="기타">기타</option>
+							<option value="예약">예약문의</option>
+							<option value="객실">객실문의</option>
+							<option value="식음시설">식음시설</option>
+							<option value="관광정보">관광정보</option>
+						</select>
+					</div>
+					<table id="user_list">
+						<thead>
+							<tr>
+								<td>질문번호</td>
+								<td>분류</td>
+								<td>내용</td>
+								<td>name</td>
+								<td>작성일</td>
+								<td>답변여부</td>
+								<td colspan="2" style="text-align: center;"></td>
+
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>1</td>
+								<td>객실문의</td>
+								<td><a href="질문글">방에서 고기구워먹어도 되나요?</a>
+								</td>
+								<td>이름가져오기</td>
+								<td>작성일</td>
+								<td>답변여부O/X</td>
+								<td><input type="button" onclick="location.href='answerPage'" value="답변"></td>
+							</tr>
+						</tbody>
+					</table>
 				</form>
 			</section>
 			<footer>

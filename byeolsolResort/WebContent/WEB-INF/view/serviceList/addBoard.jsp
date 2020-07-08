@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>별솔리조트</title>
-<link rel="stylesheet" href="/css/board.css">
+<link rel="stylesheet" href="/css/addBoard.css">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" src="/script/sub.js"></script>
@@ -38,7 +38,14 @@
 									</ul></li>
 								<li><a href="">회원 서비스</a>
 									<ul>
-										<li><a class="topmargin" href="/index/leftover">객실예약</a></li>
+										<li>
+										<c:if test="${userId==null }">
+										<a class="topmargin" href="/cus/login">객실예약</a>
+										</c:if>
+										<c:if test="${userId!=null }">
+										<a class="topmargin" href="/index/leftover">객실예약</a>
+										</c:if>
+										</li>
 										<li><a href="/index/guestroom">객실현황</a></li>
 										<li><a href="/board/list">후기게시판</a></li>
 									</ul></li>
@@ -96,9 +103,12 @@
 						<h3 class="stitle">후기작성하기</h3>
 					</div>
 					<form action="/board/addBoard" method="post" enctype="multipart/form-data">
-						<input type="text" name="title" placeholder="제목입력"> 
-						<input type="text" name="content" placeholder="내용입력">
-						<input type="file" name="uploadFile" multiple="multiple" max="3">
+					<div>
+						<div>제목</div>
+						<div><input type="text" name="title"></div>		
+						<div><textarea name="content"></textarea></div>
+						<div><input type="file" name="uploadFile" multiple="multiple" max="3"></div>
+					</div>		
 						<input type="submit">
 					</form>
 				</div>

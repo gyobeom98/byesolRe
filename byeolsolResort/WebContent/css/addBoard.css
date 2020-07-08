@@ -10,10 +10,6 @@ a:visited {
 	text-decoration: none;
 }
 
-input[readonly="readonly"]{
-	border: none;
-}
-
 * {
 	font-family: '맑은 고딕', '굴림', 'Arial', sans-serif;
 }
@@ -64,7 +60,7 @@ header:hover {
 	transition: 1.5s;
 }
 
-.stitle{
+.stitle {
 	font-size: 45px;
 	margin: 5% 0%;
 }
@@ -298,6 +294,7 @@ address ul>li {
 	margin: 0 auto 0;
 	width: 100%;
 	text-align: center;
+	margin-bottom: 100px;
 }
 
 .subimage {
@@ -322,28 +319,12 @@ address ul>li {
 	padding: 0 5px;
 }
 
-.sibtitle {
-	padding: 40px 0 20px;
-}
-
-.sibtitle>h3 {
-	font-size: 40px;
-}
-
-
-
 table {
+	margin: auto;
 	width: 100%;
-    border-top: 1px solid #d1d1d1;
-    border-bottom: 1px solid #d1d1d1;
-	margin-bottom: 20px;
 	border-collapse: collapse;
 }
-.notice_top{
-    border-bottom: 1px solid #d1d1d1;
-    background-color: #BFC7DE;
-}
 
-section{
-	margin-bottom: 100px;
+td{
+	border: 1px solid;
 }

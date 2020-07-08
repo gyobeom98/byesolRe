@@ -10,6 +10,7 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" src="/script/sub.js"></script>
+<script type="text/javascript" src="/script/news.js"></script>
 </head>
 <body>
 	<div class="allwrap">
@@ -38,7 +39,11 @@
 									</ul></li>
 								<li><a href="">회원 서비스</a>
 									<ul>
-										<li><a class="topmargin" href="/index/leftover">객실예약</a></li>
+										<li><c:if test="${userId==null }">
+												<a class="topmargin" href="/cus/login">객실예약</a>
+											</c:if> <c:if test="${userId!=null }">
+												<a class="topmargin" href="/index/leftover">객실예약</a>
+											</c:if></li>
 										<li><a href="/index/guestroom">객실현황</a></li>
 										<li><a href="/board/list">후기게시판</a></li>
 									</ul></li>
@@ -93,6 +98,11 @@
 					<div class="sibtitle">
 						<h3 class="stitle">공지사항</h3>
 					</div>
+					<div>
+						<c:if test='${userId=="admin" }'>
+						<button id="addBoard" onclick="addBoard()">글쓰기</button>
+						</c:if>
+					</div>
 					<div class="notice_main">
 						<table>
 							<tr class="notice_top">
@@ -101,14 +111,14 @@
 								<td>작성자</td>
 								<td>게시날짜</td>
 							</tr>
-							<tr>
-								<c:forEach var="q" items="${adBoardList}">
-								<td>${q.title}</td>
-								<td>${q.content}</td>
-								<td>${q.userId }</td>
-								<td>${q.wDate }</td>
-								</c:forEach>
-							</tr>
+							<c:forEach var="q" items="${adBoardList}">
+								<tr>
+									<td>${q.title}</td>
+									<td>${q.content}</td>
+									<td>${q.userId }</td>
+									<td>${q.wDate }</td>
+								</tr>
+							</c:forEach>
 						</table>
 					</div>
 				</div>

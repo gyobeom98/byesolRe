@@ -45,7 +45,14 @@
 									</ul></li>
 								<li><a href="">회원 서비스</a>
 									<ul>
-										<li><a class="topmargin" href="/index/leftover">객실예약</a></li>
+										<li>
+										<c:if test="${userId==null }">
+										<a class="topmargin" href="/cus/login">객실예약</a>
+										</c:if>
+										<c:if test="${userId!=null }">
+										<a class="topmargin" href="/index/leftover">객실예약</a>
+										</c:if>
+										</li>
 										<li><a href="/index/guestroom">객실현황</a></li>
 										<li><a href="/board/list">후기게시판</a></li>
 									</ul></li>

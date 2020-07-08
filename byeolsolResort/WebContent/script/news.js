@@ -1,17 +1,5 @@
 function addBoard() {
-	location.href="/board/addBoard";
-}
-
-function addBoardlogin() {
-	location.href="/cus/login";
-}
-
-function goUpdate(id){
-	location.href="/board/updateBoard?id="+id;
-}
-
-function goDetail(id){
-	location.href="/board/detailBoard?boardId="+id;
+	location.href="/board/addAdminBoard";
 }
 
 $(function() {

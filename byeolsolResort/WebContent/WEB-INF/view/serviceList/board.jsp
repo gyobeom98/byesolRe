@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+ <%@ taglib uri="http://sargue.net/jsptags/time" prefix="jt" %>  
+ <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>   
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,7 +40,14 @@
 									</ul></li>
 								<li><a href="">회원 서비스</a>
 									<ul>
-										<li><a class="topmargin" href="/index/leftover">객실예약</a></li>
+										<li>
+										<c:if test="${userId==null }">
+										<a class="topmargin" href="/cus/login">객실예약</a>
+										</c:if>
+										<c:if test="${userId!=null }">
+										<a class="topmargin" href="/index/leftover">객실예약</a>
+										</c:if>
+										</li>
 										<li><a href="/index/guestroom">객실현황</a></li>
 										<li><a href="/board/list">후기게시판</a></li>
 									</ul></li>
@@ -95,30 +103,31 @@
 						<h3 class="stitle">후기게시판</h3>
 					</div>
 					<div>
+						<c:if test="${userId!=null }">
 						<button id="addBoard" onclick="addBoard()">글쓰기</button>
+						</c:if>
+						<c:if test="${userId==null }">
+						<button id="addBoard" onclick="addBoardlogin()">글쓰기</button>
+						</c:if>
 					</div>
 					<!-- 만약 정보의 총 수가 0 보다 크면 -->
 					<c:if test="${boardView.boardCnt>0 }">
 						<!-- request로 받은 boardView의 정보리스트를 item으로 잡고 -->
 						<table>
 							<tr>
-								<td>제목</td>
-								<td>내용</td>
-								<td>작성자</td>
-								<td>작성일</td>
-								<td>수정</td>
+								<td>No.</td>
+								<td>title</td>
+								<td>writer</td>
+								<td>date</td>
 							</tr>
 							<c:forEach var="i" items="${boardView.boardList}">
 								<!-- 정보를 출력하게 하는데 삭제 버튼을 누르면 deleteGuest메서드(인자로 이 정보의 아이디를 줌)를 실행
 							수정 버튼을 누르면 updateGuest메서드 (인자로 이 정보의 아이디를 줌)를 실행 하게 함. -->
-								<tr>
+								<tr onclick="goDetail(${i.id})">
+									<td></td>
 									<td>${i.title}</td>
-									<td>${i.content}</td>
 									<td>${i.userId}</td>
-									<td>${i.wDate}</td>
-									<td>
-										<button onclick="goUpdate(${i.id})">수정</button>
-									</td>
+									<td><jt:format value="${i.wDate}" pattern="YYYY-MM-dd HH:mm:ss"/></td>
 								</tr>
 							</c:forEach>
 						</table>

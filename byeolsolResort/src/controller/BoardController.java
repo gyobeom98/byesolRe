@@ -65,9 +65,9 @@ public class BoardController {
 		boolean errorCheck = true;
 		if (session.getAttribute("userId") != null) {
 			if (board.getTitle().equals("") || board.getContent().equals("")) {
-				m.addAttribute("errorMessage","공백이 있습니다.");
+				m.addAttribute("errorMessage", "공백이 있습니다.");
 				return "redirect:/board/addBoard";
-				
+
 			} else {
 				String addTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy_MM_dd_HH_mm_ss_SSSS"));
 				if (!uploadFile[0].isEmpty()) {
@@ -76,17 +76,20 @@ public class BoardController {
 						if (boardService.checkImg(uploadFile[i])) {
 							if (i == 0) {
 								board = boardService.imgUpAndSetPath(board, i, uploadFile[i], addTime, "first");
-								if(board.getFirstPath().equals("") || board.getFirstPath() == null) errorCheck = false;
+								if (board.getFirstPath() == null)
+									errorCheck = false;
 							}
 							if (i == 1) {
 								board = boardService.imgUpAndSetPath(board, i, uploadFile[i], addTime, "second");
-								if(board.getSecondPath().equals("") || board.getSecondPath() == null) errorCheck = false;
+								if (board.getSecondPath() == null)
+									errorCheck = false;
 							}
 							if (i == 2) {
 								board = boardService.imgUpAndSetPath(board, i, uploadFile[i], addTime, "third");
-								if(board.getThirdPath().equals("") || board.getThirdPath() == null) errorCheck = false;
+								if (board.getThirdPath() == null)
+									errorCheck = false;
 							}
-						}else {
+						} else {
 							isTypeCheck = false;
 						}
 
@@ -97,11 +100,11 @@ public class BoardController {
 					board.setState("admin");
 				}
 				System.out.println(board);
-				if(isTypeCheck && errorCheck) {
-				boardService.addBoard(board);
-				return "redirect:/board/list";
-				}else {
-					m.addAttribute("errorMessage","게시글 형식에 맞지 않습니다.");
+				if (isTypeCheck && errorCheck) {
+					boardService.addBoard(board);
+					return "redirect:/board/list";
+				} else {
+					m.addAttribute("errorMessage", "게시글 형식에 맞지 않습니다.");
 					return "redirect:/board/addBoard";
 				}
 			}
@@ -112,13 +115,94 @@ public class BoardController {
 
 	}
 
+	@GetMapping("/addAdminBoard")
+	public String addAdminBoardForm(HttpSession session, Model m) {
+
+		if (session.getAttribute("userId") != null) {
+			String userId = (String) session.getAttribute("userId");
+			if (userId.equals("admin")) {
+				return "addAdminBoardForm";
+			} else {
+				m.addAttribute("errorMessage", "권한이 없는 접근 입니다.");
+				return "redirect:/board/adminBoardMain";
+			}
+		} else {
+			m.addAttribute("errorMessage", "로그인이 되어 있지 않습니다.");
+			return "redirect:/index/main";
+		}
+
+	}
+
+	@PostMapping("/addAdminBoard")
+	public String addAdminBoard(Board board, HttpSession session,
+			@RequestParam(required = false) MultipartFile[] uploadFile, Model m) {
+		boolean isTypeCheck = true;
+		boolean errorCheck = true;
+		if (session.getAttribute("userId") != null) {
+			String userId = (String) session.getAttribute("userId");
+			if (userId.equals("admin")) {
+				if (board.getTitle().equals("") || board.getContent().equals("")) {
+					m.addAttribute("errorMessage", "공백이 있습니다.");
+					return "redirect:/board/addAdminBoard";
+
+				} else {
+					String addTime = LocalDateTime.now()
+							.format(DateTimeFormatter.ofPattern("yyyy_MM_dd_HH_mm_ss_SSSS"));
+					if (!uploadFile[0].isEmpty()) {
+						for (int i = 0; i < uploadFile.length; i++) {
+							System.out.println(i);
+							if (boardService.checkImg(uploadFile[i])) {
+								if (i == 0) {
+									board = boardService.imgUpAndSetPath(board, i, uploadFile[i], addTime, "first");
+									if (board.getFirstPath() == null)
+										errorCheck = false;
+								}
+								if (i == 1) {
+									board = boardService.imgUpAndSetPath(board, i, uploadFile[i], addTime, "second");
+									if (board.getSecondPath() == null)
+										errorCheck = false;
+								}
+								if (i == 2) {
+									board = boardService.imgUpAndSetPath(board, i, uploadFile[i], addTime, "third");
+									if (board.getThirdPath() == null)
+										errorCheck = false;
+								}
+							} else {
+								isTypeCheck = false;
+							}
+
+						}
+					}
+					board.setUserId((String) session.getAttribute("userId"));
+					if (board.getUserId().equals("admin")) {
+						board.setState("admin");
+					}
+					System.out.println(board);
+					if (isTypeCheck && errorCheck) {
+						boardService.addBoard(board);
+						return "redirect:/board/adminBoardList";
+					} else {
+						m.addAttribute("errorMessage", "게시글 형식에 맞지 않습니다.");
+						return "redirect:/board/addAdminBoard";
+					}
+				}
+			} else {
+				m.addAttribute("errorMessage", "권한이 없는 접근 입니다.");
+				return "redirect:/index/main";
+			}
+		} else {
+			m.addAttribute("errorMessage", "로그인이 되어 있지 않습니다");
+			return "redirect:/board/adminBoardList";
+		}
+	}
+
 	@GetMapping("/updateBoard")
 	public String goBoardUpdateForm(int id, Model m, HttpSession session) {
 		if (session.getAttribute("userId") != null) {
 			String userId = (String) session.getAttribute("userId");
 			if (id != 0) {
 				Board board = boardService.selectBoard(id);
-				if (userId.equals(board.getUserId())) {
+				if (userId.equals(board.getUserId()) || userId.equals("admin")) {
 					m.addAttribute("board", board);
 					return "updateBoardForm";
 				} else {
@@ -141,81 +225,270 @@ public class BoardController {
 			@RequestParam(required = false) MultipartFile uploadFile01,
 			@RequestParam(required = false) MultipartFile uploadFile02,
 			@RequestParam(required = false) MultipartFile uploadFile03) {
+		boolean isTypeCheck = true;
+		boolean errorCheck = true;
 		if (session.getAttribute("userId") != null) {
 			String updateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy_MM_dd_HH_mm_ss_SSSS"));
 			Board b = boardService.selectBoard(board.getId());
-			System.out.println(b);
-			if (b.getUserId().equals((String) session.getAttribute("userId"))) {
-				if (uploadFile01.isEmpty()) {
-					board.setFirstPath(b.getFirstPath());
-				} else {
-					if (boardService.checkImg(uploadFile01)) {
-						if (b.getFirstPath() != null) {
-							String Time = b.getFirstPath().substring(b.getFirstPath().indexOf('/', 46) + 1,
-									b.getFirstPath().lastIndexOf('/'));
-							ftpService.ftpdelete(b.getFirstPath(), Time);
-							System.out.println("TIME : " + Time);
-							ftpService.ftpImg(uploadFile01, Time, "first");
-							board.setFirstPath("http://tjteam.dothome.co.kr/byeolsolResort/board/" + Time + "/"
-									+ "first" + uploadFile01.getOriginalFilename());
+			if (b != null) {
+				String userId = (String) session.getAttribute("userId");
+				if (b.getUserId().equals(userId) || userId.equals("admin")) {
+					if (uploadFile01.isEmpty()) {
+						board.setFirstPath(b.getFirstPath());
+					} else {
+						if (boardService.checkImg(uploadFile01)) {
+							if (b.getFirstPath() != null) {
+								String Time = b.getFirstPath().substring(b.getFirstPath().indexOf('/', 46) + 1,
+										b.getFirstPath().lastIndexOf('/'));
+								ftpService.ftpdelete(b.getFirstPath(), Time);
+								board = boardService.imgUpAndSetPath(board, 0, uploadFile01, Time, "first");
+								if (board.getFirstPath() == null)
+									errorCheck = false;
+							} else {
+								board = boardService.imgUpAndSetPath(board, 0, uploadFile01, updateTime, "first");
+								if (board.getFirstPath() == null)
+									errorCheck = false;
+							}
 						} else {
-							ftpService.ftpImg(uploadFile01, updateTime, "first");
-							board.setFirstPath("http://tjteam.dothome.co.kr/byeolsolResort/board/" + updateTime
-									+ "/first" + uploadFile01.getOriginalFilename());
-							;
+							isTypeCheck = false;
 						}
 					}
-				}
-				if (uploadFile02.isEmpty()) {
-					board.setSecondPath(b.getSecondPath());
-				}
+					if (uploadFile02.isEmpty()) {
+						board.setSecondPath(b.getSecondPath());
+					}
 
-				else {
-					if (boardService.checkImg(uploadFile02)) {
-						if (b.getSecondPath() != null) {
-							String Time = b.getFirstPath().substring(b.getFirstPath().indexOf('/', 46) + 1,
-									b.getFirstPath().lastIndexOf('/'));
-							ftpService.ftpdelete(b.getSecondPath(), Time);
-							ftpService.ftpImg(uploadFile02, Time, "second");
-							board.setSecondPath("http://tjteam.dothome.co.kr/byeolsolResort/board/" + Time + "/second"
-									+ uploadFile02.getOriginalFilename());
+					else {
+						if (boardService.checkImg(uploadFile02)) {
+							if (b.getSecondPath() != null) {
+								String Time = b.getFirstPath().substring(b.getFirstPath().indexOf('/', 46) + 1,
+										b.getFirstPath().lastIndexOf('/'));
+								ftpService.ftpdelete(b.getSecondPath(), Time);
+								board = boardService.imgUpAndSetPath(board, 1, uploadFile02, Time, "second");
+								if (board.getSecondPath() == null)
+									errorCheck = false;
+							} else {
+								board = boardService.imgUpAndSetPath(board, 1, uploadFile02, updateTime, "second");
+								if (board.getSecondPath() == null)
+									errorCheck = false;
+							}
 						} else {
-							ftpService.ftpImg(uploadFile02, updateTime, "second");
-							board.setSecondPath("http://tjteam.dothome.co.kr/byeolsolResort/board/" + updateTime
-									+ "/second" + uploadFile02.getOriginalFilename());
-							;
+							isTypeCheck = false;
 						}
 					}
-				}
 
-				if (uploadFile03.isEmpty()) {
-					board.setThirdPath(b.getThirdPath());
-				} else {
-					if (boardService.checkImg(uploadFile03)) {
-						if (b.getThirdPath() != null) {
-							String Time = b.getFirstPath().substring(b.getFirstPath().indexOf('/', 46) + 1,
-									b.getFirstPath().lastIndexOf('/'));
-							ftpService.ftpdelete(b.getThirdPath(), Time);
-							ftpService.ftpImg(uploadFile03, Time, "third");
-							board.setThirdPath("http://tjteam.dothome.co.kr/byeolsolResort/board/" + Time + "/third"
-									+ uploadFile03.getOriginalFilename());
+					if (uploadFile03.isEmpty()) {
+						board.setThirdPath(b.getThirdPath());
+					} else {
+						if (boardService.checkImg(uploadFile03)) {
+							if (b.getThirdPath() != null) {
+								String Time = b.getFirstPath().substring(b.getFirstPath().indexOf('/', 46) + 1,
+										b.getFirstPath().lastIndexOf('/'));
+								ftpService.ftpdelete(b.getThirdPath(), Time);
+								board = boardService.imgUpAndSetPath(board, 2, uploadFile03, Time, "third");
+								if (board.getThirdPath() == null)
+									errorCheck = false;
+							} else {
+								board = boardService.imgUpAndSetPath(board, 2, uploadFile03, updateTime, "third");
+								if (board.getThirdPath() == null)
+									errorCheck = false;
+							}
 						} else {
-							ftpService.ftpImg(uploadFile03, updateTime, "third");
-							board.setThirdPath("http://tjteam.dothome.co.kr/byeolsolResort/board/" + updateTime
-									+ "/third" + uploadFile03.getOriginalFilename());
+							isTypeCheck = false;
 						}
 					}
+					if (isTypeCheck && errorCheck) {
+						boardService.updateBoard(board);
+					}
 				}
-
-				boardService.updateBoard(board);
-				System.out.println(board);
+				return "redirect:/board/list";
+			} else {
+				m.addAttribute("errorMessage", "잘못된 접근 입니다.");
+				return "redirect:/board/list";
 			}
-			return "redirect:/board/list";
 		} else {
 			m.addAttribute("errorMessage", "로그인이 되어 있지 않습니다");
 			return "redirect:/board/list";
 		}
 	}
+
+	@GetMapping("/updateAdminBoard")
+	public String updateAdminBoardForm(HttpSession session, Model m, @RequestParam(defaultValue = "0") int id) {
+
+		if (session.getAttribute("userId") != null) {
+			if (id > 0) {
+				String userId = (String) session.getAttribute("userId");
+				if (userId.equals("admin")) {
+					Board board = boardService.selectBoard(id);
+					if (board != null && board.getState().equals("admin")) {
+						m.addAttribute("adminBoard", board);
+						return "updateAdminBoard";
+					} else {
+						m.addAttribute("errorMessage", "잘못된 접근 입니다.");
+						return "redirect:/index/main";
+					}
+				} else {
+					m.addAttribute("errorMessage", "권한이 없는 접근 입니다.");
+					return "redirect:/index/main";
+				}
+			} else {
+				m.addAttribute("errorMessage", "로그인이 되어 있지 않습니다.");
+				return "redirect:/index/main";
+			}
+		} else {
+			m.addAttribute("errorMessage", "잘못된 접근 입니다.");
+			return "redirect:/board/adminBoardList";
+		}
+
+	}
+
+	@PostMapping("/updateAdminBoard")
+	public String updateAdminBoard(Board board, HttpSession session, Model m,
+			@RequestParam(required = false) MultipartFile uploadFile01,
+			@RequestParam(required = false) MultipartFile uploadFile02,
+			@RequestParam(required = false) MultipartFile uploadFile03) {
+		boolean isTypeCheck = true;
+		boolean errorCheck = true;
+		if (session.getAttribute("userId") != null) {
+			String updateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy_MM_dd_HH_mm_ss_SSSS"));
+			Board b = boardService.selectBoard(board.getId());
+			if (b != null) {
+				String userId = (String) session.getAttribute("userId");
+				if (userId.equals("admin") && b.getState().equals("admin")) {
+					if (uploadFile01.isEmpty()) {
+						board.setFirstPath(b.getFirstPath());
+					} else {
+						if (boardService.checkImg(uploadFile01)) {
+							if (b.getFirstPath() != null) {
+								String Time = b.getFirstPath().substring(b.getFirstPath().indexOf('/', 46) + 1,
+										b.getFirstPath().lastIndexOf('/'));
+								ftpService.ftpdelete(b.getFirstPath(), Time);
+								board = boardService.imgUpAndSetPath(board, 0, uploadFile01, Time, "first");
+								if (board.getFirstPath() == null)
+									errorCheck = false;
+							} else {
+								board = boardService.imgUpAndSetPath(board, 0, uploadFile01, updateTime, "first");
+								if (board.getFirstPath() == null)
+									errorCheck = false;
+							}
+						} else {
+							isTypeCheck = false;
+						}
+					}
+					if (uploadFile02.isEmpty()) {
+						board.setSecondPath(b.getSecondPath());
+					}
+
+					else {
+						if (boardService.checkImg(uploadFile02)) {
+							if (b.getSecondPath() != null) {
+								String Time = b.getFirstPath().substring(b.getFirstPath().indexOf('/', 46) + 1,
+										b.getFirstPath().lastIndexOf('/'));
+								ftpService.ftpdelete(b.getSecondPath(), Time);
+								board = boardService.imgUpAndSetPath(board, 1, uploadFile02, Time, "second");
+								if (board.getSecondPath() == null)
+									errorCheck = false;
+							} else {
+								board = boardService.imgUpAndSetPath(board, 1, uploadFile02, updateTime, "second");
+								if (board.getSecondPath() == null)
+									errorCheck = false;
+							}
+						} else {
+							isTypeCheck = false;
+						}
+					}
+
+					if (uploadFile03.isEmpty()) {
+						board.setThirdPath(b.getThirdPath());
+					} else {
+						if (boardService.checkImg(uploadFile03)) {
+							if (b.getThirdPath() != null) {
+								String Time = b.getFirstPath().substring(b.getFirstPath().indexOf('/', 46) + 1,
+										b.getFirstPath().lastIndexOf('/'));
+								ftpService.ftpdelete(b.getThirdPath(), Time);
+								board = boardService.imgUpAndSetPath(board, 2, uploadFile03, Time, "third");
+								if (board.getThirdPath() == null)
+									errorCheck = false;
+							} else {
+								board = boardService.imgUpAndSetPath(board, 2, uploadFile03, updateTime, "third");
+								if (board.getThirdPath() == null)
+									errorCheck = false;
+							}
+						} else {
+							isTypeCheck = false;
+						}
+					}
+					if (isTypeCheck && errorCheck) {
+						boardService.updateBoard(board);
+					}
+				}
+				return "redirect:/board/list";
+			} else {
+				m.addAttribute("errorMessage", "잘못된 접근 입니다.");
+				return "redirect:/board/list";
+			}
+		} else {
+			m.addAttribute("errorMessage", "로그인이 되어 있지 않습니다");
+			return "redirect:/board/list";
+		}
+	}
+
+	@GetMapping("/deleteBoard")
+	public String deleteBoard(HttpSession session, Model m, @RequestParam(defaultValue = "0") int id) {
+		if (session.getAttribute("userId") != null) {
+			String userId = (String) session.getAttribute("userId");
+			if (id > 0) {
+				Board board = boardService.selectBoard(id);
+				if (board != null) {
+					if (board.getUserId().equals(userId) || userId.equals("admin")) {
+						boardService.deleteBoard(id, userId);
+						return "redirect:/board/list";
+					} else {
+						m.addAttribute("errorMessage","권한이 없습니다.");
+						return "redirect:/index/main";
+					}
+				} else {
+					m.addAttribute("errorMessage","잘못된 접근 입니다.");
+					return "redirect:/board/list";
+				}
+			} else {
+				m.addAttribute("errorMessage","잘못된 접근 입니다.");
+				return "redirect:/board/list";
+			}
+		} else {
+			m.addAttribute("errorMessage","로그인이 되어 있지 않습니다.");
+			return "redirect:/index/main";
+		}
+	}
+	
+	@GetMapping("/deleteAdminBoard")
+	public String deleteAdminBoard(HttpSession session, Model m, @RequestParam(defaultValue = "0") int id) {
+		if (session.getAttribute("userId") != null) {
+			String userId = (String) session.getAttribute("userId");
+			if (id > 0) {
+				Board board = boardService.selectBoard(id);
+				if (board != null && board.getState().equals("admin")) {
+					if (userId.equals("admin")) {
+						boardService.deleteBoard(id, userId);
+						return "redirect:/board/adminBoardList";
+					} else {
+						m.addAttribute("errorMessage","권한이 없습니다.");
+						return "redirect:/index/main";
+					}
+				} else {
+					m.addAttribute("errorMessage","잘못된 접근 입니다.");
+					return "redirect:/board/adminBoardList";
+				}
+			} else {
+				m.addAttribute("errorMessage","잘못된 접근 입니다.");
+				return "redirect:/board/adminBoardList";
+			}
+		} else {
+			m.addAttribute("errorMessage","로그인이 되어 있지 않습니다.");
+			return "redirect:/index/main";
+		}
+	}
+	
+	
 
 	@GetMapping("/detailBoard")
 	public String goBoardDetail(int boardId, Model m, @RequestParam(defaultValue = "1") int pageNum) {

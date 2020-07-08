@@ -79,19 +79,28 @@ public class BoardService {
 		
 		switch (i) {
 		case 0:	
-			if(isSuccess.equals("성공"))
+			if(isSuccess.equals("성공")) {
 			board.setFirstPath("http://tjteam.dothome.co.kr/byeolsolResort/board/" + addTime + "/"
 										+ "first" + uploadFile.getOriginalFilename());
+			}else {
+				board.setFirstPath(null);
+			}
 			break;
 		case 1:	
-			if(isSuccess.equals("성공"))
+			if(isSuccess.equals("성공")) {
 			board.setSecondPath("http://tjteam.dothome.co.kr/byeolsolResort/board/" + addTime + "/"
 										+ "second" + uploadFile.getOriginalFilename());
+			}else {
+				board.setSecondPath(null);
+			}
 			break;
 		case 2:	
-			if(isSuccess.equals("성공"))
+			if(isSuccess.equals("성공")) {
 			board.setThirdPath("http://tjteam.dothome.co.kr/byeolsolResort/board/" + addTime + "/"
 										+ "third" + uploadFile.getOriginalFilename());
+			}else {
+				board.setThirdPath(null);
+			}
 			break;	
 		}
 		

@@ -37,7 +37,7 @@
 	</select>
 
 	<select id="selectBoardListWithPage" resultType="Board">
-	select * from board where state="others" limit #{firstRow}, #{boardPerPageCount}
+	select * from board where state="others" order by w_date desc limit #{firstRow}, #{boardPerPageCount}
 	</select>
 	
 	<select id="selectBoatdByUserId">

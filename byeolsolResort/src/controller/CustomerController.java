@@ -60,7 +60,7 @@ public class CustomerController {
 	public String getRegisForm(HttpSession session, Model m) {
 		if (session.getAttribute("userId") == null) {
 			System.out.println("aa");
-			return "registForm";
+			return "/sideform/signup";
 		} else {
 			m.addAttribute("errorMessage", "잘못된 접근 입니다.");
 			return "redirect:/index/main";
@@ -86,7 +86,7 @@ public class CustomerController {
 						m.addAttribute("e" + fe.getField(), fe.getField());
 						System.out.println(fe);
 					}
-					return "registForm";
+					return "/sideform/signup";
 				} else {
 
 					String idCheck = customerService.idCheck(customerVo.getUserId());
@@ -158,7 +158,7 @@ public class CustomerController {
 	public String loginForm(HttpSession session, Model m) {
 		if (session.getAttribute("userId") == null) {
 			System.out.println("aa");
-			return "loginForm";
+			return "/sideform/login";
 		} else {
 			m.addAttribute("errorMessage", "잘못된 접근");
 			return "redirect:/index/main";
@@ -172,7 +172,7 @@ public class CustomerController {
 			Customer c = customerService.logIn(userId, password);
 			if (c == null) {
 				m.addAttribute("islog", "id 또는 비밀번호가 잘못 되었습니다.");
-				return "loginForm";
+				return "/sideform/login";
 			} else {
 
 				session.setAttribute("userId", c.getUserId());

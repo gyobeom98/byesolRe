@@ -121,7 +121,7 @@ public class BoardController {
 		if (session.getAttribute("userId") != null) {
 			String userId = (String) session.getAttribute("userId");
 			if (userId.equals("admin")) {
-				return "addAdminBoardForm";
+				return "/newsList/addNews";
 			} else {
 				m.addAttribute("errorMessage", "권한이 없는 접근 입니다.");
 				return "redirect:/board/adminBoardMain";
@@ -204,7 +204,7 @@ public class BoardController {
 				Board board = boardService.selectBoard(id);
 				if (userId.equals(board.getUserId()) || userId.equals("admin")) {
 					m.addAttribute("board", board);
-					return "updateBoardForm";
+					return "/serviceList/updateBoard";
 				} else {
 					m.addAttribute("errorMessage", "권한이 없습니다.");
 					return "redirect:/board/list";
@@ -321,7 +321,7 @@ public class BoardController {
 					Board board = boardService.selectBoard(id);
 					if (board != null && board.getState().equals("admin")) {
 						m.addAttribute("adminBoard", board);
-						return "updateAdminBoard";
+						return "/newsList/updateNews";
 					} else {
 						m.addAttribute("errorMessage", "잘못된 접근 입니다.");
 						return "redirect:/index/main";

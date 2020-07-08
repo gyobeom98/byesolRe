@@ -12,6 +12,8 @@ import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPReply;
+import org.apache.ibatis.javassist.ClassClassPath;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -150,13 +152,15 @@ public class FtpService {
 		}
 	}
 
-	public void ftpImg(MultipartFile uploadFile, String addTime, String count) {
+	public String ftpImg(MultipartFile uploadFile, String addTime, String count) {
 		// 받는 변수는 request를 보낸 것에 맞게 받으시면 됩니다.
 		// 웹에서 받은 MultipartFile을 File로 변환시켜줍니다.
 		FTPClient ftp = null;
 		String sysId = System.getProperty("user.name");
+		File tempDirectory = new File(System.getProperty("java.io.tmpdir"));
+		System.out.println(tempDirectory.getAbsolutePath());
 		try {
-			File file = new File("C:\\Users\\"+sysId+"\\Desktop" + uploadFile.getOriginalFilename());
+			File file = new File(tempDirectory.getAbsolutePath()+"/"+uploadFile.getOriginalFilename());
 			if (file.createNewFile()) {
 				System.out.println("생성");
 			}
@@ -197,8 +201,10 @@ public class FtpService {
 			System.out.println(file.exists());
 			System.out.println(file.delete());
 			// storeFile Method는 파일 송신결과를 boolean값으로 리턴합니다
+			return "성공";
 		} catch (Exception e) {
 			e.printStackTrace();
+			return "실패";
 		} finally {
 			if (ftp != null && ftp.isConnected()) {
 				try {

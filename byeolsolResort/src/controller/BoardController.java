@@ -61,6 +61,8 @@ public class BoardController {
 	@PostMapping("/addBoard")
 	public String goAddBoardResult(Board board, HttpSession session,
 			@RequestParam(required = false) MultipartFile[] uploadFile, Model m) {
+		boolean isTypeCheck = true;
+		boolean errorCheck = true;
 		if (session.getAttribute("userId") != null) {
 			if (board.getTitle().equals("") || board.getContent().equals("")) {
 				m.addAttribute("errorMessage","공백이 있습니다.");
@@ -73,21 +75,19 @@ public class BoardController {
 						System.out.println(i);
 						if (boardService.checkImg(uploadFile[i])) {
 							if (i == 0) {
-								ftpService.ftpImg(uploadFile[i], addTime, "first");
-								board.setFirstPath("http://tjteam.dothome.co.kr/byeolsolResort/board/" + addTime + "/"
-										+ "first" + uploadFile[i].getOriginalFilename());
-								System.out.println("board ftpTest  : " + board.getFirstPath());
+								board = boardService.imgUpAndSetPath(board, i, uploadFile[i], addTime, "first");
+								if(board.getFirstPath().equals("") || board.getFirstPath() == null) errorCheck = false;
 							}
 							if (i == 1) {
-								ftpService.ftpImg(uploadFile[i], addTime, "second");
-								board.setSecondPath("http://tjteam.dothome.co.kr/byeolsolResort/board/" + addTime + "/"
-										+ "second" + uploadFile[i].getOriginalFilename());
+								board = boardService.imgUpAndSetPath(board, i, uploadFile[i], addTime, "second");
+								if(board.getSecondPath().equals("") || board.getSecondPath() == null) errorCheck = false;
 							}
 							if (i == 2) {
-								ftpService.ftpImg(uploadFile[i], addTime, "third");
-								board.setThirdPath("http://tjteam.dothome.co.kr/byeolsolResort/board/" + addTime + "/"
-										+ "third" + uploadFile[i].getOriginalFilename());
+								board = boardService.imgUpAndSetPath(board, i, uploadFile[i], addTime, "third");
+								if(board.getThirdPath().equals("") || board.getThirdPath() == null) errorCheck = false;
 							}
+						}else {
+							isTypeCheck = false;
 						}
 
 					}
@@ -97,8 +97,13 @@ public class BoardController {
 					board.setState("admin");
 				}
 				System.out.println(board);
+				if(isTypeCheck && errorCheck) {
 				boardService.addBoard(board);
 				return "redirect:/board/list";
+				}else {
+					m.addAttribute("errorMessage","게시글 형식에 맞지 않습니다.");
+					return "redirect:/board/addBoard";
+				}
 			}
 		} else {
 			m.addAttribute("errorMessage", "로그인이 되어 있지 않습니다");

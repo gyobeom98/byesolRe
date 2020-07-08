@@ -105,7 +105,7 @@ function check() {
 	// 정규식
 	var passwordPattern = /^[A-Za-z0-9]{9,14}$/;
 	var namePattern = /^[가-힣]{2,6}|[a-zA-Z]{2,10}$/;
-	var phonePattern = /^\d{3}-\d{3,4}-\d{4}$/;
+	var phonePattern = /^\d{3}\d{3,4}\d{4}$/;
 
 	// 비밀번호 공백 확인
 	if ($("#password").val() == "") {

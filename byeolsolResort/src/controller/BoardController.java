@@ -10,7 +10,6 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,13 +42,13 @@ public class BoardController {
 		m.addAttribute("boardView", boardService.getView(pageNum));
 		if (errorMessage != null)
 			m.addAttribute("errorMessage", errorMessage);
-		return "boardMain";
+		return "/serviceList/board";
 	}
 
 	@GetMapping("/addBoard")
 	public String goAddBoardForm(HttpSession session, Model m) {
 		if (session.getAttribute("userId") != null)
-			return "addBoardForm";
+			return "/serviceList/addBoard";
 		else {
 			m.addAttribute("errorMessage", "로그인이 되어 있지 않습니다");
 			return "redirect:/board/list";
@@ -60,7 +59,6 @@ public class BoardController {
 	FtpService ftpService;
 
 	@PostMapping("/addBoard")
-	@Transactional
 	public String goAddBoardResult(Board board, HttpSession session,
 			@RequestParam(required = false) MultipartFile[] uploadFile, Model m) {
 		if (session.getAttribute("userId") != null) {
@@ -110,7 +108,7 @@ public class BoardController {
 	}
 
 	@GetMapping("/updateBoard")
-	public String goBoardUpdateForm(@RequestParam(defaultValue = "0")int id, Model m, HttpSession session) {
+	public String goBoardUpdateForm(int id, Model m, HttpSession session) {
 		if (session.getAttribute("userId") != null) {
 			String userId = (String) session.getAttribute("userId");
 			if (id != 0) {

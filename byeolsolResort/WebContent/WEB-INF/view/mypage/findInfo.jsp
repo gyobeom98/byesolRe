@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>별솔리조트</title>
-<link rel="stylesheet" href="/css/notice.css">
+<link rel="stylesheet" href="/css/findInfo.css">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" src="/script/sub.js"></script>
@@ -18,6 +18,8 @@
 				<div class="main">
 					<div id="logo">
 						<a id="logoimg" href="/index/main"> <img class="logo1"
+							src="https://byeolsol.000webhostapp.com/css/title1.png"> <img
+							class="logo2"
 							src="https://byeolsol.000webhostapp.com/css/title2.png">
 						</a>
 					</div>
@@ -85,32 +87,60 @@
 						<ul>
 							<li>HOME</li>
 							<li>》</li>
-							<li>별솔소식</li>
+							<li>로그인</li>
 							<li>》</li>
-							<li>공지사항</li>
+							<li>아이디/비밀번호 찾기</li>
 						</ul>
 					</div>
 					<div class="sibtitle">
-						<h3 class="stitle">공지사항</h3>
+						<h3>아이디 / 비밀번호 찾기</h3>
 					</div>
-					<div class="notice_main">
-						<table>
-							<tr class="notice_top">
-								<td>제목</td>
-								<td>내용</td>
-								<td>작성자</td>
-								<td>게시날짜</td>
-							</tr>
-							<tr>
-								<c:forEach var="q" items="${adBoardList}">
-								<td>${q.title}</td>
-								<td>${q.content}</td>
-								<td>${q.userId }</td>
-								<td>${q.wDate }</td>
-								</c:forEach>
-							</tr>
-						</table>
-					</div>
+				</div>
+
+				<div class="findForm">
+					<form action="/cus/findId" method="post">
+						<div class="findId_box">
+							<h3>아이디 찾기</h3>
+							<div class="findId_table">
+								<table>
+									<tr>
+										<td>이름</td>
+										<td><input type="text" name="name"></td>
+									</tr>
+									<tr>
+										<td>이메일</td>
+										<td><input type="email" name="email"></td>
+									</tr>
+								</table>
+								<div>
+									<input type="submit" value="아이디 찾기">
+								</div>
+							</div>
+						</div>
+					</form>
+
+					<form action="/cus/findPassword" method="post">
+						<div class="findPwd_box">
+							<h3>비밀번호 찾기</h3>
+							<table>
+								<tr>
+									<td>이름</td>
+									<td><input type="text" name="name"></td>
+								</tr>
+								<tr>
+									<td>아이디</td>
+									<td><input type="text" name="userId"></td>
+								</tr>
+								<tr>
+									<td>이메일</td>
+									<td><input type="email" name="email"></td>
+								</tr>
+							</table>
+							<div>
+								<input type="submit" value="비밀번호 찾기">
+							</div>
+						</div>
+					</form>
 				</div>
 			</section>
 			<footer>

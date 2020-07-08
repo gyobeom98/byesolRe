@@ -10,6 +10,7 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" src="/script/sub.js"></script>
+<script type="text/javascript" src="/script/login.js"></script>
 </head>
 <body>
 	<div class="allwrap">
@@ -42,7 +43,7 @@
 										<li><a class="topmargin"
 											href="/index/leftover">객실예약</a></li>
 										<li><a href="/index/guestroom">객실현황</a></li>
-										<li><a href="/index/board">후기게시판</a></li>
+										<li><a href="/board/list">후기게시판</a></li>
 									</ul></li>
 								<li><a href="">주변관광지</a>
 									<ul>
@@ -128,14 +129,8 @@
 							</form>
 						</div>
 						<div class="loginForm_foot">
-							<form action="/cus/login" method="post">
-								<button type="button" name="find_id_pwd">
-									ID / 비밀번호 찾기</button>
-							</form>
-							<form action="/cus/regis" method="post">
-								<button type="button" name="newregis">
-									회원가입</button>
-							</form>
+							<button type="button" name="find_id_pwd" onclick="idpw()">ID / 비밀번호 찾기</button>
+							<button type="button" name="newregis" onclick="signup()">회원가입</button>
 						</div>
 					</div>
 				</div>

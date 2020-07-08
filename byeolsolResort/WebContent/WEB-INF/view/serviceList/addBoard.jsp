@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>별솔리조트</title>
-<link rel="stylesheet" href="/css/notice.css">
+<link rel="stylesheet" href="/css/board.css">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" src="/script/sub.js"></script>
@@ -85,32 +85,22 @@
 						<ul>
 							<li>HOME</li>
 							<li>》</li>
-							<li>별솔소식</li>
+							<li>회원서비스</li>
 							<li>》</li>
-							<li>공지사항</li>
+							<li>후기게시판</li>
+							<li>》</li>
+							<li>후기작성하기</li>
 						</ul>
 					</div>
 					<div class="sibtitle">
-						<h3 class="stitle">공지사항</h3>
+						<h3 class="stitle">후기작성하기</h3>
 					</div>
-					<div class="notice_main">
-						<table>
-							<tr class="notice_top">
-								<td>제목</td>
-								<td>내용</td>
-								<td>작성자</td>
-								<td>게시날짜</td>
-							</tr>
-							<tr>
-								<c:forEach var="q" items="${adBoardList}">
-								<td>${q.title}</td>
-								<td>${q.content}</td>
-								<td>${q.userId }</td>
-								<td>${q.wDate }</td>
-								</c:forEach>
-							</tr>
-						</table>
-					</div>
+					<form action="/board/addBoard" method="post" enctype="multipart/form-data">
+						<input type="text" name="title" placeholder="제목입력"> 
+						<input type="text" name="content" placeholder="내용입력">
+						<input type="file" name="uploadFile" multiple="multiple" max="3">
+						<input type="submit">
+					</form>
 				</div>
 			</section>
 			<footer>

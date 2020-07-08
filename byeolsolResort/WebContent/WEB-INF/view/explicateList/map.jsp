@@ -21,6 +21,8 @@
 				<div class="main">
 					<div id="logo">
 						<a id="logoimg" href="/index/main"> <img class="logo1"
+							src="https://byeolsol.000webhostapp.com/css/title1.png"> <img
+							class="logo2"
 							src="https://byeolsol.000webhostapp.com/css/title2.png">
 						</a>
 					</div>
@@ -43,7 +45,7 @@
 									<ul>
 										<li><a class="topmargin" href="/index/leftover">객실예약</a></li>
 										<li><a href="/index/guestroom">객실현황</a></li>
-										<li><a href="/index/board">후기게시판</a></li>
+										<li><a href="/board/list">후기게시판</a></li>
 									</ul></li>
 								<li><a href="">주변관광지</a>
 									<ul>

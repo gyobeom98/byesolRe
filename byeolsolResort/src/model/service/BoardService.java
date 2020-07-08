@@ -38,6 +38,9 @@ public class BoardService {
 	}
 	
 	public void addBoard(Board board) {
+		if(board.getUserId().equals("admin")) {
+			board.setState("admin");
+		}
 		boardMapper.insertBoard(board);
 	}
 

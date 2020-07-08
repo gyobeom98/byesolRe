@@ -52,7 +52,7 @@ public class BoardService {
 	@Autowired
 	FtpService ftpService;
 	
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	public String deleteBoard(int id , String userId) {
 		Board b = boardMapper.selectBoard(id);
 		if(b.getUserId().equals(userId) || userId.equals("admin")) {
@@ -70,6 +70,32 @@ public class BoardService {
 			return "게시글을 삭제할 권한이 없음";
 		}
 		
+	}
+	
+	@Transactional(rollbackFor = Exception.class)
+	public Board imgUpAndSetPath(Board board , int i , MultipartFile uploadFile, String addTime, String count) {
+		
+		String isSuccess = ftpService.ftpImg(uploadFile, addTime, count);
+		
+		switch (i) {
+		case 0:	
+			if(isSuccess.equals("성공"))
+			board.setFirstPath("http://tjteam.dothome.co.kr/byeolsolResort/board/" + addTime + "/"
+										+ "first" + uploadFile.getOriginalFilename());
+			break;
+		case 1:	
+			if(isSuccess.equals("성공"))
+			board.setSecondPath("http://tjteam.dothome.co.kr/byeolsolResort/board/" + addTime + "/"
+										+ "second" + uploadFile.getOriginalFilename());
+			break;
+		case 2:	
+			if(isSuccess.equals("성공"))
+			board.setThirdPath("http://tjteam.dothome.co.kr/byeolsolResort/board/" + addTime + "/"
+										+ "third" + uploadFile.getOriginalFilename());
+			break;	
+		}
+		
+		return board;
 	}
 	
 	

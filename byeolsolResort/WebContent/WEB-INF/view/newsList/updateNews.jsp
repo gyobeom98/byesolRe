@@ -102,19 +102,44 @@
 							<li>》</li>
 							<li>공지사항</li>
 							<li>》</li>
-							<li>공지사항작성하기</li>
+							<li>공지사항수정하기</li>
 						</ul>
 					</div>
 					<div class="sibtitle">
-						<h3 class="stitle">공지사항작성하기</h3>
+						<h3 class="stitle">공지사항수정하기</h3>
 					</div>
 					<form action="/board/updateAdminBoard" method="post"
 						enctype="multipart/form-data">
-
-						<input type="number" value="${board.id}" name="id" readonly="readonly">
-						<input type="text" value="${board.title}" name="title"> 
-						<input type="text" value="${board.content}" name="content">
-						<input type="submit">
+						<input type="number" value="${board.id}" name="id" readonly="readonly" style="display:none">
+						<table>
+							<tr>
+								<td>제목</td>
+								<td><input type="text" value="${board.title}" name="title"></td>
+							</tr>
+							<tr>
+								<td>내용</td>
+								<td><textarea name="content" rows="20" cols="150">${board.content}</textarea>
+							</tr>
+							<tr>
+								<td><img alt="" src="${board.firstPath }" height="50px"></td>
+							</tr>
+							<tr>
+								<td><input type="file" name="uploadFile01"></td>
+							</tr>
+							<tr>
+								<td><img alt="" src="${board.secondPath }" height="50px"></td>
+							</tr>
+							<tr>
+								<td><input type="file" name="uploadFile02"></td>
+							</tr>
+							<tr>
+								<td><img alt="" src="${board.thirdPath }" height="50px"></td>
+							</tr>
+							<tr>
+								<td><input type="file" name="uploadFile03"></td>
+							</tr>
+						</table>
+						<input type="submit" value="수정" id="update_subBtn">
 					</form>
 				</div>
 			</section>

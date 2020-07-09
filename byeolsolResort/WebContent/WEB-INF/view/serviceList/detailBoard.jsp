@@ -37,22 +37,17 @@
 										<li><a class="topmargin" href="/board/adminList">별솔뉴스</a></li>
 										<li><a href="/index/event">이벤트</a></li>
 									</ul></li>
-								<li>
-								<c:if test="${userId==null }">
-								<a href="/cus/login">회원 서비스</a>
-								</c:if>
-								<c:if test="${userId!=null }">
-								<a href="/index/leftover">회원 서비스</a>
-								</c:if>
+								<li><c:if test="${userId==null }">
+										<a href="/cus/login">회원 서비스</a>
+									</c:if> <c:if test="${userId!=null }">
+										<a href="/index/leftover">회원 서비스</a>
+									</c:if>
 									<ul>
-										<li>
-										<c:if test="${userId==null }">
-										<a class="topmargin" href="/cus/login">객실예약</a>
-										</c:if>
-										<c:if test="${userId!=null }">
-										<a class="topmargin" href="/index/leftover">객실예약</a>
-										</c:if>
-										</li>
+										<li><c:if test="${userId==null }">
+												<a class="topmargin" href="/cus/login">객실예약</a>
+											</c:if> <c:if test="${userId!=null }">
+												<a class="topmargin" href="/index/leftover">객실예약</a>
+											</c:if></li>
 										<li><a href="/index/guestroom">객실현황</a></li>
 										<li><a href="/board/list">후기게시판</a></li>
 									</ul></li>
@@ -104,35 +99,68 @@
 							<li>후기게시판</li>
 						</ul>
 					</div>
+					<div class="sibtitle">
+						<h3 class="stitle">후기게시판</h3>
+					</div>
 					<div>
-						<c:if test="${userId==board.userId}">
-							<button onclick="goUpdate(${board.id})" id="update_btn">수정</button>
+						<c:if test='${userId==board.userId || userId=="admin"}'>
+							<button onclick="goUpdate(${board.id})" class="update_btn">수정</button>
 						</c:if>
-						<c:if test="${userId==board.userId}">
-							<button onclick="goDelete(${board.id})" id="update_btn">삭제</button>
+					</div>
+					<div>
+						<c:if test='${userId==board.userId || userId=="admin"}'>
+							<button onclick="goDelete(${board.id})" class="update_btn">삭제</button>
 						</c:if>
 					</div>
 					<table>
 						<tr>
-							<td class="update_title">${board.title }</td>
+							<td class="titleForm">제목</td>
+							<td class="updateForm">${board.title }</td>
 						</tr>
 						<tr>
-							<td class="update_id">${board.userId}</td>
+							<td>작성자</td>
+							<td class="updateForm">${board.userId}</td>
 						</tr>
 						<tr>
-							<td>${board.content}</td>
+							<td>내용</td>
+							<td class="updateForm">${board.content}</td>
+						</tr>
+						<tr>
+							<c:if test="${board.firstPath!=null }">
+							<td rowspan="3">사진</td>
+							<td><img src="${board.firstPath }"></td>
+							</c:if>
+						</tr>
+						<tr>
+							<c:if test="${board.secondPath!=null }">
+							<td><img src="${board.secondPath }"></td>
+							</c:if>
+						</tr>
+						<tr>
+							<c:if test="${board.thirdPath!=null }">
+							<td><img src="${board.thirdPath }"></td>
+							</c:if>
 						</tr>
 					</table>
+					
 					<br>
 					<table>
 						<tr>
-							<td colspan="2" class="addCom">댓글</td>
+							<td colspan="4" class="addCom">댓글</td>
 						</tr>
 						<c:if test="${commentView.commentCnt >0 }">
 							<c:forEach var="q" items="${commentView.commentList }">
 								<tr>
 									<td>${q.userId}</td>
 									<td>${q.message }</td>
+									<c:if test='${userId==q.userId || userId=="admin"}'>
+									<td class="updel">
+									<button type="button" onclick="onUpdate(${q.id})">수정</button>
+									</td>
+									<td class="updel">
+									<button type="button" onclick="onDelte(${q.id})">삭제</button>
+									</td>
+									</c:if>
 								</tr>
 							</c:forEach>
 						</c:if>
@@ -208,6 +236,7 @@
 						<table>
 							<tr>
 								<td class="addCom">댓글달기</td>
+								<td class="hide"><input readonly="readonly" class="hide" value="${board.id }" name = "boardId"></td>
 								<td><textarea rows="3" cols="20" name="message" class="update_comment"></textarea></td>
 							</tr>
 						</table>

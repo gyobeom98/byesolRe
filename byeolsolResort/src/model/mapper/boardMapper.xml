@@ -62,7 +62,7 @@
 	</select>
 	
 	<select id="selectBoardListWithAdminPage" resultType="Board">
-	select * from board where state = "admin" limit #{firstRow}, #{boardCountPerPage}
+	select * from board where state = "admin" order by w_date desc limit #{firstRow}, #{boardCountPerPage}
 	</select>
 
 	

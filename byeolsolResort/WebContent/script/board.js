@@ -18,6 +18,14 @@ function goDetail(id){
 	location.href="/board/detailBoard?boardId="+id;
 }
 
+function goAdminUpdate(id){
+	location.href="/board/updateAdminBoard?id="+id;
+}
+
+function goAdminDelete(id){
+	location.href="/board/deleteAdminBoard?id="+id;
+}
+
 $(function() {
 	$('#manu>ul>li>a').css('color', '#000000');
 	$('#manu>ul>li>a').css('font-size', '18px');

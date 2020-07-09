@@ -10,6 +10,7 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" src="/script/sub.js"></script>
+<script type="text/javascript" src="/script/board.js"></script>
 </head>
 <body>
 	<div class="allwrap">
@@ -36,22 +37,17 @@
 										<li><a class="topmargin" href="/board/adminList">별솔뉴스</a></li>
 										<li><a href="/index/event">이벤트</a></li>
 									</ul></li>
-								<li>
-								<c:if test="${userId==null }">
-								<a href="/cus/login">회원 서비스</a>
-								</c:if>
-								<c:if test="${userId!=null }">
-								<a href="/index/leftover">회원 서비스</a>
-								</c:if>
+								<li><c:if test="${userId==null }">
+										<a href="/cus/login">회원 서비스</a>
+									</c:if> <c:if test="${userId!=null }">
+										<a href="/index/leftover">회원 서비스</a>
+									</c:if>
 									<ul>
-										<li>
-										<c:if test="${userId==null }">
-										<a class="topmargin" href="/cus/login">객실예약</a>
-										</c:if>
-										<c:if test="${userId!=null }">
-										<a class="topmargin" href="/index/leftover">객실예약</a>
-										</c:if>
-										</li>
+										<li><c:if test="${userId==null }">
+												<a class="topmargin" href="/cus/login">객실예약</a>
+											</c:if> <c:if test="${userId!=null }">
+												<a class="topmargin" href="/index/leftover">객실예약</a>
+											</c:if></li>
 										<li><a href="/index/guestroom">객실현황</a></li>
 										<li><a href="/board/list">후기게시판</a></li>
 									</ul></li>
@@ -98,34 +94,36 @@
 						<ul>
 							<li>HOME</li>
 							<li>》</li>
-							<li>별솔소식</li>
+							<li>회원서비스</li>
 							<li>》</li>
-							<li>공지사항</li>
+							<li>후기게시판</li>
 							<li>》</li>
-							<li>공지사항작성하기</li>
+							<li>댓글수정</li>
 						</ul>
 					</div>
 					<div class="sibtitle">
-						<h3 class="stitle">공지사항작성하기</h3>
+						<h3 class="stitle">댓글수정</h3>
 					</div>
-					<form action="/board/addAdminBoard" method="post" enctype="multipart/form-data">
+				</div>
+				<form action="/question/updateAnswer" method="post">
 					<table>
 						<tr>
-							<td><div>제목</div> </td>
-							<td class="tableTd"><input class="titleText" type="text" name="title"></td>
+							<td><input type="number" value="${answer.id}"
+								readonly="readonly" name="id" class="hide"></td>
 						</tr>
 						<tr>
-							<td>내용</td>
-							<td class="tableTd"><textarea class="content" cols="146" rows="10" name="content"></textarea></td>
+							<td><input type="text" class="hide" name="title" value="${answer.title}"></td>
 						</tr>
 						<tr>
-							<td>첨부파일</td>
-							<td><input type="file" name="uploadFile" multiple="multiple" max="3"></td>
+							<td><textarea rows="20" cols="20" name="message">
+						${answer.message }
+						</textarea></td>
 						</tr>
 					</table>
-						<div><input type="submit" value="등록"></div>
-					</form>
-				</div>
+					<div>
+						<input type="submit">
+					</div>
+				</form>
 			</section>
 			<footer>
 				<div id="fnb">

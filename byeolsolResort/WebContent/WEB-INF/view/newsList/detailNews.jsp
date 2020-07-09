@@ -10,6 +10,7 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" src="/script/sub.js"></script>
+<script type="text/javascript" src="/script/board.js"></script>
 </head>
 <body>
 	<div class="allwrap">
@@ -110,20 +111,44 @@
 					</div>
 					<div>
 						<c:if test='${userId=="admin"}'>
-							<button type="button">수정</button>
+							<button onclick="goAdminUpdate(${board.id})" class="update_btn">수정</button>
 						</c:if>
 					</div>
 					<table>
 						<tr>
+							<td>제목</td>
 							<td>${board.title }</td>
 						</tr>
 						<tr>
+							<td>작성자</td>
 							<td>${board.userId}</td>
 						</tr>
 						<tr>
+							<td>내용</td>
 							<td>${board.content}</td>
 						</tr>
+						<tr>
+							<c:if test="${board.firstPath!=null }">
+							<td rowspan="3">사진</td>
+							<td><img src="${board.firstPath }"></td>
+							</c:if>
+						</tr>
+						<tr>
+							<c:if test="${board.secondPath!=null }">
+							<td><img src="${board.secondPath }"></td>
+							</c:if>
+						</tr>
+						<tr>
+							<c:if test="${board.thirdPath!=null }">
+							<td><img src="${board.thirdPath }"></td>
+							</c:if>
+						</tr>
 					</table>
+					<div>
+						<c:if test='${userId=="admin"}'>
+							<button onclick="goAdminDelete(${board.id})" class="update_btn">삭제</button>
+						</c:if>
+					</div>
 				</div>
 			</section>
 			<footer>

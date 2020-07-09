@@ -330,8 +330,6 @@ address ul>li {
 	font-size: 40px;
 }
 
-
-
 table {
 	width: 100%;
     border-top: 1px solid #d1d1d1;
@@ -346,4 +344,11 @@ table {
 
 section{
 	margin-bottom: 100px;
+}
+
+#addAdminBoard{
+	float: right;
+	margin-bottom: 10px;
+	width: 100px;
+	height: 30px;
 }

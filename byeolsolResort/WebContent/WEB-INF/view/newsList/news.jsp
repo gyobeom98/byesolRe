@@ -14,7 +14,7 @@
 <script type="text/javascript" src="/script/news.js"></script>
 </head>
 <body>
-	<div class="allwrap"> 
+	<div class="allwrap">
 		<div class="wrap">
 			<header class="header">
 				<div class="main">

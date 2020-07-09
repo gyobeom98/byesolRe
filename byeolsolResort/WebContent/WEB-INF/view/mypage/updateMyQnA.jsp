@@ -114,7 +114,7 @@
 				<form action="/question/updateQuestion" method="post">
 					<table>
 						<tr class="number">
-							<td><input type="number" value="${question.id}" name="id" readonly="readonly"></td>
+							<td><input type="number" class="hide" value="${question.id}" name="id" readonly="readonly"></td>
 						</tr>
 						<tr>
 							<td class="formTd1">제목</td>
@@ -130,10 +130,6 @@
 									<option value="관광정보">관광정보</option>
 									<option value="기타">기타</option>
 							</select></td>
-						</tr>
-						<tr>
-							<td class="formTd1">파일첨부</td>
-							<td><input type="file" name="file_input"></td>
 						</tr>
 						<tr>
 							<td class="formTd1">내용</td>

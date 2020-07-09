@@ -1,5 +1,9 @@
-function addBoard() {
+function addAdminBoard() {
 	location.href="/board/addAdminBoard";
+}
+
+function goDetail(id){
+	location.href="/board/adminDetailBoard?boardId="+id;
 }
 
 $(function() {

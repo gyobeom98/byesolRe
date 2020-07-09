@@ -111,13 +111,13 @@
 						<h3 class="stitle">나의 Q&A</h3>
 					</div>
 				</div>
-				<div class="updaelDiv">
-					<c:if test="${question.writer==userId}">
-						<button class="updel" onclick="updateQuestion(${question.id})">수정</button>
-						<button class="updel" onclick="deleteQuestion(${question.id})">삭제</button>
-					</c:if>
-				</div>
-				<form>
+				<div class="titleForm">
+					<div>
+						<c:if test="${question.writer==userId}">
+							<button onclick="updateQuestion(${question.id})">수정</button>
+							<button onclick="deleteQuestion(${question.id})">삭제</button>
+						</c:if>
+					</div>
 					<table>
 						<tr>
 							<td>제목</td>
@@ -134,31 +134,37 @@
 							<td colspan="2">${question.message}</td>
 						</tr>
 					</table>
-				</form>
+				</div>
 				<form action="/question/addAnswer?pageNum="
-					${answerView.currentPageNum} method="post">
-
+					${answerView.currentPageNum} method="post" class="anwer">
 					<div>
 						<div>댓글달기</div>
-						<input type="text" name="title" class="title" value="XX">
+						<input type="number" class="hide" value="${question.id}" readonly="readonly"
+							name="questionId"> 
+							<input type="text" name="title"
+							class="hide" value="XX">
 						<textarea rows="20" cols="20" name="message"></textarea>
+					</div>
+					<div>
 						<input type="submit">
 					</div>
 				</form>
-				<table>
-					<c:forEach var="i" items="${answerView.answerList }">
-						<tr>
-							<td class="title">${i.title}</td>
-							<td>${i.writer }</td>
-							<td>${i.message}</td>
-						</tr>
-						<c:if test="${i.writer == userId}">
-							<button onclick="goUpdateAnswer(${i.id})">수정</button>
-							<button onclick="goDeleteAnswer(${i.id})">삭제</button>
-						</c:if>
-					</c:forEach>
-				</table>
-
+				<div class="answerForm">
+					<table>
+						<c:forEach var="i" items="${answerView.answerList }">
+							<div>댓글</div>
+							<c:if test="${i.writer == userId}">
+								<button onclick="goUpdateAnswer(${i.id})">수정</button>
+								<button onclick="goDeleteAnswer(${i.id})">삭제</button>
+							</c:if>
+							<tr>
+								<td class="hide">${i.title}</td>
+								<td>${i.writer }</td>
+								<td>${i.message}</td>
+							</tr>
+						</c:forEach>
+					</table>
+				</div>
 				<!-- 현재 페이지가 총 페이지 수와 보다 작거나 같으면 -->
 				<c:if
 					test="${answerView.currentPageNum<answerView.pageTotalCount+1}">

@@ -465,6 +465,25 @@ h1 {
 	margin-bottom: 30px;
 }
 
-.ui-datepicker{
-	
+.submit{
+	margin-bottom: 100px;
+}
+
+.titleForm{
+	max-width: 1000px;
+	margin: auto;
+}
+
+.answerForm{
+	max-width: 1000px;
+	margin: auto;
+	margin-top: 6%
+}
+
+.anwer{
+	margin-bottom: 10px;
+}
+
+.hide{
+	display: none;
 }

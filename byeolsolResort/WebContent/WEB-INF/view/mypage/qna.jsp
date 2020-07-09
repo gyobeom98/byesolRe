@@ -132,10 +132,6 @@
 									</select></td>
 							</tr>
 							<tr>
-								<td class="formTd1">파일첨부</td>
-								<td><input type="file" name="file_input"></td>
-							</tr>
-							<tr>
 								<td class="formTd1">내용</td>
 								<td><textarea name="message" id="textarea" rows="8" cols="80"></textarea></td>
 							</tr>

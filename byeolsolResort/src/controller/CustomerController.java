@@ -217,48 +217,49 @@ public class CustomerController {
 
 	@PostMapping("/updateCustomer")
 	public String updateCustomer(HttpSession session, Model m,
-			@ModelAttribute("CustomerVo") @Valid CustomerVO customerVo, BindingResult result, @RequestParam(defaultValue = DEFAULT_BIRTH_DATE)Date birth) {
+			@ModelAttribute("CustomerVo") @Valid CustomerVO customerVo, BindingResult result,
+			@RequestParam(defaultValue = DEFAULT_BIRTH_DATE) Date birth) {
 		if (session.getAttribute("userId") != null) {
 			String userId = (String) session.getAttribute("userId");
 			Customer cust = new Customer();
 			if (customerVo.getUserId().equals(userId)) {
-				if(!birth.toString().equals(DEFAULT_BIRTH_DATE)) {
-				Customer customer = customerService.getCustomerById(userId);
-				cust.setId(customer.getId());
-				cust.setUserId(userId);
-				if (result.hasErrors()) {
-					List<FieldError> errors = result.getFieldErrors();
-					for (FieldError fe : errors) {
-						m.addAttribute("e" + fe.getField(), fe.getField());
-						System.out.println(fe);
-					}
-					return "redirect:/cus/myPage";
-				} else {
-					if (customerService.phoneCheck(customerVo.getPhone()).equals("중복")) {
-						if (customer.getPhone().equals(customerVo.getPhone())) {
+				if (!birth.toString().equals(DEFAULT_BIRTH_DATE)) {
+					Customer customer = customerService.getCustomerById(userId);
+					cust.setId(customer.getId());
+					cust.setUserId(userId);
+					if (result.hasErrors()) {
+						List<FieldError> errors = result.getFieldErrors();
+						for (FieldError fe : errors) {
+							m.addAttribute("e" + fe.getField(), fe.getField());
+							System.out.println(fe);
+						}
+						return "redirect:/cus/myPage";
+					} else {
+						if (customerService.phoneCheck(customerVo.getPhone()).equals("중복")) {
+							if (customer.getPhone().equals(customerVo.getPhone())) {
+								cust.setPhone(customerVo.getPhone());
+							}
+						} else {
 							cust.setPhone(customerVo.getPhone());
 						}
-					} else {
-						cust.setPhone(customerVo.getPhone());
+						if (LocalDate.now().getYear() - birth.toLocalDate().getYear() >= 5) {
+							cust.setBirthDate(birth.toLocalDate());
+						}
+						cust.setAddress(customerVo.getAddress());
+						cust.setAddressDetail(customerVo.getAddressDetail());
+						cust.setEmailState(customer.getEmailState());
+						cust.setEmail(customer.getEmail());
+						cust.setName(customerVo.getName());
+						cust.setPassword(customerVo.getPassword());
+						cust.setZipCode(customerVo.getZipCode());
+						System.out.println(cust.getPhone());
+						System.out.println(cust);
+						cust.setId(customer.getId());
+						customerService.updateCustomer(cust);
+						return "redirect:/cus/myPage";
 					}
-					if (LocalDate.now().getYear() - birth.toLocalDate().getYear() >= 5) {
-						cust.setBirthDate(birth.toLocalDate());
-					}
-					cust.setAddress(customerVo.getAddress());
-					cust.setAddressDetail(customerVo.getAddressDetail());
-					cust.setEmailState(customer.getEmailState());
-					cust.setEmail(customer.getEmail());
-					cust.setName(customerVo.getName());
-					cust.setPassword(customerVo.getPassword());
-					cust.setZipCode(customerVo.getZipCode());
-					System.out.println(cust.getPhone());
-					System.out.println(cust);
-					cust.setId(customer.getId());
-					customerService.updateCustomer(cust);
-					return "redirect:/cus/myPage";
-				}
-				}else {
-					m.addAttribute("errorMessage","생일을 다시 확인 하여 주세요");
+				} else {
+					m.addAttribute("errorMessage", "생일을 다시 확인 하여 주세요");
 					return "redirect:/cus/myPage";
 				}
 			} else {
@@ -289,26 +290,32 @@ public class CustomerController {
 
 	@PostMapping(value = "/mailSend", produces = "application/text;charset=utf-8")
 	@ResponseBody
-	public String mailSendRes(@RequestParam(defaultValue = DEFAULT_VALUE_Email)String userEmail, HttpSession session) {
-		if(!userEmail.equals(DEFAULT_VALUE_Email)) {
-		customerService.mailSend(mailSender, userEmail);
-		return "이메일 인증코드를 성공적으로 보냈습니다.";
-		}else {
+	public String mailSendRes(@RequestParam(defaultValue = DEFAULT_VALUE_Email) String userEmail, HttpSession session) {
+		if (!userEmail.equals(DEFAULT_VALUE_Email)) {
+			customerService.mailSend(mailSender, userEmail);
+			return "이메일 인증코드를 성공적으로 보냈습니다.";
+		} else {
 			return "잘못된 접근";
 		}
 	}
 
 	@PostMapping("/mailCheck")
-	public String emailCertification(String mailCode, String userEmail, Model m) {
-		Customer customer = customerService.getCustomerByEmail(userEmail, mailCode);
-		if (customer != null) {
-			customerService.updateCustomerEmailState(userEmail, "인증");
-			m.addAttribute("successMessage", "이메일 인증이 완료 되었습니다. 로그인후 별솜 리조트 홈페이지 서비스를 이용하실 수 있습니다.");
-			return "redirect:/index/main";
+	public String emailCertification(@RequestParam(defaultValue = "DEFAULTMAILCODE") String mailCode,
+			@RequestParam(defaultValue = DEFAULT_VALUE_Email) String userEmail, Model m) {
+		if (!mailCode.equals("DEFAULTMAILCODE") && !userEmail.equals(DEFAULT_VALUE_Email)) {
+			Customer customer = customerService.getCustomerByEmail(userEmail, mailCode);
+			if (customer != null) {
+				customerService.updateCustomerEmailState(userEmail, "인증");
+				m.addAttribute("successMessage", "이메일 인증이 완료 되었습니다. 로그인후 별솜 리조트 홈페이지 서비스를 이용하실 수 있습니다.");
+				return "redirect:/index/main";
+			} else {
+				customerService.updateCustomerEmailState(userEmail, "미인증");
+				m.addAttribute("errorMessage", "인증코드와 일치하지 않습니다.");
+				return "redirect:/index/mailCer";
+			}
 		} else {
-			customerService.updateCustomerEmailState(userEmail, "미인증");
-			m.addAttribute("errorMessage", "인증코드와 일치하지 않습니다.");
-			return "redirect:/index/mailCer";
+			m.addAttribute("errorMessage", "잘못된 접근 입니다.");
+			return "redirect:/index/main";
 		}
 
 	}
@@ -372,46 +379,60 @@ public class CustomerController {
 			return "redirect:/index/main";
 		}
 	}
-	
+
 	@GetMapping("/findId")
 	public String findIdForm(HttpSession session, Model m) {
-		if(session.getAttribute("userId")==null) {
+		if (session.getAttribute("userId") == null) {
 			return "/mypage/findInfo";
-		}else {
-			m.addAttribute("errorMessage","잘못된 접근 입니다.");
+		} else {
+			m.addAttribute("errorMessage", "잘못된 접근 입니다.");
 			return "redirect:/index/main";
 		}
 	}
-	
+
 	@PostMapping("/findId")
-	public String findId(HttpSession session, Model m , String email, String name) {
-		if(session.getAttribute("userId")==null) {
-			m.addAttribute("errorMessage",customerService.mailSendWithId(mailSender, email, name));
+	public String findId(HttpSession session, Model m, @RequestParam(defaultValue = DEFAULT_VALUE_Email) String email,
+			@RequestParam(defaultValue = "DEFAULT_VALUE_NAME") String name) {
+		if (session.getAttribute("userId") == null) {
+			if (!email.equals(DEFAULT_VALUE_Email) && !name.equals("DEFAULT_VALUE_NAME")) {
+				m.addAttribute("errorMessage", customerService.mailSendWithId(mailSender, email, name));
+				return "redirect:/cus/login";
+			} else {
+				m.addAttribute("errorMessage", "잘못된 접근 입니다.");
+				return "redirect:/index/main";
+			}
+		} else {
+			m.addAttribute("errorMessage", "잘못된 접근 입니다.");
 			return "redirect:/cus/login";
-		}else {
-			m.addAttribute("errorMessage","잘못된 접근 입니다.");
-			return "redirect:/index/main";
 		}
 	}
-	
-	
+
 	@GetMapping("/findPassword")
-	public String findPassword(HttpSession session , Model m) {
-		if(session.getAttribute("userId")==null) {
+	public String findPassword(HttpSession session, Model m) {
+		if (session.getAttribute("userId") == null) {
 			return "/mypage/findInfo";
-		}else {
-			m.addAttribute("errorMessage","잘못된 접근 입니다.");
+		} else {
+			m.addAttribute("errorMessage", "잘못된 접근 입니다.");
 			return "redirect:/index/main";
 		}
 	}
-	
+
 	@PostMapping("/findPassword")
-	public String findPassword(HttpSession session, Model m,String email,String userId, String name) {
-		if(session.getAttribute("userId")==null) {
-		m.addAttribute("errorMessage",customerService.mailSendByPassword(mailSender, email, userId, name));
-		return "redirect:/cus/login";
-		}else {
-			m.addAttribute("errorMessage","잘못된 접근 입니다.");
+	public String findPassword(HttpSession session, Model m,
+			@RequestParam(defaultValue = DEFAULT_VALUE_Email) String email,
+			@RequestParam(defaultValue = DEFAULT_VALUE_ID) String userId,
+			@RequestParam(defaultValue = "DEFAULT_VALUE_NAME") String name) {
+		if (session.getAttribute("userId") == null) {
+			if (!email.equals(DEFAULT_VALUE_Email) && !userId.equals(DEFAULT_VALUE_ID)
+					&& !name.equals("DEFAULT_VALUE_NAME")) {
+				m.addAttribute("errorMessage", customerService.mailSendByPassword(mailSender, email, userId, name));
+				return "redirect:/cus/login";
+			} else {
+				m.addAttribute("errorMessage","잘못된 접근 입니다.");
+				return "redirect:/cus/login";
+			}
+		} else {
+			m.addAttribute("errorMessage", "잘못된 접근 입니다.");
 			return "redirect:/index/main";
 		}
 	}

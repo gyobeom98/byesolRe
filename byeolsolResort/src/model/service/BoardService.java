@@ -20,7 +20,6 @@ import model.view.BoardView;
 public class BoardService {
 
 	private static final int BOARD_COUNT_PER_PAGE = 5;
-	private static final String FILE_FOLDER_PATH = "c:/Users/tjoeun/byeolsolResort/";
 	
 	@Autowired
 	BoardMapper boardMapper;
@@ -38,9 +37,6 @@ public class BoardService {
 	}
 	
 	public void addBoard(Board board) {
-		if(board.getUserId().equals("admin")) {
-			board.setState("admin");
-		}
 		boardMapper.insertBoard(board);
 	}
 

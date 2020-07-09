@@ -178,11 +178,6 @@ public class BoardController {
 
 						}
 					}
-					board.setUserId((String) session.getAttribute("userId"));
-					if (board.getUserId().equals("admin")) {
-						board.setState("admin");
-					}
-					System.out.println(board);
 					if (isTypeCheck && errorCheck) {
 						board.setState("admin");
 						boardService.addBoard(board);
@@ -203,7 +198,7 @@ public class BoardController {
 	}
 
 	@GetMapping("/updateBoard")
-	public String goBoardUpdateForm(int id, Model m, HttpSession session) {
+	public String goBoardUpdateForm(@RequestParam(defaultValue = "0")int id, Model m, HttpSession session) {
 		if (session.getAttribute("userId") != null) {
 			String userId = (String) session.getAttribute("userId");
 			if (id != 0) {

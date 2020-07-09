@@ -50,14 +50,20 @@ public class EventController {
 	}
 
 	@PostMapping("/addEvent")
-	public String addEvent(MultipartFile uploadFile, Event event, Model m, HttpSession session) {
+	public String addEvent(@RequestParam(required = false) MultipartFile uploadFile, Event event, Model m,
+			HttpSession session) {
 		if (session.getAttribute("userId") != null) {
 			String userId = (String) session.getAttribute("userId");
 			if (userId.equals("admin")) {
-				if (eventService.addEvent(event, uploadFile)) {
-					return "redirect:/event/list";
+				if (!uploadFile.isEmpty()) {
+					if (eventService.addEvent(event, uploadFile)) {
+						return "redirect:/event/list";
+					} else {
+						m.addAttribute("Event", event);
+						return "redirect:/event/addEvent";
+					}
 				} else {
-					m.addAttribute("Event", event);
+					m.addAttribute("errorMessage","파일업로드는 무조건 해야 합니다.");
 					return "redirect:/event/addEvent";
 				}
 			} else {
@@ -119,7 +125,7 @@ public class EventController {
 	}
 
 	@GetMapping("/deleteEvent")
-	public String deleteEvent(int id, Model m, HttpSession session) {
+	public String deleteEvent(@RequestParam(defaultValue = "0") int id, Model m, HttpSession session) {
 		if (session.getAttribute("userId") != null) {
 			String userId = (String) session.getAttribute("userId");
 			if (userId.equals("admin")) {
@@ -135,30 +141,32 @@ public class EventController {
 					m.addAttribute("errorMessage", "잘못된 접근");
 					return "redirect:/event/list";
 				}
-			}else {
+			} else {
 				m.addAttribute("errorMessage", "권한이 없는 접근");
 				return "redirect:/event/list";
 			}
-		}else {
+		} else {
 			m.addAttribute("errorMessage", "권한이 없는 접근");
 			return "redirect:/event/list";
 		}
 	}
-	
-	
+
 	@GetMapping("/detailEvent")
-	public String detailEvent(int id , Model m) {
-		Event event = eventService.getEvent(id);
-		
-		if(event != null) {
-			m.addAttribute("event",event);
-			return "detailEvent";
-		}else {
-			m.addAttribute("errorMessage", "잘못된  접근");
+	public String detailEvent(@RequestParam(defaultValue = "0") int id, Model m) {
+		if (id > 0) {
+			Event event = eventService.getEvent(id);
+			if (event != null) {
+				m.addAttribute("event", event);
+				return "detailEvent";
+			} else {
+				m.addAttribute("errorMessage", "잘못된  접근");
+				return "redirect:/event/list";
+			}
+		} else {
+			m.addAttribute("errorMessage", "잘못된 접근");
 			return "redirect:/event/list";
 		}
-		
-		
+
 	}
 
 }

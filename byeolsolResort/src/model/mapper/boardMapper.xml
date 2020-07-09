@@ -6,8 +6,8 @@
 <mapper namespace="model.mapper.BoardMapper">
 
 	<insert id="insertBoard" parameterType="Board">
-		insert into board(title,content,user_id,first_path,second_path,third_path)
-		values(#{title},#{content},#{userId},#{firstPath},#{secondPath},#{thirdPath})
+		insert into board(title,content,user_id,first_path,second_path,third_path <if test="state!=null">,state</if>)
+		values(#{title},#{content},#{userId},#{firstPath},#{secondPath},#{thirdPath} <if test="state!=null">,#{state}</if> )
 	</insert>
 
 	<update id="updateBoard" parameterType="Board">

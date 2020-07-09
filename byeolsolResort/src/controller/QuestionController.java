@@ -71,21 +71,25 @@ public class QuestionController {
 	}
 
 	@GetMapping("/detailQuestion")
-	public String goDetailQuestion(HttpSession session, int id, Model m,
+	public String goDetailQuestion(HttpSession session, @RequestParam(defaultValue = "0") int id, Model m,
 			@RequestParam(defaultValue = "1") int pageNum) {
 
 		if (session.getAttribute("userId") != null) {
 			String userId = (String) session.getAttribute("userId");
-			System.out.println(userId);
-			Question question = questionService.selectQuestionById(id);
-			if (question.getWriter().equals(userId) || userId.equals("admin")) {
-				AnswerView answerView = answerService.getAnswerView(pageNum, id);
-				m.addAttribute("answerView", answerView);
-				m.addAttribute("question", question);
-				return "/mypage/detailMyQnA";
+			if (id > 0) {
+				Question question = questionService.selectQuestionById(id);
+				if (question.getWriter().equals(userId) || userId.equals("admin")) {
+					AnswerView answerView = answerService.getAnswerView(pageNum, id);
+					m.addAttribute("answerView", answerView);
+					m.addAttribute("question", question);
+					return "/mypage/detailMyQnA";
+				} else {
+					m.addAttribute("errorMessage", "잘못된 접근 입니다.");
+					return "redirect:/index/main";
+				}
 			} else {
-				m.addAttribute("errorMessage", "잘못된 접근 입니다.");
-				return "redirect:/index/main";
+				m.addAttribute("errorMessage","잘못된 접근 입니다.");
+				return "redirect:/question/list";
 			}
 
 		} else {
@@ -110,7 +114,7 @@ public class QuestionController {
 	}
 
 	@GetMapping("/updateQuestion")
-	public String updateQuestionForm(HttpSession session, int id, Model m) {
+	public String updateQuestionForm(HttpSession session, @RequestParam(defaultValue = "0") int id, Model m) {
 		if (session.getAttribute("userId") != null) {
 			String userId = (String) session.getAttribute("userId");
 			if (id > 0) {
@@ -152,11 +156,11 @@ public class QuestionController {
 	}
 
 	@GetMapping("/updateAnswer")
-	public String updateAnswer(HttpSession session, int id, Model m) {
-		Answer answer = answerService.getAnswerById(id);
+	public String updateAnswer(HttpSession session, @RequestParam(defaultValue = "0") int id, Model m) {
 		if (session.getAttribute("userId") != null) {
 			String userId = (String) session.getAttribute("userId");
 			if (id > 0) {
+				Answer answer = answerService.getAnswerById(id);
 				m.addAttribute("answer", answer);
 				return "updateAnswerForm";
 			} else {
@@ -193,24 +197,29 @@ public class QuestionController {
 	}
 
 	@GetMapping("/deleteQuestion")
-	public String deleteQuestion(HttpSession session, int id, Model m) {
-		Question question = questionService.selectQuestionById(id);
+	public String deleteQuestion(HttpSession session, @RequestParam(defaultValue = "0") int id, Model m) {
 		if (session.getAttribute("userId") != null) {
 			String userId = (String) session.getAttribute("userId");
-			if (question != null) {
-				if (userId.equals(question.getWriter()) || userId.equals("admin")) {
-					answerService.deleteAnswerByQuestionId(id);
-					questionService.deleteQuestion(id);
-					return "redirect:/question/list";
+			if (id > 0) {
+				Question question = questionService.selectQuestionById(id);
+				if (question != null) {
+					if (userId.equals(question.getWriter()) || userId.equals("admin")) {
+						answerService.deleteAnswerByQuestionId(id);
+						questionService.deleteQuestion(id);
+						return "redirect:/question/list";
+					} else {
+						m.addAttribute("errorMessage", "잘못된 접근 입니다.");
+						return "redirect:/index/main";
+					}
 				} else {
 					m.addAttribute("errorMessage", "잘못된 접근 입니다.");
 					return "redirect:/index/main";
 				}
-			}else {
+			} else {
 				m.addAttribute("errorMessage", "잘못된 접근 입니다.");
-				return "redirect:/index/main";
+				return "redirect:/question/list";
 			}
-		}else {
+		} else {
 			m.addAttribute("errorMessage", "로그인이 되어 있지 않습니다");
 			return "redirect:/index/main";
 		}

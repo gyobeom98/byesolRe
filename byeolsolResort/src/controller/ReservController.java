@@ -103,9 +103,8 @@ public class ReservController {
 	@PostMapping("/printTotalPrice")
 	@ResponseBody
 	public String getTotalPrice(@RequestParam(defaultValue = DEFAULT_START_DATE) Date startDate,
-			@RequestParam(defaultValue = DEFAULT_END_DATE) Date endDate, int roomNum) {
-		if (!startDate.equals(DEFAULT_START_DATE) && !endDate.equals(DEFAULT_END_DATE)) {
-			System.out.println("a");
+			@RequestParam(defaultValue = DEFAULT_END_DATE) Date endDate, @RequestParam(defaultValue = "0")int roomNum) {
+		if (!startDate.equals(DEFAULT_START_DATE) && !endDate.equals(DEFAULT_END_DATE) && roomNum != 0) {
 			LocalDate start = startDate.toLocalDate();
 			LocalDate end = endDate.toLocalDate();
 			Room room = roomService.getRoomByRoomNum(roomNum);

@@ -155,7 +155,7 @@ public class IndexController {
 	//등산코스
 	@GetMapping("/mount")
 	public String mountPage() {
-		return "/tour/golf";
+		return "/tour/mount";
 	}
 	
 	//하단메뉴

@@ -31,7 +31,7 @@ public interface BoardMapper {
 
 	public List<Board> selectBoardListByUserId(String userId);
 
-	public List<Board> selectBoardListWithAdminPage(int firstRow, int boardCountPerPage);
+	public List<Board> selectBoardListWithAdminPage(@Param("firstRow")int firstRow, @Param("boardCountPerPage")int boardCountPerPage);
 	
 	
 }

@@ -62,7 +62,7 @@
 	</select>
 	
 	<select id="selectBoardListWithAdminPage" resultType="Board">
-	select * from board where state = "admin" limit #{firstRow}, #{boardPerPageCount}
+	select * from board where state = "admin" limit #{firstRow}, #{boardCountPerPage}
 	</select>
 
 	

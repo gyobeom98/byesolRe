@@ -106,6 +106,7 @@
 					</div>
 					<form action="/board/updateBoard" method="post"
 						enctype="multipart/form-data">
+						<input type="number" value="${board.id}" name="id" readonly="readonly" style="display:none">
 						<table>
 							<tr>
 								<td><input type="text" value="${board.title}" name="title"></td>

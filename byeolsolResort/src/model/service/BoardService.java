@@ -57,13 +57,21 @@ public class BoardService {
 		if(b.getUserId().equals(userId) || userId.equals("admin")) {
 			commentMapper.deleteBoardComment(id);
 			boardMapper.deleteBoard(id);
-			
-			String Time = b.getFirstPath().substring(b.getFirstPath().indexOf('/', 46) + 1,
+			String Time = "";
+			if(b.getFirstPath()!=null) {
+			 Time = b.getFirstPath().substring(b.getFirstPath().indexOf('/', 46) + 1,
 					b.getFirstPath().lastIndexOf('/'));
-			ftpService.ftpdelete(b.getFirstPath(), Time);
-			ftpService.ftpdelete(b.getSecondPath(), Time);
-			ftpService.ftpdelete(b.getThirdPath(), Time);
-			
+			 ftpService.ftpdelete(b.getFirstPath(), Time);
+			}
+			else if(b.getSecondPath()!=null) {
+				Time = b.getSecondPath().substring(b.getSecondPath().indexOf('/', 46) + 1,
+						b.getSecondPath().lastIndexOf('/'));
+				ftpService.ftpdelete(b.getSecondPath(), Time);
+			}else if(b.getThirdPath()!=null) {
+				Time = b.getThirdPath().substring(b.getThirdPath().indexOf('/', 46) + 1,
+						b.getThirdPath().lastIndexOf('/'));
+				ftpService.ftpdelete(b.getThirdPath(), Time);
+			}
 			return "삭제 완료";
 		}else {
 			return "게시글을 삭제할 권한이 없음";

@@ -64,7 +64,9 @@ public class BoardController {
 		boolean isTypeCheck = true;
 		boolean errorCheck = true;
 		if (session.getAttribute("userId") != null) {
-			if (board.getTitle().equals("") || board.getContent().equals("")) {
+			String userId = (String) session.getAttribute("userId");
+			board.setUserId(userId);
+			if (board.getTitle() == null  || board.getContent() == null) {
 				m.addAttribute("errorMessage", "공백이 있습니다.");
 				return "redirect:/board/addBoard";
 
@@ -95,7 +97,6 @@ public class BoardController {
 
 					}
 				}
-				board.setUserId((String) session.getAttribute("userId"));
 				if (isTypeCheck && errorCheck) {
 					boardService.addBoard(board);
 					return "redirect:/board/list";
@@ -146,6 +147,7 @@ public class BoardController {
 		if (session.getAttribute("userId") != null) {
 			String userId = (String) session.getAttribute("userId");
 			if (userId.equals("admin")) {
+				board.setUserId(userId);
 				if (board.getTitle().equals("") || board.getContent().equals("")) {
 					m.addAttribute("errorMessage", "공백이 있습니다.");
 					return "redirect:/board/addAdminBoard";
@@ -199,6 +201,7 @@ public class BoardController {
 
 	@GetMapping("/updateBoard")
 	public String goBoardUpdateForm(@RequestParam(defaultValue = "0")int id, Model m, HttpSession session) {
+		System.out.println(id);
 		if (session.getAttribute("userId") != null) {
 			String userId = (String) session.getAttribute("userId");
 			if (id != 0) {
@@ -228,12 +231,14 @@ public class BoardController {
 			@RequestParam(required = false) MultipartFile uploadFile03) {
 		boolean isTypeCheck = true;
 		boolean errorCheck = true;
+		board.getId();
 		if (session.getAttribute("userId") != null) {
 			String updateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy_MM_dd_HH_mm_ss_SSSS"));
 			Board b = boardService.selectBoard(board.getId());
 			if (b != null) {
 				String userId = (String) session.getAttribute("userId");
 				if (b.getUserId().equals(userId) || userId.equals("admin")) {
+					board.setUserId(b.getUserId());
 					if (uploadFile01.isEmpty()) {
 						board.setFirstPath(b.getFirstPath());
 					} else {
@@ -297,7 +302,10 @@ public class BoardController {
 							isTypeCheck = false;
 						}
 					}
+					System.out.println("type : "+isTypeCheck);
+					System.out.println("error : "+errorCheck);
 					if (isTypeCheck && errorCheck) {
+						System.out.println(board.getContent());
 						boardService.updateBoard(board);
 					}
 				}
@@ -355,6 +363,7 @@ public class BoardController {
 			if (b != null) {
 				String userId = (String) session.getAttribute("userId");
 				if (userId.equals("admin") && b.getState().equals("admin")) {
+					board.setUserId(b.getUserId());
 					if (uploadFile01.isEmpty()) {
 						board.setFirstPath(b.getFirstPath());
 					} else {

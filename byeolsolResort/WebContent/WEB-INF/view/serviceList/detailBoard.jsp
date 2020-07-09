@@ -106,7 +106,10 @@
 					</div>
 					<div>
 						<c:if test="${userId==board.userId}">
-							<button onclick="goUpdate(${i.id})" id="update_btn">수정</button>
+							<button onclick="goUpdate(${board.id})" id="update_btn">수정</button>
+						</c:if>
+						<c:if test="${userId==board.userId}">
+							<button onclick="goDelete(${board.id})" id="update_btn">삭제</button>
 						</c:if>
 					</div>
 					<table>

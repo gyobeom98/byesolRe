@@ -115,7 +115,7 @@
 							<table>
 						<tr>
 						<td class="adrv1">제목</td>
-						<td><textarea name="" id="text_title" cols="30" rows="1"></textarea></td>
+						<td><textarea name="title" id="text_title" cols="30" rows="1"></textarea></td>
 					</tr>
 						<tr>
 							<td class="adrv1">내용</td>

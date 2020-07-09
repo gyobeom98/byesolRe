@@ -10,6 +10,10 @@ function goUpdate(id){
 	location.href="/board/updateBoard?id="+id;
 }
 
+function goDelete(id){
+	location.href="/board/deleteBoard?id="+id;
+}
+
 function goDetail(id){
 	location.href="/board/detailBoard?boardId="+id;
 }

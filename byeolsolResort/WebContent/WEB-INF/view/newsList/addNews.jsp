@@ -16,7 +16,7 @@
 		<div class="wrap">
 			<header class="header">
 				<div class="main">
-					<div id="logo">
+					<div id="logo"> 
 						<a id="logoimg" href="/index/main"> <img class="logo1"
 							src="https://byeolsol.000webhostapp.com/css/title2.png">
 						</a>

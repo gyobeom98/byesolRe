@@ -13,7 +13,7 @@
 </head>
 <body>
 	<div class="allwrap">
-		<div class="wrap">
+		<div class="wrap"> 
 			<header class="header">
 				<div class="main">
 					<div id="logo">

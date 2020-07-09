@@ -13,7 +13,7 @@ function goUpdate(id){
 function goDetail(id){
 	location.href="/board/detailBoard?boardId="+id;
 }
-
+ 
 $(function() {
 	$('#manu>ul>li>a').css('color', '#000000');
 	$('#manu>ul>li>a').css('font-size', '18px');

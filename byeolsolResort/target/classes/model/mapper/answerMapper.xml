@@ -22,7 +22,7 @@ select count(*) from answer
 </select>
 
 <select id="selectAnswerByQuestionIdWithLimit" resultType="Answer">
-select * from answer where question_id = #{questionId} limit #{firstRow}, #{answerCountPerPage}
+select * from answer where question_id = #{questionId} order by reg_date desc limit #{firstRow}, #{answerCountPerPage}
 </select>
 
 <select id="selectAnswerById" resultType="Answer">

@@ -37,4 +37,15 @@ select count(*) from question
 select * from question where writer = #{writer}
 </select>
 
+<update id="updateQuestionByIdWithState">
+
+update question set state = #{state} where id = #{id}
+
+</update>
+
+<select id="selectQuestionListByStateWithLimit" resultType="Question">
+select * from question where state = "yet" limit #{firstRow}, #{questionCountPerPage}
+</select>
+
+
 </mapper>

@@ -17,8 +17,11 @@
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 
+
+	<!-- db 연결 properties 파일  -->
 	<context:property-placeholder location="classpath:config/value.properties"/>
-		<context:component-scan base-package="model.view"/>
+	<!-- model.view 패키지에 있는 것들을 스캔 -->	 
+	<!-- db연결 -->
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="${db.driverClassName}"/>
 		<property name="url" value="${db.url}"/>
@@ -26,11 +29,12 @@
 		<property name="password" value="${db.password}"/>
 	</bean>
 	
+	<!-- mybatis로 맵핑 과 설정 파일 셋팅 하기 -->
 	<bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
 	<property name="dataSource" ref="dataSource"/>
 	<property name="configLocation" value="classpath:config/config.xml"/>
 	<property name="mapperLocations">
-	<list>
+	<list> <!-- model.mapper 패키지에 있는 mapper xml파일들을 맵핑 -->
 	<value>classpath:model/mapper/customerMapper.xml</value>
 	<value>classpath:model/mapper/boardMapper.xml</value>
 	<value>classpath:model/mapper/commentMapper.xml</value>
@@ -44,31 +48,24 @@
 	</property>
 	</bean>
 	
-	<context:component-scan base-package="controller , model.service"/>
+	 <!-- controller 와 service 스캔 -->
+	<context:component-scan base-package="controller , model.service , model.view"/>
+	<!-- 맵핑 할 model.mapper 패키지 안에 있는 것들 스캔 -->
 	<mybatis-spring:scan base-package="model.mapper"/>
 	
+	<!-- view resolver로 web-inf 폴더에 view 폴더 안쪽으로 스트링 받은값 + .jsp 파일 연결 -->
 	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 	<property name="prefix" value="/WEB-INF/view/"/>
 	<property name="suffix" value=".jsp"/>
 	</bean>
 	
-	<mvc:resources location="file:C:/Users/tjoeun/byeolsolResort/" mapping="/img/**"></mvc:resources>
 	
-	
-	<!-- <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
-	<property name="defaultEncoding" value="utf-8"/>
-	<property name="basenames">
-	<list><value>message/message_ko</value></list>
-	</property>
-	</bean> -->
-
-	
-	
-	
-	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"/>
+<!-- 유효성 검사를 위한 bean -->	
+<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"/>
 
 <mvc:annotation-driven/>
 
+<!-- email보내기 위한 bean + 메일 보내기 위해 권한 설정 및 계정 연결 -->
 <bean id="mailSender" class = "org.springframework.mail.javamail.JavaMailSenderImpl">
       <property name="host" value="smtp.gmail.com" />
       <property name="port" value="587" />
@@ -84,36 +81,35 @@
          </props>
       </property>
    </bean>
-   
-   <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="prefix" value="/WEB-INF/view/"/>
-		<property name="suffix" value=".jsp"/>
-	</bean>
 
-
- <bean id="testJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+ <!-- 스케쥴러를 위한 bean method 와 class 선택 -->
+ <bean id="reservJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
 	<property name="targetObject" ref="scheduleService"/>
-	<property name="targetMethod" value="test"/>
+	<property name="targetMethod" value="deleteReserv"/>
 	<property name="concurrent" value="false"/>	
 	</bean>
 	
-	<bean id="testTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
-		<property name="jobDetail" ref="testJob"/>
+	<!-- 스케줄의 조건(?, 타임 스케쥴) 셋팅 -->
+	<bean id="reservTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="reservJob"/>
 		<property name="cronExpression" value="0 0 0 * * ?"/>		
 	</bean> 
 	
+	<!-- 스케쥴 실행 -->
 	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
 		<property name="triggers">
-		<list><ref bean="testTrigger"/></list>
+		<list><ref bean="reservTrigger"/></list>
 		</property>
 	</bean> 
 	
-	
+	<!-- transaction을 위한 bean -->
 	<bean id="dataSourceTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 	<property name="dataSource" ref="dataSource"></property>
 	</bean>	
 	<task:annotation-driven/>
 	
+	
+	<!-- resources들을 담은 폴더 를 각 맵핑으로  -->
 	<mvc:resources location="/css/" mapping="/css/**"/>
 	<mvc:resources location="/script/" mapping="/script/**"/>
 </beans>

@@ -34,10 +34,16 @@
 									</ul></li>
 								<li><a href="/index/news">별솔소식</a>
 									<ul>
-										<li><a class="topmargin" href="/index/news">별솔뉴스</a></li>
+										<li><a class="topmargin" href="/board/adminList">별솔뉴스</a></li>
 										<li><a href="/index/event">이벤트</a></li>
 									</ul></li>
-								<li><a href="">회원 서비스</a>
+								<li>
+								<c:if test="${userId==null }">
+								<a href="/cus/login">회원 서비스</a>
+								</c:if>
+								<c:if test="${userId!=null }">
+								<a href="/index/leftover">회원 서비스</a>
+								</c:if>
 									<ul>
 										<li>
 										<c:if test="${userId==null }">
@@ -50,7 +56,7 @@
 										<li><a href="/index/guestroom">객실현황</a></li>
 										<li><a href="/board/list">후기게시판</a></li>
 									</ul></li>
-								<li><a href="">주변관광지</a>
+								<li><a href="/index/trip">주변관광지</a>
 									<ul>
 										<li><a class="topmargin" href="/index/trip">여행코스</a></li>
 										<li><a href="/index/golf">골프코스</a></li>
@@ -109,15 +115,15 @@
 						<br> 메일 또는 유선을 통해 빠른 시간 내에 답변해 드립니다.<br>
 						<br>
 					</div>
-					<form onsubmit="return check()" nama="qNa_write" id="qNa_write" action="#" method="post">
+					<form onsubmit="return check()" name="qNa_write" id="qNa_write" action="/question/addQuestion" method="post">
 						<table>
 							<tr>
 								<td class="formTd1">제목</td>
-								<td><input type="text" id="qNa_title" name="qNa_write"></td>
+								<td><input type="text" id="qNa_title" name="title"></td>
 							</tr>
 							<tr>
 								<td class="formTd1">분류</td>
-								<td><select name="qNa_select">
+								<td><select name="division">
 										<option value="기타">기타</option>
 										<option value="예약">예약문의</option>
 										<option value="객실">객실문의</option>
@@ -131,7 +137,7 @@
 							</tr>
 							<tr>
 								<td class="formTd1">내용</td>
-								<td><textarea name="textarea" id="textarea" rows="8" cols="80"></textarea></td>
+								<td><textarea name="message" id="textarea" rows="8" cols="80"></textarea></td>
 							</tr>
 						</table>
 						<input type="submit" id="qNa_submit" value="등록">

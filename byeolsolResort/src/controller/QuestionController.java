@@ -34,7 +34,7 @@ public class QuestionController {
 	@GetMapping("/addQuestion")
 	public String addQuestionForm(HttpSession session) {
 		if (session.getAttribute("userId") != null) {
-			return "addQuestionForm";
+			return "/mypage/qna";
 		} else {
 			return "redirect:/index/main";
 		}
@@ -82,7 +82,7 @@ public class QuestionController {
 				AnswerView answerView = answerService.getAnswerView(pageNum, id);
 				m.addAttribute("answerView", answerView);
 				m.addAttribute("question", question);
-				return "detailQuestion";
+				return "/mypage/detailMyQnA";
 			} else {
 				m.addAttribute("errorMessage", "잘못된 접근 입니다.");
 				return "redirect:/index/main";
@@ -117,7 +117,7 @@ public class QuestionController {
 				Question question = questionService.selectQuestionById(id);
 				if (question != null) {
 					m.addAttribute("question", question);
-					return "updateQuestionForm";
+					return "/mypage/updateMyQnA";
 				} else {
 					m.addAttribute("errorMessage", "잘못된 접근 입니다.");
 					return "redirect:/index/main";

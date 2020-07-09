@@ -113,11 +113,6 @@ public class IndexController {
 	}
 	
 	//별솔소식 리스트
-	//별솔뉴스
-	@GetMapping("/news")
-	public String newsPage() {
-		return "/newsList/news";
-	}
 	
 	//이벤트
 	@GetMapping("/event")

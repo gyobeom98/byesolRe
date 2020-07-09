@@ -277,10 +277,10 @@ public class CustomerController {
 	@GetMapping(value = "/mailCheck", produces = "application/text; charset=utf-8")
 	public String mailSending(@RequestParam(required = false) String registEmail, HttpSession session, Model m) {
 		if (session.getAttribute("userEmail") != null) {
-			return "/mypage/mailCer";
+			return "/mypage/emailCer";
 		} else if (registEmail != null) {
 			m.addAttribute("userEmail", registEmail);
-			return "/mypage/mailCer";
+			return "/mypage/emailCer";
 		} else {
 			m.addAttribute("errorMessage", "잘못된 접근 입니다.");
 			return "redirect:/index/main";

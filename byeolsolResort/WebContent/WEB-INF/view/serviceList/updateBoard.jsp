@@ -6,10 +6,11 @@
 <head>
 <meta charset="UTF-8">
 <title>별솔리조트</title>
-<link rel="stylesheet" href="/css/addBoard.css">
+<link rel="stylesheet" href="/css/board.css">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" src="/script/sub.js"></script>
+<script type="text/javascript" src="/script/board.js"></script>
 </head>
 <body>
 	<div class="allwrap">
@@ -33,10 +34,14 @@
 									</ul></li>
 								<li><a href="/index/news">별솔소식</a>
 									<ul>
-										<li><a class="topmargin" href="/index/news">별솔뉴스</a></li>
+										<li><a class="topmargin" href="/board/adminList">별솔뉴스</a></li>
 										<li><a href="/index/event">이벤트</a></li>
 									</ul></li>
-								<li><a href="">회원 서비스</a>
+								<li><c:if test="${userId==null }">
+										<a href="/cus/login">회원 서비스</a>
+									</c:if> <c:if test="${userId!=null }">
+										<a href="/index/leftover">회원 서비스</a>
+									</c:if>
 									<ul>
 										<li><c:if test="${userId==null }">
 												<a class="topmargin" href="/cus/login">객실예약</a>
@@ -46,7 +51,7 @@
 										<li><a href="/index/guestroom">객실현황</a></li>
 										<li><a href="/board/list">후기게시판</a></li>
 									</ul></li>
-								<li><a href="">주변관광지</a>
+								<li><a href="/index/trip">주변관광지</a>
 									<ul>
 										<li><a class="topmargin" href="/index/trip">여행코스</a></li>
 										<li><a href="/index/golf">골프코스</a></li>
@@ -93,24 +98,43 @@
 							<li>》</li>
 							<li>후기게시판</li>
 							<li>》</li>
-							<li>후기작성하기</li>
+							<li>후기수정</li>
 						</ul>
 					</div>
 					<div class="sibtitle">
-						<h3 class="stitle">후기작성하기</h3>
+						<h3 class="stitle">후기수정</h3>
 					</div>
 					<form action="/board/updateBoard" method="post"
 						enctype="multipart/form-data">
-						<input type="number" value="${board.id}" name="id"
-							readonly="readonly"> <input type="text"
-							value="${board.title}" name="title"> <input type="text"
-							value="${board.content}" name="content"> <img alt=""
-							src="${board.firstPath }" height="50px"> <input type="file"
-							name="uploadFile01"> <img alt=""
-							src="${board.secondPath }" height="50px"> <input
-							type="file" name="uploadFile02"> <img alt=""
-							src="${board.thirdPath }" height="50px"> <input type="file"
-							name="uploadFile03"> <input type="submit">
+						<table>
+							<tr>
+								<td><input type="text" value="${board.title}" name="title"></td>
+							</tr>
+							<tr>
+								<td><input type="text" value="${board.content}"
+									name="content"></td>
+							</tr>
+							<tr>
+								<td><img alt="" src="${board.firstPath }" height="50px"></td>
+
+							</tr>
+							<tr>
+								<td><input type="file" name="uploadFile01"></td>
+							</tr>
+							<tr>
+								<td><img alt="" src="${board.secondPath }" height="50px"></td>
+							</tr>
+							<tr>
+								<td><input type="file" name="uploadFile02"></td>
+							</tr>
+							<tr>
+								<td><img alt="" src="${board.thirdPath }" height="50px"></td>
+							</tr>
+							<tr>
+								<td><input type="file" name="uploadFile03"></td>
+							</tr>
+						</table>
+						<input type="submit" value="수정" id="update_subBtn">
 					</form>
 				</div>
 			</section>

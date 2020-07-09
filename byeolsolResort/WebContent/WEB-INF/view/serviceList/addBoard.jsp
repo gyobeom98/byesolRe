@@ -6,10 +6,11 @@
 <head>
 <meta charset="UTF-8">
 <title>별솔리조트</title>
-<link rel="stylesheet" href="/css/addBoard.css">
+<link rel="stylesheet" href="/css/board.css">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" src="/script/sub.js"></script>
+<script type="text/javascript" src="/script/board.js"></script>
 </head>
 <body>
 	<div class="allwrap">
@@ -33,10 +34,16 @@
 									</ul></li>
 								<li><a href="/index/news">별솔소식</a>
 									<ul>
-										<li><a class="topmargin" href="/index/news">별솔뉴스</a></li>
+										<li><a class="topmargin" href="/board/adminList">별솔뉴스</a></li>
 										<li><a href="/index/event">이벤트</a></li>
 									</ul></li>
-								<li><a href="">회원 서비스</a>
+								<li>
+								<c:if test="${userId==null }">
+								<a href="/cus/login">회원 서비스</a>
+								</c:if>
+								<c:if test="${userId!=null }">
+								<a href="/index/leftover">회원 서비스</a>
+								</c:if>
 									<ul>
 										<li>
 										<c:if test="${userId==null }">
@@ -49,7 +56,7 @@
 										<li><a href="/index/guestroom">객실현황</a></li>
 										<li><a href="/board/list">후기게시판</a></li>
 									</ul></li>
-								<li><a href="">주변관광지</a>
+								<li><a href="/index/trip">주변관광지</a>
 									<ul>
 										<li><a class="topmargin" href="/index/trip">여행코스</a></li>
 										<li><a href="/index/golf">골프코스</a></li>
@@ -104,12 +111,27 @@
 					</div>
 					<form action="/board/addBoard" method="post" enctype="multipart/form-data">
 					<div>
-						<div>제목</div>
-						<div><input type="text" name="title"></div>		
-						<div><textarea name="content"></textarea></div>
-						<div><input type="file" name="uploadFile" multiple="multiple" max="3"></div>
+
+							<table>
+						<tr>
+						<td class="adrv1">제목</td>
+						<td><textarea name="" id="text_title" cols="30" rows="1"></textarea></td>
+					</tr>
+						<tr>
+							<td class="adrv1">내용</td>
+							<td><textarea name="content" id="text_contents"></textarea></td>
+						
+						</tr>
+						<tr>
+							<td class="adrv1">파일</td>
+							<td>
+						<input type="file" name="uploadFile" multiple="multiple" max="3"></td>
+
+					</tr>
+					</table>
+
 					</div>		
-						<input type="submit">
+						<input type="submit" id="review_submit" value="작성">
 					</form>
 				</div>
 			</section>

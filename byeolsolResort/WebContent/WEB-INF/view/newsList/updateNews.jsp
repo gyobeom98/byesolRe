@@ -33,10 +33,16 @@
 									</ul></li>
 								<li><a href="/index/news">별솔소식</a>
 									<ul>
-										<li><a class="topmargin" href="/index/news">별솔뉴스</a></li>
+										<li><a class="topmargin" href="/board/adminList">별솔뉴스</a></li>
 										<li><a href="/index/event">이벤트</a></li>
 									</ul></li>
-								<li><a href="">회원 서비스</a>
+								<li>
+								<c:if test="${userId==null }">
+								<a href="/cus/login">회원 서비스</a>
+								</c:if>
+								<c:if test="${userId!=null }">
+								<a href="/index/leftover">회원 서비스</a>
+								</c:if>
 									<ul>
 										<li>
 										<c:if test="${userId==null }">
@@ -49,7 +55,7 @@
 										<li><a href="/index/guestroom">객실현황</a></li>
 										<li><a href="/board/list">후기게시판</a></li>
 									</ul></li>
-								<li><a href="">주변관광지</a>
+								<li><a href="/index/trip">주변관광지</a>
 									<ul>
 										<li><a class="topmargin" href="/index/trip">여행코스</a></li>
 										<li><a href="/index/golf">골프코스</a></li>
@@ -102,10 +108,12 @@
 					<div class="sibtitle">
 						<h3 class="stitle">공지사항작성하기</h3>
 					</div>
-					<form action="/board/addBoard" method="post" enctype="multipart/form-data">
-						<input type="text" name="title" placeholder="제목입력"> 
-						<input type="text" name="content">
-						<input type="file" name="uploadFile" multiple="multiple" max="3">
+					<form action="/board/updateAdminBoard" method="post"
+						enctype="multipart/form-data">
+
+						<input type="number" value="${board.id}" name="id" readonly="readonly">
+						<input type="text" value="${board.title}" name="title"> 
+						<input type="text" value="${board.content}" name="content">
 						<input type="submit">
 					</form>
 				</div>

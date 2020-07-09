@@ -10,6 +10,7 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" src="/script/sub.js"></script>
+<script type="text/javascript" src="/script/board.js"></script>
 </head>
 <body>
 	<div class="allwrap">
@@ -33,20 +34,29 @@
 									</ul></li>
 								<li><a href="/index/news">별솔소식</a>
 									<ul>
-										<li><a class="topmargin" href="/index/news">별솔뉴스</a></li>
+										<li><a class="topmargin" href="/board/adminList">별솔뉴스</a></li>
 										<li><a href="/index/event">이벤트</a></li>
 									</ul></li>
-								<li><a href="">회원 서비스</a>
+								<li>
+								<c:if test="${userId==null }">
+								<a href="/cus/login">회원 서비스</a>
+								</c:if>
+								<c:if test="${userId!=null }">
+								<a href="/index/leftover">회원 서비스</a>
+								</c:if>
 									<ul>
-										<li><c:if test="${userId==null }">
-												<a class="topmargin" href="/cus/login">객실예약</a>
-											</c:if> <c:if test="${userId!=null }">
-												<a class="topmargin" href="/index/leftover">객실예약</a>
-											</c:if></li>
+										<li>
+										<c:if test="${userId==null }">
+										<a class="topmargin" href="/cus/login">객실예약</a>
+										</c:if>
+										<c:if test="${userId!=null }">
+										<a class="topmargin" href="/index/leftover">객실예약</a>
+										</c:if>
+										</li>
 										<li><a href="/index/guestroom">객실현황</a></li>
 										<li><a href="/board/list">후기게시판</a></li>
 									</ul></li>
-								<li><a href="">주변관광지</a>
+								<li><a href="/index/trip">주변관광지</a>
 									<ul>
 										<li><a class="topmargin" href="/index/trip">여행코스</a></li>
 										<li><a href="/index/golf">골프코스</a></li>
@@ -96,15 +106,15 @@
 					</div>
 					<div>
 						<c:if test="${userId==board.userId}">
-							<button type="button">수정</button>
+							<button onclick="goUpdate(${i.id})" id="update_btn">수정</button>
 						</c:if>
 					</div>
 					<table>
 						<tr>
-							<td>${board.title }</td>
+							<td class="update_title">${board.title }</td>
 						</tr>
 						<tr>
-							<td>${board.userId}</td>
+							<td class="update_id">${board.userId}</td>
 						</tr>
 						<tr>
 							<td>${board.content}</td>
@@ -113,7 +123,7 @@
 					<br>
 					<table>
 						<tr>
-							<td colspan="2">댓글</td>
+							<td colspan="2" class="addCom">댓글</td>
 						</tr>
 						<c:if test="${commentView.commentCnt >0 }">
 							<c:forEach var="q" items="${commentView.commentList }">
@@ -194,11 +204,11 @@
 					<form action="/board/addComment" method="post">
 						<table>
 							<tr>
-								<td>message</td>
-								<td><textarea rows="5" cols="20" name="message"></textarea></td>
+								<td class="addCom">댓글달기</td>
+								<td><textarea rows="3" cols="20" name="message" class="update_comment"></textarea></td>
 							</tr>
 						</table>
-						<input type="submit">
+						<input type="submit" id="update_subBtn">
 					</form>
 				</div>
 			</section>

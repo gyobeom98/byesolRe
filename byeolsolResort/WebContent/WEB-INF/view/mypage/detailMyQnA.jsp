@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
@@ -12,8 +12,12 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" src="/script/myQnA.js"></script>
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />  
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>  
+<script type="text/javascript" src="/script/detailMyQnA.js"></script>
+<link rel="stylesheet"
+	href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css"
+	type="text/css" />
+<script
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
 </head>
 <body>
@@ -41,22 +45,17 @@
 										<li><a class="topmargin" href="/board/adminList">별솔뉴스</a></li>
 										<li><a href="/index/event">이벤트</a></li>
 									</ul></li>
-								<li>
-								<c:if test="${userId==null }">
-								<a href="/cus/login">회원 서비스</a>
-								</c:if>
-								<c:if test="${userId!=null }">
-								<a href="/index/leftover">회원 서비스</a>
-								</c:if>
+								<li><c:if test="${userId==null }">
+										<a href="/cus/login">회원 서비스</a>
+									</c:if> <c:if test="${userId!=null }">
+										<a href="/index/leftover">회원 서비스</a>
+									</c:if>
 									<ul>
-										<li>
-										<c:if test="${userId==null }">
-										<a class="topmargin" href="/cus/login">객실예약</a>
-										</c:if>
-										<c:if test="${userId!=null }">
-										<a class="topmargin" href="/index/leftover">객실예약</a>
-										</c:if>
-										</li>
+										<li><c:if test="${userId==null }">
+												<a class="topmargin" href="/cus/login">객실예약</a>
+											</c:if> <c:if test="${userId!=null }">
+												<a class="topmargin" href="/index/leftover">객실예약</a>
+											</c:if></li>
 										<li><a href="/index/guestroom">객실현황</a></li>
 										<li><a href="/board/list">후기게시판</a></li>
 									</ul></li>
@@ -112,81 +111,122 @@
 						<h3 class="stitle">나의 Q&A</h3>
 					</div>
 				</div>
-				<form onsubmit="return check()" id="regis">
-					<div class="content_foot">
-						<ul class="flotBox_my_tap">
-							<li><a href="/cus/myPage" class="li2">개인정보</a></li>
-							<li><a href="/question/list" class="li1">나의 Q&A</a></li>
-							<li><a href="/cus/myReserv" class="li3">나의 예약</a></li>
-						</ul>
-					</div>
+				<div class="updaelDiv">
+					<c:if test="${question.writer==userId}">
+						<button class="updel" onclick="updateQuestion(${question.id})">수정</button>
+						<button class="updel" onclick="deleteQuestion(${question.id})">삭제</button>
+					</c:if>
+				</div>
+				<form>
 					<table>
-					<tr>
-						<td>작성자</td> 
-						<td>제목</td>
-						<td>내용</td>
-					</tr>
-					<c:forEach var="i" items="${questionView.questionList}">
-					<tr onclick="goDetail(${i.id})">
-						<td>${i.writer }</td>
-						<td>${i.title }</td>
-						<td>${i.message }</td>
-					</tr>
-					</c:forEach>
+						<tr>
+							<td>제목</td>
+							<td>${question.title}</td>
+						</tr>
+						<tr>
+							<td>문의사항</td>
+							<td>${question.division }</td>
+						</tr>
+						<tr>
+							<td colspan="2">내용</td>
+						</tr>
+						<tr>
+							<td colspan="2">${question.message}</td>
+						</tr>
 					</table>
-					<!-- 현재 페이지가 총 페이지 수와 보다 작거나 같으면 -->
-					<c:if test="${questionView.currentPageNum<questionView.pageTotalCount+1}">
-					<!-- 현재 페이지가 1보다 크고 현재 페이지가 총 페이지의 수보다 작거나 같으 -->
-					<c:if test="${questionView.currentPageNum>1 && questionView.currentPageNum<=questionView.pageTotalCount}">
-					<!-- get 방식의 get요청(인자로 현재 페이지의 전번 페이지로 이동) -->
-					<a href="/question/list?pageNum=${questionView.currentPageNum-1}">이전</a>
-					</c:if>
-					
-					<!-- 만약 현재 페이지가 1이면 -->
-					<c:if test="${questionView.currentPageNum==1}">
-					
-					<!-- 1부터 페이지 총 수 만큼 반복문을 돌리면서 -->
-					<c:forEach var="k" begin="1" end="${questionView.pageTotalCount }">
-					<!-- 1~5까지 출력  get 방식의 get요청(인자로 각 수의 페이지 로)-->
-					<c:if test="${k<6}">
-					<a href="/question/list?pageNum=${k}">${k}</a>
-					</c:if>
+				</form>
+				<form action="/question/addAnswer?pageNum="
+					${answerView.currentPageNum} method="post">
+
+					<div>
+						<div>댓글달기</div>
+						<input type="text" name="title" class="title" value="XX">
+						<textarea rows="20" cols="20" name="message"></textarea>
+						<input type="submit">
+					</div>
+				</form>
+				<table>
+					<c:forEach var="i" items="${answerView.answerList }">
+						<tr>
+							<td class="title">${i.title}</td>
+							<td>${i.writer }</td>
+							<td>${i.message}</td>
+						</tr>
+						<c:if test="${i.writer == userId}">
+							<button onclick="goUpdateAnswer(${i.id})">수정</button>
+							<button onclick="goDeleteAnswer(${i.id})">삭제</button>
+						</c:if>
 					</c:forEach>
-					
+				</table>
+
+				<!-- 현재 페이지가 총 페이지 수와 보다 작거나 같으면 -->
+				<c:if
+					test="${answerView.currentPageNum<answerView.pageTotalCount+1}">
+					<!-- 현재 페이지가 1보다 크고 현재 페이지가 총 페이지의 수보다 작거나 같으 -->
+					<c:if
+						test="${answerView.currentPageNum>1 && answerView.currentPageNum<=answerView.pageTotalCount}">
+						<!-- get 방식의 get요청(인자로 현재 페이지의 전번 페이지로 이동) -->
+						<a
+							href="/question/detailQuestion?id=${question.id}&pageNum=${answerView.currentPageNum-1}">이전</a>
+					</c:if>
+
+					<!-- 만약 현재 페이지가 1이면 -->
+					<c:if test="${answerView.currentPageNum==1}">
+
+						<!-- 1부터 페이지 총 수 만큼 반복문을 돌리면서 -->
+						<c:forEach var="k" begin="1" end="${answerView.pageTotalCount }">
+							<!-- 1~5까지 출력  get 방식의 get요청(인자로 각 수의 페이지 로)-->
+							<c:if test="${k<6}">
+								<a
+									href="/question/detailQuestion?id=${question.id}&pageNum=${k}">${k}</a>
+							</c:if>
+						</c:forEach>
+
 					</c:if>
 					<!-- 현제 페이지가 1이 아니면 -->
-					<c:if test="${questionView.currentPageNum!=1}">
-					
-					<c:if test="${questionView.pageTotalCount-questionView.currentPageNum >=3 && questionView.currentPageNum !=1 }">
-					<c:forEach var="j" begin="${questionView.currentPageNum-1}" end="${questionView.currentPageNum+3}">
-					<a href="/question/list?pageNum=${j}">${j}</a>
-					</c:forEach>
+					<c:if test="${answerView.currentPageNum!=1}">
+
+						<c:if
+							test="${answerView.pageTotalCount-answerView.currentPageNum >=3 && answerView.currentPageNum !=1 }">
+							<c:forEach var="j" begin="${answerView.currentPageNum-1}"
+								end="${answerView.currentPageNum+3}">
+								<a
+									href="/question/detailQuestion?id=${question.id}&pageNum=${j}">${j}</a>
+							</c:forEach>
+						</c:if>
+
+						<c:if
+							test="${answerView.pageTotalCount-answerView.currentPageNum<3}">
+							<c:if
+								test="${(answerView.currentPageNum-(4-(answerView.pageTotalCount-answerView.currentPageNum)))<0}">
+								<c:forEach var="j" begin="0" end="${answerView.pageTotalCount }">
+									<c:if test="${j>0 }">
+										<a
+											href="/question/detailQuestion?id=${question.id}&pageNum=${j}">${j}</a>
+									</c:if>
+								</c:forEach>
+							</c:if>
+
+							<c:if
+								test="${(answerView.currentPageNum-(4-(answerView.pageTotalCount-answerView.currentPageNum)))>=0}">
+								<c:forEach var="j"
+									begin="${answerView.currentPageNum-(4-(answerView.pageTotalCount-answerView.currentPageNum))}"
+									end="${answerView.pageTotalCount }">
+									<c:if test="${j>0 }">
+										<a
+											href="/question/detailQuestion?id=${question.id}&pageNum=${j}">${j}</a>
+									</c:if>
+								</c:forEach>
+							</c:if>
+						</c:if>
 					</c:if>
-					
-					<c:if test="${questionView.pageTotalCount-questionView.currentPageNum<3}">
-					<c:if test="${(questionView.currentPageNum-(4-(questionView.pageTotalCount-questionView.currentPageNum)))<0}">
-					<c:forEach var="j" begin="0" end="${questionView.pageTotalCount }">
-					<c:if test="${j>0 }">
-					<a href="/question/list?pageNum=${j}">${j}</a>
+
+					<c:if
+						test="${answerView.currentPageNum <answerView.pageTotalCount }">
+						<a
+							href="/question/detailQuestion?id=${question.id}&pageNum=${answerView.currentPageNum+1}">다음</a>
 					</c:if>
-					</c:forEach>
-					 </c:if>
-					 
-					 <c:if test="${(questionView.currentPageNum-(4-(questionView.pageTotalCount-questionView.currentPageNum)))>=0}">
-					 <c:forEach var="j" begin="${questionView.currentPageNum-(4-(questionView.pageTotalCount-questionView.currentPageNum))}" end="${questionView.pageTotalCount }">
-					<c:if test="${j>0 }">
-					<a href="/question/list?pageNum=${j}">${j}</a>
-					</c:if>
-					</c:forEach>
-					 </c:if>
-					 </c:if>
-					 </c:if>
-					
-					<c:if test="${questionView.currentPageNum <questionView.pageTotalCount }">
-					<a href="/question/list?pageNum=${questionView.currentPageNum+1}">다음</a>
-					</c:if>
-					</c:if>
-				</form>
+				</c:if>
 			</section>
 			<footer>
 				<div id="fnb">

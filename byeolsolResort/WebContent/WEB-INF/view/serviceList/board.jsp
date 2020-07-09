@@ -35,10 +35,16 @@
 									</ul></li>
 								<li><a href="/index/news">별솔소식</a>
 									<ul>
-										<li><a class="topmargin" href="/index/news">별솔뉴스</a></li>
+										<li><a class="topmargin" href="/board/adminList">별솔뉴스</a></li>
 										<li><a href="/index/event">이벤트</a></li>
 									</ul></li>
-								<li><a href="">회원 서비스</a>
+								<li>
+								<c:if test="${userId==null }">
+								<a href="/cus/login">회원 서비스</a>
+								</c:if>
+								<c:if test="${userId!=null }">
+								<a href="/index/leftover">회원 서비스</a>
+								</c:if>
 									<ul>
 										<li>
 										<c:if test="${userId==null }">
@@ -51,7 +57,7 @@
 										<li><a href="/index/guestroom">객실현황</a></li>
 										<li><a href="/board/list">후기게시판</a></li>
 									</ul></li>
-								<li><a href="">주변관광지</a>
+								<li><a href="/index/trip">주변관광지</a>
 									<ul>
 										<li><a class="topmargin" href="/index/trip">여행코스</a></li>
 										<li><a href="/index/golf">골프코스</a></li>
@@ -114,17 +120,15 @@
 					<c:if test="${boardView.boardCnt>0 }">
 						<!-- request로 받은 boardView의 정보리스트를 item으로 잡고 -->
 						<table>
-							<tr>
-								<td>No.</td>
-								<td>title</td>
-								<td>writer</td>
-								<td>date</td>
+							<tr class="review_title">
+								<td class="td2">제목</td>
+								<td class="td3">작성자</td>
+								<td class="td4">작성날짜</td>
 							</tr>
 							<c:forEach var="i" items="${boardView.boardList}">
 								<!-- 정보를 출력하게 하는데 삭제 버튼을 누르면 deleteGuest메서드(인자로 이 정보의 아이디를 줌)를 실행
 							수정 버튼을 누르면 updateGuest메서드 (인자로 이 정보의 아이디를 줌)를 실행 하게 함. -->
 								<tr onclick="goDetail(${i.id})">
-									<td></td>
 									<td>${i.title}</td>
 									<td>${i.userId}</td>
 									<td><jt:format value="${i.wDate}" pattern="YYYY-MM-dd HH:mm:ss"/></td>

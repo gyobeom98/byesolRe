@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+ <%@ taglib uri="http://sargue.net/jsptags/time" prefix="jt" %>  
+ <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -34,20 +35,29 @@
 									</ul></li>
 								<li><a href="/index/news">별솔소식</a>
 									<ul>
-										<li><a class="topmargin" href="/index/news">별솔뉴스</a></li>
+										<li><a class="topmargin" href="/board/adminList">별솔뉴스</a></li>
 										<li><a href="/index/event">이벤트</a></li>
 									</ul></li>
-								<li><a href="">회원 서비스</a>
+								<li>
+								<c:if test="${userId==null }">
+								<a href="/cus/login">회원 서비스</a>
+								</c:if>
+								<c:if test="${userId!=null }">
+								<a href="/index/leftover">회원 서비스</a>
+								</c:if>
 									<ul>
-										<li><c:if test="${userId==null }">
-												<a class="topmargin" href="/cus/login">객실예약</a>
-											</c:if> <c:if test="${userId!=null }">
-												<a class="topmargin" href="/index/leftover">객실예약</a>
-											</c:if></li>
+										<li>
+										<c:if test="${userId==null }">
+										<a class="topmargin" href="/cus/login">객실예약</a>
+										</c:if>
+										<c:if test="${userId!=null }">
+										<a class="topmargin" href="/index/leftover">객실예약</a>
+										</c:if>
+										</li>
 										<li><a href="/index/guestroom">객실현황</a></li>
 										<li><a href="/board/list">후기게시판</a></li>
 									</ul></li>
-								<li><a href="">주변관광지</a>
+								<li><a href="/index/trip">주변관광지</a>
 									<ul>
 										<li><a class="topmargin" href="/index/trip">여행코스</a></li>
 										<li><a href="/index/golf">골프코스</a></li>
@@ -100,23 +110,21 @@
 					</div>
 					<div>
 						<c:if test='${userId=="admin" }'>
-						<button id="addBoard" onclick="addBoard()">글쓰기</button>
+						<button id="addAdminBoard" onclick="addAdminBoard()">글쓰기</button>
 						</c:if>
 					</div>
 					<div class="notice_main">
 						<table>
 							<tr class="notice_top">
 								<td>제목</td>
-								<td>내용</td>
 								<td>작성자</td>
 								<td>게시날짜</td>
 							</tr>
-							<c:forEach var="q" items="${adBoardList}">
-								<tr>
+							<c:forEach var="q" items="${boardView.boardList}">
+								<tr onclick="goDetail(${q.id})">
 									<td>${q.title}</td>
-									<td>${q.content}</td>
-									<td>${q.userId }</td>
-									<td>${q.wDate }</td>
+									<td>관리자</td>
+									<td><jt:format value="${q.wDate}" pattern="YYYY-MM-dd HH:mm:ss" /></td>
 								</tr>
 							</c:forEach>
 						</table>

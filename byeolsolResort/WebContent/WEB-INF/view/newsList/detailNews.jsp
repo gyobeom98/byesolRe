@@ -33,20 +33,29 @@
 									</ul></li>
 								<li><a href="/index/news">별솔소식</a>
 									<ul>
-										<li><a class="topmargin" href="/index/news">별솔뉴스</a></li>
+										<li><a class="topmargin" href="/board/adminList">별솔뉴스</a></li>
 										<li><a href="/index/event">이벤트</a></li>
 									</ul></li>
-								<li><a href="">회원 서비스</a>
+								<li>
+								<c:if test="${userId==null }">
+								<a href="/cus/login">회원 서비스</a>
+								</c:if>
+								<c:if test="${userId!=null }">
+								<a href="/index/leftover">회원 서비스</a>
+								</c:if>
 									<ul>
-										<li><c:if test="${userId==null }">
-												<a class="topmargin" href="/cus/login">객실예약</a>
-											</c:if> <c:if test="${userId!=null }">
-												<a class="topmargin" href="/index/leftover">객실예약</a>
-											</c:if></li>
+										<li>
+										<c:if test="${userId==null }">
+										<a class="topmargin" href="/cus/login">객실예약</a>
+										</c:if>
+										<c:if test="${userId!=null }">
+										<a class="topmargin" href="/index/leftover">객실예약</a>
+										</c:if>
+										</li>
 										<li><a href="/index/guestroom">객실현황</a></li>
 										<li><a href="/board/list">후기게시판</a></li>
 									</ul></li>
-								<li><a href="">주변관광지</a>
+								<li><a href="/index/trip">주변관광지</a>
 									<ul>
 										<li><a class="topmargin" href="/index/trip">여행코스</a></li>
 										<li><a href="/index/golf">골프코스</a></li>
@@ -115,83 +124,6 @@
 							<td>${board.content}</td>
 						</tr>
 					</table>
-					
-					<!-- 현재 페이지가 총 페이지 수와 보다 작거나 같으면 -->
-					<c:if
-						test="${commentView.currentPageNum<commentView.pageTotalCount+1}">
-						<!-- 현재 페이지가 1보다 크고 현재 페이지가 총 페이지의 수보다 작거나 같으 -->
-						<c:if
-							test="${commentView.currentPageNum>1 && commentView.currentPageNum<=commentView.pageTotalCount}">
-							<!-- get 방식의 get요청(인자로 현재 페이지의 전번 페이지로 이동) -->
-							<a
-								href="/board/detailBoard?pageNum=${commentView.currentPageNum-1}&boardId=${board.id}">이전</a>
-						</c:if>
-
-						<!-- 만약 현재 페이지가 1이면 -->
-						<c:if test="${commentView.currentPageNum==1}">
-
-							<!-- 1부터 페이지 총 수 만큼 반복문을 돌리면서 -->
-							<c:forEach var="k" begin="1" end="${commentView.pageTotalCount }">
-								<!-- 1~5까지 출력  get 방식의 get요청(인자로 각 수의 페이지 로)-->
-								<c:if test="${k<6}">
-									<a href="/board/detailBoard?pageNum=${k}&boardId=${board.id}">${k}</a>
-								</c:if>
-							</c:forEach>
-						</c:if>
-						<!-- 현제 페이지가 1이 아니면 -->
-						<c:if test="${commentView.currentPageNum!=1}">
-
-							<c:if
-								test="${commentView.pageTotalCount-commentView.currentPageNum >=3 && commentView.currentPageNum !=1 }">
-								<c:forEach var="j" begin="${commentView.currentPageNum-1}"
-									end="${commentView.currentPageNum+3}">
-									<a href="/board/detailBoard?pageNum=${j}&boardId=${board.id}">${j}</a>
-								</c:forEach>
-							</c:if>
-							<c:if
-								test="${commentView.pageTotalCount-commentView.currentPageNum<3}">
-								<c:if
-									test="${(commentView.currentPageNum-(4-(commentView.pageTotalCount-commentView.currentPageNum)))<0}">
-									<c:forEach var="j" begin="0"
-										end="${commentView.pageTotalCount }">
-										<c:if test="${j>0 }">
-											<a href="/board/detailBoard?pageNum=${j}&boardId=${board.id}">${j}</a>
-										</c:if>
-									</c:forEach>
-								</c:if>
-								<c:if
-									test="${(commentView.currentPageNum-(4-(commentView.pageTotalCount-commentView.currentPageNum)))>=0}">
-									<c:forEach var="j"
-										begin="${commentView.currentPageNum-(4-(commentView.pageTotalCount-commentView.currentPageNum))}"
-										end="${commentView.pageTotalCount }">
-										<c:if test="${j>0 }">
-											<a href="/board/detailBoard?pageNum=${j}&boardId=${board.id}">${j}</a>
-										</c:if>
-									</c:forEach>
-								</c:if>
-							</c:if>
-						</c:if>
-						<c:if
-							test="${commentView.currentPageNum <commentView.pageTotalCount }">
-							<a
-								href="/board/detailBoard?pageNum=${commentView.currentPageNum+1}&boardId=${board.id}">다음</a>
-						</c:if>
-					</c:if>
-
-					<c:if test="${commentView.commentCnt<=0 }">
-
-					정보가 없습니다.
-					</c:if>
-
-					<form action="/board/addComment" method="post">
-						<table>
-							<tr>
-								<td>message</td>
-								<td><textarea rows="5" cols="20" name="message"></textarea></td>
-							</tr>
-						</table>
-						<input type="submit">
-					</form>
 				</div>
 			</section>
 			<footer>

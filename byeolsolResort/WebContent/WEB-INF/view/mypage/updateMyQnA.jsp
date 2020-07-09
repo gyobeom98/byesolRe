@@ -6,10 +6,19 @@
 <head>
 <meta charset="UTF-8">
 <title>별솔리조트</title>
-<link rel="stylesheet" href="/css/board.css">
+<link rel="stylesheet" href="/css/myQnA.css">
+<script
+	src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script type="text/javascript" src="/script/sub.js"></script>
+<script type="text/javascript" src="/script/myQnA.js"></script>
+<script type="text/javascript" src="/script/detailMyQnA.js"></script>
+<link rel="stylesheet"
+	href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css"
+	type="text/css" />
+<script
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
 </head>
 <body>
 	<div class="allwrap">
@@ -36,22 +45,17 @@
 										<li><a class="topmargin" href="/board/adminList">별솔뉴스</a></li>
 										<li><a href="/index/event">이벤트</a></li>
 									</ul></li>
-								<li>
-								<c:if test="${userId==null }">
-								<a href="/cus/login">회원 서비스</a>
-								</c:if>
-								<c:if test="${userId!=null }">
-								<a href="/index/leftover">회원 서비스</a>
-								</c:if>
+								<li><c:if test="${userId==null }">
+										<a href="/cus/login">회원 서비스</a>
+									</c:if> <c:if test="${userId!=null }">
+										<a href="/index/leftover">회원 서비스</a>
+									</c:if>
 									<ul>
-										<li>
-										<c:if test="${userId==null }">
-										<a class="topmargin" href="/cus/login">객실예약</a>
-										</c:if>
-										<c:if test="${userId!=null }">
-										<a class="topmargin" href="/index/leftover">객실예약</a>
-										</c:if>
-										</li>
+										<li><c:if test="${userId==null }">
+												<a class="topmargin" href="/cus/login">객실예약</a>
+											</c:if> <c:if test="${userId!=null }">
+												<a class="topmargin" href="/index/leftover">객실예약</a>
+											</c:if></li>
 										<li><a href="/index/guestroom">객실현황</a></li>
 										<li><a href="/board/list">후기게시판</a></li>
 									</ul></li>
@@ -98,23 +102,49 @@
 						<ul>
 							<li>HOME</li>
 							<li>》</li>
-							<li>별솔소식</li>
+							<li>마이페이지</li>
 							<li>》</li>
-							<li>공지사항</li>
-							<li>》</li>
-							<li>공지사항작성하기</li>
+							<li>나의 Q&A</li>
 						</ul>
 					</div>
 					<div class="sibtitle">
-						<h3 class="stitle">공지사항작성하기</h3>
+						<h3 class="stitle">나의 Q&A</h3>
 					</div>
-					<form action="/board/addAdminBoard" method="post" enctype="multipart/form-data">
-						<input type="text" name="title" placeholder="제목입력"> 
-						<input type="text" name="content">
-						<input type="file" name="uploadFile" multiple="multiple" max="3">
-						<input type="submit">
-					</form>
 				</div>
+				<form action="/question/updateQuestion" method="post">
+					<table>
+						<tr class="number">
+							<td><input type="number" value="${question.id}" name="id" readonly="readonly"></td>
+						</tr>
+						<tr>
+							<td class="formTd1">제목</td>
+							<td><input type="text" id="qNa_title" name="title"
+								value="${question.title}"></td>
+						</tr>
+						<tr>
+							<td class="formTd1">분류</td>
+							<td><select name="division">
+									<option value="예약">예약문의</option>
+									<option value="객실">객실문의</option>
+									<option value="식음시설">식음시설</option>
+									<option value="관광정보">관광정보</option>
+									<option value="기타">기타</option>
+							</select></td>
+						</tr>
+						<tr>
+							<td class="formTd1">파일첨부</td>
+							<td><input type="file" name="file_input"></td>
+						</tr>
+						<tr>
+							<td class="formTd1">내용</td>
+							<td><textarea id="textarea" rows="8" cols="80"
+									name="message">${question.message }</textarea></td>
+						</tr>
+					</table>
+					<div class="submit">
+						<input type="submit" id="qNa_submit" value="등록">
+					</div>
+				</form>
 			</section>
 			<footer>
 				<div id="fnb">

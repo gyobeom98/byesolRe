@@ -96,10 +96,6 @@ public class BoardController {
 					}
 				}
 				board.setUserId((String) session.getAttribute("userId"));
-				if (board.getUserId().equals("admin")) {
-					board.setState("admin");
-				}
-				System.out.println(board);
 				if (isTypeCheck && errorCheck) {
 					boardService.addBoard(board);
 					return "redirect:/board/list";
@@ -115,6 +111,15 @@ public class BoardController {
 
 	}
 
+	@GetMapping("/adminList")
+	public String getadminList(Model m, @RequestParam(defaultValue = "1") int pageNum,
+			@RequestParam(required = false) String errorMessage) {
+		m.addAttribute("boardView", boardService.getAdminBoardView(pageNum));
+		if (errorMessage != null)
+			m.addAttribute("errorMessage", errorMessage);
+		return "/newsList/news";
+	}
+	
 	@GetMapping("/addAdminBoard")
 	public String addAdminBoardForm(HttpSession session, Model m) {
 
@@ -179,8 +184,9 @@ public class BoardController {
 					}
 					System.out.println(board);
 					if (isTypeCheck && errorCheck) {
+						board.setState("admin");
 						boardService.addBoard(board);
-						return "redirect:/board/adminBoardList";
+						return "redirect:/board/adminList";
 					} else {
 						m.addAttribute("errorMessage", "게시글 형식에 맞지 않습니다.");
 						return "redirect:/board/addAdminBoard";
@@ -192,7 +198,7 @@ public class BoardController {
 			}
 		} else {
 			m.addAttribute("errorMessage", "로그인이 되어 있지 않습니다");
-			return "redirect:/board/adminBoardList";
+			return "redirect:/board/adminList";
 		}
 	}
 
@@ -336,7 +342,7 @@ public class BoardController {
 			}
 		} else {
 			m.addAttribute("errorMessage", "잘못된 접근 입니다.");
-			return "redirect:/board/adminBoardList";
+			return "redirect:/board/adminList";
 		}
 
 	}
@@ -476,11 +482,11 @@ public class BoardController {
 					}
 				} else {
 					m.addAttribute("errorMessage","잘못된 접근 입니다.");
-					return "redirect:/board/adminBoardList";
+					return "redirect:/board/adminList";
 				}
 			} else {
 				m.addAttribute("errorMessage","잘못된 접근 입니다.");
-				return "redirect:/board/adminBoardList";
+				return "redirect:/board/adminList";
 			}
 		} else {
 			m.addAttribute("errorMessage","로그인이 되어 있지 않습니다.");
@@ -494,7 +500,14 @@ public class BoardController {
 	public String goBoardDetail(int boardId, Model m, @RequestParam(defaultValue = "1") int pageNum) {
 		m.addAttribute("board", boardService.selectBoard(boardId));
 		m.addAttribute("commentView", commentService.getView(pageNum, boardId));
-		return "detailBoard";
+		return "/serviceList/detailBoard";
+	}
+	
+	@GetMapping("/adminDetailBoard")
+	public String goAdminBoardDetail(int boardId, Model m, @RequestParam(defaultValue = "1") int pageNum) {
+		m.addAttribute("board", boardService.selectBoard(boardId));
+		m.addAttribute("commentView", commentService.getView(pageNum, boardId));
+		return "/newsList/detailNews";
 	}
 
 	@PostMapping("/addComment")

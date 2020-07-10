@@ -328,6 +328,9 @@ public class ReservService {
 		return roomList;
 		
 	}
+	public void updateReservState() {
+		reservMapper.updateReservState();
+	}
 
 	
 	

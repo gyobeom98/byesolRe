@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
@@ -315,67 +316,7 @@ public class FtpService {
 		}
 	}
 
-	public void ftpHeaderImg(MultipartFile uploadFile) {
-		FTPClient ftp = null;
-		String uploadFileType = "." + uploadFile.getContentType()
-				.substring(uploadFile.getContentType().lastIndexOf('/') + 1, uploadFile.getContentType().length());
-		File tempDirectory = new File(System.getProperty("java.io.tmpdir"));
-		System.out.println(tempDirectory.getAbsolutePath());
-		try {
-			File file = new File(tempDirectory.getAbsolutePath() + "/" + uploadFile.getOriginalFilename());
-			if (file.createNewFile()) {
-				System.out.println("생성");
-			}
-			FileOutputStream fos = new FileOutputStream(file);
-			fos.write(uploadFile.getBytes());
-			fos.close();
-			// FTPClient를 생성합니다.
-			ftp = new FTPClient();
-			// 원하시는 인코딩 타입
-			ftp.setControlEncoding("utf-8");
-			ftp.connect(server, port);
-			ftp.login(user, pw);
-			// 원하시는 파일 타입
-			ftp.setFileType(FTP.BINARY_FILE_TYPE);
-			// 제대로 연결이 안댔을 경우 ftp접속을 끊습니다.
-			if (!FTPReply.isPositiveCompletion(ftp.getReplyCode())) {
-				ftp.disconnect();
-				System.out.println("연결 실패");
-			} else {
-				System.out.println("연결 성공");
-			}
-			// 파일을 넣을 디렉토리를 설정해줍니다.
-			ftp.mkd("/html/byeolsolResort/header");
-			System.out.println("성공?");
-			// makeDirectory는 directory 생성이 필요할 때만 해주시면 됩니다.
-			ftp.changeWorkingDirectory("/html/byeolsolResort/header");
-			FTPFile[] ftpFiles = ftp.listFiles();
-			// 그 후 이전에 File로 변환한 업로드파일을 읽어 FTP로 전송합니다.
-			FileInputStream fis = new FileInputStream(file);
-			ftp.rename("header.png", "dumpHeader" + ftpFiles.length + ".png");
-			boolean isSucess = ftp.storeFile("header.png", fis);
-			if (isSucess) {
-				System.out.println("성공");
-			} else {
-				System.out.println("실패");
-			}
-			fis.close();
-			fos.close();
-			System.out.println(file.exists());
-			System.out.println(file.delete());
-			// storeFile Method는 파일 송신결과를 boolean값으로 리턴합니다
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			if (ftp != null && ftp.isConnected()) {
-				try {
-					ftp.disconnect();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}
-	}
+	
 
 	public boolean fileTypeCheck(MultipartFile uploadFile) {
 		String fileName = uploadFile.getOriginalFilename();
@@ -448,8 +389,6 @@ public class FtpService {
 		}
 
 	}
-
-	
 	
 	
 	public boolean ftpDeleteEventImgReal(String imgPath, int eventId) {
@@ -561,6 +500,155 @@ public class FtpService {
 			}
 		}
 
+	}
+
+	
+	public void ftpAdminImg(MultipartFile uploadFile , String classification, String value) {
+		FTPClient ftp = null;
+		String type = "";
+		String oName = uploadFile.getOriginalFilename();
+		String fileName = "";
+		File tempDirectory = new File(System.getProperty("java.io.tmpdir"));
+		System.out.println(tempDirectory.getAbsolutePath());
+		try {
+			File file = new File(tempDirectory.getAbsolutePath() + "/" + uploadFile.getOriginalFilename());
+			if (file.createNewFile()) {
+				System.out.println("생성");
+			}
+			FileOutputStream fos = new FileOutputStream(file);
+			fos.write(uploadFile.getBytes());
+			fos.close();
+			// FTPClient를 생성합니다.
+			ftp = new FTPClient();
+			// 원하시는 인코딩 타입
+			ftp.setControlEncoding("utf-8");
+			ftp.connect(server, port);
+			ftp.login(user, pw);
+			// 원하시는 파일 타입
+			ftp.setFileType(FTP.BINARY_FILE_TYPE);
+			// 제대로 연결이 안댔을 경우 ftp접속을 끊습니다.
+			if (!FTPReply.isPositiveCompletion(ftp.getReplyCode())) {
+				ftp.disconnect();
+				System.out.println("연결 실패");
+			} else {
+				System.out.println("연결 성공");
+			}
+			// 파일을 넣을 디렉토리를 설정해줍니다.
+			ftp.mkd("/html/byeolsolResort/"+classification);
+			System.out.println("성공?");
+			// makeDirectory는 directory 생성이 필요할 때만 해주시면 됩니다.
+			ftp.changeWorkingDirectory("/html/byeolsolResort/"+classification);
+			FTPFile[] ftpFiles = ftp.listFiles();
+			// 그 후 이전에 File로 변환한 업로드파일을 읽어 FTP로 전송합니다.
+			System.out.println(classification);
+			System.out.println(value);
+			for (FTPFile ftpFile : ftpFiles) {
+				System.out.println("자름 : " + ftpFile.getName().substring(0,ftpFile.getName().lastIndexOf('.')-1));
+
+				if(ftpFile.getName().substring(0,ftpFile.getName().lastIndexOf('.')).equals(value)) {
+					System.out.println("aaa");
+					fileName = ftpFile.getName().substring(0,ftpFile.getName().lastIndexOf('.'));
+					type = ftpFile.getName().substring(ftpFile.getName().lastIndexOf('.'),ftpFile.getName().length());
+				}
+			}
+			System.out.println(ftpFiles.length);
+			FileInputStream fis = new FileInputStream(file);
+			System.out.println(fileName+type);
+			System.out.println("dump"+fileName+ftpFiles.length+type);
+			System.out.println(ftp.rename(fileName+type, "dump"+fileName + ftpFiles.length + type));
+			boolean isSucess = ftp.storeFile(value+type , fis);
+			if (isSucess) {
+				System.out.println("성공");
+			} else {
+				System.out.println("실패");
+			}
+			fis.close();
+			fos.close();
+			System.out.println(file.exists());
+			System.out.println(file.delete());
+			// storeFile Method는 파일 송신결과를 boolean값으로 리턴합니다
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (ftp != null && ftp.isConnected()) {
+				try {
+					ftp.disconnect();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	
+
+	public void ftpAdminImgRename(String classification, String value, String dumpImg) {
+		// TODO Auto-generated method stub
+		
+		FTPClient ftp = null;
+		String type = "";
+		String fileName = "";
+		String selectFileName= dumpImg.substring(dumpImg.lastIndexOf('/')+1,dumpImg.length());
+		File tempDirectory = new File(System.getProperty("java.io.tmpdir"));
+		System.out.println(tempDirectory.getAbsolutePath());
+		try {
+			// FTPClient를 생성합니다.
+			ftp = new FTPClient();
+			// 원하시는 인코딩 타입
+			ftp.setControlEncoding("utf-8");
+			ftp.connect(server, port);
+			ftp.login(user, pw);
+			// 원하시는 파일 타입
+			ftp.setFileType(FTP.BINARY_FILE_TYPE);
+			// 제대로 연결이 안댔을 경우 ftp접속을 끊습니다.
+			if (!FTPReply.isPositiveCompletion(ftp.getReplyCode())) {
+				ftp.disconnect();
+				System.out.println("연결 실패");
+			} else {
+				System.out.println("연결 성공");
+			}
+			// 파일을 넣을 디렉토리를 설정해줍니다.
+			ftp.mkd("/html/byeolsolResort/"+classification);
+			System.out.println("성공?");
+			// makeDirectory는 directory 생성이 필요할 때만 해주시면 됩니다.
+			ftp.changeWorkingDirectory("/html/byeolsolResort/"+classification);
+			FTPFile[] ftpFiles = ftp.listFiles();
+			// 그 후 이전에 File로 변환한 업로드파일을 읽어 FTP로 전송합니다.
+			System.out.println(classification);
+			System.out.println(value);
+			for (FTPFile ftpFile : ftpFiles) {
+				System.out.println("자름 : " + ftpFile.getName().substring(0,ftpFile.getName().lastIndexOf('.')));
+				if(ftpFile.getName().substring(0,ftpFile.getName().lastIndexOf('.')).equals(value)) {
+					fileName = ftpFile.getName().substring(0,ftpFile.getName().lastIndexOf('.'));
+					type = ftpFile.getName().substring(ftpFile.getName().lastIndexOf('.'),ftpFile.getName().length());
+				}
+			}
+			System.out.println(ftpFiles.length);
+			System.out.println(fileName+type);
+			System.out.println("dump"+fileName+(ftpFiles.length+1)+type);
+			int random = (int)(Math.random()*45)+1;
+			boolean isSucess = ftp.rename(fileName+type, "dump"+fileName + random + type);
+			if (isSucess) {
+				System.out.println("성공");
+				System.out.println("성공이냐?");
+			} else {
+				System.out.println("실패");
+			}
+			boolean isMainSucess = ftp.rename(selectFileName, value+type);
+			System.out.println(isMainSucess);
+			// storeFile Method는 파일 송신결과를 boolean값으로 리턴합니다
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (ftp != null && ftp.isConnected()) {
+				try {
+					ftp.disconnect();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		
 	}
 	
 

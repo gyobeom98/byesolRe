@@ -50,7 +50,7 @@ public class BoardController {
 		if (session.getAttribute("userId") != null)
 			return "/serviceList/addBoard";
 		else {
-			m.addAttribute("errorMessage", "로그인이 되어 있지 않습니다");
+			m.addAttribute("errorMessage", "로그인이 되어 있지 않습니다.");
 			return "redirect:/board/list";
 		}
 	}
@@ -106,7 +106,7 @@ public class BoardController {
 				}
 			}
 		} else {
-			m.addAttribute("errorMessage", "로그인이 되어 있지 않습니다");
+			m.addAttribute("errorMessage", "로그인이 되어 있지 않습니다.");
 			return "redirect:/board/list";
 		}
 
@@ -194,7 +194,7 @@ public class BoardController {
 				return "redirect:/index/main";
 			}
 		} else {
-			m.addAttribute("errorMessage", "로그인이 되어 있지 않습니다");
+			m.addAttribute("errorMessage", "로그인이 되어 있지 않습니다.");
 			return "redirect:/board/adminList";
 		}
 	}
@@ -218,7 +218,7 @@ public class BoardController {
 				return "redirect:/board/list";
 			}
 		} else {
-			m.addAttribute("errorMessage", "로그인이 되어 있지 않습니다");
+			m.addAttribute("errorMessage", "로그인이 되어 있지 않습니다.");
 			return "redirect:/board/list";
 		}
 
@@ -315,7 +315,7 @@ public class BoardController {
 				return "redirect:/board/list";
 			}
 		} else {
-			m.addAttribute("errorMessage", "로그인이 되어 있지 않습니다");
+			m.addAttribute("errorMessage", "로그인이 되어 있지 않습니다.");
 			return "redirect:/board/list";
 		}
 	}
@@ -437,7 +437,7 @@ public class BoardController {
 				return "redirect:/board/list";
 			}
 		} else {
-			m.addAttribute("errorMessage", "로그인이 되어 있지 않습니다");
+			m.addAttribute("errorMessage", "로그인이 되어 있지 않습니다.");
 			return "redirect:/board/list";
 		}
 	}
@@ -520,7 +520,7 @@ public class BoardController {
 			comment.setUserId((String) session.getAttribute("userId"));
 			commentService.addComment(comment);
 		} else {
-			m.addAttribute("errorMessage", "로그인을 해주세요");
+			m.addAttribute("errorMessage", "로그인이 되어 있지 않습니다.");
 		}
 		return "redirect:/board/detailBoard?boardId=" + comment.getBoardId();
 	}

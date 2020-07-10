@@ -12,6 +12,17 @@
 <script src="https://kit.fontawesome.com/c945c12587.js"
 	crossorigin="anonymous"></script>
 <script type="text/javascript" src="/script/main.js"></script>
+
+<script type="text/javascript">
+
+function updateImg(classification,value){
+	console.log(classification,value)
+	location.href="/index/imgUpdate?classification="+classification+"&value="+value;
+	
+}
+
+</script>
+
 </head>
 <body>
 	<div class="allwrap">
@@ -75,5 +86,7 @@
 			</footer>
 		</div>
 	</div>
+	<!--  -->
+	<button onclick='updateImg("mainImg","main")'>이미지 수정</button>	
 </body>
 </html>

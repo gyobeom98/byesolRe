@@ -104,7 +104,8 @@ public class ReservController {
 	@PostMapping("/printTotalPrice")
 	@ResponseBody
 	public String getTotalPrice(@RequestParam(defaultValue = DEFAULT_START_DATE) Date startDate,
-			@RequestParam(defaultValue = DEFAULT_END_DATE) Date endDate, @RequestParam(defaultValue = "0")int roomNum) {
+			@RequestParam(defaultValue = DEFAULT_END_DATE) Date endDate,
+			@RequestParam(defaultValue = "0") int roomNum) {
 		if (!startDate.equals(DEFAULT_START_DATE) && !endDate.equals(DEFAULT_END_DATE) && roomNum != 0) {
 			LocalDate start = startDate.toLocalDate();
 			LocalDate end = endDate.toLocalDate();
@@ -220,13 +221,28 @@ public class ReservController {
 		}
 
 	}
-	
+
 	@PostMapping("/printRoomNum")
 	@ResponseBody
-	public List<Room> getRoomNum(Date startDate , Date endDate){
-		return reservService.getReservCheckNoRoomId(startDate.toLocalDate() , endDate.toLocalDate());
-		
+	public List<Room> getRoomNum(Date startDate, Date endDate) {
+		return reservService.getReservCheckNoRoomId(startDate.toLocalDate(), endDate.toLocalDate());
 	}
-	
+
+	@GetMapping("/updateReservState")
+	public String adminUpdateReservState(int id, HttpSession session, Model m) {
+		if (session.getAttribute("userId") != null) {
+			String userId = (String) session.getAttribute("userId");
+			if (userId.equals("admin")) {
+				reservService.updateReservState();
+				return "";
+			}else {
+				m.addAttribute("errorMessage","권한이 없는 접근 입니다.");
+				return "redirect:/index/main";
+			}
+		} else {
+			m.addAttribute("errorMessage","로그인이 되어 있지 않습니다.");
+			return "redirect:/index/main";
+		}
+	}
 
 }

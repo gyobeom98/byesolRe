@@ -93,7 +93,7 @@ public class QuestionController {
 			}
 
 		} else {
-			m.addAttribute("errorMessage", "로그인이 되어 있지 않습니다");
+			m.addAttribute("errorMessage", "로그인이 되어 있지 않습니다.");
 			return "redirect:/index/main";
 		}
 
@@ -131,7 +131,7 @@ public class QuestionController {
 				return "redirect:/index/main";
 			}
 		} else {
-			m.addAttribute("errorMessage", "로그인이 되어 있지 않습니다");
+			m.addAttribute("errorMessage", "로그인이 되어 있지 않습니다.");
 			return "redirect:/index/main";
 		}
 	}
@@ -149,7 +149,7 @@ public class QuestionController {
 				return "redirect:/index/main";
 			}
 		} else {
-			m.addAttribute("errorMessage", "로그인이 되어 있지 않습니다");
+			m.addAttribute("errorMessage", "로그인이 되어 있지 않습니다.");
 			return "redirect:/index/main";
 		}
 
@@ -219,7 +219,7 @@ public class QuestionController {
 				return "redirect:/question/list";
 			}
 		} else {
-			m.addAttribute("errorMessage", "로그인이 되어 있지 않습니다");
+			m.addAttribute("errorMessage", "로그인이 되어 있지 않습니다.");
 			return "redirect:/index/main";
 		}
 

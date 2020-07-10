@@ -209,7 +209,7 @@ public class CustomerController {
 			m.addAttribute("customer", customer);
 			return "/mypage/mypage";
 		} else {
-			m.addAttribute("errorMessage", "로그인을 해주세요");
+			m.addAttribute("errorMessage", "로그인이 되어 있지 않습니다.");
 			return "redirect:/index/main";
 		}
 
@@ -336,7 +336,7 @@ public class CustomerController {
 				return "redirect:/cus/myPage";
 			}
 		} else {
-			m.addAttribute("errorMessage", "로그인이 되어있지 않습니다.");
+			m.addAttribute("errorMessage", "로그인이 되어 있지 않습니다.");
 			return "redirect:/index/main";
 		}
 	}

@@ -22,10 +22,12 @@ public class ReservInfo {
 	
 	private String state;
 	
+	private String phone;
+	
 	public ReservInfo() {}
 
 	public ReservInfo(int id , String userId, String concept, String userName, LocalDate startDate, LocalDate endDate,
-			int totalPrice, int peopleCount, String state) {
+			int totalPrice, int peopleCount, String state, String phone) {
 		this.id = id;
 		this.userId = userId;
 		this.concept = concept;
@@ -35,6 +37,7 @@ public class ReservInfo {
 		this.totalPrice = totalPrice;
 		this.peopleCount = peopleCount;
 		this.state = state;
+		this.phone = phone;
 	}
 	
 	public String getUserId() {
@@ -109,12 +112,22 @@ public class ReservInfo {
 	public void setId(int id) {
 		this.id = id;
 	}
+	
+	
+	
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
 
 	@Override
 	public String toString() {
 		return "ReservInfo [id=" + id + ", userId=" + userId + ", concept=" + concept + ", userName=" + userName
 				+ ", startDate=" + startDate + ", endDate=" + endDate + ", totalPrice=" + totalPrice + ", peopleCount="
-				+ peopleCount + ", state=" + state + "]";
+				+ peopleCount + ", state=" + state + ", phone=" + phone + "]";
 	}
 	
 	

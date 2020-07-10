@@ -312,7 +312,7 @@ public class ReservService {
 			Customer customer = customerMapper.selectCustomerWithId(reserv.getUserId());
 			Room room = roomService.getRoomById(reserv.getRoomId());
 			reservInfoList.add(new ReservInfo(reserv.getId(),reserv.getUserId(), room.getConcept(),
-					customer.getName(), reserv.getStartDate(),reserv.getEndDate(), reserv.getTotalPrice(), reserv.getPeopleCount(),reserv.getState()));
+					customer.getName(), reserv.getStartDate(),reserv.getEndDate(), reserv.getTotalPrice(), reserv.getPeopleCount(),reserv.getState(),customer.getPhone()));
 			}
 		}
 		reservInfoView = new ReservInfoView(reservCnt, pageNum, firstRow, RESERV_COUNT_PER_PAGE, reservInfoList);

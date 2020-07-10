@@ -1,6 +1,5 @@
 
 $(function() {
-	
 	$.datepicker.setDefaults($.datepicker.regional['ko']);
 	// 시작일(date1)은 종료일(date2) 이후 날짜 선택 불가
 	// 종료일(date2)은 시작일(date1) 이전 날짜 선택 불가
@@ -49,6 +48,36 @@ $(function() {
 	$('#date1').datepicker('setDate', new Date());
 	$('#date1').datepicker("show");
 	$('#date1').datepicker("hide");
+	
+	$("#date2").change(function(){
+		
+		var startDate = $("input[name=startDate]").val();
+		var endDate = $("input[name=endDate]").val();
+		if(startDate != null && endDate!=null){
+		$.ajax({
+			url:"/reserv/printRoomNum",
+			type:"post",
+			data :{"startDate":startDate , "endDate" : endDate},
+			success : function(d){
+				var option = "";
+				$('#roomNum').empty();
+				option = $('<option value="">객실 선택</option>')
+				$('#roomNum').append(option)
+				for(var i = 0 ; i< d.length; i++){
+						option = $('<option value="'+d[i].roomNum+'">'+d[i].roomNum+'번</option>')
+					$("#roomNum").append(option)
+					
+				}
+				
+			}
+			
+			
+		})
+	}
+		
+		
+	})
+	
 
 	var room = $("select[name=roomNum]");
 	room.change(function() {

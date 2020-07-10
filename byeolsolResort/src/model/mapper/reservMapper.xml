@@ -46,7 +46,11 @@ select * from reserv where user_id = #{userId} limit #{firstRow},#{reservCountPe
 </select>
 
 <select id="selectReservWithLimit" resultType="Reserv">
-select * from reserv #{firstRow},#{reservCountPerPage}
+select * from reserv limit #{firstRow},#{reservCountPerPage}
+</select>
+
+<select id="selectReservListByStartAndEndDate" resultType="Reserv">
+select * from reserv where start_date between #{startDate} and #{endDate} OR end_date between #{startDate} and #{endDate}
 </select>
 
 </mapper>

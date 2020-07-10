@@ -61,23 +61,9 @@
 									<tr>
 										<td class="tdForm">객실</td>
 										<td class="tdForm1">
-										<select class="room" name="roomNum">
-												<option value="객실종류">객실선택</option>
-												<option value="101">room101</option>
-												<option value="102">room102</option>
-												<option value="103">room103</option>
-												<option value="104">room104</option>
-												<option value="105">room105</option>
-												<option value="201">room201</option>
-												<option value="202">room202</option>
-												<option value="203">room203</option>
-												<option value="204">room204</option>
-												<option value="205">room205</option>
-												<option value="301">room301</option>
-												<option value="302">room302</option>
-												<option value="303">room303</option>
-												<option value="304">room304</option>
-												<option value="305">room305</option>
+										<select class="room" name="roomNum" id="roomNum">
+												<option value="">객실선택</option>
+												
 										</select></td>
 									</tr>
 									<tr>

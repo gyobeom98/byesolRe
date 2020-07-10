@@ -310,6 +310,24 @@ public class ReservService {
 		reservInfoView = new ReservInfoView(reservCnt, pageNum, firstRow, RESERV_COUNT_PER_PAGE, reservInfoList);
 		return reservInfoView;
 	}
+	public List<Room> getReservCheckNoRoomId(LocalDate startDate, LocalDate endDate) {
+		List<Reserv> reservList =  reservMapper.selectReservListByStartAndEndDate(startDate,endDate);
+		List<Room> roomList =  roomService.getRoomAll();
+		List<Integer> deleteIndex = new ArrayList<Integer>();
+		
+		for (int i = 0; i < roomList.size(); i++) {
+			for (Reserv reserv : reservList) {
+				if(roomList.get(i).getId() == reserv.getId()) {
+					deleteIndex.add(i);
+				}
+			}
+		}
+		for (Integer integer : deleteIndex) {
+			roomList.remove(roomList.get(integer));
+		}
+		return roomList;
+		
+	}
 
 	
 	

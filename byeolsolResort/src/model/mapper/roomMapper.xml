@@ -10,7 +10,7 @@ select * from room where id = #{id}
 </select>
 
 <select id="selectRoomList" resultType="Room">
-select * from room where 
+select * from room
 </select>
 
 <select id="selectRoomListByConcept" resultType="Room">

@@ -2,6 +2,7 @@ package controller;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -136,7 +137,7 @@ public class ReservController {
 					if (reserv.getUserId().equals(userId) || userId.equals("admin")) {
 						m.addAttribute("reserv", reserv);
 						m.addAttribute("roomNum", roomService.getRoomById(reserv.getRoomId()).getRoomNum());
-						return "updateReservForm";
+						return "/mypage/updateReserv";
 					} else {
 						m.addAttribute("errorMessage", "권한이 없습니다.");
 						return "redirect:/index/main";
@@ -219,5 +220,13 @@ public class ReservController {
 		}
 
 	}
+	
+	@PostMapping("/printRoomNum")
+	@ResponseBody
+	public List<Room> getRoomNum(Date startDate , Date endDate){
+		return reservService.getReservCheckNoRoomId(startDate.toLocalDate() , endDate.toLocalDate());
+		
+	}
+	
 
 }

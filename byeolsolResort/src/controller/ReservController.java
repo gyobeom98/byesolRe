@@ -233,12 +233,17 @@ public class ReservController {
 	}
 
 	@GetMapping("/updateReservState")
-	public String adminUpdateReservState(int id, HttpSession session, Model m) {
+	public String adminUpdateReservState(@RequestParam(defaultValue = "0")int id, HttpSession session, Model m) {
 		if (session.getAttribute("userId") != null) {
 			String userId = (String) session.getAttribute("userId");
 			if (userId.equals("admin")) {
+				if(id>0) {
 				reservService.updateReservState();
-				return "";
+				return "redirect:/reserv/adminReservPage";
+				}else {
+					m.addAttribute("errorMessage","잘못된 접근 입니다.");
+					return"";
+				}
 			} else {
 				m.addAttribute("errorMessage", "권한이 없는 접근 입니다.");
 				return "redirect:/index/main";

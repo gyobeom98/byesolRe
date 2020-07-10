@@ -4,6 +4,8 @@ import java.time.LocalDate;
 
 public class ReservInfo {
 	
+	private int id;
+	
 	private String userId;
 	
 	private String concept;
@@ -22,9 +24,9 @@ public class ReservInfo {
 	
 	public ReservInfo() {}
 
-	public ReservInfo(String userId, String concept, String userName, LocalDate startDate, LocalDate endDate,
+	public ReservInfo(int id , String userId, String concept, String userName, LocalDate startDate, LocalDate endDate,
 			int totalPrice, int peopleCount, String state) {
-		super();
+		this.id = id;
 		this.userId = userId;
 		this.concept = concept;
 		this.userName = userName;
@@ -100,11 +102,19 @@ public class ReservInfo {
 		this.state = state;
 	}
 
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	@Override
 	public String toString() {
-		return "ReservInfo [userId=" + userId + ", concept=" + concept + ", userName=" + userName + ", startDate="
-				+ startDate + ", endDate=" + endDate + ", totalPrice=" + totalPrice + ", peopleCount=" + peopleCount
-				+ ", state=" + state + "]";
+		return "ReservInfo [id=" + id + ", userId=" + userId + ", concept=" + concept + ", userName=" + userName
+				+ ", startDate=" + startDate + ", endDate=" + endDate + ", totalPrice=" + totalPrice + ", peopleCount="
+				+ peopleCount + ", state=" + state + "]";
 	}
 	
 	

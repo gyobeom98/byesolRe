@@ -311,7 +311,7 @@ public class ReservService {
 			for (Reserv reserv : reservList) {
 			Customer customer = customerMapper.selectCustomerWithId(reserv.getUserId());
 			Room room = roomService.getRoomById(reserv.getRoomId());
-			reservInfoList.add(new ReservInfo(reserv.getUserId(), room.getConcept(),
+			reservInfoList.add(new ReservInfo(reserv.getId(),reserv.getUserId(), room.getConcept(),
 					customer.getName(), reserv.getStartDate(),reserv.getEndDate(), reserv.getTotalPrice(), reserv.getPeopleCount(),reserv.getState()));
 			}
 		}

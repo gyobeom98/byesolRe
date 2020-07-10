@@ -20,4 +20,6 @@ public interface RemoveMapper {
 	
 	public Remove selectRemoveById(int id);
 	
+	public int countRemove();
+	
 }

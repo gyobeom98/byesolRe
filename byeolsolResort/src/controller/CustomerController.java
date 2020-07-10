@@ -436,4 +436,21 @@ public class CustomerController {
 			return "redirect:/index/main";
 		}
 	}
+	
+	@GetMapping("/adminUserInfo")
+	public String goAdminUserInfo(HttpSession session, Model m , int pageNum) {
+		if(session.getAttribute("userId")!=null) {
+			String userId = (String) session.getAttribute("userId");
+			if(userId.equals("admin")) {
+				customerService.getCustomerView(pageNum);
+				return "/adminPage/adminUser";
+			}else {
+				m.addAttribute("errorMessage","권한이 없는 접근 입니다.");
+				return "/redirect:/index/main";
+			}
+		}else {
+			m.addAttribute("errorMessage", "로그인이 되어 있지 않습니다.");
+			return "/redirect:/index/main";
+		}
+	}
 }

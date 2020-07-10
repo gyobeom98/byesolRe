@@ -21,6 +21,7 @@ import model.dto.Reserv;
 import model.dto.Room;
 import model.mapper.ReservMapper;
 import model.service.CustomerService;
+import model.service.RemoveService;
 import model.service.ReservService;
 import model.service.RoomService;
 
@@ -33,6 +34,9 @@ public class ReservController {
 
 	@Autowired
 	CustomerService customerService;
+
+	@Autowired
+	RemoveService removeService;
 
 	@GetMapping("/addReserv")
 	public String goAddreservForm(HttpSession session, Model m, @RequestParam(defaultValue = "101") int roomNum) {
@@ -127,7 +131,7 @@ public class ReservController {
 
 	@Autowired
 	RoomService roomService;
-	
+
 	@GetMapping("/updateReserv")
 	public String updateReservForm(HttpSession session, Model m, @RequestParam(defaultValue = "0") int reservId) {
 		if (session.getAttribute("userId") != null) {
@@ -235,34 +239,77 @@ public class ReservController {
 			if (userId.equals("admin")) {
 				reservService.updateReservState();
 				return "";
-			}else {
-				m.addAttribute("errorMessage","권한이 없는 접근 입니다.");
+			} else {
+				m.addAttribute("errorMessage", "권한이 없는 접근 입니다.");
 				return "redirect:/index/main";
 			}
 		} else {
-			m.addAttribute("errorMessage","로그인이 되어 있지 않습니다.");
+			m.addAttribute("errorMessage", "로그인이 되어 있지 않습니다.");
 			return "redirect:/index/main";
 		}
 	}
-	
-	
+
 	@GetMapping("/adminReservPage")
-	public String adminReservPage(HttpSession session, Model m, @RequestParam()int pageNum) {
-		
-		if(session.getAttribute("userid")!=null) {
+	public String adminReservPage(HttpSession session, Model m, @RequestParam(defaultValue = "1") int pageNum) {
+
+		if (session.getAttribute("userid") != null) {
 			String userId = (String) session.getAttribute("userId");
-			if(userId.equals("admin")) {
-				m.addAttribute("reservInfoView",reservService.getReservInfoView(pageNum));
+			if (userId.equals("admin")) {
+				m.addAttribute("reservInfoView", reservService.getReservInfoView(pageNum));
 				return "/adminPage/adminRoom";
-			}else {
-				m.addAttribute("errorMessage","권한이 없는 접근 입니다.");
+			} else {
+				m.addAttribute("errorMessage", "권한이 없는 접근 입니다.");
 				return "redirect:/index/main";
 			}
-		}else {
-			m.addAttribute("errorMessage","로그인이 되어 있지 않습니다.");
+		} else {
+			m.addAttribute("errorMessage", "로그인이 되어 있지 않습니다.");
 			return "redirect:/index/main";
 		}
-		
+
+	}
+
+	@GetMapping("/adminRemovePage")
+	public String adminRemovePage(HttpSession session, Model m, @RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "")String errorMessage) {
+		if (session.getAttribute("userId") != null) {
+			String userId = (String) session.getAttribute("userId");
+			if (userId.equals("admin")) {
+				if(!errorMessage.equals("")) {
+					m.addAttribute("errorMessage",errorMessage);
+				}
+				m.addAttribute("removeView", removeService.getRemoveView(pageNum));
+				return "/adminPage/removePage";
+			} else {
+				m.addAttribute("errorMessage", "권한이 없는 접근 입니다.");
+				return "redirect:/index/main";
+			}
+		} else {
+			m.addAttribute("errorMessage", "로그인이 되어 있지 않습니다.");
+			return "redirect:/index/main";
+		}
+	}
+
+	@GetMapping("/adminDeleteRemove")
+	public String adminDeleteRemove(HttpSession session, Model m, @RequestParam(defaultValue = "0") int id) {
+
+		if (session.getAttribute("userId") != null) {
+			String userId = (String) session.getAttribute("userId");
+			if (userId.equals("admin")) {
+				if (id > 0) {
+					removeService.removeRemove(id);
+					return "redirect:/reserv/adminRemovePage";
+				} else {
+					m.addAttribute("errorMessage","잘못된 정보 입니다.");
+					return "redirect:/reserv/adminRemovePage";
+				}
+			} else {
+				m.addAttribute("errorMessage", "권한이 없는 접근 입니다.");
+				return "redirect:/index/main";
+			}
+		} else {
+			m.addAttribute("errorMessage", "로그인이 되어 있지 않습니다.");
+			return "redirect:/index/main";
+		}
+
 	}
 
 }

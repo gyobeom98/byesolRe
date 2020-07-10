@@ -21,12 +21,17 @@ delete from remove where id = #{id}
 select * from remove limit #{firstRow},#{removeCountPerPage}
 </select>
 
-<select id="selectRemoveList">
+<select id="selectRemoveList" resultType="Remove">
 select * from remove;
 </select>
 
-<select id="selectRemoveById">
+<select id="selectRemoveById" resultType="Remove">
 select * from remove where id = #{id}
 </select>
+
+<select id="countRemove" resultType="int">
+select count(*) from remove
+</select>
+
 
 </mapper>

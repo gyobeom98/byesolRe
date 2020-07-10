@@ -25,7 +25,7 @@ public class FtpService {
 	private final String user = "tjteam";
 	private final String pw = "tjpassword01!";
 
-	public void ftpdeleteEvent(String path, String Time) {
+	public boolean ftpdeleteEvent(String path, String Time) {
 		FTPClient ftp = null;
 		try {
 			ftp = new FTPClient();
@@ -42,10 +42,12 @@ public class FtpService {
 			ftp.changeWorkingDirectory("/html/byeolsolResort/event/" + Time);
 			String deletePath = "/html/byeolsolResort/event/" + Time
 					+ path.substring(path.lastIndexOf('/'), path.length());
-			System.out.println(deletePath);
-			System.out.println(ftp.deleteFile(deletePath));
+			if(ftp.deleteFile(deletePath)) {
+				return true;
+			}else return false;
 		} catch (Exception e) {
 			e.printStackTrace();
+			return false;
 		} finally {
 			if (ftp != null && ftp.isConnected()) {
 				try {
@@ -57,7 +59,8 @@ public class FtpService {
 		}
 
 	}
-
+	
+	
 	public void ftpdelete(String path, String Time) {
 
 		FTPClient ftp = null;
@@ -99,7 +102,7 @@ public class FtpService {
 		File tempDirectory = new File(System.getProperty("java.io.tmpdir"));
 		System.out.println(tempDirectory.getAbsolutePath());
 		try {
-			File file = new File(tempDirectory.getAbsolutePath()+"/"+uploadFile.getOriginalFilename());
+			File file = new File(tempDirectory.getAbsolutePath() + "/" + uploadFile.getOriginalFilename());
 			if (file.createNewFile()) {
 				System.out.println("생성");
 			}
@@ -161,7 +164,7 @@ public class FtpService {
 		File tempDirectory = new File(System.getProperty("java.io.tmpdir"));
 		System.out.println(tempDirectory.getAbsolutePath());
 		try {
-			File file = new File(tempDirectory.getAbsolutePath()+"/"+uploadFile.getOriginalFilename());
+			File file = new File(tempDirectory.getAbsolutePath() + "/" + uploadFile.getOriginalFilename());
 			if (file.createNewFile()) {
 				System.out.println("생성");
 			}
@@ -235,16 +238,16 @@ public class FtpService {
 			} else {
 				System.out.println("연결 성공");
 			}
-			ftp.changeWorkingDirectory("/html/byeolsolResort/"+what);
+			ftp.changeWorkingDirectory("/html/byeolsolResort/" + what);
 			FTPFile[] ftpFiles = ftp.listFiles();
 			for (FTPFile ftpFile : ftpFiles) {
 				System.out.println(ftpFile.getName());
-				imgPath.add("http://tjteam.dothome.co.kr/byeolsolResort/"+what+"/"+ftpFile.getName());
+				imgPath.add("http://tjteam.dothome.co.kr/byeolsolResort/" + what + "/" + ftpFile.getName());
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		return imgPath;
 	}
 
@@ -255,7 +258,7 @@ public class FtpService {
 		File tempDirectory = new File(System.getProperty("java.io.tmpdir"));
 		System.out.println(tempDirectory.getAbsolutePath());
 		try {
-			File file = new File(tempDirectory.getAbsolutePath()+"/"+uploadFile.getOriginalFilename());
+			File file = new File(tempDirectory.getAbsolutePath() + "/" + uploadFile.getOriginalFilename());
 			if (file.createNewFile()) {
 				System.out.println("생성");
 			}
@@ -286,7 +289,7 @@ public class FtpService {
 			FTPFile[] ftpFiles = ftp.listFiles();
 			FileInputStream fis = new FileInputStream(file);
 			// 이전 logo이미지를 dumpLogo + 현재 이미지 올리는 폴더의 파일 수 로 이름을 변경 해준다.
-			ftp.rename("logo.png", "dumpLogo"+ ftpFiles.length+".png");
+			ftp.rename("logo.png", "dumpLogo" + ftpFiles.length + ".png");
 			// 그 후 이전에 File로 변환한 업로드파일을 읽어 FTP로 전송합니다.
 			boolean isSucess = ftp.storeFile("logo.png", fis);
 			if (isSucess) {
@@ -311,8 +314,7 @@ public class FtpService {
 			}
 		}
 	}
-	
-	
+
 	public void ftpHeaderImg(MultipartFile uploadFile) {
 		FTPClient ftp = null;
 		String uploadFileType = "." + uploadFile.getContentType()
@@ -320,7 +322,7 @@ public class FtpService {
 		File tempDirectory = new File(System.getProperty("java.io.tmpdir"));
 		System.out.println(tempDirectory.getAbsolutePath());
 		try {
-			File file = new File(tempDirectory.getAbsolutePath()+"/"+uploadFile.getOriginalFilename());
+			File file = new File(tempDirectory.getAbsolutePath() + "/" + uploadFile.getOriginalFilename());
 			if (file.createNewFile()) {
 				System.out.println("생성");
 			}
@@ -350,7 +352,7 @@ public class FtpService {
 			FTPFile[] ftpFiles = ftp.listFiles();
 			// 그 후 이전에 File로 변환한 업로드파일을 읽어 FTP로 전송합니다.
 			FileInputStream fis = new FileInputStream(file);
-			ftp.rename("header.png", "dumpHeader"+ftpFiles.length+".png");
+			ftp.rename("header.png", "dumpHeader" + ftpFiles.length + ".png");
 			boolean isSucess = ftp.storeFile("header.png", fis);
 			if (isSucess) {
 				System.out.println("성공");
@@ -373,6 +375,192 @@ public class FtpService {
 				}
 			}
 		}
+	}
+
+	public boolean fileTypeCheck(MultipartFile uploadFile) {
+		String fileName = uploadFile.getOriginalFilename();
+		String fileType = fileName.substring(fileName.lastIndexOf('.') + 1, fileName.length()).toLowerCase();
+		if (fileType.equals("png") || fileType.equals("jpg") || fileType.equals("jpeg")) {
+			return true;
+		} else
+			return false;
+
+	}
+
+	public boolean ftpEventThumbImg(MultipartFile uploadFile, int eventId) {
+		FTPClient ftp = null;
+		File tempDirectory = new File(System.getProperty("java.io.tmpdir"));
+		System.out.println(tempDirectory.getAbsolutePath());
+		try {
+			File file = new File(tempDirectory.getAbsolutePath() + "/" + uploadFile.getOriginalFilename());
+			if (file.createNewFile()) {
+				System.out.println("생성");
+			}
+			FileOutputStream fos = new FileOutputStream(file);
+			fos.write(uploadFile.getBytes());
+			fos.close();
+			// FTPClient를 생성합니다.
+			ftp = new FTPClient();
+			// 원하시는 인코딩 타입
+			ftp.setControlEncoding("utf-8");
+			ftp.connect(server, port);
+			ftp.login(user, pw);
+			// 원하시는 파일 타입
+			ftp.setFileType(FTP.BINARY_FILE_TYPE);
+			// 제대로 연결이 안댔을 경우 ftp접속을 끊습니다.
+			if (!FTPReply.isPositiveCompletion(ftp.getReplyCode())) {
+				ftp.disconnect();
+				System.out.println("연결 실패");
+			} else {
+				System.out.println("연결 성공");
+			}
+			// 파일을 넣을 디렉토리를 설정해줍니다.
+			ftp.mkd("/html/byeolsolResort/event");
+			ftp.mkd("/html/byeolsolResort/event/event_"+eventId+"_thumbnail");
+			System.out.println("성공?");
+			// makeDirectory는 directory 생성이 필요할 때만 해주시면 됩니다.
+			ftp.changeWorkingDirectory("/html/byeolsolResort/event/event_" + eventId + "_thumbnail");
+			// 그 후 이전에 File로 변환한 업로드파일을 읽어 FTP로 전송합니다.
+			FileInputStream fis = new FileInputStream(file);
+			boolean isSucess = ftp.storeFile(uploadFile.getOriginalFilename(), fis);
+			if (isSucess) {
+				System.out.println("Thumb 성공");
+			} else {
+				System.out.println("실패");
+			}
+			fis.close();
+			fos.close();
+			System.out.println(file.exists());
+			System.out.println(file.delete());
+			// storeFile Method는 파일 송신결과를 boolean값으로 리턴합니다
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			if (ftp != null && ftp.isConnected()) {
+				try {
+					ftp.disconnect();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
+	}
+
+	
+	
+	
+	public boolean ftpDeleteEventImgReal(String imgPath, int eventId) {
+		System.out.println(eventId);
+		System.out.println("삭제");
+		FTPClient ftp = null;
+		try {
+			ftp = new FTPClient();
+			ftp.setControlEncoding("utf-8");
+			ftp.connect(server, port);
+			ftp.login(user, pw);
+			ftp.setFileType(FTP.BINARY_FILE_TYPE);
+			if (!FTPReply.isPositiveCompletion(ftp.getReplyCode())) {
+				ftp.disconnect();
+				System.out.println("연결 실패");
+			} else {
+				System.out.println("연결 성공");
+			}
+			boolean isHave = false;
+			FTPFile[] ftpFiles = ftp.listDirectories("/html/byeolsolResort/event");
+			for (FTPFile ftpFile : ftpFiles) {
+				System.out.println("폴더 경로 : " + ftpFile.getName());
+				if (ftpFile.getName().equals("event_" + eventId + "_thumbnail")) {
+					System.out.println(ftpFile.getName());
+					isHave = true;
+					break;
+				}
+			}
+			if (isHave) {
+				ftp.changeWorkingDirectory("/html/byeolsolResort/event/event_" + eventId + "_thumbnail");
+				String deletePath = "/html/byeolsolResort/event/event_" + eventId + "_thumbnail"
+						+ imgPath.substring(imgPath.lastIndexOf('/'), imgPath.length());
+				System.out.println("deletePath : " + deletePath);
+				if (ftp.deleteFile(deletePath)) {
+					return true;
+				} else {
+					return false;
+				}
+			}else {
+				return false;
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			if (ftp != null && ftp.isConnected()) {
+				try {
+					ftp.disconnect();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
+	}
+	
+	
+	public boolean ftpDeleteEventImg(String imgPath, int eventId) {
+		System.out.println(eventId);
+		System.out.println("삭제");
+		FTPClient ftp = null;
+		try {
+			ftp = new FTPClient();
+			ftp.setControlEncoding("utf-8");
+			ftp.connect(server, port);
+			ftp.login(user, pw);
+			ftp.setFileType(FTP.BINARY_FILE_TYPE);
+			if (!FTPReply.isPositiveCompletion(ftp.getReplyCode())) {
+				ftp.disconnect();
+				System.out.println("연결 실패");
+			} else {
+				System.out.println("연결 성공");
+			}
+			boolean isHave = false;
+			FTPFile[] ftpFiles = ftp.listDirectories("/html/byeolsolResort/event");
+			for (FTPFile ftpFile : ftpFiles) {
+				System.out.println("폴더 경로 : " + ftpFile.getName());
+				if (ftpFile.getName().equals("event_" + eventId + "_thumbnail")) {
+					System.out.println(ftpFile.getName());
+					isHave = true;
+					break;
+				}
+			}
+			if (isHave) {
+				ftp.changeWorkingDirectory("/html/byeolsolResort/event/event_" + eventId + "_thumbnail");
+				String deletePath = "/html/byeolsolResort/event/event_" + eventId + "_thumbnail"
+						+ imgPath.substring(imgPath.lastIndexOf('/'),imgPath.length());
+				
+				if (ftp.deleteFile(deletePath)) {
+					return true;
+				} else {
+					return false;
+				}
+			}else {
+				return false;
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			if (ftp != null && ftp.isConnected()) {
+				try {
+					ftp.disconnect();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
 	}
 	
 

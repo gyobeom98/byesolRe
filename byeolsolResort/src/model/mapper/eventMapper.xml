@@ -5,7 +5,7 @@
 
 <mapper namespace="model.mapper.EventMapper">
 
-<insert id="insertEvent" parameterType="Event">
+<insert id="insertEvent" parameterType="Event" keyProperty="id">
 
 insert into event(title,img_path) values(#{title},#{imgPath})
 

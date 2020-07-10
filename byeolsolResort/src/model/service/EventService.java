@@ -4,13 +4,19 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import model.dto.Event;
+import model.dto.EventImg;
+import model.dto.EventWithThumb;
+import model.mapper.EventImgMapper;
 import model.mapper.EventMapper;
 import model.view.EventView;
 
@@ -22,34 +28,52 @@ public class EventService {
 	@Autowired
 	EventMapper eventMapper;
 
+	@Autowired
+	EventImgMapper eventImgMapper;
+
 	public EventView getEventView(int pageNum) {
 		EventView eventview = null;
 
 		int firstRow = 0;
 		List<Event> eventList = null;
+		List<EventWithThumb> eventWithThumbList = new ArrayList<EventWithThumb>();
 		int eventCnt = eventMapper.countEvent();
 
 		if (eventCnt > 0) {
 			firstRow = (pageNum - 1) * EVENT_COUNT_PER_PAGE;
 			eventList = eventMapper.selectEventListWithLimit(firstRow, EVENT_COUNT_PER_PAGE);
+			
+			for (Event event : eventList) {
+				EventImg eventImg = eventImgMapper.selectEventImgByEventId(event.getId());
+				eventWithThumbList.add(new EventWithThumb(event, eventImg.getImgPath()));
+			}
+			
+			
+			
 		} else {
 			pageNum = 0;
 		}
 
-		eventview = new EventView(eventCnt, pageNum, firstRow, EVENT_COUNT_PER_PAGE, eventList);
+		eventview = new EventView(eventCnt, pageNum, firstRow, EVENT_COUNT_PER_PAGE, eventWithThumbList);
 		return eventview;
 	}
-	
+
 	@Autowired
 	FtpService ftpService;
-	
-	public boolean addEvent(Event event, MultipartFile uploadFile) {
+
+	@Transactional(propagation = Propagation.REQUIRES_NEW,rollbackFor = {IOException.class})
+	public boolean addEvent(Event event, MultipartFile uploadFile, MultipartFile thumbnail) throws IOException {
 		if (typeCheck(uploadFile)) {
 			String addTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH_mm_ss_SSSS"));
 			ftpService.ftpEventImg(uploadFile, addTime);
-			event.setImgPath("http://tjteam.dothome.co.kr/byeolsolResort/event/"+addTime+"/"+uploadFile.getOriginalFilename());
-			eventMapper.insertEvent(event);
-			return true;
+			event.setImgPath("http://tjteam.dothome.co.kr/byeolsolResort/event/" + addTime + "/"
+					+ uploadFile.getOriginalFilename());
+				eventMapper.insertEvent(event);
+				if(!addEventImgThumbnail(thumbnail,event.getId())) {
+					throw new IOException();
+				}
+				return true;
+			
 		} else {
 			return false;
 		}
@@ -69,72 +93,106 @@ public class EventService {
 		String eventPath = FILE_FOLDER_PATH + "event";
 		File fileEvent = new File(eventPath);
 		String addTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH_mm_ss_SSSS"));
-		if(fileEvent.mkdir()) {
-			
+		if (fileEvent.mkdir()) {
+
 		}
-		String path = eventPath+"/"+addTime;
+		String path = eventPath + "/" + addTime;
 		System.out.println("path : " + path);
 		File file01 = new File(path);
 		if (file01.mkdir()) {
 			System.out.println("test");
 		}
 		File file = new File(path, uploadFile.getOriginalFilename());
-		
+
 		try {
 			uploadFile.transferTo(file);
 		} catch (IllegalStateException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return "event/" + addTime + "/" + uploadFile.getOriginalFilename();
 	}
-	
-//	public String updateImage(MultipartFile uploadFile , String path) {
-//		String upPath = path.substring(0, path.lastIndexOf('/'));
-//		File file = new File(FILE_FOLDER_PATH + path);
-//		System.out.println("file path : " + FILE_FOLDER_PATH+path);
-//		if (file.canRead()) {
-//			file.delete();
-//			File file01 = new File(FILE_FOLDER_PATH+ upPath, uploadFile.getOriginalFilename());
-//			System.out.println("file.getName : "+file.getName());
-//			System.out.println("file.getPath : " +file.getPath());
-//			try {
-//				uploadFile.transferTo(file01);
-//			} catch (IllegalStateException | IOException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//		} 
-//		return upPath + "/" + uploadFile.getOriginalFilename();
-//	}
-	
+
+
 	public Event getEvent(int id) {
 		return eventMapper.selectEventById(id);
 	}
-	
-	public boolean updateEventWithFile(MultipartFile uploadFile,Event event) {
-		if(typeCheck(uploadFile)) {
-			String Time = event.getImgPath().substring(event.getImgPath().indexOf('/',46)+1,event.getImgPath().lastIndexOf('/'));
+
+	public boolean updateEventWithFile(MultipartFile uploadFile, Event event) {
+		if (typeCheck(uploadFile)) {
+			String Time = event.getImgPath().substring(event.getImgPath().indexOf('/', 46) + 1,
+					event.getImgPath().lastIndexOf('/'));
 			ftpService.ftpdeleteEvent(event.getImgPath(), Time);
 			ftpService.ftpEventImg(uploadFile, Time);
-			event.setImgPath("http://tjteam.dothome.co.kr/byeolsolResort/event/"+Time+"/"+uploadFile.getOriginalFilename());
+			event.setImgPath("http://tjteam.dothome.co.kr/byeolsolResort/event/" + Time + "/"
+					+ uploadFile.getOriginalFilename());
 			eventMapper.updateEvent(event);
 			return true;
-		}else return false;
-		
+		} else
+			return false;
+
 	}
-	
+
 	public void updateEvent(Event event) {
 		eventMapper.updateEvent(event);
 	}
-
 	
-	public void removeEvent(int id) {
+	@Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = {IOException.class})
+	public boolean removeEvent(int id) throws IOException{
+		
 		Event event = eventMapper.selectEventById(id);
-		String Time = event.getImgPath().substring(event.getImgPath().indexOf('/',46)+1,event.getImgPath().lastIndexOf('/'));
-		ftpService.ftpdeleteEvent(event.getImgPath(), Time);
-		eventMapper.deleteEvent(id);
+		if(event!=null) {
+		String Time = event.getImgPath().substring(event.getImgPath().indexOf('/', 46) + 1,
+				event.getImgPath().lastIndexOf('/'));
+		if(!ftpService.ftpdeleteEvent(event.getImgPath(), Time)) {
+			throw new IOException();
+		}
+		if (deleteEventImgThumbnaul(id)) {
+			eventMapper.deleteEvent(id);
+			return true;
+		} else {
+			throw new IOException();
+		}
+		}else {
+			return false;
+		}
+		
+	}
+
+	public boolean addEventImgThumbnail(MultipartFile thumbnail, int eventId) {
+		if (ftpService.fileTypeCheck(thumbnail)) {
+			if (ftpService.ftpEventThumbImg(thumbnail, eventId)) {
+				eventImgMapper.insertEventImg(
+						new EventImg(0, eventId, "http://tjteam.dothome.co.kr/byeolsolResort/event/event_" + eventId
+								+ "_thumbnail/" + thumbnail.getOriginalFilename()));
+				return true;
+			} else {
+				return false;
+			}
+
+		} else {
+			return false;
+		}
+
+	}
+
+	public boolean deleteEventImgThumbnaul(int eventId) {
+		EventImg eventImg = eventImgMapper.selectEventImgByEventId(eventId);
+		if(ftpService.ftpDeleteEventImg(eventImg.getImgPath(), eventId)) {
+			eventImgMapper.deleteEventImg(eventId);
+			return true;
+		}else
+		return false; 
+
 	}
 	
+	public String getImgPath (int eventId) {
+		return eventImgMapper.selectEventImgByEventId(eventId).getImgPath();
+	}
+
+	
+	
+	
+
 }

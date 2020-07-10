@@ -36,10 +36,11 @@ function goDetail(id){
 </head>
 <body>
 
-<c:forEach var="i" items="${eventView.eventList}">
-${i.title}
-${i.regDate}
-<button onclick="goDetail(${i.id})">goDetail</button>
+<c:forEach var="i" items="${eventView.eventWithThumbList}">
+<img  src="${i.imgPath}"> 
+${i.event.title}
+${i.event.regDate}
+<button onclick="goDetail(${i.event.id})">goDetail</button>
 </c:forEach>
 
 

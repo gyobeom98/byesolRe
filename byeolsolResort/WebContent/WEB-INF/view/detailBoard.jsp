@@ -18,6 +18,10 @@
 	<c:forEach var="q" items="${commentView.commentList }">
 	작성자 : ${q.userId} <br>
 	메시지 : ${q.message }<hr>
+	<c:if test="${q.firstPath!=null}">
+	${q.firstPath }
+	</c:if>
+	
 	</c:forEach>
 	
 	

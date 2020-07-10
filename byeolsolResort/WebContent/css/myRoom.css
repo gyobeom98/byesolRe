@@ -375,3 +375,12 @@ td {
 	font-weight: bold;
 	margin-bottom: 30px;
 }
+table .myRoomTr1 td{
+	font-weight:bold;
+	padding:15px 0px 15px 0px;
+	font-size:16px;
+	background-color:#e6e6e6;
+}
+table .myRoomTr2 td{
+	padding:15px 0px 15px 0px;
+}

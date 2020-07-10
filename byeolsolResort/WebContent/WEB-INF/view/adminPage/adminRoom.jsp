@@ -35,18 +35,18 @@
 						<li>》</li>
 						<li>관리자페이지</li>
 						<li>》</li>
-						<li>객실정보관리</li>
+						<li>객실예약관리</li>
 					</ul>
 				</div>
 				<div class="sibtitle">
-					<h3 class="stitle">객실정보관리</h3>
+					<h3 class="stitle">객실예약관리</h3>
 				</div>
 			</div>
 			<form onsubmit="return check()" id="regis">
 				<div class="content_foot">
 					<ul class="flotBox_my_tap">
 						<li><a href="/index/adminUser" class="li2">유저정보관리</a></li>
-						<li><a href="/index/adminRoom" class="li1">객실정보관리</a></li>
+						<li><a href="/index/adminRoom" class="li1">객실예약관리</a></li>
 						<li><a href="/index/adminQnA" class="li3">Q&A관리</a></li>
 					</ul>
 				</div>
@@ -83,7 +83,6 @@
 						</tbody>
 					</table>
 				</div>
-			</form>
 			</form>
 		</section>
 		<footer>

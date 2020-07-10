@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>별솔리조트</title>
-<link rel="stylesheet" href="/css/board.css">
+<link rel="stylesheet" href="/css/detailBoard.css">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" src="/script/sub.js"></script>
@@ -16,7 +16,7 @@
 	<div class="allwrap">
 		<div class="wrap">
 			<header class="header">
-				<jsp:include page="../header/sub.jsp"/>
+				<jsp:include page="../header/sub.jsp" />
 			</header>
 			<div class="subimage">
 				<h2>서브 이미지 들어가야함.</h2>
@@ -51,48 +51,56 @@
 							<td class="updateForm">${board.title }</td>
 						</tr>
 						<tr>
-							<td>작성자</td>
+							<td class="titleForm">작성자</td>
 							<td class="updateForm">${board.userId}</td>
 						</tr>
 						<tr>
-							<td>내용</td>
+							<td class="titleForm">내용</td>
 							<td class="updateForm">${board.content}</td>
 						</tr>
-						<tr>
-							<c:if test="${board.firstPath!=null }">
-							<td rowspan="3">사진</td>
-							<td><img src="${board.firstPath }"></td>
-							</c:if>
-						</tr>
-						<tr>
-							<c:if test="${board.secondPath!=null }">
-							<td><img src="${board.secondPath }"></td>
-							</c:if>
-						</tr>
-						<tr>
-							<c:if test="${board.thirdPath!=null }">
-							<td><img src="${board.thirdPath }"></td>
-							</c:if>
-						</tr>
 					</table>
-					
-					<br>
+					<div>
+						<c:if test="${board.firstPath!=null }">
+							<img class="updateForm" src="${board.firstPath }">
+						</c:if>
+						<c:if test="${board.secondPath!=null }">
+							<img class="updateForm" src="${board.secondPath }">
+						</c:if>
+						<c:if test="${board.thirdPath!=null }">
+							<img class="updateForm" src="${board.thirdPath }">
+						</c:if>
+					</div>
+					<form action="/board/addComment" method="post">
+						<table>
+							<tr>
+								<td class="addCom1">댓글달기</td>
+								<td class="hide"><input readonly="readonly" class="hide"
+									value="${board.id }" name="boardId"></td>
+								<td class="hideTd"><input type="text" name="message"
+									class="update_comment"></td>
+								<td class="subBtn"><input type="submit" id="update_subBtn"
+									value="등록"></td>
+							</tr>
+						</table>
+					</form>
+					<div class="comment">댓글</div>
 					<table>
-						<tr>
-							<td colspan="4" class="addCom">댓글</td>
-						</tr>
 						<c:if test="${commentView.commentCnt >0 }">
+							<tr>
+								<td class="users">작성자</td>
+								<td colspan="3">내용</td>
+							</tr>
 							<c:forEach var="q" items="${commentView.commentList }">
 								<tr>
 									<td>${q.userId}</td>
 									<td>${q.message }</td>
 									<c:if test='${userId==q.userId || userId=="admin"}'>
-									<td class="updel">
-									<button type="button" onclick="onUpdate(${q.id})">수정</button>
-									</td>
-									<td class="updel">
-									<button type="button" onclick="onDelte(${q.id})">삭제</button>
-									</td>
+										<td class="updel">
+											<button class="updelCom" type="button" onclick="onUpdate(${q.id})">수정</button>
+										</td>
+										<td class="updel">
+											<button class="updelCom" type="button" onclick="onDelte(${q.id})">삭제</button>
+										</td>
 									</c:if>
 								</tr>
 							</c:forEach>
@@ -164,21 +172,10 @@
 
 					정보가 없습니다.
 					</c:if>
-
-					<form action="/board/addComment" method="post">
-						<table>
-							<tr>
-								<td class="addCom">댓글달기</td>
-								<td class="hide"><input readonly="readonly" class="hide" value="${board.id }" name = "boardId"></td>
-								<td><textarea rows="3" cols="20" name="message" class="update_comment"></textarea></td>
-							</tr>
-						</table>
-						<input type="submit" id="update_subBtn">
-					</form>
 				</div>
 			</section>
 			<footer>
-				<jsp:include page="../footer/footer.jsp"/>
+				<jsp:include page="../footer/footer.jsp" />
 			</footer>
 		</div>
 	</div>

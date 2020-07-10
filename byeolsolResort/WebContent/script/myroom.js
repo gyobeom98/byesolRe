@@ -1,3 +1,11 @@
+function updateRoom(id) {
+	location.href = "/reserv/updateReserv?reservId="+id;
+}
+
+function deleteRoom(id) {
+	location.href = "/reserv/deleteReserv?reservId="+id;
+}
+
 $(function() {
 	$('#manu>ul>li>a').css('color', '#000000');
 	$('#manu>ul>li>a').css('font-size', '18px');
@@ -37,7 +45,6 @@ $(function() {
 	var startDate = $("input[name=startDate]")
 	var roomNum = $("input[name=roomNum]").val();
 	var totalP = document.querySelector("input[name=totalPrice]");
-	console.log(totalP)
 	endDate.on("focusout", function() {
 		var endDateData = endDate.val();
 		var startDateData = startDate.val();

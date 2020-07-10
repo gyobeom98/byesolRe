@@ -64,7 +64,10 @@
 	<select id="selectBoardListWithAdminPage" resultType="Board">
 	select * from board where state = "admin" order by w_date desc limit #{firstRow}, #{boardCountPerPage}
 	</select>
-
+	
+	<select id="countAdminBoard" resultType="int">
+	select count(*) from board where state ="admin"
+	</select>
 	
 
 

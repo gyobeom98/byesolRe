@@ -238,7 +238,7 @@ public class ReservController {
 			String userId = (String) session.getAttribute("userId");
 			if (userId.equals("admin")) {
 				if(id>0) {
-				reservService.updateReservState();
+				reservService.updateReservState(id);
 				return "redirect:/reserv/adminReservPage";
 				}else {
 					m.addAttribute("errorMessage","잘못된 접근 입니다.");

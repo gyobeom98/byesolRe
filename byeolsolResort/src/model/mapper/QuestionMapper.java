@@ -20,7 +20,7 @@ public interface QuestionMapper {
 	
 	public List<Question> selectQuestionList();
 	
-	public int countQuestion();
+	public int countQuestion(String writer);
 
 	public List<Question> selectQuestionByWriter();
 
@@ -28,5 +28,7 @@ public interface QuestionMapper {
 	
 	public List<Question> selectQuestionListByStateWithLimit(@Param("firstRow")int firstRow, @Param("questionCountPerPage")int questionCountPerPage);
 	
+	
+	public int countQuestionByState();
 	
 }

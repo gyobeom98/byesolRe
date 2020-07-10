@@ -120,7 +120,7 @@ public class BoardService {
 		BoardView boardView = null;
 		int firstRow = 0;
 		List<Board> boardList = null;
-		int boardCnt = boardMapper.countBoard(); 
+		int boardCnt = boardMapper.countAdminBoard();
 		if(boardCnt>0) {
 			firstRow = (pageNum-1)*BOARD_COUNT_PER_PAGE;
 			boardList = boardMapper.selectBoardListWithAdminPage(firstRow,BOARD_COUNT_PER_PAGE);

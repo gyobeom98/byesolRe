@@ -336,8 +336,12 @@ public class ReservService {
 		return roomList;
 		
 	}
-	public void updateReservState() {
-		reservMapper.updateReservState();
+	public void updateReservState(int id) {
+		Reserv reserv = reservMapper.selectReservById(id);
+		String state = "입금";
+		if(reserv.getState().equals("입금"))
+			state = "미입금";
+		reservMapper.updateReservState(id,state);
 	}
 
 	

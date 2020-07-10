@@ -33,7 +33,7 @@ public interface ReservMapper {
 
 	public List<Reserv> selectReservListByStartAndEndDate(@Param("startDate")LocalDate startDate,@Param("endDate") LocalDate endDate);
 
-	public void updateReservState();
+	public void updateReservState(@Param("id") int id , @Param("state")String state);
 	
 	
 	

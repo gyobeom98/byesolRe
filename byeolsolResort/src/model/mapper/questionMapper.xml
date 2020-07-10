@@ -29,8 +29,12 @@ select * from question where writer = #{writer} limit #{firstRow}, #{questionCou
 select * from question
 </select>
 
+<select id="countQuestionByState">
+select count(*) from question where state = "yet"
+</select>
+
 <select id="countQuestion" resultType="int">
-select count(*) from question
+select count(*) from question where writer = #{writer}
 </select>
 
 <select id="selectQuestionByWriter" resultType="Question">

@@ -438,11 +438,11 @@ public class CustomerController {
 	}
 	
 	@GetMapping("/adminUserInfo")
-	public String goAdminUserInfo(HttpSession session, Model m , int pageNum) {
+	public String goAdminUserInfo(HttpSession session, Model m , @RequestParam(defaultValue = "1")int pageNum) {
 		if(session.getAttribute("userId")!=null) {
 			String userId = (String) session.getAttribute("userId");
 			if(userId.equals("admin")) {
-				customerService.getCustomerView(pageNum);
+				m.addAttribute("customerView",customerService.getCustomerView(pageNum));
 				return "/adminPage/adminUser";
 			}else {
 				m.addAttribute("errorMessage","권한이 없는 접근 입니다.");

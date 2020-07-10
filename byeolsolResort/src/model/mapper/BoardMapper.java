@@ -33,5 +33,6 @@ public interface BoardMapper {
 
 	public List<Board> selectBoardListWithAdminPage(@Param("firstRow")int firstRow, @Param("boardCountPerPage")int boardCountPerPage);
 	
+	public int countAdminBoard();
 	
 }

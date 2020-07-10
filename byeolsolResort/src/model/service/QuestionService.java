@@ -25,7 +25,7 @@ public class QuestionService {
 		int firstRow = 0;
 		List<Question> questionList = null;
 
-		int questionCnt = questionMapper.countQuestion();
+		int questionCnt = questionMapper.countQuestion(writer);
 
 		if (questionCnt > 0) {
 			firstRow = (pageNum - 1) * QUESTION_COUNT_PER_PAGE;
@@ -65,7 +65,7 @@ public class QuestionService {
 		QuestionView questionView = null;
 		int firstRow = 0;
 		List<Question> questionList = null;
-		int questionCnt = questionMapper.countQuestion();
+		int questionCnt = questionMapper.countQuestionByState();
 		if (questionCnt > 0) {
 			firstRow = (pageNum - 1) * QUESTION_COUNT_PER_PAGE;
 			questionList = questionMapper.selectQuestionListByStateWithLimit(firstRow, QUESTION_COUNT_PER_PAGE);

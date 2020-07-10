@@ -54,7 +54,7 @@ select * from reserv where start_date between #{startDate} and #{endDate} OR end
 </select>
 
 <update id="updateReservState">
-update reserv set state = "입금"
+update reserv set state = #{state} where id = #{id}
 </update>
 
 </mapper>

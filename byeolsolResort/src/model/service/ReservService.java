@@ -45,9 +45,16 @@ public class ReservService {
 	}
 	public boolean reservUpdateCheck(int roomId, LocalDate startDate, LocalDate endDate, int reservId) {
 		Reserv reserv = reservMapper.selectReservById(reservId);
-			if(reserv.equals(reservMapper.selectReservByRoomIdWithDate(roomId, startDate, endDate))) {
+		if(reserv != null) {
+			System.out.println(reserv.getId() == reservMapper.selectReservByRoomIdWithDate(roomId, startDate, endDate).getId());
+			if(reserv.getId() == reservMapper.selectReservByRoomIdWithDate(roomId, startDate, endDate).getId()) {
+				System.out.println("해당 날짜는 예약 날짜는 reserv가 있음");
+				
 				return true;
 			}else return false;
+		}else {
+			return false;
+		}
 	}
 	
 
@@ -133,20 +140,21 @@ public class ReservService {
 			if (peopleCountCheck(room, peopleCount)) {
 				if (dateCheck(startDate.toLocalDate(), endDate.toLocalDate())) {
 					if(reservUpdateCheck(room.getId(), startDate.toLocalDate(), endDate.toLocalDate(),reservId)) {
+						System.out.println("after Check");
 						int total = getTotalPrice(startDate.toLocalDate(), endDate.toLocalDate(), room);
 						Reserv reserv = new 
 								Reserv(reservId, userId, room.getId(), startDate.toLocalDate(), endDate.toLocalDate(), total, peopleCount, null, null);
 						reservMapper.updateReserv(reserv);
-						return new ErrorMessage(null, "redirect:/reserv/main", 0);
+						return new ErrorMessage(null, "redirect:/cus/myReserv", 0);
 					}else {
-						return new ErrorMessage("예약 불가능한 날짜 입니다.", "redirect:/reserv/addReserv", roomNum);
+						return new ErrorMessage("예약 불가능한 날짜 입니다.", "redirect:/reserv/updateReserv?reservId="+reservId, roomNum);
 					}
 				} else {
-					return new ErrorMessage("예약 가능 범위를 벗어났습니다.", "redirect:/reserv/addReserv", roomNum);
+					return new ErrorMessage("예약 가능 범위를 벗어났습니다.", "redirect:/reserv/updateReserv?reservId="+reservId, roomNum);
 				}
 			} else {
 				return new ErrorMessage("해당 인원은 이 방을 예약 하실 수 없습니다. 해당 방을 예약하시려면 관리자에게 문의 해주세요",
-						"redirect:/reserv/addreserv", roomNum);
+						"redirect:/reserv/updateReserv?reservId="+reservId, roomNum);
 			}
 		} else {
 			return new ErrorMessage("로그인이 되어 있지 않습니다.", "redirect:/index/main", 0);

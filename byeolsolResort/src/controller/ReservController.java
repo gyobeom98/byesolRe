@@ -127,7 +127,7 @@ public class ReservController {
 
 	@Autowired
 	RoomService roomService;
-
+	
 	@GetMapping("/updateReserv")
 	public String updateReservForm(HttpSession session, Model m, @RequestParam(defaultValue = "0") int reservId) {
 		if (session.getAttribute("userId") != null) {

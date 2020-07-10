@@ -162,7 +162,7 @@ public class QuestionController {
 			if (id > 0) {
 				Answer answer = answerService.getAnswerById(id);
 				m.addAttribute("answer", answer);
-				return "updateAnswerForm";
+				return "/mypage/updateAnswerMyQnA";
 			} else {
 				m.addAttribute("errorMessage", "잘못된 접근 입니다.");
 				return "redirect:/index/main";
@@ -171,7 +171,6 @@ public class QuestionController {
 			m.addAttribute("errorMessage", "잘못된 접근 입니다.");
 			return "redirect:/index/main";
 		}
-
 	}
 
 	@PostMapping("/updateAnswer")

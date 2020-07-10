@@ -18,10 +18,12 @@ public class ReservInfo {
 	
 	private int peopleCount;
 	
+	private String state;
+	
 	public ReservInfo() {}
 
 	public ReservInfo(String userId, String concept, String userName, LocalDate startDate, LocalDate endDate,
-			int totalPrice, int peopleCount) {
+			int totalPrice, int peopleCount, String state) {
 		super();
 		this.userId = userId;
 		this.concept = concept;
@@ -30,6 +32,7 @@ public class ReservInfo {
 		this.endDate = endDate;
 		this.totalPrice = totalPrice;
 		this.peopleCount = peopleCount;
+		this.state = state;
 	}
 	
 	public String getUserId() {
@@ -88,11 +91,20 @@ public class ReservInfo {
 		this.peopleCount = peopleCount;
 	}
 
+	
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
 	@Override
 	public String toString() {
 		return "ReservInfo [userId=" + userId + ", concept=" + concept + ", userName=" + userName + ", startDate="
 				+ startDate + ", endDate=" + endDate + ", totalPrice=" + totalPrice + ", peopleCount=" + peopleCount
-				+ "]";
+				+ ", state=" + state + "]";
 	}
 	
 	

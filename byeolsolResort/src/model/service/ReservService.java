@@ -48,9 +48,9 @@ public class ReservService {
 		if(reserv != null) {
 			System.out.println(reserv.getId() == reservMapper.selectReservByRoomIdWithDate(roomId, startDate, endDate).getId());
 			if(reserv.getId() == reservMapper.selectReservByRoomIdWithDate(roomId, startDate, endDate).getId()) {
-				System.out.println("해당 날짜는 예약 날짜는 reserv가 있음");
-				
+				if(reserv.getStartDate().compareTo(LocalDate.now())>=1)
 				return true;
+				else return false;
 			}else return false;
 		}else {
 			return false;
@@ -312,7 +312,7 @@ public class ReservService {
 			Customer customer = customerMapper.selectCustomerWithId(reserv.getUserId());
 			Room room = roomService.getRoomById(reserv.getRoomId());
 			reservInfoList.add(new ReservInfo(reserv.getUserId(), room.getConcept(),
-					customer.getName(), reserv.getStartDate(),reserv.getEndDate(), reserv.getTotalPrice(), reserv.getPeopleCount()));
+					customer.getName(), reserv.getStartDate(),reserv.getEndDate(), reserv.getTotalPrice(), reserv.getPeopleCount(),reserv.getState()));
 			}
 		}
 		reservInfoView = new ReservInfoView(reservCnt, pageNum, firstRow, RESERV_COUNT_PER_PAGE, reservInfoList);

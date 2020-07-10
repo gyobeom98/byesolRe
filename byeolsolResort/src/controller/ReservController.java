@@ -244,5 +244,25 @@ public class ReservController {
 			return "redirect:/index/main";
 		}
 	}
+	
+	
+	@GetMapping("/adminReservPage")
+	public String adminReservPage(HttpSession session, Model m, @RequestParam()int pageNum) {
+		
+		if(session.getAttribute("userid")!=null) {
+			String userId = (String) session.getAttribute("userId");
+			if(userId.equals("admin")) {
+				m.addAttribute("reservInfoView",reservService.getReservInfoView(pageNum));
+				return "/adminPage/adminRoom";
+			}else {
+				m.addAttribute("errorMessage","권한이 없는 접근 입니다.");
+				return "redirect:/index/main";
+			}
+		}else {
+			m.addAttribute("errorMessage","로그인이 되어 있지 않습니다.");
+			return "redirect:/index/main";
+		}
+		
+	}
 
 }

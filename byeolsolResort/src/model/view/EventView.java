@@ -4,6 +4,7 @@ import java.util.List;
 
 import model.dto.Board;
 import model.dto.Event;
+import model.dto.EventWithThumb;
 
 public class EventView {
 
@@ -18,16 +19,16 @@ public class EventView {
 	// 페이지당 보여줄 정보의 수
 	private int eventCountPerPage;
 	// 페이지의 보여줄 정보의 리스트
-	private List<Event> eventList;
+	private List<EventWithThumb> eventWithThumbList;
 	
 	public EventView() {}
 
-	public EventView(int eventCnt, int currentPageNum, int firstRow, int eventCountPerPage, List<Event> eventList) {
+	public EventView(int eventCnt, int currentPageNum, int firstRow, int eventCountPerPage, List<EventWithThumb> eventWithThumbList) {
 		this.eventCnt = eventCnt;
 		this.currentPageNum = currentPageNum;
 		this.firstRow = firstRow;
 		this.eventCountPerPage = eventCountPerPage;
-		this.eventList = eventList;
+		this.eventWithThumbList = eventWithThumbList;
 		
 		if(eventCnt>0) {
 			pageTotalCount = eventCnt/eventCountPerPage;
@@ -81,20 +82,24 @@ public class EventView {
 		this.eventCountPerPage = eventCountPerPage;
 	}
 
-	public List<Event> getEventList() {
-		return eventList;
+	public List<EventWithThumb> getEventWithThumbList() {
+		return eventWithThumbList;
 	}
 
-	public void setEventList(List<Event> eventList) {
-		this.eventList = eventList;
+	public void setEventWithThumbList(List<EventWithThumb> eventWithThumbList) {
+		this.eventWithThumbList = eventWithThumbList;
 	}
 
 	@Override
 	public String toString() {
 		return "EventView [eventCnt=" + eventCnt + ", currentPageNum=" + currentPageNum + ", pageTotalCount="
 				+ pageTotalCount + ", firstRow=" + firstRow + ", eventCountPerPage=" + eventCountPerPage
-				+ ", eventList=" + eventList + "]";
+				+ ", eventWithThumbList=" + eventWithThumbList + "]";
 	}
+
+	
+
+	
 	
 	
 }

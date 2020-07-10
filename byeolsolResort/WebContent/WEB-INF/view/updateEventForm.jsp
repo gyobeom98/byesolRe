@@ -12,6 +12,7 @@
 <input type="number" name="id" value="${event.id}" readonly="readonly">
 <input type="text" name="title" value="${event.title}">
 <input type="file" name="uploadFile">
+<input type="file" name="thumbnail">
 <input type="submit">
 </form>
 

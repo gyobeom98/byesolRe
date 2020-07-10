@@ -44,6 +44,7 @@
 	<value>classpath:model/mapper/roomMapper.xml</value>
 	<value>classpath:model/mapper/reservMapper.xml</value>
 	<value>classpath:model/mapper/removeMapper.xml</value>
+	<value>classpath:model/mapper/eventImgMapper.xml</value>
 	</list>
 	</property>
 	</bean>

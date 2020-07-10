@@ -9,6 +9,10 @@ function updateEvent(id){
 	location.href = "/event/updateEvent?id="+id;
 }
 
+function deleteEvent(id){
+	location.href = "/event/deleteEvent?id="+id;
+}
+
 </script>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -18,5 +22,7 @@ function updateEvent(id){
 ${event.title}
 <img alt="" src="${event.imgPath}">
 <button onclick="updateEvent(${event.id})">수정</button>
+<button onclick="deleteEvent(${event.id})">삭제</button>
+
 </body>
 </html>

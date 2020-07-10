@@ -49,7 +49,23 @@
 	<filter-name>encoding</filter-name>
 	<url-pattern>/*</url-pattern>
 	</filter-mapping>
-
-  
+	
+	<error-page>
+	<error-code>404</error-code>
+	<location>/WEB-INF/view/error/error404Page.jsp</location>
+	</error-page>
+	
+	<error-page>
+	<error-code>400</error-code>
+	<location>/WEB-INF/view/error/error400Page.jsp</location>
+	</error-page>
+	
+	
+	<error-page>
+	<error-code>500</error-code>
+	<location>/WEB-INF/view/error/error500Page.jsp</location>
+	</error-page>
+	
+  	
   
 </web-app>

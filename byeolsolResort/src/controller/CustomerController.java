@@ -288,11 +288,11 @@ public class CustomerController {
 	@GetMapping(value = "/mailCheck", produces = "application/text; charset=utf-8")
 	public String mailSending(@RequestParam(required = false) String registEmail, HttpSession session, Model m) {
 		// userEmail이 null이 아니라면
-		if (session.getAttribute("userEmail") != null) {
+		if (registEmail != null) {
+			m.addAttribute("userEmail", registEmail);
 			return "/mypage/emailCer";
 			// 회원가입 후 넘어온 이메일이 null이 아니라면
-		} else if (registEmail != null) {
-			m.addAttribute("userEmail", registEmail);
+		} else if (session.getAttribute("userEmail") != null) {
 			return "/mypage/emailCer";
 		} else {
 			m.addAttribute("errorMessage", "잘못된 접근 입니다.");

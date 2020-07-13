@@ -54,7 +54,7 @@ public class ReservService {
 		System.out.println(reserv);
 		if(reserv != null) {
 			System.out.println(reservMapper.selectReservByRoomIdWithDate(roomId, startDate, endDate));
-			if(reservMapper.selectReservByRoomIdWithDate(roomId, startDate, endDate).size()<1&&reserv.getId() == reservMapper.selectReservByRoomIdWithDate(roomId, startDate, endDate).get(0).getId()) {
+			if(reservMapper.selectReservByRoomIdWithDate(roomId, startDate, endDate).size()==1&&reserv.getId() == reservMapper.selectReservByRoomIdWithDate(roomId, startDate, endDate).get(0).getId() || reservMapper.selectReservByRoomIdWithDate(roomId, startDate, endDate).size()<=0) {
 				if(reserv.getStartDate().compareTo(LocalDate.now())>=1)
 				return true;
 				else return false;

@@ -32,10 +32,10 @@
 							<li><a href="/index/fee">이용안내</a></li>
 							<li><a href="/index/map">오시는길</a></li>
 						</ul></li>
-					<li><a href="/index/news">별솔소식</a>
+					<li><a href="/board/adminList">별솔소식</a>
 						<ul>
 							<li><a class="topmargin" href="/board/adminList">별솔뉴스</a></li>
-							<li><a href="/index/event">이벤트</a></li>
+							<li><a href="/event/list">이벤트</a></li>
 						</ul></li>
 					<li><c:if test="${userId==null }">
 							<a href="/cus/login">회원 서비스</a>
@@ -79,7 +79,7 @@
 					</c:if> <c:if test='${userId!=null && userId!="admin"}'>
 						<a href="/cus/myPage">마이페이지</a>
 					</c:if> <c:if test='${userId=="admin"}'>
-						<a href="/index/adminUser">관리자페이지</a>
+						<a href="/cus/adminUserInfo">관리자페이지</a>
 					</c:if></li>
 			</ul>
 		</div>

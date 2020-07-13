@@ -35,7 +35,7 @@ public class EventController {
 		m.addAttribute("eventView", eventService.getEventView(pageNum));
 		if (errorMessage != null)
 			m.addAttribute("errorMessage", errorMessage);
-		return "eventMain";
+		return "/newsList/event";
 		// eventView를 페이지에 넘겨줌
 	}
 
@@ -45,7 +45,7 @@ public class EventController {
 		if (session.getAttribute("userId") != null) {
 			String userId = (String) session.getAttribute("userId");
 			if (userId.equals("admin")) {	// 로그인 되어 있는게 관리자 라면
-				return "addEventForm";
+				return "/newsList/addEventForm";
 			} else {
 				m.addAttribute("errorMessage", "권한이 없습니다");
 				return "redirect:/event/list";
@@ -124,7 +124,7 @@ public class EventController {
 					Event event = eventService.getEvent(id);
 					if (event != null) {
 						m.addAttribute("event", event);
-						return "updateEventForm";
+						return "/newsList/updateEventForm";
 					} else {
 						m.addAttribute("errorMessage", "잘못된 접근");
 						return "redirect:/event/list";
@@ -269,7 +269,7 @@ public class EventController {
 			Event event = eventService.getEvent(id);
 			if (event != null) {
 				m.addAttribute("event", event);
-				return "detailEvent";
+				return "/newsList/detailEvent";
 			} else {
 				m.addAttribute("errorMessage", "잘못된  접근");
 				return "redirect:/event/list";

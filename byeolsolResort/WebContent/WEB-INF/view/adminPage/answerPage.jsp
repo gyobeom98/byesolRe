@@ -48,7 +48,7 @@
 				<form onsubmit="return check()" id="regis">
 					<div class="content_foot">
 						<ul class="flotBox_my_tap">
-							<li><a href="/index/adminUser" class="li1">유저정보관리</a></li>
+							<li><a href="/cus/adminUserInfo" class="li1">유저정보관리</a></li>
 							<li><a href="/index/adminRoom" class="li2">객실정보관리</a></li>
 							<li><a href="/index/adminQnA" class="li3">Q&A관리</a></li>
 						</ul>

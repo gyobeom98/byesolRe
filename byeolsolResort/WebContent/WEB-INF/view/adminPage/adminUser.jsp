@@ -46,7 +46,7 @@
 				<form onsubmit="return check()" id="regis">
 					<div class="content_foot">
 						<ul class="flotBox_my_tap">
-							<li><a href="/index/adminUser" class="li1">유저정보관리</a></li>
+							<li><a href="/cus/adminUserInfo" class="li1">유저정보관리</a></li>
 							<li><a href="/index/adminRoom" class="li2">객실정보관리</a></li>
 							<li><a href="/index/adminQnA" class="li3">Q&A관리</a></li>
 						</ul>
@@ -63,7 +63,7 @@
 									<td>password</td>
 									<td>name</td>
 									<td>email</td>
-									<td>zipcode</td>
+									<td>zip_code</td>
 									<td>address</td>
 									<td>phone</td>
 									<td>email_state</td>
@@ -79,13 +79,13 @@
 										<td>${u.password }</td>
 										<td>${u.name }</td>
 										<td>${u.email }</td>
-										<td>${u.zipCoda }</td>
+										<td>${u.zipCode }</td>
 										<td>${u.address }</td>
 										<td>${u.phone }</td>
 										<td>${u.emailState }</td>
 										<td>${u.birthDate }</td>
 									</tr>
-								</c:forEach>
+									</c:forEach>
 								<tr>
 									<td><input type="button"
 										onclick="location.href=(어드민회원수정폼)" value="수정"></td>

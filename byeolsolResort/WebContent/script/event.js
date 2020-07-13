@@ -1,16 +1,17 @@
-function goDeleteReserv(id) {
-	location.href = "/reserv/deleteReserv?reservId=" + id;
+function adEvent() {
+	location.href="/event/addEvent";
 }
 
-function clickEvent(id){
-	var c = confirm("상태를 바꾸시겠습니까?")
-	if (c) {
-		location.href = "/reserv/updateReservState?id="+id;
-	}
+function updateEvent(id){
+	location.href = "/event/updateEvent?id="+id;
+}
+
+function deleteEvent(id){
+	alert(id);
+	location.href = "/event/deleteEvent?id="+id;
 }
 
 $(function() {
-	
 	$('#manu>ul>li>a').css('color', '#000000');
 	$('#manu>ul>li>a').css('font-size', '18px');
 
@@ -31,7 +32,7 @@ $(function() {
 				$(this).parent().parent().parent().children('#manu>ul>li>a')
 						.css('color', '#000000');
 			});
-
+	
 	$("header").hover(
 			function() {
 				$(this).children().children().eq(1).children().children()

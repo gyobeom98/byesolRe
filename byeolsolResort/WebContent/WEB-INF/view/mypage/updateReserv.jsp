@@ -13,6 +13,7 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" src="/script/myQnA.js"></script>
 <script type="text/javascript" src="/script/detailMyQnA.js"></script>
+<script type="text/javascript" src="/script/updateLeftover.js"></script>
 <link rel="stylesheet"
 	href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css"
 	type="text/css" />
@@ -47,12 +48,39 @@
 					</div>
 				</div>
 				<form action="/reserv/updateReserv" method="post">
-					<input type="number" readonly="readonly" name="roomNum"
-						value="${roomNum}"> <input type="date" name="startDate"
-						value="${reserv.startDate}"> <input type="date"
-						name="endDate" value="${reserv.endDate }"> <input
-						type="number" name="peopleCount" value="${reserv.peopleCount}">
-					<input type="submit">
+					<table>
+						<tr>
+							<td>
+								<input type="number" readonly="readonly" class="hide" name="reservId" value="${reserv.id }">
+							</td>
+						</tr>
+						<tr>
+							<td class="tdForm">입실날짜</td>
+							<td class="tdForm1">
+							<input id="date1" type="date" name="startDate" readonly="readonly" value="${reserv.startDate}">
+							</td>
+						</tr>
+						<tr>
+							<td class="tdForm">퇴실날짜</td>
+							<td class="tdForm1">
+							<input id="date2" type="date" name="endDate" readonly="readonly" value="${reserv.endDate }">
+							</td>
+						</tr>
+						<tr>
+							<td class="tdForm">객실</td>
+							<td class="tdForm1">
+							<input type="number" readonly="readonly" name="roomNum" value="${roomNum}"></td>
+						</tr>
+						<tr>
+							<td class="tdForm">인원</td>
+							<td class="tdForm1"><input type="number" name="peopleCount" value="${reserv.peopleCount}"></td>
+						</tr>
+						<tr style="border-style: none">
+							<td colspan="2">
+								<button type="submit">예약</button>
+							</td>
+						</tr>
+					</table>
 				</form>
 			</section>
 			<footer>

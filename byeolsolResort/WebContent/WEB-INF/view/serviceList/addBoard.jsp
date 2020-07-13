@@ -37,13 +37,13 @@
 					<div class="sibtitle">
 						<h3 class="stitle">후기작성하기</h3>
 					</div>
-					<form action="/board/addBoard" method="post" enctype="multipart/form-data">
+					<form onsubmit="return check()" action="/board/addBoard" method="post" enctype="multipart/form-data">
 					<div>
 
 							<table>
 						<tr>
 						<td class="adrv1">제목</td>
-						<td><textarea name="title" id="text_title" cols="30" rows="1"></textarea></td>
+						<td><input name="title" id="text_title"></td>
 					</tr>
 						<tr>
 							<td class="adrv1">내용</td>

@@ -24,7 +24,7 @@
 	<div class="allwrap">
 		<div class="wrap">
 			<header class="header">
-				<jsp:include page="../header/sub.jsp" />
+				<jsp:include page="../header/sub.jsp"/>
 			</header>
 			<div class="subimage">
 				<h2>서브 이미지 들어가야함.</h2>
@@ -45,55 +45,55 @@
 					</div>
 				</div>
 				<div class="titleForm">
-					<div class="btn">
+					<div>
 						<c:if test="${question.writer==userId}">
-							<button onclick="updateQuestion(${question.id})" id="updateBtn">수정</button>
-							<button onclick="deleteQuestion(${question.id})" id="deleteBtn">삭제</button>
+							<button onclick="updateQuestion(${question.id})">수정</button>
+							<button onclick="deleteQuestion(${question.id})">삭제</button>
 						</c:if>
 					</div>
 					<table>
 						<tr>
-							<td class="dmq">제목</td>
+							<td>제목</td>
 							<td>${question.title}</td>
 						</tr>
 						<tr>
-							<td class="dmq">문의사항</td>
+							<td>문의사항</td>
 							<td>${question.division }</td>
 						</tr>
 						<tr>
-							<td colspan="2" class="dmq">내용</td>
+							<td colspan="2">내용</td>
 						</tr>
 						<tr>
-							<td colspan="2"><pre>${question.message}</pre></td>
+							<td colspan="2">${question.message}</td>
 						</tr>
 					</table>
 				</div>
 				<form action="/question/addAnswer?pageNum="
 					${answerView.currentPageNum} method="post" class="anwer">
-					<div class="comment_main">
-						<div>
-							<p>댓글달기</p>
-							<input type="number" class="hide" value="${question.id}"
-								readonly="readonly" name="questionId"> <input
-								type="text" name="title" class="hide" value="XX">
-							<textarea rows="20" cols="20" name="message" class="commentBox"></textarea>
-						</div>
-						<div>
-							<input type="submit" value="작성" class="writeBtn">
-						</div>
+					<div>
+						<div>댓글달기</div>
+						<input type="number" class="hide" value="${question.id}" readonly="readonly"
+							name="questionId"> 
+							<input type="text" name="title"
+							class="hide" value="XX">
+						<textarea rows="20" cols="20" name="message"></textarea>
+					</div>
+					<div>
+						<input type="submit">
 					</div>
 				</form>
 				<div class="answerForm">
-					<div class="reComment">댓글</div>
-					<table class="">
-						<c:forEach var="i" items="${answerView.answerList }"><tr>
+					<table>
+						<c:forEach var="i" items="${answerView.answerList }">
+							<div>댓글</div>
+							<c:if test="${i.writer == userId}">
+								<button onclick="goUpdateAnswer(${i.id})">수정</button>
+								<button onclick="goDeleteAnswer(${i.id})">삭제</button>
+							</c:if>
+							<tr>
 								<td class="hide">${i.title}</td>
-								<td class="comWriter">${i.writer }</td>
-								<td class="comWriter">${i.message}</td>
-								<c:if test="${i.writer == userId}">
-									<td class="answerBtn"><button onclick="goUpdateAnswer(${i.id})">수정</button>
-									<button onclick="goDeleteAnswer(${i.id})">삭제</button></td>
-								</c:if>
+								<td>${i.writer }</td>
+								<td>${i.message}</td>
 							</tr>
 						</c:forEach>
 					</table>
@@ -168,7 +168,7 @@
 				</c:if>
 			</section>
 			<footer>
-				<jsp:include page="../footer/footer.jsp" />
+				<jsp:include page="../footer/footer.jsp"/>
 			</footer>
 		</div>
 	</div>

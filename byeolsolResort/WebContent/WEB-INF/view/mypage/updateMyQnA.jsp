@@ -45,18 +45,18 @@
 					</div>
 				</div>
 				<form action="/question/updateQuestion" method="post">
-					<table class="updateQnATable">
+					<table>
 						<tr class="number">
 							<td><input type="number" class="hide" value="${question.id}" name="id" readonly="readonly"></td>
 						</tr>
 						<tr>
 							<td class="formTd1">제목</td>
-							<td class="formTd2"><input type="text" id="qNa_title" name="title"
+							<td><input type="text" id="qNa_title" name="title"
 								value="${question.title}"></td>
 						</tr>
 						<tr>
 							<td class="formTd1">분류</td>
-							<td class="formTd2"><select name="division">
+							<td><select name="division">
 									<option value="예약">예약문의</option>
 									<option value="객실">객실문의</option>
 									<option value="식음시설">식음시설</option>
@@ -66,12 +66,12 @@
 						</tr>
 						<tr>
 							<td class="formTd1">내용</td>
-							<td class="formTd2"><textarea id="textarea" rows="8" cols="80"
+							<td><textarea id="textarea" rows="8" cols="80"
 									name="message">${question.message }</textarea></td>
 						</tr>
 					</table>
 					<div class="submit">
-						<input type="submit" class="qNa_submit" value="수정">
+						<input type="submit" id="qNa_submit" value="등록">
 					</div>
 				</form>
 			</section>

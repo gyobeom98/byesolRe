@@ -387,6 +387,9 @@ td>button {
 #text_title {
 	width: 100%;
 	resize: none;
+	height: 20px;
+	font-size: 20px;
+	font-weight: bold;
 }
 
 #text_contents {
@@ -465,3 +468,4 @@ img{
 .updateForm{
 	text-align: left;
 }
+

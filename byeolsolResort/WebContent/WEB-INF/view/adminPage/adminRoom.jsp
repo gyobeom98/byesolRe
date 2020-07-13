@@ -45,7 +45,7 @@
 			<form onsubmit="return check()" id="regis">
 				<div class="content_foot">
 					<ul class="flotBox_my_tap">
-						<li><a href="/index/adminUser" class="li2">유저정보관리</a></li>
+						<li><a href="/cus/adminUserInfo" class="li2">유저정보관리</a></li>
 						<li><a href="/index/adminRoom" class="li1">객실예약관리</a></li>
 						<li><a href="/index/adminQnA" class="li3">Q&A관리</a></li>
 					</ul>
@@ -63,23 +63,30 @@
 								<td>예약자명</td>
 								<td>예약ID</td>
 								<td>연락처</td>
-								<td>입금확인</td>
 								<td>인원몇명</td>
-								<td></td>
+								<td>입실일</td>
+								<td>퇴실일</td>
+								<td>금액</td>
+								<td>입금확인</td>
+								<td>취소</td>
 							</tr>
 						</thead>
 						<tbody>
+							<c:forEach var="i" items="${reservInfoView.reservInfoList }">
 							<tr>
-								<td>1</td>
-								<td>객실2</td>
-								<td>예약한ID</td>
-								<td>홍길동</td>
-								<td>01012341234</td>
-								<td>미입금</td>
-								<td>3명</td>
-								<td><input type="button" onclick="location.href=(예약삭제)"
-									value="삭제"></td>
+								<td>${i.id }</td>
+								<td>${i.concept }</td>
+								<td>${i.userId }</td>
+								<td>${i.userName }</td>
+								<td>${i.phone }</td>
+								<td>${i.peopleCount }</td>
+								<td>${i.startDate }</td>
+								<td>${i.endDate }</td>
+								<td>${i.totalPrice }</td>
+								<td onclick="clickEvent(${i.id})">${i.state }</td>
+								<td><button type="button" onclick="goDeleteReserv(${i.id})">취소</button></td>
 							</tr>
+							</c:forEach>
 						</tbody>
 					</table>
 				</div>

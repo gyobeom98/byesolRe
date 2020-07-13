@@ -45,7 +45,6 @@ $(function() {
 					$("#date1").datepicker("option", "maxDate", selectedDate);
 				}
 			});
-	$('#date1').datepicker('setDate', new Date());
 	$('#date1').datepicker("show");
 	$('#date1').datepicker("hide");
 	
@@ -71,6 +70,8 @@ $(function() {
 			}
 		})
 	}
+		
+		
 	})
 	
 

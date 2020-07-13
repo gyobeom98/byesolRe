@@ -1,8 +1,10 @@
 function updateRoom(id) {
+	event.preventDefault()
 	location.href = "/reserv/updateReserv?reservId="+id;
 }
 
 function deleteRoom(id) {
+	event.preventDefault()
 	location.href = "/reserv/deleteReserv?reservId="+id;
 }
 

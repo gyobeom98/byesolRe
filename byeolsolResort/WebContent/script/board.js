@@ -1,3 +1,17 @@
+function check() {
+	if ($("#text_title").val()=="") {
+		alert("제목을 입력해주세요.");
+		$("#text_title").focus();
+		return false;
+	}
+	
+	if ($("#text_contents").val()=="") {
+		alert("내용을 입력해주세요.");
+		$("#text_contents").focus();
+		return false;
+	}
+}
+
 function addBoard() {
 	location.href="/board/addBoard";
 }
@@ -27,6 +41,7 @@ function goAdminDelete(id){
 }
 
 $(function() {
+	
 	$('#manu>ul>li>a').css('color', '#000000');
 	$('#manu>ul>li>a').css('font-size', '18px');
 

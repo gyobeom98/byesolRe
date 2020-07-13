@@ -7,12 +7,12 @@
 
 <insert id="insertEvent" parameterType="Event" keyProperty="id">
 
-insert into event(title,img_path) values(#{title},#{imgPath})
+insert into event(title,img_path,start_date,end_date,state) values(#{title},#{imgPath},#{startDate},#{endDate},#{state})
 
 </insert>
 
 <update id="updateEvent" parameterType="Event">
-update event set title = #{title} , img_path = #{imgPath} where id = #{id}
+update event set title = #{title} , img_path = #{imgPath} , start_date = #{startDate} , end_date = #{endDate} , state = #{state} where id = #{id}
 </update>
 
 <delete id="deleteEvent">

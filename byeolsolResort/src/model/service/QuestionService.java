@@ -24,7 +24,7 @@ public class QuestionService {
 
 		int firstRow = 0;
 		List<Question> questionList = null;
-
+		// 작성자의 question의 수
 		int questionCnt = questionMapper.countQuestion(writer);
 
 		if (questionCnt > 0) {
@@ -55,16 +55,19 @@ public class QuestionService {
 	AnswerMapper answerMapper;
 
 	@Transactional
+	// question을 삭제 할 때 그 question의 답변도 같이 삭제 
 	public void deleteQuestion(int id) {
 		Question question = questionMapper.selectQuestion(id);
 		answerMapper.deleteAnswerByQuestionId(id);
 		questionMapper.deleteQuestion(id);
 	}
-
+	
+	// 페이지 번호를 받아 quesion을 가져옴 
 	public QuestionView getQuestionViewWithState(int pageNum) {
 		QuestionView questionView = null;
 		int firstRow = 0;
 		List<Question> questionList = null;
+		// state에 따른 question의 수
 		int questionCnt = questionMapper.countQuestionByState();
 		if (questionCnt > 0) {
 			firstRow = (pageNum - 1) * QUESTION_COUNT_PER_PAGE;
@@ -76,4 +79,11 @@ public class QuestionService {
 		return questionView;
 	}
 
+	public boolean nullCheck(Question question) {
+		if(question.getDivision()!=null && question.getMessage()!=null && question.getTitle() != null
+				&& !question.getDivision().trim().equals("") && !question.getMessage().trim().equals("") && !question.getTitle().trim().equals("")) {
+			return true;
+		}else return false;
+	}
+	
 }

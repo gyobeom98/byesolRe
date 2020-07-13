@@ -44,29 +44,42 @@ public class AnswerService {
 	}
 
 	public void addAnswer(Answer answer) {
+		// 답변을 추가 하기 위해 답변을 달 question을 가져옴
 		Question question = questionMapper.selectQuestion(answer.getQuestionId());
-		if(answer.getWriter().equals("admin")) {
+		if(answer.getWriter().equals("admin")) { // 만약 답변의 작성자가 관리자 이면 게시글의 상태를 cea로
 			questionMapper.updateQuestionByIdWithState(question.getId(),"cea");
 		}else if(answer.getWriter().equals(question.getWriter())) {
+			// 아니라면 yet으로
 			questionMapper.updateQuestionByIdWithState(question.getId(), "yet");
 		}
+		// answer db에 추가
 		answerMapper.insertAnswer(answer);
 	}
 	
+	// answer를 가져id로 가져오기
 	public Answer getAnswerById(int id) {
 		return answerMapper.selectAnswerById(id);
 	}
 
+	// answer 수정
 	public void updateAnswer(Answer answer) {
 		answerMapper.updateAnswer(answer);
 	}
 
+	// 삭제
 	public void deleteAnswer(int id) {
 		answerMapper.deleteAnswer(id);
 	}
-
+	
+	// 질문이 삭제 되면 답변도 삭제 해야함
 	public void deleteAnswerByQuestionId(int questionId) {
 		answerMapper.deleteAnswerByQuestionId(questionId);
+	}
+	
+	public boolean nullCheck(Answer answer) {
+		if(answer.getMessage().trim()!=null && !answer.getMessage().trim().equals("")) {
+			return true;
+		}else return false;
 	}
 	
 }

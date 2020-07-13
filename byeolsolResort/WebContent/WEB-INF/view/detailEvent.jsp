@@ -20,7 +20,7 @@ function deleteEvent(id){
 <body>
 
 ${event.title}
-<img alt="" src="${event.imgPath}">
+<img alt="a" src="${event.imgPath}">
 <button onclick="updateEvent(${event.id})">수정</button>
 <button onclick="deleteEvent(${event.id})">삭제</button>
 

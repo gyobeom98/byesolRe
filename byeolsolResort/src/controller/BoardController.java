@@ -26,18 +26,18 @@ import model.service.FtpService;
 import model.view.BoardView;
 
 @Controller
-@RequestMapping("/board")
+@RequestMapping("/board") // controller mapping
 public class BoardController {
-	private static final String FILE_FOLDER_PATH = "c:/Users/tjoeun/byeolsolResort/";
 	@Autowired
 	BoardService boardService;
 
 	@Autowired
 	CommentService commentService;
 
-	@GetMapping("/list")
+	@GetMapping("/list") 
 	public String getList(Model m, @RequestParam(defaultValue = "1") int pageNum,
 			@RequestParam(required = false) String errorMessage) {
+		// adBoardList 와 boardView를  page에 줌
 		m.addAttribute("adBoardList", boardService.getAdBoard());
 		m.addAttribute("boardView", boardService.getView(pageNum));
 		if (errorMessage != null)
@@ -47,9 +47,10 @@ public class BoardController {
 
 	@GetMapping("/addBoard")
 	public String goAddBoardForm(HttpSession session, Model m) {
-		if (session.getAttribute("userId") != null)
-			return "/serviceList/addBoard";
+		if (session.getAttribute("userId") != null) // session에 userId가 있다면
+			return "/serviceList/addBoard"; // WEB_INF/erviceList/addBoard jsp페이지
 		else {
+			// session에 로그인이 되어있지 않다면 errorMessage를 보냄
 			m.addAttribute("errorMessage", "로그인이 되어 있지 않습니다.");
 			return "redirect:/board/list";
 		}
@@ -66,17 +67,23 @@ public class BoardController {
 		if (session.getAttribute("userId") != null) {
 			String userId = (String) session.getAttribute("userId");
 			board.setUserId(userId);
-			if (board.getTitle() == null  || board.getContent() == null) {
+			// board의 title과 content가 null인지 확인 후 request
+			if (!boardService.nullCheck(board)) {
 				m.addAttribute("errorMessage", "공백이 있습니다.");
 				return "redirect:/board/addBoard";
 
-			} else {
+			} else { // 아니라면
+				// Board의 추가하는 시간을 갖옴
 				String addTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy_MM_dd_HH_mm_ss_SSSS"));
+				// upload파일중 0 번 파일이 비어있지 않다면
 				if (!uploadFile[0].isEmpty()) {
+					// uploadFile의 수 만큼 반복
 					for (int i = 0; i < uploadFile.length; i++) {
 						System.out.println(i);
+						// 파일 이미지 타입을 체크
 						if (boardService.checkImg(uploadFile[i])) {
 							if (i == 0) {
+								// i 가 0 이면 ftp에 board 와 시간 안쪽 폴더에 이미지를 올리고 imgPath를 셋팅
 								board = boardService.imgUpAndSetPath(board, i, uploadFile[i], addTime, "first");
 								if (board.getFirstPath() == null)
 									errorCheck = false;
@@ -97,7 +104,7 @@ public class BoardController {
 
 					}
 				}
-				if (isTypeCheck && errorCheck) {
+				if (isTypeCheck && errorCheck) { // type체크와 errorChek가 된다면
 					boardService.addBoard(board);
 					return "redirect:/board/list";
 				} else {
@@ -115,6 +122,7 @@ public class BoardController {
 	@GetMapping("/adminList")
 	public String getadminList(Model m, @RequestParam(defaultValue = "1") int pageNum,
 			@RequestParam(required = false) String errorMessage) {
+		// boardView를 가져와서 페이지에 줌
 		m.addAttribute("boardView", boardService.getAdminBoardView(pageNum));
 		if (errorMessage != null)
 			m.addAttribute("errorMessage", errorMessage);
@@ -126,7 +134,7 @@ public class BoardController {
 
 		if (session.getAttribute("userId") != null) {
 			String userId = (String) session.getAttribute("userId");
-			if (userId.equals("admin")) {
+			if (userId.equals("admin")) { // session의 userId가 있고 그게 admin일 경우
 				return "/newsList/addNews";
 			} else {
 				m.addAttribute("errorMessage", "권한이 없는 접근 입니다.");
@@ -142,13 +150,13 @@ public class BoardController {
 	@PostMapping("/addAdminBoard")
 	public String addAdminBoard(Board board, HttpSession session,
 			@RequestParam(required = false) MultipartFile[] uploadFile, Model m) {
-		boolean isTypeCheck = true;
+		boolean isTypeCheck = true; // 위 addBoard와 같음
 		boolean errorCheck = true;
 		if (session.getAttribute("userId") != null) {
 			String userId = (String) session.getAttribute("userId");
 			if (userId.equals("admin")) {
 				board.setUserId(userId);
-				if (board.getTitle().equals("") || board.getContent().equals("")) {
+				if (!boardService.nullCheck(board)) {
 					m.addAttribute("errorMessage", "공백이 있습니다.");
 					return "redirect:/board/addAdminBoard";
 
@@ -234,18 +242,23 @@ public class BoardController {
 		board.getId();
 		if (session.getAttribute("userId") != null) {
 			String updateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy_MM_dd_HH_mm_ss_SSSS"));
+			// 페이지에서 board와 Id 를 받아와 board를 찾아모
 			Board b = boardService.selectBoard(board.getId());
-			if (b != null) {
+			if (b != null) { // 가져온 보드가 null이 아니라면 
 				String userId = (String) session.getAttribute("userId");
+				// 게시글의 작성자와 로그인 되어있는 userId 와 같거나 userId와 admin일 경우
 				if (b.getUserId().equals(userId) || userId.equals("admin")) {
+					// board의 userId를 session에 있는 userId로 셋팅
 					board.setUserId(b.getUserId());
-					if (uploadFile01.isEmpty()) {
+					if(boardService.nullCheck(board)) {
+					if (uploadFile01.isEmpty()) { // 파일이 비어있다면 board의 Path를 아까 가져온 board b의 Path로 지정
 						board.setFirstPath(b.getFirstPath());
-					} else {
-						if (boardService.checkImg(uploadFile01)) {
-							if (b.getFirstPath() != null) {
+					} else { // 비어있지 않다면 파일의 이미지를 체크하고
+						if (boardService.checkImg(uploadFile01)) { 
+							if (b.getFirstPath() != null) { // 아까 가져온 board b의 path의 시간을 가져와서 path설정 
 								String Time = b.getFirstPath().substring(b.getFirstPath().indexOf('/', 46) + 1,
 										b.getFirstPath().lastIndexOf('/'));
+								// ftp 이미지 삭제
 								ftpService.ftpdelete(b.getFirstPath(), Time);
 								board = boardService.imgUpAndSetPath(board, 0, uploadFile01, Time, "first");
 								if (board.getFirstPath() == null)
@@ -304,12 +317,20 @@ public class BoardController {
 					}
 					System.out.println("type : "+isTypeCheck);
 					System.out.println("error : "+errorCheck);
-					if (isTypeCheck && errorCheck) {
+					if (isTypeCheck && errorCheck) { // typeCheck와 errorCCheck 맞으면
 						System.out.println(board.getContent());
+						// 업데이트
 						boardService.updateBoard(board);
 					}
+					return "redirect:/board/list";
+					}else {
+						m.addAttribute("errorMessage","들어가지 않은 값이 있습니다.");
+						return "redirect:/board/updateBoard?id="+board.getId();
+					}
+				}else {
+					m.addAttribute("errorMessage","권한이 없는 접근 입니다.");
+					return "redirect:/board/list";
 				}
-				return "redirect:/board/list";
 			} else {
 				m.addAttribute("errorMessage", "잘못된 접근 입니다.");
 				return "redirect:/board/list";
@@ -322,7 +343,6 @@ public class BoardController {
 
 	@GetMapping("/updateAdminBoard")
 	public String updateAdminBoardForm(HttpSession session, Model m, @RequestParam(defaultValue = "0") int id) {
-
 		if (session.getAttribute("userId") != null) {
 			if (id > 0) {
 				String userId = (String) session.getAttribute("userId");
@@ -355,6 +375,7 @@ public class BoardController {
 			@RequestParam(required = false) MultipartFile uploadFile01,
 			@RequestParam(required = false) MultipartFile uploadFile02,
 			@RequestParam(required = false) MultipartFile uploadFile03) {
+		// update Board와 같음
 		boolean isTypeCheck = true;
 		boolean errorCheck = true;
 		if (session.getAttribute("userId") != null) {
@@ -364,6 +385,7 @@ public class BoardController {
 				String userId = (String) session.getAttribute("userId");
 				if (userId.equals("admin") && b.getState().equals("admin")) {
 					board.setUserId(b.getUserId());
+					if(boardService.nullCheck(board)) {
 					if (uploadFile01.isEmpty()) {
 						board.setFirstPath(b.getFirstPath());
 					} else {
@@ -430,8 +452,15 @@ public class BoardController {
 					if (isTypeCheck && errorCheck) {
 						boardService.updateBoard(board);
 					}
+					return "redirect:/board/adminList";
+					}else {
+						m.addAttribute("errorMessage","들어가지 않은 값이 있습니다.");
+						return "redirect:/board/updateAdminBoard?id="+board.getId();
+					}
+				}else {
+					m.addAttribute("errorMessage","권한이 없는 접근 입니다.");
+					return "redirect:/board/list";
 				}
-				return "redirect:/board/list";
 			} else {
 				m.addAttribute("errorMessage", "잘못된 접근 입니다.");
 				return "redirect:/board/list";
@@ -444,6 +473,7 @@ public class BoardController {
 
 	@GetMapping("/deleteBoard")
 	public String deleteBoard(HttpSession session, Model m, @RequestParam(defaultValue = "0") int id) {
+		//  session의 userId가 null이 아니고 admin일 경우 id를 갖고 board 삭제
 		if (session.getAttribute("userId") != null) {
 			String userId = (String) session.getAttribute("userId");
 			if (id > 0) {
@@ -502,23 +532,39 @@ public class BoardController {
 
 	@GetMapping("/detailBoard")
 	public String goBoardDetail(int boardId, Model m, @RequestParam(defaultValue = "1") int pageNum) {
+		Board board = boardService.selectBoard(boardId);
+		if(board!=null) {
 		m.addAttribute("board", boardService.selectBoard(boardId));
 		m.addAttribute("commentView", commentService.getView(pageNum, boardId));
 		return "/serviceList/detailBoard";
+		}else {
+			m.addAttribute("errorMessage","잘못된 접근 입니다.");
+			return "redirect:/board/list";
+		}
 	}
 	
 	@GetMapping("/adminDetailBoard")
 	public String goAdminBoardDetail(int boardId, Model m, @RequestParam(defaultValue = "1") int pageNum) {
+		Board board = boardService.selectBoard(boardId);
+		if(board!=null) {
 		m.addAttribute("board", boardService.selectBoard(boardId));
 		m.addAttribute("commentView", commentService.getView(pageNum, boardId));
 		return "/newsList/detailNews";
+		}else {
+			m.addAttribute("errorMessage","잘못된 접근입니다.");
+			return "redirect:/board/adminList";
+		}
 	}
 
 	@PostMapping("/addComment")
 	public String addComment(Comment comment, HttpSession session, Model m) {
 		if (session.getAttribute("userId") != null) {
 			comment.setUserId((String) session.getAttribute("userId"));
+			if(commentService.nullCheck(comment)) {
 			commentService.addComment(comment);
+			}else {
+				m.addAttribute("errorMessage","입력하지 않은 값이 있습니다.");
+			}
 		} else {
 			m.addAttribute("errorMessage", "로그인이 되어 있지 않습니다.");
 		}

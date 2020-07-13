@@ -45,10 +45,12 @@ import model.service.ReservService;
 @Controller
 @RequestMapping("/cus")
 public class CustomerController {
-
+	
+	// default value들
 	private static final String DEFAULT_VALUE_ID = "defaultValueId";
 	private static final String DEFAULT_VALUE_PASSWORD = "defaultValuePassword";
 	private static final String DEFAULT_VALUE_Email = "defaultValueEmail@test.com";
+	private static final String DEFAULT_BIRTH_DATE = "1850-01-01";
 
 	@Autowired
 	CustomerService customerService;
@@ -59,27 +61,30 @@ public class CustomerController {
 	@GetMapping("/regis")
 	public String getRegisForm(HttpSession session, Model m) {
 		if (session.getAttribute("userId") == null) {
-			System.out.println("aa");
+			// session에 userId가 null이라면
 			return "/sideform/signup";
 		} else {
+			// session에 userId가 null이 아니라면
 			m.addAttribute("errorMessage", "잘못된 접근 입니다.");
 			return "redirect:/index/main";
 		}
 	}
 
-	private static final String DEFAULT_BIRTH_DATE = "1850-01-01";
 
 	@PostMapping("/regis")
+	// CustomerVo를 통해 유효성 검사를 함 + birth를 받는데 없다면 deleteValue로 설정
 	public String getResultRegis(HttpServletRequest resq, @ModelAttribute("CustomerVo") @Valid CustomerVO customerVo,
 			BindingResult result, @RequestParam(defaultValue = DEFAULT_BIRTH_DATE) Date birth, Model m,
 			HttpSession session) {
 		if (session.getAttribute("userId") == null) {
 			customerVo.setId(0);
+			// birth의 값이 defaultValue인지 확인 후 아니라면 birth를 localDate로 바꿈
 			if (!birth.toString().equals(DEFAULT_BIRTH_DATE)) {
 				customerVo.setBirthDate(birth.toLocalDate());
 
 				System.out.println(customerVo);
-
+				
+				// 유효성 검사를 해서 error가 나는 지 확인후 fieldError를 이용해 에러가 난 필드 앞에 e를 추가 하고 page로 이동
 				if (result.hasErrors()) {
 					List<FieldError> errors = result.getFieldErrors();
 					for (FieldError fe : errors) {
@@ -88,17 +93,18 @@ public class CustomerController {
 					}
 					return "/sideform/signup";
 				} else {
-
+					
+					// id가 중복인지 확인후
 					String idCheck = customerService.idCheck(customerVo.getUserId());
 					if (idCheck.equals("중복")) {
 						m.addAttribute("errorMessage", "id가 중복되었습니다.");
 						return "redirect/cus/regis";
 
-					} else {
+					} else { // email이 중복인지 아닌지 확인
 						String emailCheck = customerService.emailCheck(customerVo.getEmail());
-						if (!emailCheck.equals("중복")) {
-							if (!customerService.phoneCheck(customerVo.getPhone()).equals("중복")) {
-								if (LocalDate.now().getYear() - birth.toLocalDate().getYear() >= 5) {
+						if (!emailCheck.equals("중복")) {  // 중복이 아니라면
+							if (!customerService.phoneCheck(customerVo.getPhone()).equals("중복")) { // 전화번호 중복 체크
+								if (LocalDate.now().getYear() - birth.toLocalDate().getYear() >= 5) { // 입력한 생일이 현재 날짜와 비교후 5미만이라면 return false
 									Customer customer = new Customer(customerVo.getId(), customerVo.getUserId(),
 											customerVo.getPassword(), customerVo.getName(), customerVo.getZipCode(),
 											customerVo.getEmail(), customerVo.getAddress(),
@@ -143,19 +149,23 @@ public class CustomerController {
 
 	@PostMapping(value = "/eamilcheck", produces = "application/text; charset=utf-8")
 	@ResponseBody
+	// 바로 그 페이지에 return 해줌
 	public String getEmailCheck(String email) {
 		System.out.println(email);
+		// email이 중복인지 아닌지 확인
 		return customerService.emailCheck(email);
 	}
 
 	@PostMapping(value = "/phoneCheck", produces = "application/text; charset=utf-8")
 	@ResponseBody
+	// 중복인지 아닌지 확인
 	public String getPhoneCheck(String phone) {
 		return customerService.phoneCheck(phone);
 	}
 
 	@GetMapping("/login")
 	public String loginForm(HttpSession session, Model m) {
+		// 로그인이 되어있지 않다면
 		if (session.getAttribute("userId") == null) {
 			System.out.println("aa");
 			return "/sideform/login";
@@ -222,7 +232,7 @@ public class CustomerController {
 		if (session.getAttribute("userId") != null) {
 			String userId = (String) session.getAttribute("userId");
 			Customer cust = new Customer();
-			if (customerVo.getUserId().equals(userId)) {
+			if (customerVo.getUserId().equals(userId)) { // customerVo로 유효성 검사
 				if (!birth.toString().equals(DEFAULT_BIRTH_DATE)) {
 					Customer customer = customerService.getCustomerById(userId);
 					cust.setId(customer.getId());
@@ -277,8 +287,10 @@ public class CustomerController {
 
 	@GetMapping(value = "/mailCheck", produces = "application/text; charset=utf-8")
 	public String mailSending(@RequestParam(required = false) String registEmail, HttpSession session, Model m) {
+		// userEmail이 null이 아니라면
 		if (session.getAttribute("userEmail") != null) {
 			return "/mypage/emailCer";
+			// 회원가입 후 넘어온 이메일이 null이 아니라면
 		} else if (registEmail != null) {
 			m.addAttribute("userEmail", registEmail);
 			return "/mypage/emailCer";
@@ -292,6 +304,7 @@ public class CustomerController {
 	@ResponseBody
 	public String mailSendRes(@RequestParam(defaultValue = DEFAULT_VALUE_Email) String userEmail, HttpSession session) {
 		if (!userEmail.equals(DEFAULT_VALUE_Email)) {
+			// 이메일 보내기
 			customerService.mailSend(mailSender, userEmail);
 			return "이메일 인증코드를 성공적으로 보냈습니다.";
 		} else {
@@ -300,6 +313,7 @@ public class CustomerController {
 	}
 
 	@PostMapping("/mailCheck")
+	// 이메일 인증 코드와 입력한 코드가 같다면 state를 인증으로 인증코드와 같지 않다면 state를 미인증으로
 	public String emailCertification(@RequestParam(defaultValue = "DEFAULTMAILCODE") String mailCode,
 			@RequestParam(defaultValue = DEFAULT_VALUE_Email) String userEmail, Model m) {
 		if (!mailCode.equals("DEFAULTMAILCODE") && !userEmail.equals(DEFAULT_VALUE_Email)) {
@@ -344,7 +358,7 @@ public class CustomerController {
 	@GetMapping("/deleteCustomer")
 	public String deleteCustomerForm(HttpSession session, Model m) {
 		if (session.getAttribute("userId") != null) {
-			return "customerDeleteForm";
+			return "/mypage/deleteForm";
 		} else {
 			m.addAttribute("errorMessage", "로그인이 되어 있지 않습니다.");
 			return "redirect:/index/main";
@@ -352,6 +366,7 @@ public class CustomerController {
 	}
 
 	@PostMapping("/deleteCustomer")
+	// userId와 password를 확인하고 맞으면 계정삭제 -> 게시글 ,댓글 , reserv 등을 삭제
 	public String deleteCustomer(HttpSession session, @RequestParam(defaultValue = DEFAULT_VALUE_ID) String userId,
 			@RequestParam(defaultValue = DEFAULT_VALUE_PASSWORD) String password, Model m) {
 		if (session.getAttribute("userId") != null) {
@@ -391,6 +406,7 @@ public class CustomerController {
 	}
 
 	@PostMapping("/findId")
+	// email과 이름을 갖고 id찾기 하는데 email과 name이 맞는 customer를 찾아서 그 userId를 이메일로 보냄
 	public String findId(HttpSession session, Model m, @RequestParam(defaultValue = DEFAULT_VALUE_Email) String email,
 			@RequestParam(defaultValue = "DEFAULT_VALUE_NAME") String name) {
 		if (session.getAttribute("userId") == null) {
@@ -418,6 +434,7 @@ public class CustomerController {
 	}
 
 	@PostMapping("/findPassword")
+	// email, userId,name 등을 customerDb에서 확인
 	public String findPassword(HttpSession session, Model m,
 			@RequestParam(defaultValue = DEFAULT_VALUE_Email) String email,
 			@RequestParam(defaultValue = DEFAULT_VALUE_ID) String userId,

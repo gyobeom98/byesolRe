@@ -22,6 +22,7 @@ public class RoomService {
 		return roomMapper.selectRoomList();
 	}
 	
+	// concept에 맞는 방의 리스트 보여주기
 	public List<Room> getRoomListByConcept(String concept){
 		return roomMapper.selectRoomListByConcept(concept);
 	}

@@ -7,10 +7,13 @@
 <title>Insert title here</title>
 </head>
 <body>
-
 <form action="/event/updateEvent" method="post" enctype="multipart/form-data">
 <input type="number" name="id" value="${event.id}" readonly="readonly">
 <input type="text" name="title" value="${event.title}">
+<input type="date" name="start" value="${event.startDate}">
+<input type="date" name="end" value="${event.endDate}">
+미상시<input type="radio" name="state" value="미상시">
+상시<input type="radio" name="state" value="상시">
 <input type="file" name="uploadFile">
 <input type="file" name="thumbnail">
 <input type="submit">

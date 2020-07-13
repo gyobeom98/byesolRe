@@ -26,7 +26,7 @@ select * from reserv
 </select>
 
 <select id="selectReservByRoomIdWithDate" resultType="Reserv">
-select * from reserv where room_id = #{roomId} and start_date between #{startDate} and #{endDate} OR end_date between #{startDate} and #{endDate}
+select * from reserv where room_id = #{roomId} and start_date between #{startDate} and #{endDate} OR room_id = #{roomId} and end_date between #{startDate} and #{endDate}
 </select>
 
 <select id="selectReservById" resultType="Reserv">

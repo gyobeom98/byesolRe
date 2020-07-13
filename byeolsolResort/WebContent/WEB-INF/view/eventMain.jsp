@@ -38,8 +38,16 @@ function goDetail(id){
 
 <c:forEach var="i" items="${eventView.eventWithThumbList}">
 <img  src="${i.imgPath}"> 
-${i.event.title}
-${i.event.regDate}
+${i.event.title}<br>
+${i.event.regDate}<br>
+<c:if test='${i.event.state=="미상시"}'><br>
+${i.event.startDate}<br>
+${i.event.endDate}<br>
+</c:if>
+
+<c:if test='${i.event.state== "상시" }'>
+${i.event.state }
+</c:if>
 <button onclick="goDetail(${i.event.id})">goDetail</button>
 </c:forEach>
 

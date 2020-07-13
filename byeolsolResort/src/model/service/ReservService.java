@@ -37,12 +37,17 @@ public class ReservService {
 	@Autowired
 	RemoveMapper removeMapper;
 
+	// 해당날짜를 포함하는 roomId를 갖고 있는 예약을 가져와서 null이면 true 아니라면 false
 	public boolean reservCheck(int roomId, LocalDate startDate, LocalDate endDate) {
+		System.out.println(roomId);
+		System.out.println(reservMapper.selectReservByRoomIdWithDate(roomId, startDate, endDate));
+		// reserv가져오기
 		if (reservMapper.selectReservByRoomIdWithDate(roomId, startDate, endDate) != null)
 			return false;
 		else
 			return true;
 	}
+	// 예약 update체크 위와 같지만 null이 아니면 reserv를 하나 가져와서 그 예약을 한사람이 본인이라면 업데이트
 	public boolean reservUpdateCheck(int roomId, LocalDate startDate, LocalDate endDate, int reservId) {
 		Reserv reserv = reservMapper.selectReservById(reservId);
 		if(reserv != null) {
@@ -72,25 +77,35 @@ public class ReservService {
 	@Autowired
 	RoomService roomService;
 
+	// 예약을 추가하는 메서드 이지만 ErrorMessage를 return 함
 	public ErrorMessage totalAddResrv(Date startDate, Date endDate, int roomNum, HttpSession session, int peopleCount) {
 		if (session.getAttribute("userId") != null) {
+			// room과 cstomer을 가져옴
 			String userId = (String) session.getAttribute("userId");
 			Customer customer = customerService.getCustomerById(userId);
 			Room room = roomService.getRoomByRoomNum(roomNum);
 			System.out.println(room);
+			// email인증이 된 계정이라면 받은 date값을 localDate로
 			if (customer.getEmailState().equals("인증")) {
 				LocalDate start = startDate.toLocalDate();
 				LocalDate end = endDate.toLocalDate();
 				int dv = end.compareTo(start);
+				// 퇴실일과 입실일이 같을 수는 있지만 적을순 없다
 				if (dv >= 0) {
+					// dateCheck 메서드 실행 후 결과가 true라면
 					if (dateCheck(start, end)) {
+						// room에 맞는 인원수 인지 확인 한다.
 						if (peopleCountCheck(room, peopleCount)) {
+							// 예약 금액을 갖는 메서드를 사용해 totalPrice에 넣음
 							int totalPrice = getTotalPrice(start, end, room);
+							// 예약 정보 넣기
 							Reserv reserv = new Reserv(0, userId, room.getId(), start, end, totalPrice, peopleCount,
 									null, null);
-							if (reservCheck(room.getId(), start, end)) {
+							if (reservCheck(room.getId(), start, end)) { // 예약 확인을 함
 								System.out.println("확인함");
+								// reserv를 추가
 								addReserv(reserv);
+								// errorMessage 와 redirect할 request를 넘겨줌 
 								return new ErrorMessage(null, "redirect:/index/main", 0);
 							} else {
 								System.out.println("실패함");
@@ -114,13 +129,15 @@ public class ReservService {
 		}
 	}
 
+	// errorMessage 자바의 속성인 errorMessage가 null이면 true반환
 	public boolean isNullFromErrorMessage(ErrorMessage errorMessage) {
 		if (errorMessage.getErrorMessage() == null) {
 			return true;
 		} else
 			return false;
 	}
-
+	
+	// ErrorMessage 안 속성 roomNum이 0 보다 작거나 같으면 return true
 	public boolean isHaveRoomNumber(ErrorMessage errorMessage) {
 		if (errorMessage.getRoomNum() <= 0)
 			return true;
@@ -131,7 +148,8 @@ public class ReservService {
 	public Reserv getReservById(int reservId) {
 		return reservMapper.selectReservById(reservId);
 	}
-
+	
+	// 예약을 수정 하는 ErrorMessage return 하는 메서드 totalAddReserv와 같지만 check를 updateCheck로
 	public ErrorMessage updateReserv(HttpSession session, int reservId, Date startDate, Date endDate, int roomNum,
 			int peopleCount) {
 		if (session.getAttribute("userId") != null) {
@@ -164,15 +182,16 @@ public class ReservService {
 
 	@Autowired
 	HolyDayService holyDayService;
-	
+	// totalPrice를 구하는 메서드
 	public int getTotalPrice(LocalDate startDate, LocalDate endDate, Room room) {
 		int totalPrice = 0;
 		int dv = endDate.compareTo(startDate);
-		if(dv>1) dv--;
+		if(dv>1) dv--; // 박이 기준이기때문
 		List<LocalDate> days = new ArrayList<LocalDate>();
-		for (int i = 0; i <= dv; i++) {
+		for (int i = 0; i <= dv; i++) { // 입실일 과 퇴실일 사이의 날짜를 list에 추가
 			days.add(startDate.plusDays(i));
 		}
+		// 금토일 , holyDay, peekSesion이라면 weekendPrice
 		for (LocalDate localDate : days) {
 			if (isWeekend(localDate.getDayOfWeek().toString()) || isHolyDay(localDate) || isPeekSeason(localDate))
 				totalPrice += room.getWeekendPrice();
@@ -183,12 +202,14 @@ public class ReservService {
 		return totalPrice;
 	}
 	
+	// 금토일인지 확인
 	private boolean isWeekend(String dayofWeek) {
 		if(dayofWeek.equals("FRIDAY")|| dayofWeek.equals("SATURDAY") || dayofWeek.equals("SUNDAY")) {
 			return true;
 		}else return false;
 	}
 	
+	// holyDay서비스를통해 holyDay인지 체크
 	private boolean isHolyDay(LocalDate localDate) {
 		int y = localDate.getYear();
 		int m = localDate.getMonthValue();
@@ -215,13 +236,15 @@ public class ReservService {
 		
 	}
 	
-
+	// 날짜 체크
 	public boolean dateCheck(LocalDate startDate, LocalDate endDate) {
 		int hour = LocalDateTime.now().getHour();
 		int minute = LocalDateTime.now().getMinute();
+		// 시작일과 오늘 이 0보다 크거나 같고 시작일과 오늘이 60일 이내라면
 		if (startDate.compareTo(LocalDate.now()) >= 0 && startDate.compareTo(LocalDate.now()) <= 60) {
-			if (endDate.compareTo(startDate) >= 0 && endDate.compareTo(startDate) <= 8) {
+			if (endDate.compareTo(startDate) >= 0 && endDate.compareTo(startDate) <= 8) { // 시작일과 퇴실일의 차가 0 ~ 8 이라면
 				if (startDate.compareTo(LocalDate.now()) == 0) {
+					// 현제 시간이 11시 30분 이전이라면 true
 					if (hour < 11 || hour == 11 && minute <= 30) {
 						return true;
 					} else {
@@ -239,6 +262,7 @@ public class ReservService {
 	}
 
 	public boolean peopleCountCheck(Room room, int peopleCount) {
+		// 인자로 받은 인원수가 그 방의 최대 인원수와 최소인원수 사이에있는지 확인
 		int max = room.getMaxPeople();
 		int min = room.getMinPeople();
 
@@ -249,6 +273,7 @@ public class ReservService {
 		}
 
 	}
+	// 방 번호가 101 ~ 105 &&  201~205 && 301~305 인지 확인
 	public boolean roomNumCheck(int roomNum) {
 		if(roomNum>=101 && roomNum<=105 || roomNum<=201 && roomNum>=205 || roomNum<=301 && roomNum>=305)
 			return true;
@@ -259,8 +284,9 @@ public class ReservService {
 	@Transactional
 	public void deleteReserv(int reservId) {
 		Reserv reserv = reservMapper.selectReservById(reservId);
-		if(reserv.getState().equals("입금")) {
+		if(reserv.getState().equals("입금")) { // 예약이 입금 된 상태라면 
 			Customer customer = customerService.getCustomerById(reserv.getUserId());
+			// remove추가
 			Remove remove = new Remove(0, reserv.getUserId(), reserv.getRoomId(), reserv.getStartDate(), reserv.getEndDate(), reserv.getTotalPrice(),customer.getName(), customer.getPhone(), null);
 			removeMapper.insertRemove(remove);
 		}
@@ -319,6 +345,7 @@ public class ReservService {
 		return reservInfoView;
 	}
 	public List<Room> getReservCheckNoRoomId(LocalDate startDate, LocalDate endDate) {
+		// 시작일과 끝일을 포함한 예약일을 가져와서 그거의 roomId로 총 room에서 삭제
 		List<Reserv> reservList =  reservMapper.selectReservListByStartAndEndDate(startDate,endDate);
 		List<Room> roomList =  roomService.getRoomAll();
 		List<Integer> deleteIndex = new ArrayList<Integer>();
@@ -336,6 +363,7 @@ public class ReservService {
 		return roomList;
 		
 	}
+	// 예약의 상태를 입금과 미입금으로 변경
 	public void updateReservState(int id) {
 		Reserv reserv = reservMapper.selectReservById(id);
 		String state = "입금";
@@ -344,6 +372,5 @@ public class ReservService {
 		reservMapper.updateReservState(id,state);
 	}
 
-	
 	
 }

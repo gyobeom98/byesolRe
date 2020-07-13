@@ -10,6 +10,10 @@
 
 <form action="/event/addEvent" method="post" enctype="multipart/form-data">
 <input type="text" name="title">
+<input type="Date" name="start">
+<input type="Date" name="end">
+미상시<input type="radio" name="state" value="미상시">
+상시<input type="radio" name="state" value="상시">
 <input type="file" name="uploadFile">
 <input type="file" name="thumbnail">
 <input type="submit">

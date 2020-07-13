@@ -22,6 +22,7 @@ public class RemoveService {
 		
 		int firstRow = 0;
 		List<Remove> removeList = null;
+		// remove의 수
 		int removeCnt = removeMapper.countRemove();
 		
 		if (removeCnt>0) {

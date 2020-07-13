@@ -41,11 +41,20 @@ public class QuestionController {
 	}
 
 	@PostMapping("/addQuestion")
-	public String addQuestion(HttpSession session, Question question) {
-
+	public String addQuestion(HttpSession session, Question question, Model m) {
+		if(session.getAttribute("userId")!=null) {
 		question.setWriter((String) session.getAttribute("userId"));
+		if(questionService.nullCheck(question)) {
 		questionService.addQuestion(question);
 		return "redirect:/question/list";
+		}else {
+			m.addAttribute("errorMessage","입력 하지 않은 값이 있습니다.");
+			return "redirect:/question/addQuestion";
+		}
+		}else {
+		m.addAttribute("errorMessage","로그인이 되어 있지 않습니다.");
+		return "redirect:/index/main";
+		}
 	}
 
 	@GetMapping("/list")
@@ -88,7 +97,7 @@ public class QuestionController {
 					return "redirect:/index/main";
 				}
 			} else {
-				m.addAttribute("errorMessage","잘못된 접근 입니다.");
+				m.addAttribute("errorMessage", "잘못된 접근 입니다.");
 				return "redirect:/question/list";
 			}
 
@@ -100,13 +109,18 @@ public class QuestionController {
 	}
 
 	@PostMapping("/addAnswer")
-	public String addAnswerP(Answer answer, HttpSession session, @RequestParam(defaultValue = "1") int pageNum) {
-
+	public String addAnswerP(Answer answer, HttpSession session, @RequestParam(defaultValue = "1") int pageNum, Model m) {
 		if (session.getAttribute("userId") != null) {
 			String userId = (String) session.getAttribute("userId");
 			answer.setWriter(userId);
+			if(answerService.nullCheck(answer)) {
 			answerService.addAnswer(answer);
 			return "redirect:/question/detailQuestion?id=" + answer.getQuestionId() + "&pageNum=" + pageNum;
+			}else {
+				m.addAttribute("errorMessage","입력 하지 않은 값이 있습니다.");
+				return "redirect:/question/detailQuestion?id=" + answer.getQuestionId() + "&pageNum=" + pageNum;
+			}
+			
 		} else {
 			return "redirect:/index/main";
 		}
@@ -142,8 +156,13 @@ public class QuestionController {
 		if (session.getAttribute("userId") != null) {
 			String userId = (String) session.getAttribute("userId");
 			if (userId.equals(qu.getWriter())) {
+				if(questionService.nullCheck(question)) {
 				questionService.updateQuestion(question);
 				return "redirect:/question/list";
+				}else {
+					m.addAttribute("errorMessage","입력하지 않은 값이 있습니다.");
+					return "redirect:/question/updateQuestion?id="+question.getId();
+				}
 			} else {
 				m.addAttribute("errorMessage", "잘못된 접근 입니다.");
 				return "redirect:/index/main";
@@ -152,7 +171,6 @@ public class QuestionController {
 			m.addAttribute("errorMessage", "로그인이 되어 있지 않습니다.");
 			return "redirect:/index/main";
 		}
-
 	}
 
 	@GetMapping("/updateAnswer")
@@ -181,8 +199,13 @@ public class QuestionController {
 			String userId = (String) session.getAttribute("userId");
 			if (userId.equals(an.getWriter())) {
 				answer.setWriter(an.getWriter());
+				if(answerService.nullCheck(answer)) {
 				answerService.updateAnswer(answer);
 				return "redirect:/question/list";
+				}else {
+					m.addAttribute("errorMessage","입력 하지 않은 값이 있습니다.");
+					return "redirect:/question/updateAnswer?id="+answer.getId();
+				}
 			} else {
 				m.addAttribute("errorMessage", "잘못된 접근 입니다.");
 				return "redirect:/index/main";

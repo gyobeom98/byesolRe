@@ -22,7 +22,7 @@ select * from question where id = #{id}
 </select>
 
 <select id="selectQuestionListByWriterWithLimit" resultType="Question">
-select * from question where writer = #{writer} limit #{firstRow}, #{questionCountPerPage}
+select * from question where writer = #{writer} order by reg_date desc limit #{firstRow}, #{questionCountPerPage}
 </select>
 
 <select id="selectQuestionList" resultType="Question">

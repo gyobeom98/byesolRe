@@ -51,11 +51,13 @@ public class CustomerService {
 	@Autowired
 	QuestionMapper questionMapper;
 
+	// customerVo 로 인해 유효성 검사가 끝났기 때문에 바로 db에 저장
 	public void register(Customer customer) {
 		System.out.println("회원가입 넘어 오는지 확인 : " + customer);
 		customerMapper.insertCustomer(customer);
 	}
 
+	// userId 와 password가 맞는 customer를 가져옴
 	public Customer logIn(String userId, String password) {
 		System.out.println("로그인 넘어 오는지 확인 : " + userId);
 		Customer c = customerMapper.selectCustomer(userId, password);
@@ -63,8 +65,8 @@ public class CustomerService {
 		return c;
 	}
 
+	// userId customerdb에 있는 지 확인 후 결과값 반환
 	public String idCheck(String userId) {
-
 		Customer c = customerMapper.selectCustomerWithId(userId);
 		if (c != null) {
 			return "중복";
@@ -73,12 +75,13 @@ public class CustomerService {
 
 	}
 
+	// 커스터머 있는지 확인
 	public Customer check(Customer customer) {
 		System.out.println("있는지 확인 : " + customer);
 		return customerMapper.selectCustomer(customer.getUserId(), customer.getPassword());
-
 	}
 
+	// email을 받아와서 customerdb에있는지 확인하기
 	public String emailCheck(String email) {
 		Customer c = customerMapper.selectCustomerWithEmail(email);
 		if (c == null) {
@@ -88,23 +91,30 @@ public class CustomerService {
 		}
 	}
 
+	// email 이랑 emailCode로 찾아옴
 	public Customer getCustomerByEmail(String email, String emailCode) {
 		return customerMapper.selectCustomerByEmailAndEmailState(email, emailCode);
 	}
 
+	// userId를 갖고 customer를 찾아와서 반환
 	public Customer getCustomerById(String userId) {
 		return customerMapper.selectCustomerWithId(userId);
 	}
 
+	
+	// 메일 보내기
 	public void mailSend(JavaMailSender mailSender, String registEmail) {
+		// 이메일에 보낼 랜덤 4자리코드
 		String mailCode = (int) (Math.random() * 8999) + 1000 + "";
+		// 관리자 이메일
 		String setfrom = "byeolsol6@gmail.com";
 		try {
 			MimeMessage message = mailSender.createMimeMessage();
+			// message를 보내는데 utf-8
 			MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
 			messageHelper.setFrom(setfrom); // 보내는사람 생략하거나 하면 정상작동을 안함
 			messageHelper.setTo(registEmail); // 받는사람 이메일
-			messageHelper.setSubject("별솔리조트 인증번호 입니다."); // 메일제목은 생략이 가능하다
+			messageHelper.setSubject("별솔리조트 인증번호 입니다."); // 메일제목은 생략이 가능하며 , html을 설정
 			messageHelper.setText(
 					"<div style='margin: 0auto; width: 800px; border-bottom: 3px solid lightgray; border-top: 3px solid lightgray; text-align: center'>"
 							+ "<span> 별솔리조트 인증번호 입니다. 별솔리조트 이메일 인증 화면에 인증 코드를 입력 하여 주세요" + "</span><h3>" + mailCode
@@ -118,10 +128,12 @@ public class CustomerService {
 
 	}
 
+	// customer의 email state를 변경함
 	public void updateCustomerEmailState(String userEmail, String emailState) {
 		customerMapper.updateStateByEmail(userEmail, emailState);
 	}
 
+	// phone을 받아와서 customer db에 있는지 확인후 리턴
 	public String phoneCheck(String phone) {
 
 		Customer customer = customerMapper.selectCustomerByPhone(phone);
@@ -131,24 +143,28 @@ public class CustomerService {
 			return "중복";
 	}
 
+	// customer 업데이트
 	public void updateCustomer(Customer cust) {
 		customerMapper.updateCustomer(cust);
 	}
 
 	@Transactional
+	// customer의 계정탈퇴를 할경우 삭제하는 것
 	public void deleteCustomerWithAllInfor(Customer customer) {
-
+		// userId가 받은 customer의 아이디를 받아와서 그 아이디를가진 유저가 쓴 게시글의 리스트를 삭제 하고
 		List<Board> boardList = boardService.selectBoardListByUserId(customer.getUserId());
 
 		for (Board board : boardList) {
 			boardService.deleteBoard(board.getId(), customer.getUserId());
 		}
-
+		// 게시글과 comment를 삭제
 		commentMapper.deleteCommentByUserId(customer.getUserId());
 
+		// 예약 찾기
 		List<Reserv> reservList = reservMapper.selectReservByUserId(customer.getUserId());
 
 		for (Reserv reserv : reservList) {
+			// 만약 예약이 입금된 상태이면 remove를 추가
 			if (reserv.getState().equals("입금")) {
 				removeMapper.insertRemove(new Remove(0, customer.getUserId(), reserv.getRoomId(), reserv.getStartDate(),
 						reserv.getEndDate(), reserv.getTotalPrice() - (int) (reserv.getTotalPrice() / 10),
@@ -156,6 +172,7 @@ public class CustomerService {
 			}
 			reservMapper.deleteReserv(reserv.getId());
 		}
+		// question과 asnwer를 삭제
 		List<Question> questionList = questionMapper.selectQuestionByWriter();
 		for (Question question : questionList) {
 			answerMapper.deleteAnswerByQuestionId(question.getId());
@@ -180,9 +197,10 @@ public class CustomerService {
 		return customerView;
 	}
 	
-	@Transactional
+	// userId와 이름을 받아서 일치하면 가입한 메일로 임시 비밀번호 보내기
 	public String mailSendByPassword(JavaMailSender mailSender, String email, String userId, String name) {
 		if (isCheck(email, userId, name)) {
+			// 임시 비밀번호
 			String temporaryPassword = randomTemporaryPassword();
 			String setfrom = "byeolsol6@gmail.com";
 			try {
@@ -211,7 +229,7 @@ public class CustomerService {
 		}
 	}
 	
-	@Transactional
+	// 가입한 메일로 아이디 보냄
 	public String mailSendWithId(JavaMailSender mailSender, String email, String name) {
 		System.out.println(email+","+name);
 		Customer customer = customerMapper.selectCustomerWithEmail(email);
@@ -244,9 +262,8 @@ public class CustomerService {
 		}
 
 	}
-
+	// 이메일과 아이디,이름이 db와 일치하는지 확인
 	public boolean isCheck(String email, String userId, String name) {
-
 		Customer customer = customerMapper.selectCustomerWithId(userId);
 		if (customer != null) {
 			if (customer.getEmail().equals(email) && customer.getName().equals(name)) {
@@ -260,6 +277,7 @@ public class CustomerService {
 
 	}
 
+	// random임시 비밀번호
 	private String randomTemporaryPassword() {
 
 		String temporaryPassword = "";

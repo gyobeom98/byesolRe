@@ -1,5 +1,6 @@
 package model.dto;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class Event {
@@ -12,15 +13,27 @@ public class Event {
 	
 	private LocalDateTime regDate;
 	
+	private LocalDate startDate;
+	
+	private LocalDate endDate;
+	
+	private String state;
+	
+	
 	public Event() {}
 
-	public Event(int id, String title, String imgPath, LocalDateTime regDate) {
+	public Event(int id, String title, String imgPath, LocalDateTime regDate, LocalDate startDate, LocalDate endDate,
+			String state) {
 		super();
 		this.id = id;
 		this.title = title;
 		this.imgPath = imgPath;
 		this.regDate = regDate;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.state = state;
 	}
+
 
 	public int getId() {
 		return id;
@@ -54,9 +67,34 @@ public class Event {
 		this.regDate = regDate;
 	}
 
+	public LocalDate getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(LocalDate startDate) {
+		this.startDate = startDate;
+	}
+
+	public LocalDate getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(LocalDate endDate) {
+		this.endDate = endDate;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
 	@Override
 	public String toString() {
-		return "Question [id=" + id + ", title=" + title + ", imgPath=" + imgPath + ", regDate=" + regDate + "]";
+		return "Event [id=" + id + ", title=" + title + ", imgPath=" + imgPath + ", regDate=" + regDate + ", startDate="
+				+ startDate + ", endDate=" + endDate + ", state=" + state + "]";
 	}
 	
 	

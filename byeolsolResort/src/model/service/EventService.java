@@ -191,10 +191,18 @@ public class EventService {
 	}
 	
 	public boolean nullCheck(Event event) {
-		if (event.getState() != null && event.getId() > 0 && event.getTitle() != null) {
+		if (event.getState() != null && event.getTitle() != null) {
 			System.out.println(event.getState() + " , " + event.getId() + " , " + event.getTitle());
 			return true;
 		}else return false;
+	}
+	
+	public boolean nullCheckUpdate(Event event) {
+		if (event.getState() != null && event.getTitle() != null && event.getId()>0) {
+			System.out.println(event.getState() + " , " + event.getId() + " , " + event.getTitle());
+			return true;
+		}else return false;
+		
 	}
 	
 	

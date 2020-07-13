@@ -343,7 +343,7 @@ public class CustomerController {
 			String userId = (String) session.getAttribute("userId");
 			Customer customer = customerService.getCustomerById(userId);
 			if (customer.getEmailState().equals("인증")) {
-				m.addAttribute("reservView", reservService.getReservView(pageNum, userId));
+				m.addAttribute("reservWithRoomNumView", reservService.getReservWithRoomNumView(pageNum, userId));
 				return "/mypage/myRoom";
 			} else {
 				m.addAttribute("errorMessage", "이메일 인증이 되어있지 않은 계정입니다.");

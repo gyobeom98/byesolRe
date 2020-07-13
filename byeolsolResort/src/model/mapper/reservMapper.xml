@@ -34,7 +34,7 @@ select * from reserv where id = #{id}
 </select>
 
 <select id="reservCount" resultType="int">
-select count(*) from reserv
+select count(*) from reserv 
 </select>
 
 <select id="selectReservByUserId" resultType="Reserv">
@@ -56,5 +56,9 @@ select * from reserv where start_date between #{startDate} and #{endDate} OR end
 <update id="updateReservState">
 update reserv set state = #{state} where id = #{id}
 </update>
+
+<select id="reservCountWithUserId">
+select count(*) from reserv where user_id = #{userId}
+</select>
 
 </mapper>

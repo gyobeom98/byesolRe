@@ -19,12 +19,14 @@ import model.dto.ErrorMessage;
 import model.dto.Remove;
 import model.dto.Reserv;
 import model.dto.ReservInfo;
+import model.dto.ReservWithRoomNum;
 import model.dto.Room;
 import model.mapper.CustomerMapper;
 import model.mapper.RemoveMapper;
 import model.mapper.ReservMapper;
 import model.view.ReservInfoView;
 import model.view.ReservView;
+import model.view.ReservWithRoomNumView;
 
 @Service("reservService")
 public class ReservService {
@@ -310,7 +312,7 @@ public class ReservService {
 		
 		int firstRow = 0;
 		List<Reserv> reservList = null;
-		int reservCnt = reservMapper.reservCount();
+		int reservCnt = reservMapper.reservCountWithUserId(userId);
 		if(reservCnt>0) {
 			firstRow = (pageNum-1) * RESERV_COUNT_PER_PAGE;
 			reservList = reservMapper.selectReservListByUserIdWithLimit(userId, firstRow, RESERV_COUNT_PER_PAGE);
@@ -335,13 +337,13 @@ public class ReservService {
 	@Autowired
 	CustomerMapper customerMapper;
 	
-	public ReservInfoView getReservInfoView(int pageNum) {
+	public ReservInfoView getReservInfoView(int pageNum , HttpSession session) {
 		
 		ReservInfoView reservInfoView = null;
-		
+		String userId = (String) session.getAttribute("userId");
 		int firstRow = 0;
 		List<ReservInfo> reservInfoList = new ArrayList<ReservInfo>();
-		int reservCnt = reservMapper.reservCount();
+		int reservCnt = reservMapper.reservCountWithUserId(userId);
 		
 		if(reservCnt>0) {
 			List<Reserv> reservList = reservMapper.selectReservWithLimit(firstRow, RESERV_COUNT_PER_PAGE);
@@ -383,5 +385,29 @@ public class ReservService {
 		reservMapper.updateReservState(id,state);
 	}
 
+	public ReservWithRoomNumView getReservWithRoomNumView(int pageNum , String userId) {
+		ReservWithRoomNumView reservWithRoomNumView = null;
+		
+		int firstRow = 0;
+		List<ReservWithRoomNum> reservWithRoomNumList = new ArrayList<ReservWithRoomNum>();
+		List<Reserv> reservList = null;
+		int reservCnt = reservMapper.reservCountWithUserId(userId);
+		if(reservCnt>0) {
+			firstRow = (pageNum-1)*RESERV_COUNT_PER_PAGE;
+			reservList = reservMapper.selectReservByUserId(userId);
+			for (Reserv reserv : reservList) {
+				Room room = roomService.getRoomById(reserv.getRoomId());
+				reservWithRoomNumList.add(new ReservWithRoomNum(reserv.getId(), userId, reserv.getRoomId(),
+						reserv.getStartDate(), reserv.getEndDate(), reserv.getTotalPrice(), 
+						reserv.getPeopleCount(), reserv.getRegDate(), reserv.getState(),room.getRoomNum()));
+			}
+		}else {
+			pageNum = 0;
+		}
+		
+		reservWithRoomNumView = new ReservWithRoomNumView(reservCnt, pageNum, firstRow, RESERV_COUNT_PER_PAGE, reservWithRoomNumList);
+		return reservWithRoomNumView;
+	}
+	
 	
 }

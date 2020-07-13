@@ -35,6 +35,8 @@ public interface ReservMapper {
 
 	public void updateReservState(@Param("id") int id , @Param("state")String state);
 	
+	public int reservCountWithUserId(String userId);
+	
 	
 	
 }

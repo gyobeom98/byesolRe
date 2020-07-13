@@ -45,7 +45,7 @@ public class IndexController {
 		if (session.getAttribute("userId") != null) {
 			String userId = (String) session.getAttribute("userId");
 			if (userId.equals("admin")) {
-				m.addAttribute("reservInfoView", reservService.getReservInfoView(pageNum,session));
+				m.addAttribute("reservInfoView", reservService.getAdminReservInfoView(pageNum));
 				return "adminPage/adminRoom";
 			} else {
 				m.addAttribute("errorMessage", "권한이 없는 접근 입니다.");

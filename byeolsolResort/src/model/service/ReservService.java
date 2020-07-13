@@ -44,8 +44,9 @@ public class ReservService {
 		System.out.println(roomId);
 		System.out.println(reservMapper.selectReservByRoomIdWithDate(roomId, startDate, endDate));
 		// reserv가져오기
-		if (reservMapper.selectReservByRoomIdWithDate(roomId, startDate, endDate) != null)
+		if (reservMapper.selectReservByRoomIdWithDate(roomId, startDate, endDate).size()!=0) {
 			return false;
+		}
 		else
 			return true;
 	}
@@ -337,13 +338,12 @@ public class ReservService {
 	@Autowired
 	CustomerMapper customerMapper;
 	
-	public ReservInfoView getReservInfoView(int pageNum , HttpSession session) {
+	public ReservInfoView getAdminReservInfoView(int pageNum) {
 		
 		ReservInfoView reservInfoView = null;
-		String userId = (String) session.getAttribute("userId");
 		int firstRow = 0;
 		List<ReservInfo> reservInfoList = new ArrayList<ReservInfo>();
-		int reservCnt = reservMapper.reservCountWithUserId(userId);
+		int reservCnt = reservMapper.reservCount();
 		
 		if(reservCnt>0) {
 			List<Reserv> reservList = reservMapper.selectReservWithLimit(firstRow, RESERV_COUNT_PER_PAGE);
@@ -391,6 +391,7 @@ public class ReservService {
 		int firstRow = 0;
 		List<ReservWithRoomNum> reservWithRoomNumList = new ArrayList<ReservWithRoomNum>();
 		List<Reserv> reservList = null;
+		System.out.println(" sdsadsad : " +reservMapper.reservCountWithUserId(userId));
 		int reservCnt = reservMapper.reservCountWithUserId(userId);
 		if(reservCnt>0) {
 			firstRow = (pageNum-1)*RESERV_COUNT_PER_PAGE;

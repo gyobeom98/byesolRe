@@ -26,7 +26,7 @@
 			<div id="headerblank"></div>
 			<div class="roomInfo_01_mainImg">
 				<img class="subbanner"
-					src="https://byeolsol.000webhostapp.com/css/img/roommainsub.jpg">
+					src="http://tjteam.dothome.co.kr/byeolsolResort/roomMain/R1subimg.jpg">
 			</div>
 			<section>
 				<div class="writ">
@@ -50,7 +50,7 @@
 									<ul class="room_content">
 										<li>
 											<div class="roomname">Healing room</div> <img
-											src="https://byeolsol.000webhostapp.com/css/img/room1img/room1main.png"
+											src="http://tjteam.dothome.co.kr/byeolsolResort/healingRoom/room1main.png"
 											alt="">
 											<div class="roomcom">
 												<i class="fab fa-pagelines"></i> 조용하고 편안한 분위기를 만끽하며 나 자신을
@@ -60,7 +60,7 @@
 										</li>
 										<li>
 											<div class="roomname">Kids room</div> <img
-											src="https://byeolsol.000webhostapp.com/css/img/room2img/room2main.png"
+											src="http://tjteam.dothome.co.kr/byeolsolResort/kidsRoom/room2main.png"
 											alt="">
 											<div class="roomcom">
 												<i class="fab fa-pagelines"></i> 아이친화적 가구와 물품들로 사랑하는 가족과 함께
@@ -68,7 +68,7 @@
 													보기</a>
 											</div>
 											<div class="roomname">Pastime room</div> <img
-											src="https://byeolsol.000webhostapp.com/css/img/room3img/room3main.png"
+											src="http://tjteam.dothome.co.kr/byeolsolResort/gameRoom/room3main.png"
 											alt="">
 											<div class="roomcom">
 												<i class="fab fa-pagelines"></i> 고급스러운 인테리어와 구비된 보드게임들로 친구들과

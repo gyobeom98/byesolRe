@@ -28,7 +28,7 @@
 			<div id="headerblank"></div>
 			<div class="roomInfo_01_mainImg">
 				<img class="subbanner"
-					src="https://byeolsol.000webhostapp.com/css/img/room3img/R3subimg.jpg">
+					src="http://tjteam.dothome.co.kr/byeolsolResort/gameRoom/R3subimg.jpg">
 			</div>
 			<section>
 				<div class="writ">
@@ -52,13 +52,13 @@
 						<div class="img_slide">
 							<ul>
 								<li><img
-									src="https://byeolsol.000webhostapp.com/css/img/room3img/img9-1.jpg"
+									src="http://tjteam.dothome.co.kr/byeolsolResort/gameRoom/img9-1.jpg"
 									alt=""></li>
 								<li><img
-									src="https://byeolsol.000webhostapp.com/css/img/room3img/img9-2.jpg"
+									src="http://tjteam.dothome.co.kr/byeolsolResort/gameRoom/img9-2.jpg"
 									alt=""></li>
 								<li><img
-									src="https://byeolsol.000webhostapp.com/css/img/room3img/img9-3.jpg"
+									src="http://tjteam.dothome.co.kr/byeolsolResort/gameRoom/img9-3.jpg"
 									alt=""></li>
 							</ul>
 							<div class="slidebtn" id="next">
@@ -79,7 +79,7 @@
 									<tbody>
 										<tr>
 											<td><img
-												src="https://byeolsol.000webhostapp.com/css/img/room2img/room2.PNG"></td>
+												src="http://tjteam.dothome.co.kr/byeolsolResort/gameRoom/room3.PNG"></td>
 										</tr>
 									</tbody>
 								</table>

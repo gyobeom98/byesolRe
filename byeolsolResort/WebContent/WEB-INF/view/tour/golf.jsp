@@ -22,7 +22,7 @@
 			</header>
 			<div id="headerblank"></div>
 			<img class="subbanner"
-				src="https://byeolsol.000webhostapp.com/css/img/tour/golf/toursub.jpg">
+				src="http://tjteam.dothome.co.kr/byeolsolResort/golf/golfsub.jpg">
 			<section>
 				<div class="writ">
 					<div id="secheader">
@@ -64,7 +64,7 @@
 							</div>
 							<div class="map">
 								<img
-									src="https://byeolsol.000webhostapp.com/css/img/tour/golf/golf3.jpg">
+									src="http://tjteam.dothome.co.kr/byeolsolResort/golf/golf3.jpg">
 							</div>
 						</div>
 
@@ -76,7 +76,7 @@
 						<div class="course">
 							<div class="map">
 								<img
-									src="https://byeolsol.000webhostapp.com/css/img/tour/golf/golf2.jpg">
+									src="http://tjteam.dothome.co.kr/byeolsolResort/golf/golf2.jpg">
 							</div>
 							<div class="text">
 								<p class="texttitle">산바람 코스</p>
@@ -110,7 +110,7 @@
 							</div>
 							<div class="map">
 								<img
-									src="https://byeolsol.000webhostapp.com/css/img/tour/golf/golf1.jpg">
+									src="http://tjteam.dothome.co.kr/byeolsolResort/golf/golf1.jpg">
 							</div>
 						</div>
 					</div>

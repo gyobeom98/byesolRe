@@ -6,9 +6,9 @@
 <head>
 <meta charset="UTF-8">
 <title>별솔리조트</title>
-<link rel="stylesheet" href="../css/footer.css">
-<link rel="stylesheet" href="../css/header.css">
-<link rel="stylesheet" href="../css/byeolsolInfo.css">
+<link rel="stylesheet" href="/css/footer.css">
+<link rel="stylesheet" href="/css/header.css">
+<link rel="stylesheet" href="/css/byeolsolInfo.css">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
 </script>
@@ -22,7 +22,7 @@
 			<div id="headerblank"></div>
 			<div class="fee_mainImg">
 				<img class="subbanner"
-					src="https://byeolsol.000webhostapp.com/css/img/byeolsolinfo/infosub.jpg">
+					src="http://tjteam.dothome.co.kr/byeolsolResort/byeolsolinfo/infosub.jpg">
 			</div>
 			<section>
 				<div class="writ">
@@ -41,7 +41,7 @@
 						</div>
 						<div class="byeolsolInfo">
 							<div class="infoImg">
-								<img src="https://byeolsol.000webhostapp.com/css/img/byeolsolinfo/info1.jpg">
+								<img src="http://tjteam.dothome.co.kr/byeolsolResort/byeolsolinfo/info1.jpg">
 							</div>
 							<div class="infoTitle">
                 <div class="infotitle">
@@ -55,20 +55,20 @@
 								</div>
 								<div class="infoImg__2">
                   <div class="concept">
-                    <img src="https://byeolsol.000webhostapp.com/image/nature.jpg"/>
+                    <img src="http://tjteam.dothome.co.kr/byeolsolResort/byeolsolinfo/nature.jpg"/>
 
                     <p class="padding"><strong>에코힐링 리조트</strong></p>
                     <p class="fontsize">자연과의 생생한 교감을 통해<br>
                       건강한 삶의 방식을 배우고 누릴 수 있는 곳</p>
                   </div>
 								<div class="concept">
-                  <img src="https://byeolsol.000webhostapp.com/image/spa.jpg"/>
+                  <img src="http://tjteam.dothome.co.kr/byeolsolResort/byeolsolinfo/spa.jpg"/>
                   <p class="padding"><strong>스파 리조트</strong></p>
 									<p class="fontsize">해발고도 500m 숲 한가운데서<br>
                     노천 스파를 즐길 수 있는 곳</p>
                 </div>
                 <div class="concept">
-                  <img src="https://byeolsol.000webhostapp.com/css/img/byeolsolinfo/infof.jpg"/>
+                  <img src="http://tjteam.dothome.co.kr/byeolsolResort/byeolsolinfo/infof.jpg"/>
                   <p class="padding"><strong>가족사랑 리조트</strong></p>
 									<p class="fontsize">사랑하는 가족들과 <br>
                   편안한 시간을 보낼 수 있는 곳</p>

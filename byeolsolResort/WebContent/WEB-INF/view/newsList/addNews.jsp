@@ -17,9 +17,8 @@
 			<header class="header">
 				<jsp:include page="../header/sub.jsp"/>
 			</header>
-			<div class="subimage">
-				<h2>서브 이미지 들어가야함.</h2>
-			</div>
+				<img  src="http://tjteam.dothome.co.kr/byeolsolResort/board/byeolsolnewssub.jpg"
+				 class="subimage">
 			<section>
 				<div class="writ">
 					<div class="route">

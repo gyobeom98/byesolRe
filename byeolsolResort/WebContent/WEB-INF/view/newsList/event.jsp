@@ -23,7 +23,7 @@
 			<div id="headerblank"></div>
 			<div class="fee_mainImg">
 				<img class="subbanner"
-					src="https://byeolsol.000webhostapp.com/css/img/byeolsolnewssub.jpg">
+					src="http://tjteam.dothome.co.kr/byeolsolResort/event/byeolsolnewssub.jpg">
 			</div>
 			<section>
 				<div class="writ">

@@ -49,10 +49,12 @@ public class ReservService {
 	}
 	// 예약 update체크 위와 같지만 null이 아니면 reserv를 하나 가져와서 그 예약을 한사람이 본인이라면 업데이트
 	public boolean reservUpdateCheck(int roomId, LocalDate startDate, LocalDate endDate, int reservId) {
+		System.out.println("reservId : " + reservId);
 		Reserv reserv = reservMapper.selectReservById(reservId);
+		System.out.println(reserv);
 		if(reserv != null) {
-			System.out.println(reserv.getId() == reservMapper.selectReservByRoomIdWithDate(roomId, startDate, endDate).getId());
-			if(reserv.getId() == reservMapper.selectReservByRoomIdWithDate(roomId, startDate, endDate).getId()) {
+			System.out.println(reservMapper.selectReservByRoomIdWithDate(roomId, startDate, endDate));
+			if(reservMapper.selectReservByRoomIdWithDate(roomId, startDate, endDate).size()<1&&reserv.getId() == reservMapper.selectReservByRoomIdWithDate(roomId, startDate, endDate).get(0).getId()) {
 				if(reserv.getStartDate().compareTo(LocalDate.now())>=1)
 				return true;
 				else return false;
@@ -62,10 +64,6 @@ public class ReservService {
 		}
 	}
 	
-
-	public Reserv getReservCheck(int roomId, LocalDate startDate, LocalDate endDate) {
-		return reservMapper.selectReservByRoomIdWithDate(roomId, startDate, endDate);
-	}
 
 	public void addReserv(Reserv reserv) {
 		reservMapper.insertReserv(reserv);
@@ -152,13 +150,18 @@ public class ReservService {
 	// 예약을 수정 하는 ErrorMessage return 하는 메서드 totalAddReserv와 같지만 check를 updateCheck로
 	public ErrorMessage updateReserv(HttpSession session, int reservId, Date startDate, Date endDate, int roomNum,
 			int peopleCount) {
+		System.out.println(startDate);
+		System.out.println(endDate);
 		if (session.getAttribute("userId") != null) {
 			String userId = (String) session.getAttribute("userId");
 			Room room = roomService.getRoomByRoomNum(roomNum);
+			System.out.println(room);
 			if (peopleCountCheck(room, peopleCount)) {
+				System.out.println("after peopleCount");
 				if (dateCheck(startDate.toLocalDate(), endDate.toLocalDate())) {
+					System.out.println("after dateCheck");
 					if(reservUpdateCheck(room.getId(), startDate.toLocalDate(), endDate.toLocalDate(),reservId)) {
-						System.out.println("after Check");
+						System.out.println("after updateCheck");
 						int total = getTotalPrice(startDate.toLocalDate(), endDate.toLocalDate(), room);
 						Reserv reserv = new 
 								Reserv(reservId, userId, room.getId(), startDate.toLocalDate(), endDate.toLocalDate(), total, peopleCount, null, null);
@@ -238,14 +241,20 @@ public class ReservService {
 	
 	// 날짜 체크
 	public boolean dateCheck(LocalDate startDate, LocalDate endDate) {
+		System.out.println(startDate);
+		System.out.println(endDate);
 		int hour = LocalDateTime.now().getHour();
 		int minute = LocalDateTime.now().getMinute();
 		// 시작일과 오늘 이 0보다 크거나 같고 시작일과 오늘이 60일 이내라면
 		if (startDate.compareTo(LocalDate.now()) >= 0 && startDate.compareTo(LocalDate.now()) <= 60) {
-			if (endDate.compareTo(startDate) >= 0 && endDate.compareTo(startDate) <= 8) { // 시작일과 퇴실일의 차가 0 ~ 8 이라면
+			System.out.println("오늘 날짜와 비교 후");
+			if (endDate.compareTo(startDate) >= 0 && endDate.compareTo(startDate) < 8) { // 시작일과 퇴실일의 차가 0 ~ 8 이라면
+				System.out.println("시작일 과 종요일 비교 후");
 				if (startDate.compareTo(LocalDate.now()) == 0) {
+					 System.out.println("시작일과 현제가 0일 차인지 비교 후");
 					// 현제 시간이 11시 30분 이전이라면 true
 					if (hour < 11 || hour == 11 && minute <= 30) {
+						// 현제 시간이 11시 30분 이전인지 확인 후
 						return true;
 					} else {
 						return false;
@@ -275,8 +284,10 @@ public class ReservService {
 	}
 	// 방 번호가 101 ~ 105 &&  201~205 && 301~305 인지 확인
 	public boolean roomNumCheck(int roomNum) {
-		if(roomNum>=101 && roomNum<=105 || roomNum<=201 && roomNum>=205 || roomNum<=301 && roomNum>=305)
+		System.out.println(roomNum);
+		if(roomNum>=101 && roomNum<=105 || roomNum>=201 && roomNum<=205 || roomNum>=301 && roomNum<=305) {
 			return true;
+		}
 		else return false;
 	}
 	

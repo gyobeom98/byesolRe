@@ -19,9 +19,9 @@ public interface ReservMapper {
 	
 	public List<Reserv> selectReservListByUserIdWithLimit(@Param("userId")String userId, @Param("firstRow")int firstRow, @Param("reservCountPerPage")int reservCountPerPage);
 	
-	public Reserv selectReservByRoomIdWithDate(@Param("roomId")int roomId,@Param("startDate")LocalDate startDate, @Param("endDate")LocalDate endDate);
+	public List<Reserv> selectReservByRoomIdWithDate(@Param("roomId")int roomId,@Param("startDate")LocalDate startDate, @Param("endDate")LocalDate endDate);
 
-	public Reserv selectReservById(int reservId);
+	public Reserv selectReservById(int id);
 
 	public void deleteReservByState();
 	

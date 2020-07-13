@@ -168,11 +168,13 @@ public class ReservController {
 			@RequestParam(defaultValue = DEFAULT_END_DATE) Date endDate,
 			@RequestParam(defaultValue = "0") int peopleCount, HttpSession session,
 			@RequestParam(defaultValue = "0") int reservId, Model m) {
-		if (reservService.roomNumCheck(roomNum) && !startDate.equals(DEFAULT_START_DATE)
-				&& !endDate.equals(DEFAULT_END_DATE)) {
+		if (reservService.roomNumCheck(roomNum) && !startDate.toString().equals(DEFAULT_START_DATE)
+				&& !endDate.toString().equals(DEFAULT_END_DATE)) {
+			System.out.println("ss");
 			ErrorMessage errorMessage = reservService.updateReserv(session, reservId, startDate, endDate, roomNum,
 					peopleCount);
 			if (errorMessage.getErrorMessage() != null) {
+				System.out.println(errorMessage.getErrorMessage());
 				m.addAttribute("errorMessage", errorMessage.getErrorMessage());
 			}
 			if (errorMessage.getRoomNum() > 0) {

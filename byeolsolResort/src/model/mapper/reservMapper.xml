@@ -10,7 +10,7 @@ insert into reserv(room_id,user_id,start_date,end_date,total_price,people_count)
 </insert>
 
 <update id="updateReserv">	
-update reserv set room_id = #{roomId} , start_date = #{startDate} , end_date = #{endDate} , total_price = #{totalPrice}, people_count = #{peopleCount}
+update reserv set room_id = #{roomId} , start_date = #{startDate} , end_date = #{endDate} , total_price = #{totalPrice}, people_count = #{peopleCount} where id = #{id}
 </update>
 
 <delete id="deleteReserv">
@@ -30,7 +30,7 @@ select * from reserv where room_id = #{roomId} and start_date between #{startDat
 </select>
 
 <select id="selectReservById" resultType="Reserv">
-select * from reserv where id = #{reservId}
+select * from reserv where id = #{id}
 </select>
 
 <select id="reservCount" resultType="int">

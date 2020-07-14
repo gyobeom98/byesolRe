@@ -7,7 +7,12 @@
 <head>
 <meta charset="UTF-8">
 <title>별솔리조트</title>
+<script src="https://kit.fontawesome.com/c945c12587.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="/css/notice.css">
+<link rel="stylesheet" href="/css/board1.css">
+<link rel="stylesheet" href="/css/header.css">
+<link rel="stylesheet" href="/css/footer.css">
+
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" src="/script/sub.js"></script>
@@ -17,12 +22,12 @@
 	<div class="allwrap">
 		<div class="wrap">
 			<header class="header">
-				<jsp:include page="../header/sub.jsp"/>
+				<jsp:include page="../header/sub.jsp" />
 			</header>
-			
-				<img  src="http://tjteam.dothome.co.kr/byeolsolResort/board/byeolsolnewssub.jpg"
-				 class="subimage">
-			
+			<div>
+				<img class="subimage"
+					src="https://byeolsol.000webhostapp.com/css/img/byeolsolnewssub.jpg">
+			</div>
 			<section>
 				<div class="writ">
 					<div class="route">
@@ -37,38 +42,38 @@
 					<div class="sibtitle">
 						<h3 class="stitle">공지사항</h3>
 					</div>
-					<div>
-						<c:if test='${userId=="admin" }'>
-							<button id="addAdminBoard" onclick="addAdminBoard()">글쓰기</button>
-						</c:if>
-					</div>
 					<!-- 만약 정보의 총 수가 0 보다 크면 -->
 					<c:if test="${boardView.boardCnt>0 }">
 						<!-- request로 받은 boardView의 정보리스트를 item으로 잡고 -->
 						<div class="notice_main">
+						<div class="tableborder">
 							<table>
-								<tr class="notice_top">
-									<td>제목</td>
-									<td>작성자</td>
-									<td>게시날짜</td>
-								</tr>
-								<c:forEach var="q" items="${boardView.boardList}">
-									<tr onclick="goDetail(${q.id})">
-										<td>${q.title}</td>
-										<td>관리자</td>
-										<td><jt:format value="${q.wDate}"
-												pattern="YYYY-MM-dd HH:mm:ss" /></td>
+								<tbody style="border-bottom: 2px solid #969696;">
+									<tr class="notice_top">
+										<td class="tablenumber">번호</td>
+										<td class="tableside">작성자</td>
+										<td class="tablemain">제목</td>
+										<td class="tableside">게시날짜</td>
 									</tr>
-								</c:forEach>
+									<c:forEach var="q" items="${boardView.boardList}">
+										<tr class="border" onclick="goDetail(${q.id})">
+											<td>${q.id}</td>
+											<td>별솔</td>
+											<td><b>${q.title}</b></td>
+											<td><jt:format value="${q.wDate}"
+													pattern="YYYY-MM-dd HH:mm:ss" /></td>
+										</tr>
+									</c:forEach>
+								</tbody>
 							</table>
-						</div>
+							<div class="numbermap">
 						<c:if
 							test="${boardView.currentPageNum<boardView.pageTotalCount+1}">
 							<!-- 현재 페이지가 1보다 크고 현재 페이지가 총 페이지의 수보다 작거나 같으 -->
 							<c:if
 								test="${boardView.currentPageNum>1 && boardView.currentPageNum<=boardView.pageTotalCount}">
 								<!-- get 방식의 get요청(인자로 현재 페이지의 전번 페이지로 이동) -->
-								<a href="/board/adminList?pageNum=${boardView.currentPageNum-1}">이전</a>
+								<a href="/board/adminList?pageNum=${boardView.currentPageNum-1}"><i class="fas fa-angle-left"></i></a>
 							</c:if>
 							<!-- 만약 현재 페이지가 1이면 -->
 							<c:if test="${boardView.currentPageNum==1}">
@@ -114,14 +119,28 @@
 							</c:if>
 							<c:if
 								test="${boardView.currentPageNum <boardView.pageTotalCount }">
-								<a href="/board/adminList?pageNum=${boardView.currentPageNum+1}">다음</a>
+								<a href="/board/adminList?pageNum=${boardView.currentPageNum+1}"><i class="fas fa-angle-right"></i></a>
 							</c:if>
 						</c:if>
+							<div>
+								<c:if test='${userId=="admin" }'>
+									<button id="addAdminBoard" onclick="addAdminBoard()">글쓰기</button>
+								</c:if>
+							</div>
+						</div>
+							
+						</div>
+						
+						
+							
+						</div>
+					
 					</c:if>
+					
 				</div>
 			</section>
 			<footer>
-				<jsp:include page="../footer/footer.jsp"/>
+				<jsp:include page="../footer/footer.jsp" />
 			</footer>
 		</div>
 	</div>

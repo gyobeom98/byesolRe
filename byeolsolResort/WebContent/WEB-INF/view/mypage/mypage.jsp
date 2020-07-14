@@ -116,7 +116,7 @@
 					<br> <br> <br>
 					<div class="ptag">
 						<p>
-							*별솔을 더이상 이용하지 않으시려면 <a href="../sideform/deleteForm.jsp"> <input
+							*별솔을 더이상 이용하지 않으시려면 <a href="/cus/deleteCustomer"> <input
 								type="button" value="회원탈퇴 바로가기>">
 							</a>
 						</p>

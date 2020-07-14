@@ -384,3 +384,8 @@ table .myRoomTr1 td{
 table .myRoomTr2 td{
 	padding:15px 0px 15px 0px;
 }
+
+.updel{
+	width: 100%;
+	height: 40px;
+}

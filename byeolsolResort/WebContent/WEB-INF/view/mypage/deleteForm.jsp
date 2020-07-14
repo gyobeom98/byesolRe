@@ -58,7 +58,7 @@
 									<table>
 										<tr>
 											<td class="formTd1">아이디</td>
-											<td class="formTd2"><input type="text" name="userId"></td>
+											<td class="formTd2"><input type="text" name="userId" value="${customer.userId }" readonly="readonly"></td>
 										</tr>
 										<tr>
 											<td class="formTd1">비밀번호</td>

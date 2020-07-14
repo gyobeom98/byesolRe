@@ -62,6 +62,8 @@
 							<td>예약인원</td>
 							<td>입금상태</td>
 							<td>접수일</td>
+							<td>수정</td>
+							<td>삭제</td>
 						</tr>
 					<c:forEach var="i" items="${reservWithRoomNumView.reservWithRoomNumList }">
 						<tr class="myRoomTr2">
@@ -85,6 +87,12 @@
 							</td>
 							<td>
 								<jt:format value="${i.regDate}" pattern="YYYY-MM-dd HH:mm:ss" />
+							</td>
+							<td>
+								<button class="updel" onclick="updateRoom(${i.id})">수정</button>
+							</td>
+							<td>
+								<button class="updel" onclick="deleteRoom(${i.id})">삭제</button>
 							</td>
 						</tr>
 					</c:forEach>

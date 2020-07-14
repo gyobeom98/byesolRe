@@ -138,19 +138,29 @@ keyframes listshow { 0% {
 opacity
 
 
+
+
 :
 
+
  
+
 
 1;
 transform
 
 
+
+
 :
+
 
  
 
+
 translateY
+
+
 
 
 (0);
@@ -409,7 +419,7 @@ td>button {
 }
 
 .update_btn {
-	float:right;
+	float: right;
 	width: 100px;
 	height: 30px;
 	background-color: #b2b4b9;
@@ -443,7 +453,6 @@ td>button {
 
 .hide {
 	display: none;
-
 }
 
 .updel {
@@ -458,74 +467,82 @@ input[type="file"] {
 	width: 99%;
 }
 
-img{
+img {
 	width: 100%;
 	height: 250px;
 }
 
-.titleForm{
+.titleForm {
 	width: 80px;
 }
 
-.updateForm{
+.updateForm {
 	text-align: left;
 }
-.td2,.td3{
+
+.td2, .td3 {
 	border-right: 1px solid #b2b4b9;
 }
-.td3,.td4{
-	text-align: center;
-}
-td .upBoard_title{
-	width: 30px;
-}
-.upAnswerTable{
-	width: 50%;
-}
-.htd{
-	border-style: none;
-}
-.messageSub{
-width: 130px;
-height: 40px;
-background-color: #b2b4b9;
-border-style: none;
-font-weight: bold;
-}
-.message{
-	width: 100%;
-}
-.messageBtn{
-margin-top: 30px;
+
+.td3, .td4 {
 	text-align: center;
 }
 
-.content{
+td .upBoard_title {
+	width: 30px;
+}
+
+.upAnswerTable {
+	width: 50%;
+}
+
+.htd {
+	border-style: none;
+}
+
+.messageSub {
+	width: 130px;
+	height: 40px;
+	background-color: #b2b4b9;
+	border-style: none;
+	font-weight: bold;
+}
+
+.message {
+	width: 100%;
+}
+
+.messageBtn {
+	margin-top: 30px;
+	text-align: center;
+}
+
+.content {
 	width: 100%;
 	height: 160px;
 	resize: none;
 }
 
-.titleName{
+.titleName {
 	float: left;
 	margin-left: 1%
 }
 
-.inputTitle{
+.inputTitle {
 	width: 94%;
 	border: none;
 	font-weight: bold;
 	font-size: 16px;
 }
 
-.titleClass{
+.titleClass {
 	border-bottom: 1px solid #b2b4b9;
 }
 
-.contentTitle{
+.contentTitle {
 	text-align: left;
 }
 
-.width50{
+.width50 {
 	width: 50%;
 }

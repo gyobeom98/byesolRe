@@ -6,7 +6,11 @@
 <head>
 <meta charset="UTF-8">
 <title>별솔리조트</title>
-<link rel="stylesheet" href="/css/board.css">
+<link rel="stylesheet" href="/css/up_addboard.css">
+<link rel="stylesheet" href="/css/board1.css">
+<link rel="stylesheet" href="/css/header.css">
+<link rel="stylesheet" href="/css/footer.css">
+<script src="https://kit.fontawesome.com/c945c12587.js" crossorigin="anonymous"></script>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" src="/script/sub.js"></script>
@@ -17,57 +21,50 @@
 			<header class="header">
 				<jsp:include page="../header/sub.jsp"/>
 			</header>
-				<img  src="http://tjteam.dothome.co.kr/byeolsolResort/board/byeolsolnewssub.jpg"
-				 class="subimage">
+			<div>
+				<img class="subimage"
+					src="https://byeolsol.000webhostapp.com/css/img/byeolsolnewssub.jpg">
+			</div>
 			<section>
 				<div class="writ">
-					<div class="route">
-						<ul>
-							<li>HOME</li>
-							<li>》</li>
-							<li>별솔소식</li>
-							<li>》</li>
-							<li>공지사항</li>
-							<li>》</li>
-							<li>공지사항수정하기</li>
-						</ul>
-					</div>
 					<div class="sibtitle">
-						<h3 class="stitle">공지사항수정하기</h3>
+						<h3 class="stitle">공지사항</h3>
 					</div>
 					<form action="/board/updateAdminBoard" method="post"
 						enctype="multipart/form-data">
 						<input type="number" value="${board.id}" name="id" readonly="readonly" style="display:none">
-						<table>
+						
+					<div class="tableborder">
+						<table class="table">
 							<tr>
-								<td>제목</td>
-								<td><input type="text" value="${board.title}" name="title"></td>
+								<td style="padding:0; width:400px; height:50px; background: #d4d4d4; border-bottom: 2px solid #969696">제목</td>
+								<td style="padding:0; border-bottom: 2px solid #d4d4d4"><input class="input1" type="text" value="${board.title}" name="title"></td>
 							</tr>
 							<tr>
-								<td>내용</td>
-								<td><textarea name="content" rows="20" cols="150">${board.content}</textarea>
-							</tr>
-							<tr>
-								<td><img alt="" src="${board.firstPath }" height="50px"></td>
-							</tr>
-							<tr>
-								<td><input type="file" name="uploadFile01"></td>
-							</tr>
-							<tr>
-								<td><img alt="" src="${board.secondPath }" height="50px"></td>
-							</tr>
-							<tr>
-								<td><input type="file" name="uploadFile02"></td>
-							</tr>
-							<tr>
-								<td><img alt="" src="${board.thirdPath }" height="50px"></td>
-							</tr>
-							<tr>
-								<td><input type="file" name="uploadFile03"></td>
+								<td style="padding:0;background: #d4d4d4;">내용</td>
+								<td style="padding:0;"><textarea class="textarea" name="content">${board.content}</textarea>
 							</tr>
 						</table>
-						<input type="submit" value="수정" id="update_subBtn">
+						<div class="allimg">
+							<div class="imgfile">
+								<input type="file" name="uploadFile01">
+								<img alt="" src="${board.firstPath}" height="50px">
+							</div>
+							
+							<div class="imgfile">
+								<input type="file" name="uploadFile02">
+								<img alt="" src="${board.secondPath }" height="50px">
+							</div>
+							
+							<div class="imgfile">
+								<input type="file" name="uploadFile03">
+								<img alt="" src="${board.thirdPath }" height="50px">
+							</div>
+						</div>
+					</div>	
+					<input type="submit" value="수정" id="update_subBtn">
 					</form>
+					<a href="javascript:history.back()"><i class="fas fa-arrow-left"></i></a>
 				</div>
 			</section>
 			<footer>

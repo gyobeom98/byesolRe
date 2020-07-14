@@ -22,7 +22,7 @@ public interface QuestionMapper {
 	
 	public int countQuestion(String writer);
 
-	public List<Question> selectQuestionByWriter();
+	public List<Question> selectQuestionByWriter(String writer);
 
 	public void updateQuestionByIdWithState(@Param("id")int id , @Param("state")String state);
 	

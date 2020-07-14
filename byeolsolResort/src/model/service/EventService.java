@@ -86,7 +86,7 @@ public class EventService {
 
 	public boolean typeCheck(MultipartFile uploadFile) {
 		// 받아온 파일의 original이름에 .부터 마지막까지를 저장
-		String fileType = uploadFile.getOriginalFilename().substring(uploadFile.getOriginalFilename().indexOf('.'),
+		String fileType = uploadFile.getOriginalFilename().substring(uploadFile.getOriginalFilename().lastIndexOf('.'),
 				uploadFile.getOriginalFilename().length());
 		// fileType을 소문자로 변경 
 		fileType = fileType.toLowerCase();

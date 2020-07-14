@@ -539,7 +539,7 @@ public class FtpService {
 	}
 	
 
-	// 이름 ㅂㄴ경
+	// 이름 변경
 	public void ftpAdminImgRename(String classification, String value, String dumpImg) {
 		// TODO Auto-generated method stub
 		
@@ -572,8 +572,8 @@ public class FtpService {
 			ftp.changeWorkingDirectory("/html/byeolsolResort/"+classification);
 			FTPFile[] ftpFiles = ftp.listFiles();
 			// 그 후 이전에 File로 변환한 업로드파일을 읽어 FTP로 전송합니다.
-			System.out.println(classification);
-			System.out.println(value);
+			System.out.println("classification : " + classification);
+			System.out.println("value : " + value);
 			for (FTPFile ftpFile : ftpFiles) {
 				System.out.println("자름 : " + ftpFile.getName().substring(0,ftpFile.getName().lastIndexOf('.')));
 				if(ftpFile.getName().substring(0,ftpFile.getName().lastIndexOf('.')).equals(value)) {
@@ -581,19 +581,18 @@ public class FtpService {
 					type = ftpFile.getName().substring(ftpFile.getName().lastIndexOf('.'),ftpFile.getName().length());
 				}
 			}
-			System.out.println(ftpFiles.length);
 			System.out.println(fileName+type);
-			System.out.println("dump"+fileName+(ftpFiles.length+1)+type);
-			int random = (int)(Math.random()*45)+1;
+			int random = (int)(Math.random()*500)+15;
+			System.out.println("바꾸기 전 이름 : "+fileName+type+ "  바꿀 이름   :  dump"+fileName + random + type);
 			boolean isSucess = ftp.rename(fileName+type, "dump"+fileName + random + type);
 			if (isSucess) {
-				System.out.println("성공");
-				System.out.println("성공이냐?");
+				System.out.println("이름 변경 성공");
 			} else {
-				System.out.println("실패");
+				System.out.println("이름 변경 실패");
 			}
+			System.out.println("바꾸기 전 이름 : " + selectFileName + "바꾼 후 이름 : "+ value+type);
 			boolean isMainSucess = ftp.rename(selectFileName, value+type);
-			System.out.println(isMainSucess);
+			System.out.println("선택한 파일을 main으로 바꿈? :" + isMainSucess);
 			// storeFile Method는 파일 송신결과를 boolean값으로 리턴합니다
 		} catch (Exception e) {
 			e.printStackTrace();

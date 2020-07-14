@@ -166,7 +166,7 @@ public class BoardService {
 	
 	// 이미지 타입 확인
 	public boolean checkImg(MultipartFile uploadFile) {
-		String fileType = uploadFile.getOriginalFilename().substring(uploadFile.getOriginalFilename().indexOf('.'),
+		String fileType = uploadFile.getOriginalFilename().substring(uploadFile.getOriginalFilename().lastIndexOf('.'),
 				uploadFile.getOriginalFilename().length());
 		fileType = fileType.toLowerCase(); // 이미지 소문자로 변경 후 파일 타입 체크
 		if (fileType.equals(".jpg") || fileType.equals(".png") || fileType.equals(".jpeg")) {

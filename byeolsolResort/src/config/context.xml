@@ -89,6 +89,16 @@
 	<property name="targetMethod" value="deleteReserv"/>
 	<property name="concurrent" value="false"/>	
 	</bean>
+	<bean id="eventJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+	<property name="targetObject" ref="scheduleService"/>
+	<property name="targetMethod" value="deleteEvent"/>
+	<property name="concurrent" value="false"/>
+	</bean>	
+	
+	<bean id="eventTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+	<property name="jobDetail" ref="eventJob"/>
+	<property name="cronExpression" value="0 0 0 * * ?"/>
+	</bean>
 	
 	<!-- 스케줄의 조건(?, 타임 스케쥴) 셋팅 -->
 	<bean id="reservTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
@@ -99,7 +109,7 @@
 	<!-- 스케쥴 실행 -->
 	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
 		<property name="triggers">
-		<list><ref bean="reservTrigger"/></list>
+		<list><ref bean="reservTrigger"/><ref bean="eventTrigger"/></list>
 		</property>
 	</bean> 
 	

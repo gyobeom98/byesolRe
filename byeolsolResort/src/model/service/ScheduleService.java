@@ -2,6 +2,7 @@ package model.service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -11,7 +12,9 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import model.dto.Event;
 import model.dto.Reserv;
+import model.mapper.EventMapper;
 import model.mapper.ReservMapper;
 
 @Service("scheduleService")
@@ -19,6 +22,9 @@ public class ScheduleService {
 
 	@Autowired
 	ReservMapper reservMapper;
+	
+	@Autowired
+	EventMapper eventMapper;
 
 	public void deleteReserv() {
 		List<Reserv> reservList = reservMapper.selectReservList();// 예약 정보를 모두 가져옴
@@ -40,6 +46,20 @@ public class ScheduleService {
 					reservMapper.deleteReserv(reserv.getId());
 				}
 			}
+		}
+	}
+	
+	public void deleteEvent() {
+		List<Event> eventList = eventMapper.selectEventList();
+		LocalDate now = LocalDate.now().plusDays(1);
+		List<Integer> deleteIndex = new ArrayList<Integer>();
+		for (Event event : eventList) {
+			if(event.getEndDate().equals(now)) {
+				deleteIndex.add(event.getId());
+			}
+		}
+		for (Integer index : deleteIndex) {
+			eventMapper.deleteEvent(index);
 		}
 	}
 

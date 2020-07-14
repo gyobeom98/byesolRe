@@ -34,8 +34,11 @@
 								<li>》</li>
 								<li>별솔소식</li>
 								<li>》</li>
-								<li>이벤트</li>
+								<li>이벤트수정</li>
 							</ul>
+						</div>
+						<div class="sibtitle">
+							<h3 class="stitle">이벤트수정</h3>
 						</div>
 						<form action="/event/updateEvent" method="post"
 							enctype="multipart/form-data">
@@ -43,11 +46,11 @@
 								readonly="readonly">
 							<table>
 								<tr>
-									<td>제목</td>
+									<td class="tdTitle">제목</td>
 									<td><input type="text" name="title" value="${event.title}"></td>
 								</tr>
 								<tr>
-									<td>이벤트 기간</td>
+									<td class="tdTitle">이벤트 기간</td>
 									<td>
 									<input type="date" name="start" value="${event.startDate}">
 									<input type="date" name="end" value="${event.endDate}">
@@ -56,7 +59,7 @@
 									</td>
 								</tr>
 								<tr>
-									<td>메인이미지</td>
+									<td class="tdTitle">메인이미지</td>
 									<td><input type="file" name="thumbnail" id="upload"></td>
 								</tr>
 								<tr>
@@ -65,7 +68,7 @@
 									</td>
 								</tr>
 								<tr>
-									<td>내용이미지</td>
+									<td class="tdTitle">내용이미지</td>
 									<td><input type="file" name="uploadFile" id="upload1"></td>
 								</tr>
 								<tr>
@@ -73,10 +76,12 @@
 										<div id="preview1"></div>
 									</td>
 								</tr>
-								<tr>
-									<td colspan="2"><input type="submit"></td>
-								</tr>
+								
+								
 							</table>
+							<div class="submitBtn_mom">
+							<input type="submit" class="submitBtn" value="수정">
+						</div>
 						</form>
 					</div>
 				</div>

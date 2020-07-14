@@ -16,7 +16,7 @@
 	<div class="allwrap">
 		<div class="wrap">
 			<header class="header">
-				<jsp:include page="../header/sub.jsp"/>
+				<jsp:include page="../header/sub.jsp" />
 			</header>
 			<div class="subimage">
 				<h2>서브 이미지 들어가야함.</h2>
@@ -39,33 +39,35 @@
 					</div>
 				</div>
 				<div>
-				<form action="/board/updateComment" method="post">
-					<div class="upAnswerDiv">
-					<table class="upAnswerTable">
-						<tr class="htd">
-							<td><input type="number" value="${comment.id}"
-								readonly="readonly" name="id" class="hide"></td>
-							<td><input type="number" value="${boardId}" readonly="readonly" name="boardId" class="hide">
-							</td>						
-						</tr>
-						<tr>
-							<td><input type="text" class="hide" name="title" value="title"></td>
-						</tr>
-						<tr>
-							<td><textarea rows="20" cols="120" name="message" class="message">
+					<form action="/board/updateComment" method="post">
+						<div class="upAnswerDiv">
+							<table class="upAnswerTable">
+								<tr class="hide">
+									<td ><input type="number" value="${comment.id}"
+										readonly="readonly" name="id" class="hide"></td>
+									<td><input type="number" value="${boardId}"
+										readonly="readonly" name="boardId" class="hide"></td>
+								</tr>
+								<tr>
+									<td><input type="text" class="hide" name="title"
+										value="title"></td>
+								</tr>
+								<tr>
+									<td><textarea rows="20" cols="120" name="message"
+											class="message">
 						${comment.message }
 						</textarea></td>
-						</tr>
-					</table>
-					</div>
-					<div class="messageBtn">
-						<input type="submit" class="messageSub">
-					</div>
-				</form>
-			</div>
+								</tr>
+							</table>
+						</div>
+						<div class="messageBtn">
+							<input type="submit" class="messageSub">
+						</div>
+					</form>
+				</div>
 			</section>
 			<footer>
-				<jsp:include page="../footer/footer.jsp"/>
+				<jsp:include page="../footer/footer.jsp" />
 			</footer>
 		</div>
 	</div>

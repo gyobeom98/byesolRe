@@ -34,20 +34,22 @@
 								<li>》</li>
 								<li>별솔소식</li>
 								<li>》</li>
-								<li>이벤트</li>
+								<li>이벤트추가</li>
 							</ul>
 						</div>
 						<div class="sibtitle">
-							<h3 class="stitle">이벤트</h3>
+							<h3 class="stitle">이벤트추가</h3>
 						</div>
+						<div>
 						<form action="/event/addEvent" method="post" enctype="multipart/form-data">
+							<div class="eventTb">
 							<table>
 								<tr>
-									<td>제목</td>
+									<td class="tdTitle">제목</td>
 									<td><input type="text" name="title"></td>
 								</tr>
 								<tr>
-									<td>이벤트 기간</td>
+									<td class="tdTitle">이벤트 기간</td>
 									<td>
 									<input type="Date" name="start">
 									<input type="Date" name="end">
@@ -56,7 +58,7 @@
 									</td>
 								</tr>
 								<tr>
-									<td>메인이미지</td>
+									<td class="tdTitle">메인이미지</td>
 									<td><input type="file" name="thumbnail" id="upload"></td>
 								</tr>
 								<tr>
@@ -65,7 +67,7 @@
 									</td>
 								</tr>
 								<tr>
-									<td>내용이미지</td>
+									<td class="tdTitle">내용이미지</td>
 									<td><input type="file" name="uploadFile" id="upload1"></td>
 								</tr>
 								<tr>
@@ -73,11 +75,13 @@
 										<div id="preview1"></div>
 									</td>
 								</tr>
-								<tr>
-									<td colspan="2"><input type="submit"></td>
-								</tr>
 							</table>
+							</div>
+							<div class="submitBtn_mom">
+							<input type="submit" class="submitBtn" value="작성">
+						</div>
 						</form>
+					</div>
 					</div>
 				</div>
 			</section>

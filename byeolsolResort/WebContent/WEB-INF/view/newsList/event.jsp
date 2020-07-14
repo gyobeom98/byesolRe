@@ -55,7 +55,7 @@
 										<c:if test="${x%y==0 }">
 											<tr>
 										</c:if>
-										<td>
+										<td class="bottomNone">
 											<div class="event">
 												<!-- 반복문 돌릴것 -->
 												<ul>

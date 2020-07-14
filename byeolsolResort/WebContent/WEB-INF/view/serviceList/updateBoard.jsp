@@ -40,44 +40,50 @@
 					<form action="/board/updateBoard" method="post"
 						enctype="multipart/form-data">
 						<input type="number" value="${board.id}" name="id" readonly="readonly" style="display:none">
+						
+						<div class="titleClass">
+							<div class="titleName">제목</div>
+							<input type="text" value="${board.title}" class="inputTitle" name="title">
+						</div>
 						<table>
 							<tr>
-								<td>제목</td>
-								<td><input type="text" value="${board.title}" name="title"></td>
+								<td colspan="2" class="contentTitle">내용</td>
 							</tr>
 							<tr>
-								<td>내용</td>
-								<td><input type="text" value="${board.content}" name="content"></td>
+								<td colspan="2"><textarea class="content" name="content" rows="10" cols="160">${board.content}</textarea></td>
 							</tr>
 							<tr>
-								<td><input type="file" name="uploadFile01" id="upload"></td>
-								<td>변경이미지</td>
+								<td colspan="2"><input type="file" name="uploadFile01" id="upload"></td>
 							</tr>
 							<tr>
-								<td>
-									<div id="preview"></div>
+								<c:if test="${board.firstPath!=null }">
+								<td class="width50">원본이미지<img alt="" src="${board.firstPath }" height="50px"></td>
+								</c:if>
+								<td class="width50">
+									변경이미지 <div id="preview"></div>
 								</td>
-								<td><img alt="" src="${board.firstPath }" height="50px"></td>
 							</tr>
 							<tr>
-								<td><input type="file" name="uploadFile02" id="upload1"></td>
-								<td>변경이미지</td>
+								<td colspan="2"><input type="file" name="uploadFile02" id="upload1"></td>
 							</tr>
 							<tr>
-								<td>
-									<div id="preview1"></div>
+								<c:if test="${board.secondPath!=null }">
+								<td class="width50">원본이미지<img alt="" src="${board.secondPath }" height="50px"></td>
+								</c:if>
+								<td class="width50">
+									변경이미지  <div id="preview1"></div>
 								</td>
-								<td><img alt="" src="${board.secondPath }" height="50px"></td>
 							</tr>
 							<tr>
-								<td><input type="file" name="uploadFile03" id="upload2"></td>
-								<td>변경이미지</td>
+								<td colspan="2"><input type="file" name="uploadFile03" id="upload2"></td>
 							</tr>
 							<tr>
-								<td>
-									<div id="preview2"></div>
+								<c:if test="${board.thirdPath!=null }">
+								<td class="width50">원본이미지<img alt="" src="${board.thirdPath }" height="50px"></td>
+								</c:if>
+								<td class="width50">
+									변경이미지  <div id="preview2"></div>
 								</td>
-								<td><img alt="" src="${board.thirdPath }" height="50px"></td>
 							</tr>
 						</table>
 						<input type="submit" value="수정" id="update_subBtn">
@@ -90,4 +96,5 @@
 		</div>
 	</div>
 </body>
+<script type="text/javascript" src="/script/imgView.js"></script>
 </html>

@@ -135,3 +135,34 @@ section{
 	height: 40px;
 	margin: 0 0 30px 0;
 }
+.tdTitle{
+	font-weight: bold;
+
+}
+td{
+	
+	padding: 10px;
+	border-bottom:1px solid #ada6a6
+}
+table{
+	border-collapse: collapse;
+	margin: 0 auto;
+}
+.submitBtn{
+	width: 130px;
+	height: 40px;
+	background-color: #E8E3E3;
+	border-style: none;
+	font-weight: bold;
+	margin-top: 30px;}
+
+.submitBtn_mom{
+	text-align: center;
+}
+.imgs{
+	width: 100%;
+}
+
+.bottomNone{
+	border-bottom:  none;
+}

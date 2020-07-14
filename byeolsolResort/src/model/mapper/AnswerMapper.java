@@ -21,5 +21,7 @@ public interface AnswerMapper {
 	public Answer selectAnswerById(int id);
 	
 	public void deleteAnswerByQuestionId(int questionId);
+
+	public void deleteAnswerByWriter(String writer);
 	
 }

@@ -22,6 +22,7 @@ import model.dto.Reserv;
 import model.dto.Room;
 import model.service.CustomerService;
 import model.service.FtpService;
+import model.service.IndexService;
 import model.service.ReservService;
 import model.service.RoomService;
 
@@ -29,13 +30,20 @@ import model.service.RoomService;
 @RequestMapping("/index")
 public class IndexController {
 
+	private final String DEFAULT_CLASSIFICATION ="DEFAULT_CLASSIFICATION";
+	private final String DEFAULT_VALUE ="DEFAULT_VALUE";
+	
+	@Autowired
+	IndexService indexService;
+	
 	// 어드민페이지
 	// Q&A현황
 	@GetMapping("/adminQnA")
 	public String adminQnAPage() {
 		return "/adminPage/adminQnA";
 	}
-
+	
+	
 	@Autowired
 	ReservService reservService;
 
@@ -59,14 +67,29 @@ public class IndexController {
 
 	// 유저정보관리
 	@GetMapping("/adminUser")
-	public String adminUserPage() {
-		return "/adminPage/adminUser";
+	public String adminUserPage(HttpSession session, Model m) {
+		if(session.getAttribute("userId")!=null) {
+			String userId = (String) session.getAttribute("userId");
+			if(userId.equals("admin")) {
+			return "/adminPage/adminUser";
+			}else {
+				m.addAttribute("errorMessage","권한이 없는 접근 입니다.");
+				return "redirect:/index/main";
+			}
+		}else {
+			m.addAttribute("errorMessage","로그인이 되어 있지 않습니다.");
+			return "redirect:/index/main";
+		}
+			
 	}
 
 	// 메인페이지
 	@GetMapping("/main")
-	public String mainPage(@RequestParam(required = false) String errorMessage, Model m) {
+	public String mainPage(@RequestParam(required = false) String errorMessage, Model m , @RequestParam(defaultValue = "0")int randome) {
+		if(errorMessage != null)
 		m.addAttribute("errorMessage", errorMessage);
+		if(randome>0)
+		m.addAttribute("randome",randome);
 		return "/main/main";
 	}
 
@@ -196,14 +219,21 @@ public class IndexController {
 	}
 
 	@GetMapping("/imgUpdate")
-	public String goTestForm(String classification, String value, Model m, HttpSession session) {
+	public String goTestForm(@RequestParam(defaultValue = DEFAULT_CLASSIFICATION)String classification, @RequestParam(defaultValue = DEFAULT_VALUE)String value, Model m, HttpSession session , @RequestParam(defaultValue = "")String errorMessage) {
 		if (session.getAttribute("userId") != null) {
 			String userId = (String) session.getAttribute("userId");
 			if (userId.equals("admin")) {
+				if(!classification.equals(DEFAULT_CLASSIFICATION) && !value.equals(DEFAULT_VALUE)) {
+				if(!errorMessage.equals(""))
+					m.addAttribute("errorMessage",errorMessage);
 				m.addAttribute("classification", classification);
 				m.addAttribute("value", value);
 				m.addAttribute("imgList", ftpService.ftpImgPath(classification));
 				return "testForm";
+				}else {
+					m.addAttribute("errorMessage","잘못된 접근 입니다.");
+					return "redirect:/index/main";
+				}
 			} else {
 				m.addAttribute("errorMessage", "권한이 없는 접근 입니다.");
 				return "redirect:/index/main";
@@ -218,19 +248,32 @@ public class IndexController {
 	FtpService ftpService;
 
 	@PostMapping("/imgUpdate")
-	public String test(@RequestParam(required = false) MultipartFile uploadFile, String value, String classification,
+	public String test(@RequestParam(required = false) MultipartFile uploadFile, @RequestParam(defaultValue = DEFAULT_VALUE)String value, @RequestParam(defaultValue = DEFAULT_CLASSIFICATION)String classification,
 			Model m, HttpSession session, @RequestParam(required = false, defaultValue = "") String dumpImg) {
-		System.out.println(dumpImg);
 		if (session.getAttribute("userId") != null) {
 			String userId = (String) session.getAttribute("userId");
 			if (userId.equals("admin")) {
+				if(!value.equals(DEFAULT_VALUE) && !classification.equals(DEFAULT_CLASSIFICATION)){
 				if (!uploadFile.isEmpty() || !dumpImg.equals("")) {
-					System.out.println("firstCheck");
 					if (!uploadFile.isEmpty() && dumpImg.equals("") && ftpService.fileTypeCheck(uploadFile)) {
 						ftpService.ftpAdminImg(uploadFile, classification, value);
-						return "redirect:/index/main";
+						int randome = (int)(Math.random()*45)+1;
+						m.addAttribute("value",value);
+						m.addAttribute("randome",randome);
+						return "redirect:"+indexService.returnPath(classification, value);
 					} else if (uploadFile.isEmpty() && !dumpImg.equals("") ) {
+						System.out.println(value);
+						System.out.println(dumpImg);
+						String dumpImgOnlyName = dumpImg.substring(dumpImg.lastIndexOf('/')+1,dumpImg.lastIndexOf('.'));
+						System.out.println(dumpImgOnlyName);
+						if(dumpImgOnlyName.equals(value)) {
+							System.out.println("yes");
+						}else {
 						ftpService.ftpAdminImgRename(classification, value, dumpImg);
+						}
+						
+						int randome = (int)(Math.random()*45)+1;
+						m.addAttribute("randome",randome);
 						return "redirect:/index/main";
 					}else {
 						System.out.println(dumpImg);
@@ -239,7 +282,12 @@ public class IndexController {
 						return "redirect:/index/imgUpdate";
 					}
 				} else {
-					return "";
+					m.addAttribute("errorMessage","파일이 아무것도 선택 되지 않았습니다.");
+					return "redirect:/index/imgUpdate?value="+value+"&classification="+classification;
+				}
+				}else {
+					m.addAttribute("errorMessage","잘못된 접근 입니다.");
+					return "redirect:/index/main";
 				}
 			} else {
 				m.addAttribute("errorMessage", "권한이 없는 접근 입니다.");

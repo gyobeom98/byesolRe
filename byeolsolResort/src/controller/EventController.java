@@ -40,11 +40,13 @@ public class EventController {
 	}
 
 	@GetMapping("/addEvent")
-	public String addEventForm(HttpSession session, Model m) {
+	public String addEventForm(HttpSession session, Model m, @RequestParam(defaultValue = "")String errorMessage) {
 
 		if (session.getAttribute("userId") != null) {
 			String userId = (String) session.getAttribute("userId");
 			if (userId.equals("admin")) {	// 로그인 되어 있는게 관리자 라면
+				if(!errorMessage.equals(""))
+					m.addAttribute("errorMessage",errorMessage);
 				return "/newsList/addEventForm";
 			} else {
 				m.addAttribute("errorMessage", "권한이 없습니다");
@@ -116,14 +118,16 @@ public class EventController {
 	}
 
 	@GetMapping("/updateEvent")
-	public String updateEvent(int id, Model m, HttpSession session) {
+	public String updateEvent(@RequestParam(defaultValue = "0")int id, Model m, HttpSession session, @RequestParam(defaultValue = "")String errorMessage) {
 		if (session.getAttribute("userId") != null) {
 			String userId = (String) session.getAttribute("userId");
 			if (userId.equals("admin")) { // 이벤트를 업데이트 하려 하는 데 관리자만 사용
 				if (id != 0) {
 					Event event = eventService.getEvent(id);
-					if (event != null) {
+					if (event != null && id>0) {
 						m.addAttribute("event", event);
+						if(!errorMessage.equals(""))
+							m.addAttribute("errorMessage",errorMessage);
 						return "/newsList/updateEventForm";
 					} else {
 						m.addAttribute("errorMessage", "잘못된 접근");

@@ -173,11 +173,12 @@ public class CustomerService {
 			reservMapper.deleteReserv(reserv.getId());
 		}
 		// question과 asnwer를 삭제
-		List<Question> questionList = questionMapper.selectQuestionByWriter();
+		List<Question> questionList = questionMapper.selectQuestionByWriter(customer.getUserId());
 		for (Question question : questionList) {
 			answerMapper.deleteAnswerByQuestionId(question.getId());
 			questionMapper.deleteQuestion(question.getId());
 		}
+		answerMapper.deleteAnswerByWriter(customer.getUserId());
 		customerMapper.deleteCustomerById(customer.getId());
 
 	}

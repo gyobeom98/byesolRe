@@ -378,7 +378,7 @@ public class ReservService {
 			if(i>0)
 			roomList.remove(roomList.get(integer-1-i));
 			else {
-				roomList.remove(roomList.get(integer));
+				roomList.remove(roomList.get(integer-1));
 			}
 			i++;
 		}

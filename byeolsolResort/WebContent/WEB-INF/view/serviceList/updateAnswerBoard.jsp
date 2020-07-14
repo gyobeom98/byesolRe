@@ -39,19 +39,21 @@
 					</div>
 				</div>
 				<div>
-				<form action="/question/updateAnswer" method="post">
+				<form action="/board/updateComment" method="post">
 					<div class="upAnswerDiv">
 					<table class="upAnswerTable">
 						<tr class="htd">
-							<td><input type="number" value="${answer.id}"
+							<td><input type="number" value="${comment.id}"
 								readonly="readonly" name="id" class="hide"></td>
+							<td><input type="number" value="${boardId}" readonly="readonly" name="boardId" class="hide">
+							</td>						
 						</tr>
 						<tr>
-							<td><input type="text" class="hide" name="title" value="${answer.title}"></td>
+							<td><input type="text" class="hide" name="title" value="title"></td>
 						</tr>
 						<tr>
 							<td><textarea rows="20" cols="120" name="message" class="message">
-						${answer.message }
+						${comment.message }
 						</textarea></td>
 						</tr>
 					</table>

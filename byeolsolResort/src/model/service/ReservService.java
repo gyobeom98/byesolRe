@@ -107,7 +107,7 @@ public class ReservService {
 								// reserv를 추가
 								addReserv(reserv);
 								// errorMessage 와 redirect할 request를 넘겨줌 
-								return new ErrorMessage(null, "redirect:/index/main", 0);
+								return new ErrorMessage("예약이 되었습니다. 관리자 계좌로 "+ (int)(reserv.getTotalPrice()/10)+"원을 선입금 해주셔야 예약이 완료 됩니다.", "redirect:/index/main", 0);
 							} else {
 								System.out.println("실패함");
 								return new ErrorMessage("해당 날짜는 예약 하실수 없습니다.", "redirect:/reserv/addReserv", roomNum);
@@ -365,13 +365,22 @@ public class ReservService {
 		
 		for (int i = 0; i < roomList.size(); i++) {
 			for (Reserv reserv : reservList) {
-				if(roomList.get(i).getId() == reserv.getId()) {
-					deleteIndex.add(i);
+				if(roomList.get(i).getId() == reserv.getRoomId()) {
+					deleteIndex.add(reserv.getRoomId());
 				}
 			}
 		}
+		
+		int i = 0; 
 		for (Integer integer : deleteIndex) {
-			roomList.remove(roomList.get(integer));
+			System.out.println(integer);
+			System.out.println(roomList.get(integer-1-i));
+			if(i>0)
+			roomList.remove(roomList.get(integer-1-i));
+			else {
+				roomList.remove(roomList.get(integer));
+			}
+			i++;
 		}
 		return roomList;
 		

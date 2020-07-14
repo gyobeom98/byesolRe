@@ -2,8 +2,12 @@ package model.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import model.dto.Board;
 import model.dto.Comment;
@@ -61,6 +65,11 @@ public class CommentService {
 		if(comment.getMessage()!=null && comment.getBoardId()>0 && !comment.getMessage().trim().equals("")) {
 			return true;
 		}else return false;
+	}
+	
+	
+	public Comment getCommentWithId(int id) {
+		return commentMapepr.selectCommentWithId(id);
 	}
 	
 	

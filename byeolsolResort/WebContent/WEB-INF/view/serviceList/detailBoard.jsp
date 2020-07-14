@@ -106,11 +106,11 @@
 											<c:if test='${userId==q.userId || userId=="admin"}'>
 												<td class="updel">
 													<button class="updelCom" type="button"
-														onclick="onUpdate(${q.id})">수정</button>
+														onclick="onUpdate(${q.id},${board.id})">수정</button>
 												</td>
 												<td class="updel">
 													<button class="updelCom1" type="button"
-														onclick="onDelte(${q.id})">삭제</button>
+														onclick="onDelte(${q.id},${board.id})">삭제</button>
 												</td>
 											</c:if>
 										</tr>

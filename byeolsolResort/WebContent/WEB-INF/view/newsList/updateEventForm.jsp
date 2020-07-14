@@ -47,20 +47,30 @@
 									<td><input type="text" name="title" value="${event.title}"></td>
 								</tr>
 								<tr>
-									<td>메인이미지</td>
-									<td><input type="file" name="thumbnail"></td>
-								</tr>
-								<tr>
-									<td>내용 이미지</td>
-									<td><input type="file" name="uploadFile"></td>
-								</tr>
-								<tr>
 									<td>이벤트 기간</td>
 									<td>
 									<input type="date" name="start" value="${event.startDate}">
 									<input type="date" name="end" value="${event.endDate}">
 									미상시<input type="radio" name="state" value="미상시">
 									상시<input type="radio" name="state" value="상시">
+									</td>
+								</tr>
+								<tr>
+									<td>메인이미지</td>
+									<td><input type="file" name="thumbnail" id="upload"></td>
+								</tr>
+								<tr>
+									<td colspan="2">
+										<div id="preview"></div>
+									</td>
+								</tr>
+								<tr>
+									<td>내용이미지</td>
+									<td><input type="file" name="uploadFile" id="upload1"></td>
+								</tr>
+								<tr>
+									<td colspan="2">
+										<div id="preview1"></div>
 									</td>
 								</tr>
 								<tr>
@@ -77,4 +87,5 @@
 		</div>
 	</div>
 </body>
+<script type="text/javascript" src="/script/imgView.js"></script>
 </html>

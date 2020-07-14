@@ -349,7 +349,7 @@ public class BoardController {
 				if (userId.equals("admin")) {
 					Board board = boardService.selectBoard(id);
 					if (board != null && board.getState().equals("admin")) {
-						m.addAttribute("adminBoard", board);
+						m.addAttribute("board", board);
 						return "/newsList/updateNews";
 					} else {
 						m.addAttribute("errorMessage", "잘못된 접근 입니다.");

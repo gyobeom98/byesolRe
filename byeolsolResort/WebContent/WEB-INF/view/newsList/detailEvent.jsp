@@ -40,20 +40,21 @@
 						<div class="sibtitle">
 							<h3 class="stitle">이벤트</h3>
 						</div>
+						<div class="buttonForm">
+							<c:if test='${userId=="admin" }'>
+								<button class="updelButton" onclick="updateEvent(${event.id})">수정</button>
+								<button class="updelButton" onclick="deleteEvent(${event.id})">삭제</button>
+							</c:if>
+						</div>
 						<div class="detailForm">
-							<div>
-								<c:if test='${userId=="admin" }'>
-									<button onclick="updateEvent(${event.id})">수정</button>
-									<button onclick="deleteEvent(${event.id})">삭제</button>
-								</c:if>
-							</div>
 							<table class="detailTable">
 								<tr>
 									<td class="eventTitle">${event.title}</td>
 									<td class="eventRegDate">${event.regDate }</td>
 								</tr>
 								<tr>
-									<td colspan="2"><img class="imgeSize" src="${event.imgPath}"></td>
+									<td colspan="2"><img class="imgeSize"
+										src="${event.imgPath}"></td>
 								</tr>
 							</table>
 						</div>

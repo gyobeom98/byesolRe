@@ -38,9 +38,11 @@
 						<h3 class="stitle">댓글수정</h3>
 					</div>
 				</div>
+				<div>
 				<form action="/question/updateAnswer" method="post">
-					<table>
-						<tr>
+					<div class="upAnswerDiv">
+					<table class="upAnswerTable">
+						<tr class="htd">
 							<td><input type="number" value="${answer.id}"
 								readonly="readonly" name="id" class="hide"></td>
 						</tr>
@@ -48,15 +50,17 @@
 							<td><input type="text" class="hide" name="title" value="${answer.title}"></td>
 						</tr>
 						<tr>
-							<td><textarea rows="20" cols="20" name="message">
+							<td><textarea rows="20" cols="120" name="message" class="message">
 						${answer.message }
 						</textarea></td>
 						</tr>
 					</table>
-					<div>
-						<input type="submit">
+					</div>
+					<div class="messageBtn">
+						<input type="submit" class="messageSub">
 					</div>
 				</form>
+			</div>
 			</section>
 			<footer>
 				<jsp:include page="../footer/footer.jsp"/>

@@ -1,11 +1,12 @@
+
 function check() {
-	if ($("#text_title").val()=="") {
+	if ($("#text_title").val() == "") {
 		alert("제목을 입력해주세요.");
 		$("#text_title").focus();
 		return false;
 	}
-	
-	if ($("#text_contents").val()=="") {
+
+	if ($("#text_contents").val() == "") {
 		alert("내용을 입력해주세요.");
 		$("#text_contents").focus();
 		return false;
@@ -13,35 +14,43 @@ function check() {
 }
 
 function addBoard() {
-	location.href="/board/addBoard";
+	location.href = "/board/addBoard";
 }
 
 function addBoardlogin() {
-	location.href="/cus/login";
+	location.href = "/cus/login";
 }
 
-function goUpdate(id){
-	location.href="/board/updateBoard?id="+id;
+function goUpdate(id) {
+	location.href = "/board/updateBoard?id=" + id;
 }
 
-function goDelete(id){
-	location.href="/board/deleteBoard?id="+id;
+function goDelete(id) {
+	location.href = "/board/deleteBoard?id=" + id;
 }
 
-function goDetail(id){
-	location.href="/board/detailBoard?boardId="+id;
+function goDetail(id) {
+	location.href = "/board/detailBoard?boardId=" + id;
 }
 
-function goAdminUpdate(id){
-	location.href="/board/updateAdminBoard?id="+id;
+function goAdminUpdate(id) {
+	location.href = "/board/updateAdminBoard?id=" + id;
 }
 
-function goAdminDelete(id){
-	location.href="/board/deleteAdminBoard?id="+id;
+function goAdminDelete(id) {
+	location.href = "/board/deleteAdminBoard?id=" + id;
+}
+
+function onUpdate(id) {
+	location.href = ""
+}
+
+function onUpdate(id) {
+	location.href = ""
 }
 
 $(function() {
-	
+
 	$('#manu>ul>li>a').css('color', '#000000');
 	$('#manu>ul>li>a').css('font-size', '18px');
 
@@ -62,7 +71,7 @@ $(function() {
 				$(this).parent().parent().parent().children('#manu>ul>li>a')
 						.css('color', '#000000');
 			});
-	
+
 	$("header").hover(
 			function() {
 				$(this).children().children().eq(1).children().children()

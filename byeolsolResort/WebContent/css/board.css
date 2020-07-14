@@ -334,7 +334,7 @@ table {
 }
 
 td {
-	border: 1px solid;
+	border-bottom: 1px solid #b2b4b9;
 	padding: 8px;
 }
 
@@ -354,9 +354,10 @@ td>button {
 }
 
 .review_title {
-	background-color: #BFC7DE;
+	background-color: #d2d5df;
 	font-weight: bold;
-	font-size: 20px;
+	font-size: 18px;
+	text-align: center;
 }
 
 .td1 {
@@ -442,6 +443,7 @@ td>button {
 
 .hide {
 	display: none;
+
 }
 
 .updel {
@@ -468,4 +470,32 @@ img{
 .updateForm{
 	text-align: left;
 }
-
+.td2,.td3{
+	border-right: 1px solid #b2b4b9;
+}
+.td3,.td4{
+	text-align: center;
+}
+td .upBoard_title{
+	width: 30px;
+}
+.upAnswerTable{
+	width: 50%;
+}
+.htd{
+	border-style: none;
+}
+.messageSub{
+width: 130px;
+height: 40px;
+background-color: #b2b4b9;
+border-style: none;
+font-weight: bold;
+}
+.message{
+	width: 100%;
+}
+.messageBtn{
+margin-top: 30px;
+	text-align: center;
+}

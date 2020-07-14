@@ -1,14 +1,15 @@
+
 function adEvent() {
-	location.href="/event/addEvent";
+	location.href = "/event/addEvent";
 }
 
-function updateEvent(id){
-	location.href = "/event/updateEvent?id="+id;
+function updateEvent(id) {
+	location.href = "/event/updateEvent?id=" + id;
 }
 
-function deleteEvent(id){
+function deleteEvent(id) {
 	alert(id);
-	location.href = "/event/deleteEvent?id="+id;
+	location.href = "/event/deleteEvent?id=" + id;
 }
 
 $(function() {
@@ -32,7 +33,7 @@ $(function() {
 				$(this).parent().parent().parent().children('#manu>ul>li>a')
 						.css('color', '#000000');
 			});
-	
+
 	$("header").hover(
 			function() {
 				$(this).children().children().eq(1).children().children()

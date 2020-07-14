@@ -42,7 +42,7 @@
 						</div>
 						<div>
 							<c:if test='${userId=="admin" }'>
-								<button onclick="adEvent()">글쓰기</button>
+								<button class="addEventButton" onclick="adEvent()">글쓰기</button>
 							</c:if>
 						</div>
 						

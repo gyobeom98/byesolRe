@@ -56,10 +56,10 @@
 							<c:forEach var="i" items="${boardView.boardList}">
 								<!-- 정보를 출력하게 하는데 삭제 버튼을 누르면 deleteGuest메서드(인자로 이 정보의 아이디를 줌)를 실행
 							수정 버튼을 누르면 updateGuest메서드 (인자로 이 정보의 아이디를 줌)를 실행 하게 함. -->
-								<tr onclick="goDetail(${i.id})">
-									<td>${i.title}</td>
-									<td>${i.userId}</td>
-									<td><jt:format value="${i.wDate}" pattern="YYYY-MM-dd HH:mm:ss"/></td>
+								<tr onclick="goDetail(${i.id})" class="review_content">
+									<td class="td2">${i.title}</td>
+									<td class="td3">${i.userId}</td>
+									<td class="td4"><jt:format value="${i.wDate}" pattern="YYYY-MM-dd HH:mm:ss"/></td>
 								</tr>
 							</c:forEach>
 						</table>

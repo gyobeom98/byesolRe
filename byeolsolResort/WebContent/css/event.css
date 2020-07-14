@@ -108,3 +108,30 @@ section{
 	height: 50px;
 	font-size: 25px;
 }
+
+.addEventButton{
+	width: 100px;
+	height: 40px;
+	background: #ada6a6;
+	border-style: none;
+	color: #fff;
+	font-weight: bold;
+	float: right;
+	margin-bottom: 30px;
+}
+
+.updelButton{
+	width: 100px;
+	height: 40px;
+	background: #ada6a6;
+	border-style: none;
+	color: #fff;
+	font-weight: bold;
+	float: right;
+	margin: 0 30px 30px 0px;
+}
+
+.buttonForm{
+	height: 40px;
+	margin: 0 0 30px 0;
+}

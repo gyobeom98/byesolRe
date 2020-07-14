@@ -10,7 +10,7 @@ a:visited {
 	text-decoration: none;
 }
 
-input[readonly="readonly"]{
+input[readonly="readonly"] {
 	border: none;
 }
 
@@ -64,7 +64,7 @@ header:hover {
 	transition: 1.5s;
 }
 
-.stitle{
+.stitle {
 	font-size: 45px;
 	margin: 5% 0%;
 }
@@ -140,16 +140,34 @@ keyframes listshow { 0% {
 100%
 {
 opacity
+
+
+
+
 :
+
+
  
+
+
 1;
 transform
-:
- 
-translateY
-(0);
 
-	
+
+
+
+:
+
+
+ 
+
+
+translateY
+
+
+
+
+(0);
 }
 }
 header:hover #manu>ul>li>ul>li>a {
@@ -346,20 +364,23 @@ form {
 .formTd1 {
 	text-align: center;
 	font-weight: bold;
+	background-color: rgb(246, 246, 246);
+	
 }
 
 .formTd2 {
-	padding: 20px 30px;
+	padding: 20px;
+	border-top:1px solid #d1d1d1;
 }
 
 table {
 	width: 100%;
-	border-top: 1px solid #d1d1d1;
 	margin-bottom: 20px;
 	border-collapse: collapse;
+	text-align: center;
 }
 
-.tableTr{
+.tableTr {
 	height: 95px;
 }
 
@@ -390,9 +411,8 @@ input[type="reset"] {
 input[type="submit"], input[type="reset"] {
 	width: 130px;
 	height: 50px;
-	float: left;
 	max-width: 1000px;
-	margin: 15px;
+	margin: 28px 28px 28px 40px;
 	border: 1px solid #e6e6e6;
 	font-weight: bold;
 	font-size: 15px;
@@ -408,10 +428,6 @@ input[type="submit"], input[type="reset"] {
 	font-weight: normal;
 }
 
-.formTd1 {
-	background-color: rgb(246, 246, 246)
-}
-
 .btn {
 	margin-left: 33.33%;
 	margin-bottom: 50px;
@@ -425,6 +441,7 @@ input[type="submit"], input[type="reset"] {
 textarea {
 	width: 100%;
 	height: 105px;
+	resize: none;
 }
 
 input[type="checkbox"] {
@@ -465,25 +482,114 @@ h1 {
 	margin-bottom: 30px;
 }
 
-.submit{
+.submit {
 	margin-bottom: 100px;
 }
 
-.titleForm{
+.titleForm {
 	max-width: 1000px;
 	margin: auto;
 }
 
-.answerForm{
+.answerForm {
 	max-width: 1000px;
 	margin: auto;
 	margin-top: 6%
 }
 
-.anwer{
+.anwer {
 	margin-bottom: 10px;
 }
 
-.hide{
+.hide {
 	display: none;
+}
+
+.myQnAPagenation {
+	font-weight: bold;
+	font-size: 20px;
+	text-align: center;
+	margin-top: 30px;
+}
+
+.myQnAtr {
+	font-weight: bold;
+	background-color: #d1d1d1;
+}
+
+.qNaUpForm {
+	text-aign: center;
+}
+
+td {
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+table tbody tr .dmq {
+	width: 100px;
+	text-align: center;
+	font-weight: bold;
+}
+
+.btn {
+	float: right;
+}
+
+#updateBtn, #deleteBtn {
+	width: 110px;
+	height: 30px;
+	font-weight: bold;
+	border-style: none;
+}
+
+#updateBtn {
+	background-color: #d1d1d1;
+}
+
+.commentBox {
+	width: 80%;
+	float: left;
+}
+
+.writeBtn {
+	
+}
+
+.comment_main {
+	margin-top: 40px;
+}
+
+p {
+	font-weight: bold;
+	margin-bottom: 20px;
+}
+
+.reComment {
+	font-weight: bold;
+	margin-bottom: 20px;
+}
+
+table tr .comWriter {
+	width: 100px;
+}
+
+table tr .answerBtn {
+	text-align: right;
+}
+
+table tr .answerBtn button {
+	height: 30px;
+	width: 50px;
+	background-color: #d1d1d1;
+	border-style: none;
+}
+.submit{
+	text-align:center;
+}
+table .number {
+	border-style: none;
+}
+.qNa_submit{
+	margin:0 auto;
 }

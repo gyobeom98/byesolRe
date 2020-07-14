@@ -52,21 +52,24 @@
 							<li><a href="/cus/myReserv" class="li1">나의 예약</a></li>
 						</ul>
 					</div>
+					<div class="myRoom_main">
 					<table>
-						<tr>
-							<td>가격</td>
+						<tr class="myRoomTr1">
+							<td>요금</td>
+							<td>방 번호</td>
 							<td>입실예약날짜</td>
 							<td>퇴실날짜</td>
 							<td>예약인원</td>
 							<td>입금상태</td>
 							<td>접수일</td>
-							<td>수정</td>
-							<td>삭제</td>
 						</tr>
-					<c:forEach var="i" items="${reservView.reservList }">
-						<tr>
+					<c:forEach var="i" items="${reservWithRoomNumView.reservWithRoomNumList }">
+						<tr class="myRoomTr2">
 							<td>
 								${i.totalPrice }
+							</td>
+							<td>
+								${i.roomNum }
 							</td>
 							<td>
 								${i.startDate }
@@ -83,15 +86,10 @@
 							<td>
 								<jt:format value="${i.regDate}" pattern="YYYY-MM-dd HH:mm:ss" />
 							</td>
-							<td>
-								<button onclick="updateRoom(${i.id})">수정</button>
-							</td>
-							<td>
-								<button onclick="deleteRoom(${i.id})">삭제</button>
-							</td>
 						</tr>
 					</c:forEach>
 					</table>
+					</div>
 				</form>
 			</section>
 			<footer>

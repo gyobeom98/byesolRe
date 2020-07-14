@@ -57,11 +57,21 @@
 								</tr>
 								<tr>
 									<td>메인이미지</td>
-									<td><input type="file" name="thumbnail"></td>
+									<td><input type="file" name="thumbnail" id="upload"></td>
+								</tr>
+								<tr>
+									<td colspan="2">
+										<div id="preview"></div>
+									</td>
 								</tr>
 								<tr>
 									<td>내용이미지</td>
-									<td><input type="file" name="uploadFile"></td>
+									<td><input type="file" name="uploadFile" id="upload1"></td>
+								</tr>
+								<tr>
+									<td colspan="2">
+										<div id="preview1"></div>
+									</td>
 								</tr>
 								<tr>
 									<td colspan="2"><input type="submit"></td>
@@ -77,4 +87,5 @@
 		</div>
 	</div>
 </body>
+<script type="text/javascript" src="/script/imgView.js"></script>
 </html>

@@ -49,19 +49,20 @@
 						</ul>
 					</div>
 					<table>
-					<tr>
+					<tr class="myQnAtr">
 						<td>작성자</td> 
 						<td>제목</td>
 						<td>내용</td>
 					</tr>
 					<c:forEach var="i" items="${questionView.questionList}">
-					<tr onclick="goDetail(${i.id})">
-						<td>${i.writer }</td>
+					<tr onclick="goDetail(${i.id})" class="qNaUpForm">
+						<td><a href='/question/detailQuestion?id=${i.id }'>${i.writer }</a></td>
 						<td>${i.title }</td>
 						<td>${i.message }</td>
 					</tr>
 					</c:forEach>
 					</table>
+					<div class="myQnAPagenation">
 					<!-- 현재 페이지가 총 페이지 수와 보다 작거나 같으면 -->
 					<c:if test="${questionView.currentPageNum<questionView.pageTotalCount+1}">
 					<!-- 현재 페이지가 1보다 크고 현재 페이지가 총 페이지의 수보다 작거나 같으 -->
@@ -72,6 +73,7 @@
 					
 					<!-- 만약 현재 페이지가 1이면 -->
 					<c:if test="${questionView.currentPageNum==1}">
+					
 					
 					<!-- 1부터 페이지 총 수 만큼 반복문을 돌리면서 -->
 					<c:forEach var="k" begin="1" end="${questionView.pageTotalCount }">
@@ -114,6 +116,7 @@
 					<a href="/question/list?pageNum=${questionView.currentPageNum+1}">다음</a>
 					</c:if>
 					</c:if>
+					</div>
 				</form>
 			</section>
 			<footer>

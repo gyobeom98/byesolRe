@@ -42,30 +42,42 @@
 						<input type="number" value="${board.id}" name="id" readonly="readonly" style="display:none">
 						<table>
 							<tr>
+								<td>제목</td>
 								<td><input type="text" value="${board.title}" name="title"></td>
 							</tr>
 							<tr>
-								<td><input type="text" value="${board.content}"
-									name="content"></td>
+								<td>내용</td>
+								<td><input type="text" value="${board.content}" name="content"></td>
 							</tr>
 							<tr>
+								<td><input type="file" name="uploadFile01" id="upload"></td>
+								<td>변경이미지</td>
+							</tr>
+							<tr>
+								<td>
+									<div id="preview"></div>
+								</td>
 								<td><img alt="" src="${board.firstPath }" height="50px"></td>
-
 							</tr>
 							<tr>
-								<td><input type="file" name="uploadFile01"></td>
+								<td><input type="file" name="uploadFile02" id="upload1"></td>
+								<td>변경이미지</td>
 							</tr>
 							<tr>
+								<td>
+									<div id="preview1"></div>
+								</td>
 								<td><img alt="" src="${board.secondPath }" height="50px"></td>
 							</tr>
 							<tr>
-								<td><input type="file" name="uploadFile02"></td>
+								<td><input type="file" name="uploadFile03" id="upload2"></td>
+								<td>변경이미지</td>
 							</tr>
 							<tr>
+								<td>
+									<div id="preview2"></div>
+								</td>
 								<td><img alt="" src="${board.thirdPath }" height="50px"></td>
-							</tr>
-							<tr>
-								<td><input type="file" name="uploadFile03"></td>
 							</tr>
 						</table>
 						<input type="submit" value="수정" id="update_subBtn">

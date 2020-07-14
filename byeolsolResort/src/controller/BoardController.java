@@ -46,9 +46,12 @@ public class BoardController {
 	}
 
 	@GetMapping("/addBoard")
-	public String goAddBoardForm(HttpSession session, Model m) {
-		if (session.getAttribute("userId") != null) // session에 userId가 있다면
+	public String goAddBoardForm(HttpSession session, Model m , @RequestParam(defaultValue = "")String errorMessage) {
+		if (session.getAttribute("userId") != null) {// session에 userId가 있다면
+			if(!errorMessage.equals(""))
+				m.addAttribute("errorMessage",errorMessage);
 			return "/serviceList/addBoard"; // WEB_INF/erviceList/addBoard jsp페이지
+		}
 		else {
 			// session에 로그인이 되어있지 않다면 errorMessage를 보냄
 			m.addAttribute("errorMessage", "로그인이 되어 있지 않습니다.");
@@ -135,11 +138,13 @@ public class BoardController {
 	}
 
 	@GetMapping("/addAdminBoard")
-	public String addAdminBoardForm(HttpSession session, Model m) {
+	public String addAdminBoardForm(HttpSession session, Model m , @RequestParam(defaultValue = "")String errorMessage) {
 
 		if (session.getAttribute("userId") != null) {
 			String userId = (String) session.getAttribute("userId");
 			if (userId.equals("admin")) { // session의 userId가 있고 그게 admin일 경우
+				if(!errorMessage.equals(""))
+					m.addAttribute("errorMessage",errorMessage);
 				return "/newsList/addNews";
 			} else {
 				m.addAttribute("errorMessage", "권한이 없는 접근 입니다.");
@@ -213,13 +218,15 @@ public class BoardController {
 	}
 
 	@GetMapping("/updateBoard")
-	public String goBoardUpdateForm(@RequestParam(defaultValue = "0") int id, Model m, HttpSession session) {
+	public String goBoardUpdateForm(@RequestParam(defaultValue = "0") int id, Model m, HttpSession session, @RequestParam(defaultValue = "")String errorMessage) {
 		System.out.println(id);
 		if (session.getAttribute("userId") != null) {
 			String userId = (String) session.getAttribute("userId");
 			if (id != 0) {
 				Board board = boardService.selectBoard(id);
 				if (userId.equals(board.getUserId()) || userId.equals("admin")) {
+					if(!errorMessage.equals(""))
+						m.addAttribute("errorMessage",errorMessage);
 					m.addAttribute("board", board);
 					return "/serviceList/updateBoard";
 				} else {
@@ -347,7 +354,7 @@ public class BoardController {
 	}
 
 	@GetMapping("/updateAdminBoard")
-	public String updateAdminBoardForm(HttpSession session, Model m, @RequestParam(defaultValue = "0") int id) {
+	public String updateAdminBoardForm(HttpSession session, Model m, @RequestParam(defaultValue = "0") int id, @RequestParam(defaultValue = "")String errorMessage) {
 		if (session.getAttribute("userId") != null) {
 			if (id > 0) {
 				String userId = (String) session.getAttribute("userId");
@@ -355,6 +362,8 @@ public class BoardController {
 					Board board = boardService.selectBoard(id);
 					if (board != null && board.getState().equals("admin")) {
 						m.addAttribute("board", board);
+						if(!errorMessage.equals(""))
+							m.addAttribute("errorMessage",errorMessage);
 						return "/newsList/updateNews";
 					} else {
 						m.addAttribute("errorMessage", "잘못된 접근 입니다.");
@@ -534,11 +543,13 @@ public class BoardController {
 	}
 
 	@GetMapping("/detailBoard")
-	public String goBoardDetail(int boardId, Model m, @RequestParam(defaultValue = "1") int pageNum) {
+	public String goBoardDetail(int boardId, Model m, @RequestParam(defaultValue = "1") int pageNum ,@RequestParam(defaultValue = "")String errorMessage) {
 		Board board = boardService.selectBoard(boardId);
 		if (board != null) {
 			m.addAttribute("board", boardService.selectBoard(boardId));
 			m.addAttribute("commentView", commentService.getView(pageNum, boardId));
+			if(!errorMessage.equals(""))
+				m.addAttribute("errorMessage",errorMessage);
 			return "/serviceList/detailBoard";
 		} else {
 			m.addAttribute("errorMessage", "잘못된 접근 입니다.");
@@ -547,9 +558,11 @@ public class BoardController {
 	}
 
 	@GetMapping("/adminDetailBoard")
-	public String goAdminBoardDetail(int boardId, Model m, @RequestParam(defaultValue = "1") int pageNum) {
+	public String goAdminBoardDetail(int boardId, Model m, @RequestParam(defaultValue = "1") int pageNum , @RequestParam(defaultValue = "")String errorMessage) {
 		Board board = boardService.selectBoard(boardId);
 		if (board != null) {
+			if(!errorMessage.equals(""))
+				m.addAttribute("errorMessage",errorMessage);
 			m.addAttribute("board", boardService.selectBoard(boardId));
 			m.addAttribute("commentView", commentService.getView(pageNum, boardId));
 			return "/newsList/detailNews";
@@ -576,7 +589,7 @@ public class BoardController {
 
 	@GetMapping("/updateComment")
 	public String updateCommentForm(HttpSession session, Model m, @RequestParam(defaultValue = "0") int boardId,
-			@RequestParam(defaultValue = "0") int id) {
+			@RequestParam(defaultValue = "0") int id , @RequestParam(defaultValue = "")String errorMessage) {
 
 		if (session.getAttribute("userId") != null) {
 			if (id > 0 && boardId > 0) {
@@ -587,6 +600,8 @@ public class BoardController {
 							if (comment.getBoardId() == boardId) {
 								m.addAttribute("boardId",boardId);
 								m.addAttribute("comment",comment);
+								if(!errorMessage.equals(""))
+									m.addAttribute("errorMessage",errorMessage);
 								return "/serviceList/updateAnswerBoard";
 							} else {
 								m.addAttribute("errorMessage", "잘못된 접근 입니다.");

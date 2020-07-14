@@ -36,12 +36,12 @@
 					</div>
 				</div>
 				<div class="memberDeleteForm">
-					<form class="memberDelete" action="#" method="post">
+					<form class="memberDelete" action="/cus/deleteCustomer" method="post">
 						<div class="delete_box">
 							<div>
 								<div class="delete_ask">
 									<h2>
-										<p>(사용자이름)님, 정말 탈퇴하시겠습니까?</p>
+										<p>${customer.name}님, 정말 탈퇴하시겠습니까?</p>
 									</h2>
 								</div>
 								<br>
@@ -58,12 +58,12 @@
 									<table>
 										<tr>
 											<td class="formTd1">아이디</td>
-											<td class="formTd2"><input type="text" name="id_input"></td>
+											<td class="formTd2"><input type="text" name="userId"></td>
 										</tr>
 										<tr>
 											<td class="formTd1">비밀번호</td>
 											<td class="formTd2"><input type="password"
-												name="password_input"></td>
+												name="password"></td>
 										</tr>
 									</table>
 								</div>
@@ -74,9 +74,8 @@
 									</h5>
 									<br>
 									<div class="btn">
-										<a href="../main/main.html"><input type="button"
-											name="cancel" value="취소"></a> <a href="#"><input
-											type="submit" value="확인"></a>
+											<button type="button" onclick='location.href=/index/main'>취소</button> <input
+											type="submit" value="확인">
 									</div>
 								</div>
 							</div>

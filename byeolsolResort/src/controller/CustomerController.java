@@ -59,9 +59,11 @@ public class CustomerController {
 	private Validator validator;
 
 	@GetMapping("/regis")
-	public String getRegisForm(HttpSession session, Model m) {
+	public String getRegisForm(HttpSession session, Model m, @RequestParam(defaultValue = "")String errorMessage) {
 		if (session.getAttribute("userId") == null) {
 			// session에 userId가 null이라면
+			if(!errorMessage.equals(""))
+				m.addAttribute("errorMessage",errorMessage);
 			return "/sideform/signup";
 		} else {
 			// session에 userId가 null이 아니라면
@@ -164,10 +166,12 @@ public class CustomerController {
 	}
 
 	@GetMapping("/login")
-	public String loginForm(HttpSession session, Model m) {
+	public String loginForm(HttpSession session, Model m, @RequestParam(required = false)String errorMessage) {
 		// 로그인이 되어있지 않다면
 		if (session.getAttribute("userId") == null) {
-			System.out.println("aa");
+			if(errorMessage != null) {
+				m.addAttribute("errorMessage",errorMessage);
+			}
 			return "/sideform/login";
 		} else {
 			m.addAttribute("errorMessage", "잘못된 접근");
@@ -181,8 +185,8 @@ public class CustomerController {
 		if (!userId.equals(DEFAULT_VALUE_ID) || !password.equals(DEFAULT_VALUE_PASSWORD)) {
 			Customer c = customerService.logIn(userId, password);
 			if (c == null) {
-				m.addAttribute("islog", "id 또는 비밀번호가 잘못 되었습니다.");
-				return "/sideform/login";
+				m.addAttribute("errorMessage", "id 또는 비밀번호가 잘못 되었습니다.");
+				return "redirect:/cus/login";
 			} else {
 
 				session.setAttribute("userId", c.getUserId());
@@ -204,6 +208,8 @@ public class CustomerController {
 			System.out.println(session.getAttribute("userName"));
 			session.setAttribute("userId", null);
 			session.setAttribute("userName", null);
+			session.setAttribute("userEmail", null);
+			session.setAttribute("state", null);
 			return "redirect:/index/main";
 		} else {
 			m.addAttribute("errorMessage", "잘못된 접근");
@@ -212,10 +218,12 @@ public class CustomerController {
 	}
 
 	@GetMapping("/myPage")
-	public String goMyPage(HttpSession session, Model m) {
+	public String goMyPage(HttpSession session, Model m , @RequestParam(defaultValue = "")String errorMessage) {
 		if (session.getAttribute("userId") != null) {
 			String userId = (String) session.getAttribute("userId");
 			Customer customer = customerService.getCustomerById(userId);
+			if(!errorMessage.equals(""))
+				m.addAttribute("errorMessage",errorMessage);
 			m.addAttribute("customer", customer);
 			return "/mypage/mypage";
 		} else {
@@ -356,8 +364,13 @@ public class CustomerController {
 	}
 
 	@GetMapping("/deleteCustomer")
-	public String deleteCustomerForm(HttpSession session, Model m) {
+	public String deleteCustomerForm(HttpSession session, Model m, @RequestParam(defaultValue = "")String errorMessage) {
 		if (session.getAttribute("userId") != null) {
+			String userId = (String)session.getAttribute("userId");
+			Customer customer = customerService.getCustomerById(userId);
+			if(!errorMessage.equals(""))
+				m.addAttribute("errorMessage",errorMessage);
+			m.addAttribute("customer",customer);
 			return "/mypage/deleteForm";
 		} else {
 			m.addAttribute("errorMessage", "로그인이 되어 있지 않습니다.");
@@ -396,8 +409,10 @@ public class CustomerController {
 	}
 
 	@GetMapping("/findId")
-	public String findIdForm(HttpSession session, Model m) {
+	public String findIdForm(HttpSession session, Model m , @RequestParam(defaultValue = "")String errorMessage) {
 		if (session.getAttribute("userId") == null) {
+			if(!errorMessage.equals(""))
+				m.addAttribute("errorMessage",errorMessage);
 			return "/mypage/findInfo";
 		} else {
 			m.addAttribute("errorMessage", "잘못된 접근 입니다.");
@@ -455,10 +470,12 @@ public class CustomerController {
 	}
 	
 	@GetMapping("/adminUserInfo")
-	public String goAdminUserInfo(HttpSession session, Model m , @RequestParam(defaultValue = "1")int pageNum) {
+	public String goAdminUserInfo(HttpSession session, Model m , @RequestParam(defaultValue = "1")int pageNum, @RequestParam(defaultValue = "")String errorMessage) {
 		if(session.getAttribute("userId")!=null) {
 			String userId = (String) session.getAttribute("userId");
 			if(userId.equals("admin")) {
+				if(!errorMessage.equals(""))
+					m.addAttribute("errorMessage",errorMessage);
 				m.addAttribute("customerView",customerService.getCustomerView(pageNum));
 				return "/adminPage/adminUser";
 			}else {

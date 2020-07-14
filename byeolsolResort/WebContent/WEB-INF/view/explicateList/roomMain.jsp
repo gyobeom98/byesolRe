@@ -26,7 +26,7 @@
 			<div id="headerblank"></div>
 			<div class="roomInfo_01_mainImg">
 				<img class="subbanner"
-					src="http://tjteam.dothome.co.kr/byeolsolResort/roomMain/R1subimg.jpg">
+					src="http://tjteam.dothome.co.kr/byeolsolResort/roomMain/RMsubimg.jpg">
 			</div>
 			<section>
 				<div class="writ">

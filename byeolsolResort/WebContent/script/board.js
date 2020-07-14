@@ -41,12 +41,12 @@ function goAdminDelete(id) {
 	location.href = "/board/deleteAdminBoard?id=" + id;
 }
 
-function onUpdate(id) {
-	location.href = ""
+function onUpdate(id , boardId) {
+	location.href = "/board/updateComment?id="+id+"&boardId="+boardId;
 }
 
-function onUpdate(id) {
-	location.href = ""
+function onDelte(id,boardId) {
+	location.href = "/board/deleteComment?id="+id+"&boardId="+boardId;
 }
 
 $(function() {

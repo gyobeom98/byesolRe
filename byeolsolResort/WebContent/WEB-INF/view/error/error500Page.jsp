@@ -6,7 +6,9 @@
 <head>
 <meta charset="UTF-8">
 <title>별솔리조트</title>
-<link rel="stylesheet" href="/errorPage/error.css">
+<link rel="stylesheet" href="/css/header.css">
+<link rel="stylesheet" href="/css/error.css">
+<link rel="stylesheet" href="/css/footer.css">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" src="/script/sub.js"></script>
@@ -20,7 +22,7 @@
 			</header>
 
 			<div class="error_main">
-				<div class="error_505">505</div>
+				<div class="error_404">505</div>
 				<div class="error_img">
 					<img src="/errorPage/pngwing.com.png" alt="">
 				</div>

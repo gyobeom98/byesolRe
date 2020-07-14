@@ -40,10 +40,10 @@ public class ScheduleService {
 					// 현제 와 예약 등록일의 차가 2일 이상이라면 해당 예약 삭제
 					if(now.compareTo(reserv.getRegDate().toLocalDate())>= 2) {
 						reservMapper.deleteReserv(reserv.getId());
+						// 예약의 퇴실날자와 오늘이 같은날이라면 예약 삭제
+					}else if(reserv.getEndDate().equals(now)) {
+						reservMapper.deleteReserv(reserv.getId());
 					}
-					// 예약의 퇴실날자와 오늘이 같은날이라면 예약 삭제
-				}else if(reserv.getEndDate().equals(now)) {
-					reservMapper.deleteReserv(reserv.getId());
 				}
 			}
 		}

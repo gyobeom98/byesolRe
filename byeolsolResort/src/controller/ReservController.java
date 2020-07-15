@@ -37,9 +37,9 @@ public class ReservController {
 
 	@Autowired
 	RemoveService removeService;
-
+	
 	@GetMapping("/addReserv")
-	public String goAddreservForm(HttpSession session, Model m, @RequestParam(defaultValue = "101") int roomNum) {
+	public String goAddreservForm(HttpSession session, Model m, @RequestParam(defaultValue = "101") int roomNum , @RequestParam(defaultValue = DEFAULT_START_DATE)Date startDate , @RequestParam(defaultValue = DEFAULT_END_DATE)Date endDate) {
 		if (session.getAttribute("userId") != null) {
 			String userId = (String) session.getAttribute("userId");
 			Customer customer = customerService.getCustomerById(userId);
@@ -47,6 +47,10 @@ public class ReservController {
 				if (roomNum >= 101 && roomNum <= 105 || roomNum >= 201 && roomNum <= 205
 						|| roomNum >= 301 && roomNum <= 305) {
 					m.addAttribute("roomNum", roomNum);
+				}
+				if(!startDate.toString().equals(DEFAULT_START_DATE) && ! endDate.toString().equals(DEFAULT_END_DATE)) {
+					m.addAttribute("startDate",startDate);
+					m.addAttribute("endDate",endDate);
 				}
 				return "/serviceList/leftover";
 			} else {

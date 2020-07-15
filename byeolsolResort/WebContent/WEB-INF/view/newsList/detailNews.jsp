@@ -64,20 +64,17 @@
 							<c:if test="${board.firstPath!=null }">
 							<tr id="photo" class="photo">
 								<c:if test="${board.firstPath!=null }">
-								<td colspan="2"><img src="${board.firstPath}"></td>
-								<td></td>
+								<td colspan="2"><img class="imgSize" src="${board.firstPath}"></td>
 								</c:if>
 							</tr>
 							<tr class="photo">
 								<c:if test="${board.secondPath!=null }">
-								<td colspan="2"><img src="${board.secondPath }"></td>
-								<td></td>
+								<td colspan="2"><img class="imgSize" src="${board.secondPath }"></td>
 								</c:if>
 							</tr>
 							<tr class="photo">
 								<c:if test="${board.thirdPath!=null }">
-								<td colspan="2"><img src="${board.thirdPath }"></td>
-								<td></td>
+								<td colspan="2"><img class="imgSize" src="${board.thirdPath }"></td>
 								</c:if>
 							</tr>
 							</c:if>

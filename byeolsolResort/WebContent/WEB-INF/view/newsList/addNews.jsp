@@ -48,7 +48,13 @@
 								</table>
 								
 								<div class="addfile">
-									<input type="file" name="uploadFile" multiple="multiple" max="3">
+									<input type="file" name="uploadFile"
+										multiple="multiple" id="input_imgs" maxlength="3"
+										accept=".jpg,.jpeg,.png">
+								</div>
+								<div>
+									<h1>파일미리보기</h1>
+									<div class="imgs_wrap"></div>
 								</div>
 								
 							</div>	
@@ -68,4 +74,5 @@
 		</c:if>
 	</div>
 </body>
+<script type="text/javascript" src="/script/multiImg.js"></script>
 </html>

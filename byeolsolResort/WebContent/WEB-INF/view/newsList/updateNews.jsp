@@ -47,18 +47,22 @@
 						</table>
 						<div class="allimg">
 							<div class="imgfile">
-								<input type="file" name="uploadFile01">
+								<input type="file" name="uploadFile01" id="upload">
 								<img src="${board.firstPath}" height="50px">
+								<div id="preview">
 							</div>
-							
+							</div>
 							<div class="imgfile">
-								<input type="file" name="uploadFile02">
+								<input type="file" name="uploadFile02" id="upload1">
 								<img src="${board.secondPath }" height="50px">
+								<div id="preview1">
 							</div>
-							
+							</div>
 							<div class="imgfile">
-								<input type="file" name="uploadFile03">
+								<input type="file" name="uploadFile03" id="upload2">
 								<img src="${board.thirdPath }" height="50px">
+								<div id="preview2">
+							</div>
 							</div>
 						</div>
 					</div>	

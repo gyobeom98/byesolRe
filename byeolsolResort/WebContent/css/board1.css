@@ -255,3 +255,10 @@ display: flex;
 	border-radius: 5px;
 }
 
+.imgs{
+	width: 33%;
+}
+
+.imgSize{
+	width: 1000px;
+}

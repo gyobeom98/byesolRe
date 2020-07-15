@@ -24,7 +24,7 @@
 			<div class="error_main">
 				<div class="error_404">400</div>
 				<div class="error_img">
-					<img src="http://tjteam.dothome.co.kr/byeolsolResort/error/errorImg" alt="">
+					<img src="http://tjteam.dothome.co.kr/byeolsolResort/error/errorImg.png" alt="">
 				</div>
 				<div class="error_info">
 					<div class="title">죄송합니다. 현재 페이지에 오류가있어 표시할 수 없습니다.</div>

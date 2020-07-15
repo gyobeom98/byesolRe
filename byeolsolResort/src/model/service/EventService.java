@@ -62,8 +62,7 @@ public class EventService {
 	FtpService ftpService;
 	
 	// IOExeption이 발생하면 rollback함
-	@Transactional(propagation = Propagation.REQUIRES_NEW,rollbackFor = {IOException.class})
-	public boolean addEvent(Event event, MultipartFile uploadFile, MultipartFile thumbnail) throws IOException {
+	public boolean addEvent(Event event, MultipartFile uploadFile, MultipartFile thumbnail) {
 		if (typeCheck(uploadFile)&& typeCheck(thumbnail)) { // 파일의 type을 
 			// 추가할때 날짜와 시간을 갖고 폴더 생성
 			String addTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH_mm_ss_SSSS"));
@@ -75,7 +74,10 @@ public class EventService {
 				eventMapper.insertEvent(event);
 				// 업로드 실패시 IOExeption발생
 				if(!addEventImgThumbnail(thumbnail,event.getId())) {
-					throw new IOException();
+					String Time = event.getImgPath().substring(event.getImgPath().indexOf('/', 46) + 1,
+							event.getImgPath().lastIndexOf('/'));
+					ftpService.ftpdeleteEvent(event.getImgPath(), Time);
+					eventMapper.deleteEvent(event.getId());
 				}
 				return true;
 			

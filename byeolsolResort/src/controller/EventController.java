@@ -75,7 +75,6 @@ public class EventController {
 							// state가 미상시 이며 start , end 가 default값이 아닐 때 이거나 state가 상시 이면서 start,end 가 default 값일 때
 							if (event.getState().equals("상시")	// state가 상시 이거나 state가 미상시 이면서 날짜 맞는 날짜인지 확인 이 되었을 때
 									|| event.getState().equals("미상시") && eventService.stateNoDateCheck(start, end)) {
-								try {
 									event.setStartDate(start.toLocalDate()); // event의 startDate와 endDate에 받은 start,end를 localDate로 변경 시켜서 setting
 									event.setEndDate(end.toLocalDate());
 									// event db, event_img , ftp에 각각 추가 이 과정에서 문제가 하나라도 있다면 IOExeption 발생
@@ -85,11 +84,6 @@ public class EventController {
 										m.addAttribute("Event", event);
 										return "redirect:/event/addEvent";
 									}
-								} catch (IOException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-									return "error";
-								}
 							} else {
 								m.addAttribute("errorMessage", "날짜 입력을 확인 하여 주세요");
 								return "redirect:/event/addEvent";

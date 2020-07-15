@@ -24,7 +24,7 @@
 			<div class="error_main">
 				<div class="error_404">505</div>
 				<div class="error_img">
-					<img src="http://tjteam.dothome.co.kr/byeolsolResort/error/errorImg" alt="">
+					<img src="http://tjteam.dothome.co.kr/byeolsolResort/error/errorImg.png" alt="">
 				</div>
 				<div class="error_info">
 					<div class="title">죄송합니다. 현재 내부 서버의 오류로 페이지를 표시할 수 없습니다.</div>

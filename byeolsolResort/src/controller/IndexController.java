@@ -41,6 +41,9 @@ public class IndexController {
 	@Autowired
 	QuestionService questionService;
 	
+	@Autowired
+	RoomService roomService;
+	
 	
 	// 어드민페이지
 	// Q&A현황
@@ -167,7 +170,8 @@ public class IndexController {
 
 	// 객실현황
 	@GetMapping("/guestroom")
-	public String guestroomPage() {
+	public String guestroomPage(HttpSession session , Model m) {
+		m.addAttribute("roomList",roomService.getRoomAll());
 		return "/serviceList/guestroom";
 	}
 
@@ -243,8 +247,14 @@ public class IndexController {
 					m.addAttribute("errorMessage",errorMessage);
 				m.addAttribute("classification", classification);
 				m.addAttribute("value", value);
-				m.addAttribute("imgList", ftpService.ftpImgPath(classification));
+				List<String> imgList = ftpService.ftpImgPath(classification,value);
+				if(imgList.size()>0) {
+				m.addAttribute("imgList", imgList);
 				return "testForm";
+				}else {
+					m.addAttribute("errorMessage","잘못된 접근 입니다.");
+					return "redirect:/index/main";
+				}
 				}else {
 					m.addAttribute("errorMessage","잘못된 접근 입니다.");
 					return "redirect:/index/main";

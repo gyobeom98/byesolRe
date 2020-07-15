@@ -47,20 +47,26 @@
 						</table>
 						<div class="allimg">
 							<div class="imgfile">
+								<c:if test="${board.firstPath!=null }">
 								<input type="file" name="uploadFile01" id="upload">
-								<img src="${board.firstPath}" height="50px">
+								<img alt="" src="${board.firstPath}" height="50px">
+								</c:if>
 								<div id="preview">
 							</div>
 							</div>
 							<div class="imgfile">
+								<c:if test="${board.secondPath!=null }">
 								<input type="file" name="uploadFile02" id="upload1">
-								<img src="${board.secondPath }" height="50px">
+								<img alt="" src="${board.secondPath }" height="50px">
+								</c:if>
 								<div id="preview1">
 							</div>
 							</div>
 							<div class="imgfile">
+								<c:if test="${board.thirdPath!=null }">
 								<input type="file" name="uploadFile03" id="upload2">
-								<img src="${board.thirdPath }" height="50px">
+								<img alt="" src="${board.thirdPath }" height="50px">
+								</c:if>
 								<div id="preview2">
 							</div>
 							</div>

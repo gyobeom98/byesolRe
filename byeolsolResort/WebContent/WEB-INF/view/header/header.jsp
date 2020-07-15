@@ -64,9 +64,13 @@
 			<ul>
 				<li><c:if test="${userId==null}">
 						<a href="/cus/login">고객센터</a>
-					</c:if> <c:if test="${userId!=null}">
+					</c:if> <c:if test='${userId!=null && userId!="admin"}'>
 						<a href="/question/addQuestion">고객센터</a>
-					</c:if></li>
+					</c:if>
+					<c:if test='${userId=="admin"}'>
+						<a href="/index/adminQnA">Q&A관리</a>
+					</c:if>
+					</li>
 				<li><span>｜</span></li>
 				<li><c:if test="${userId==null}">
 						<a href="/cus/login">로그인</a>

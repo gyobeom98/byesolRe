@@ -20,21 +20,24 @@
 			<header class="header">
 				<jsp:include page="../header/sub.jsp" />
 			</header>
-
-			<div class="error_main">
-				<div class="error_404">400</div>
-				<div class="error_img">
-					<img src="http://tjteam.dothome.co.kr/byeolsolResort/error/errorImg" alt="">
+			<section>
+				<div class="error_main">
+					<div class="error_404">400</div>
+					<div class="error_img">
+						<img
+							src="http://tjteam.dothome.co.kr/byeolsolResort/error/errorImg.png"
+							alt="">
+					</div>
+					<div class="error_info">
+						<div class="title">죄송합니다. 현재 페이지에 오류가있어 표시할 수 없습니다.</div>
+						<p>궁금하신 점이 있으시면 언제든지 고객센터를 통해 문의해 주시기 바랍니다.</p>
+						<p>감사합니다</p>
+					</div>
 				</div>
-				<div class="error_info">
-					<div class="title">죄송합니다. 현재 페이지에 오류가있어 표시할 수 없습니다.</div>
-					<p>궁금하신 점이 있으시면 언제든지 고객센터를 통해 문의해 주시기 바랍니다.</p>
-					<p>감사합니다</p>
-				</div>
-				<footer>
-					<jsp:include page="../footer/footer.jsp" />
-				</footer>
-			</div>
+			</section>
+			<footer>
+				<jsp:include page="../footer/footer.jsp" />
+			</footer>
 		</div>
 	</div>
 </body>

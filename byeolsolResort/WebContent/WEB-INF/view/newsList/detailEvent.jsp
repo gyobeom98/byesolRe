@@ -65,6 +65,9 @@
 				<jsp:include page="../footer/footer.jsp" />
 			</footer>
 		</div>
+		<c:if test='${userId=="admin"}'>
+		<button onclick='updateImg("detailEvent","main")'>배너이미지 수정</button>
+		</c:if>
 	</div>
 </body>
 </html>

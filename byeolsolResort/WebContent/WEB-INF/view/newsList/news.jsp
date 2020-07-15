@@ -31,7 +31,7 @@
 			<section>
 				<div class="writ">
 					<div class="route" style="padding: 0;">
-						<ul style="padding-left: 700px;">
+						<ul style="padding-left: 78%">
 							<li>HOME</li>
 							<li>》</li>
 							<li>별솔소식</li>
@@ -43,9 +43,14 @@
 						<h3 class="stitle">별솔뉴스</h3>
 					</div>
 					<div class="writingForm">
-						<c:if test='${userId=="admin"}'>
-							<button onclick="addAdminBoard()" class="writing">글쓰기</button>
-						</c:if>
+						<div class="writingleft">
+							이름 : <input type="text" id="keyword_name">
+						</div>
+						<div class="writingright">
+							<c:if test='${userId=="admin"}'>
+								<button onclick="addAdminBoard()" class="writing">글쓰기</button>
+							</c:if>
+						</div>
 					</div>
 					<!-- 만약 정보의 총 수가 0 보다 크면 -->
 					<c:if test="${boardView.boardCnt>0 }">
@@ -147,6 +152,9 @@
 				<jsp:include page="../footer/footer.jsp" />
 			</footer>
 		</div>
+		<c:if test='${userId=="admin"}'>
+		<button onclick='updateImg("news","main")'>배너이미지 수정</button>
+		</c:if>
 	</div>
 </body>
 </html>

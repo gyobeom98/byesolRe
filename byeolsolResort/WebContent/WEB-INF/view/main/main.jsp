@@ -29,8 +29,6 @@ window.addEventListener("DOMContentLoaded",function(){
 		alert(errorMessage)
 		location.href="/index/main"
 	}
-	//var mainImg = document.querySelector(".mainImg");
-	//mainImg.style.backgroundImg = 'url:("http://tjteam.dothome.co.kr/byeolsolResort/mainImg/main.jpg?nocache=${Math.random()}")'
 })
 
 
@@ -106,6 +104,9 @@ function updateImg(classification,value){
 		</div>
 	</div>
 	<!--  -->
-	<button onclick='updateImg("mainImg","main")'>이미지 수정</button>	
+	<c:if test='${userId=="admin"}'>
+	<button onclick='updateImg("mainImg","main")'>메인이미지 수정</button>
+	<button onclick='updateImg("mainImg","logo")'>로고이미지 수정</button>	
+	</c:if>
 </body>
 </html>

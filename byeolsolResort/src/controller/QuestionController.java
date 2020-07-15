@@ -114,6 +114,36 @@ public class QuestionController {
 		}
 
 	}
+	
+	@GetMapping("/detailAdminQuestion")
+	public String goDetailAdminQuestion(HttpSession session, @RequestParam(defaultValue = "0") int id, Model m,
+			@RequestParam(defaultValue = "1") int pageNum) {	// id가 들어오지 않으면 0으로 하고 pageNum도 들어오지 않으면 1로 넣음
+		if (session.getAttribute("userId") != null) {
+			String userId = (String) session.getAttribute("userId");
+			if (id > 0) { // id가 0이고
+				Question question = questionService.selectQuestionById(id);
+				if (question != null && question.getWriter().equals(userId) || userId.equals("admin")) { 
+					// question이 null이 아니고 question을 쓴 사람과 로그인을 한 사람이 같거나 관리자 이면
+					// 답변 들과 question을 보여준다.
+					AnswerView answerView = answerService.getAnswerView(pageNum, id);
+					m.addAttribute("answerView", answerView);
+					m.addAttribute("question", question);
+					return "/adminPage/detailAdminQnA";
+				} else {
+					m.addAttribute("errorMessage", "잘못된 접근 입니다.");
+					return "redirect:/index/main";
+				}
+			} else {
+				m.addAttribute("errorMessage", "잘못된 접근 입니다.");
+				return "redirect:/question/list";
+			}
+
+		} else {
+			m.addAttribute("errorMessage", "로그인이 되어 있지 않습니다.");
+			return "redirect:/index/main";
+		}
+
+	}
 
 	@PostMapping("/addAnswer")
 	public String addAnswerP(Answer answer, HttpSession session, @RequestParam(defaultValue = "1") int pageNum, Model m) {
@@ -132,7 +162,25 @@ public class QuestionController {
 		} else {
 			return "redirect:/index/main";
 		}
-
+	}
+	
+	@PostMapping("/addAdminAnswer")
+	public String addAdminAnswerP(Answer answer, HttpSession session, @RequestParam(defaultValue = "1") int pageNum, Model m) {
+		if (session.getAttribute("userId") != null) {
+			String userId = (String) session.getAttribute("userId");
+			answer.setWriter(userId);
+			//추가 하려는 답변에 공백 값이 있는지 확인 하고 없다면 추가
+			if(answerService.nullCheck(answer)) {
+			answerService.addAnswer(answer);
+			return "redirect:/question/detailAdminQuestion?id=" + answer.getQuestionId() + "&pageNum=" + pageNum;
+			}else {
+				m.addAttribute("errorMessage","입력 하지 않은 값이 있습니다.");
+				return "redirect:/question/detailAdminQuestion?id=" + answer.getQuestionId() + "&pageNum=" + pageNum;
+			}
+			
+		} else {
+			return "redirect:/index/main";
+		}
 	}
 
 	@GetMapping("/updateQuestion")

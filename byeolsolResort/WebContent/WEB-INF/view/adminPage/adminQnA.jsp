@@ -68,7 +68,7 @@
 						</thead>
 						<tbody>
 							<c:forEach var="q" items="${questionView.questionList }">
-							<tr>
+							<tr onclick="questionUser(${q.id})">
 								<td>${q.id}</td>
 								<td>${q.division }</td>
 								<td>${q.message }</td>
@@ -79,13 +79,15 @@
 							</c:forEach>
 						</tbody>
 					</table>
-					<input type="button" onclick="location.href='answerPage'" value="답변">
 				</form>
 			</section>
 			<footer>
 				<jsp:include page="../footer/footer.jsp"/>
 			</footer>
 		</div>
+		<c:if test='${userId=="admin"}'>
+		<button onclick='updateImg("adminQnA","main")'>배너이미지 수정</button>
+		</c:if>
 	</div>
 </body>
 </html>

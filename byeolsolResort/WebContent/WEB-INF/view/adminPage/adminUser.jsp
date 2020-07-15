@@ -68,7 +68,6 @@
 									<td>phone</td>
 									<td>email_state</td>
 									<td>birth_date</td>
-									<td></td>
 								</tr>
 							</thead>
 							<tbody>
@@ -86,12 +85,6 @@
 										<td>${u.birthDate }</td>
 									</tr>
 									</c:forEach>
-								<tr>
-									<td><input type="button"
-										onclick="location.href=(어드민회원수정폼)" value="수정"></td>
-									<td><input type="button"
-										onclick="location.href=(어드민회원삭제폼)" value="삭제"></td>
-								</tr>
 							</tbody>
 						</table>
 					</div>
@@ -101,6 +94,9 @@
 				<jsp:include page="../footer/footer.jsp" />
 			</footer>
 		</div>
+		<c:if test='${userId=="admin"}'>
+		<button onclick='updateImg("adminUser","main")'>배너이미지 수정</button>
+		</c:if>
 	</div>
 </body>
 </html>

@@ -64,11 +64,6 @@ header:hover {
 	transition: 1.5s;
 }
 
-.stitle{
-	font-size: 45px;
-	margin: 5% 0%;
-}
-
 #logo {
 	display: flex;
 }
@@ -382,9 +377,23 @@ tbody{
 	border: none;
 	width: 130px;
 	height: 40px;
+}
+
+.writingleft{
+	float: left;
+	margin-left: 36%;
+	font-size: 23px;
+}
+
+.writingright{
 	float: right;
 }
 
 .writingForm{
 	width: 1000px;
+}
+
+#keyword_name{
+	width: 66%;
+	height: 33px;
 }

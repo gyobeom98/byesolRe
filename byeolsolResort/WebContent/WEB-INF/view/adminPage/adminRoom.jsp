@@ -22,7 +22,7 @@
 <div class="allwrap">
 	<div class="wrap">
 		<header class="header">
-			<jsp:include page="../header/sub.jsp"/>
+			<jsp:include page="../header/sub.jsp" />
 		</header>
 		<div class="subimage">
 			<h2>서브 이미지 들어가야함.</h2>
@@ -73,19 +73,20 @@
 						</thead>
 						<tbody>
 							<c:forEach var="i" items="${reservInfoView.reservInfoList }">
-							<tr>
-								<td>${i.id }</td>
-								<td>${i.concept }</td>
-								<td>${i.userId }</td>
-								<td>${i.userName }</td>
-								<td>${i.phone }</td>
-								<td>${i.peopleCount }</td>
-								<td>${i.startDate }</td>
-								<td>${i.endDate }</td>
-								<td>${i.totalPrice }</td>
-								<td onclick="clickEvent(${i.id})">${i.state }</td>
-								<td><button type="button" onclick="goDeleteReserv(${i.id})">취소</button></td>
-							</tr>
+								<tr>
+									<td>${i.id }</td>
+									<td>${i.concept }</td>
+									<td>${i.userName }</td>
+									<td>${i.userId }</td>
+									<td>${i.phone }</td>
+									<td>${i.peopleCount }</td>
+									<td>${i.startDate }</td>
+									<td>${i.endDate }</td>
+									<td>${i.totalPrice }</td>
+									<td onclick="clickEvent(${i.id})">${i.state }</td>
+									<td><button type="button"
+											onclick="goDeleteReserv(${i.id})">취소</button></td>
+								</tr>
 							</c:forEach>
 						</tbody>
 					</table>
@@ -93,9 +94,12 @@
 			</form>
 		</section>
 		<footer>
-			<jsp:include page="../footer/footer.jsp"/>
+			<jsp:include page="../footer/footer.jsp" />
 		</footer>
 	</div>
+	<c:if test='${userId=="admin"}'>
+		<button onclick='updateImg("adminRoom","main")'>배너이미지 수정</button>
+	</c:if>
 </div>
 </body>
 </html>

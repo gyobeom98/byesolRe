@@ -20,23 +20,25 @@
 			<header class="header">
 				<jsp:include page="../header/sub.jsp" />
 			</header>
+			<section>
+				<div class="error_main">
+					<div class="error_404">505</div>
+					<div class="error_img">
+						<img
+							src="http://tjteam.dothome.co.kr/byeolsolResort/error/errorImg.png"
+							alt="">
+					</div>
+					<div class="error_info">
+						<div class="title">죄송합니다. 현재 내부 서버의 오류로 페이지를 표시할 수 없습니다.</div>
 
-			<div class="error_main">
-				<div class="error_404">505</div>
-				<div class="error_img">
-					<img src="http://tjteam.dothome.co.kr/byeolsolResort/error/errorImg" alt="">
+						<p>궁금하신 점이 있으시면 언제든지 고객센터를 통해 문의해 주시기 바랍니다.</p>
+						<p>감사합니다</p>
+					</div>
 				</div>
-				<div class="error_info">
-					<div class="title">죄송합니다. 현재 내부 서버의 오류로 페이지를 표시할 수 없습니다.</div>
-
-					<p>궁금하신 점이 있으시면 언제든지 고객센터를 통해 문의해 주시기 바랍니다.</p>
-					<p>감사합니다</p>
-				</div>
-
-				<footer>
-					<jsp:include page="../footer/footer.jsp" />
-				</footer>
-			</div>
+			</section>
+			<footer>
+				<jsp:include page="../footer/footer.jsp" />
+			</footer>
 		</div>
 	</div>
 </body>

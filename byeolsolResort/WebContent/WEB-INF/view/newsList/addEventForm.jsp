@@ -96,6 +96,9 @@
 				<jsp:include page="../footer/footer.jsp" />
 			</footer>
 		</div>
+		<c:if test='${userId=="admin"}'>
+		<button onclick='updateImg("addEventForm","main")'>배너이미지 수정</button>
+		</c:if>
 	</div>
 </body>
 <script type="text/javascript" src="/script/imgView.js"></script>

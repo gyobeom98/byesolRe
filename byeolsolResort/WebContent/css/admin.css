@@ -366,6 +366,7 @@ a.li1 {
 td {
 	border-bottom: 1px solid #e6e6e6;
 	border-collapse: collapse;
+	text-align: center;
 }
 
 input {
@@ -459,4 +460,118 @@ h1 {
 	line-height: 60px;
 	font-weight: bold;
 	margin-bottom: 30px;
+}
+
+.updel{
+	width: 50px;
+	height: 43px;
+}
+
+
+.titleForm {
+	max-width: 1000px;
+	margin: auto;
+}
+
+.answerForm {
+	max-width: 1000px;
+	margin: auto;
+	margin-top: 10%
+}
+
+.anwer {
+	margin-bottom: 10px;
+}
+
+.hide {
+	display: none;
+}
+
+.myQnAPagenation {
+	font-weight: bold;
+	font-size: 20px;
+	text-align: center;
+	margin-top: 30px;
+}
+
+.myQnAtr {
+	font-weight: bold;
+	background-color: #d1d1d1;
+}
+
+.qNaUpForm {
+	text-aign: center;
+}
+
+td {
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+table tbody tr .dmq {
+	width: 100px;
+	text-align: center;
+	font-weight: bold;
+}
+
+.btn {
+	float: right;
+}
+
+#updateBtn, #deleteBtn {
+	width: 110px;
+	height: 30px;
+	font-weight: bold;
+	border-style: none;
+}
+
+#updateBtn {
+	background-color: #d1d1d1;
+}
+
+.commentBox {
+	width: 80%;
+	float: left;
+}
+
+.writeBtn {
+	
+}
+
+.comment_main {
+	margin-top: 40px;
+}
+
+p {
+	font-weight: bold;
+	margin-bottom: 20px;
+}
+
+.reComment {
+	font-weight: bold;
+	margin-bottom: 20px;
+}
+
+table tr .comWriter {
+	width: 100px;
+}
+
+table tr .answerBtn {
+	text-align: right;
+}
+
+table tr .answerBtn button {
+	height: 30px;
+	width: 50px;
+	background-color: #d1d1d1;
+	border-style: none;
+}
+.submit{
+	text-align:center;
+}
+table .number {
+	border-style: none;
+}
+.qNa_submit{
+	margin:0 auto;
 }

@@ -40,3 +40,13 @@ $(function() {
 						.children().children("a").css("font-size", "18px");
 			})
 })
+
+$(document).ready(function () {
+	$("#keyword_name").keyup(function () {
+		var r = $(this).val();
+		$("#user_list > tbody > tr").hide();
+		var temp = $(`#user_list > tbody > tr > td:nth-child(4n+3):contains('${r}')`);
+
+		$(temp).parent().show();
+	})
+})

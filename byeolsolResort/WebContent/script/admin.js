@@ -2,6 +2,18 @@ function goDeleteReserv(id) {
 	location.href = "/reserv/deleteReserv?reservId=" + id;
 }
 
+function questionUser(id){
+	location.href="/question/detailAdminQuestion?id="+id;
+}
+
+function goUpdateAnswer(id){
+	location.href="/question/updateAnswer?id="+id;
+}
+
+function updateQuestion(id) {
+	location.href = "/question/updateQuestion?id="+id; 
+}
+
 function clickEvent(id){
 	var c = confirm("상태를 바꾸시겠습니까?")
 	if (c) {
@@ -43,4 +55,24 @@ $(function() {
 				$(this).children().children().eq(1).children().children()
 						.children().children("a").css("font-size", "18px");
 			})
+})
+
+$(document).ready(function () {
+	$("#keyword_name").keyup(function () {
+		var r = $(this).val();
+		$("#user_list > tbody > tr").hide();
+		var temp = $(`#user_list > tbody > tr > td:nth-child(10n+3):contains('${r}')`);
+
+		$(temp).parent().show();
+	})
+})
+
+$(document).ready(function () {
+	$("#keyword_room").keyup(function () {
+		var r = $(this).val();
+		$("#user_list > tbody > tr").hide();
+		var temp = $(`#user_list > tbody > tr > td:nth-child(10n+2):contains('${r}')`);
+
+		$(temp).parent().show();
+	})
 })

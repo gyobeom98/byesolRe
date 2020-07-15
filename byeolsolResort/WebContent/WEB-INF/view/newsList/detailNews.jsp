@@ -54,23 +54,30 @@
 							</tr>
 							<tr>
 								<td colspan="2" style="width:100%;padding-top: 50px; padding-bottom: 50px;">
+								<table>
+									<tr>
 										<td class="text"><textarea rows="8" cols="150" name="context" class="context">${board.content}</textarea> </td>
+									</tr>
+								</table>
 								</td>
 							</tr>
 							<c:if test="${board.firstPath!=null }">
 							<tr id="photo" class="photo">
 								<c:if test="${board.firstPath!=null }">
-								<td><img class="detailImg" src="${board.firstPath}"></td>
+								<td colspan="2"><img src="${board.firstPath}"></td>
+								<td></td>
 								</c:if>
 							</tr>
 							<tr class="photo">
 								<c:if test="${board.secondPath!=null }">
-								<td><img class="detailImg" src="${board.secondPath }"></td>
+								<td colspan="2"><img src="${board.secondPath }"></td>
+								<td></td>
 								</c:if>
 							</tr>
 							<tr class="photo">
 								<c:if test="${board.thirdPath!=null }">
-								<td><img class="detailImg" src="${board.thirdPath }"></td>
+								<td colspan="2"><img src="${board.thirdPath }"></td>
+								<td></td>
 								</c:if>
 							</tr>
 							</c:if>
@@ -89,11 +96,8 @@
 						</div>
 					</div>
 					</div>
-					
-					
 					<a href="javascript:history.back()"><i class="fas fa-arrow-left"></i></a>
 				</div>
-				
 			</section>
 			<footer>
 				<jsp:include page="../footer/footer.jsp"/>

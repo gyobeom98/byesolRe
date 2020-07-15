@@ -16,9 +16,12 @@
 	<div class="allwrap">
 		<div class="wrap">
 			<header class="header">
-				<jsp:include page="../header/sub.jsp"/>
+				<jsp:include page="../header/sub.jsp" />
 			</header>
-				<img class="subbanner" src="https://gyonewproject.000webhostapp.com/byeolsolResort/myPage/myPageSub.jpg">
+			<div class="subbanner">
+				<img
+					src="https://gyonewproject.000webhostapp.com/byeolsolResort/myPage/myPageSub.jpg">
+			</div>
 			<section>
 				<div class="writ">
 					<div class="route">
@@ -61,11 +64,11 @@
 				</div>
 			</section>
 			<footer>
-				<jsp:include page="../footer/footer.jsp"/>
+				<jsp:include page="../footer/footer.jsp" />
 			</footer>
 		</div>
 		<c:if test='${userId=="admin"}'>
-		<button onclick='updateImg("myPage","myPageSub")'>배너이미지 수정</button>
+			<button onclick='updateImg("myPage","myPageSub")'>배너이미지 수정</button>
 		</c:if>
 	</div>
 </body>

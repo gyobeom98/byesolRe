@@ -64,6 +64,10 @@ header:hover {
 	transition: 1.5s;
 }
 
+.stitle{
+	font-size: 45px;
+}
+
 #logo {
 	display: flex;
 }
@@ -363,37 +367,3 @@ tr{
 	padding: 0 3px 0 3px;
 }
 
-tbody{
-	width: 100%
-}
-
-.detailImg{
-	width: 1000px;
-	height: 500px;
-}
-
-.writing{
-	background-color: #d4d4d4;
-	border: none;
-	width: 130px;
-	height: 40px;
-}
-
-.writingleft{
-	float: left;
-	margin-left: 36%;
-	font-size: 23px;
-}
-
-.writingright{
-	float: right;
-}
-
-.writingForm{
-	width: 1000px;
-}
-
-#keyword_name{
-	width: 66%;
-	height: 33px;
-}

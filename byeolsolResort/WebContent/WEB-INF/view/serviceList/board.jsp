@@ -19,7 +19,9 @@
 			<header class="header">
 				<jsp:include page="../header/sub.jsp"/>
 			</header>
-			<img class="subbanner" src="https://gyonewproject.000webhostapp.com/byeolsolResort/board/byeolsolnewssub.jpg">
+			<div class="subbanner">
+			<img src="https://gyonewproject.000webhostapp.com/byeolsolResort/board/byeolsolnewssub.jpg">
+			</div>
 			<section>
 				<div class="writ">
 					<div class="route">

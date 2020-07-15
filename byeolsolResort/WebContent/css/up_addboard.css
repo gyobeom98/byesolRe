@@ -19,12 +19,20 @@
 	margin-top:50px;
 }
 
+.imgfile>img{
+	filter:brightness(0.5);
+	margin-left: 10px;
+    margin-top: 10px;
+    margin-bottom: 50px;
+}
+
 .tableborder{
 	margin: 20px 10px;
 	border-top: 1px solid #d1d1d1;
     border-bottom: 1px solid #d1d1d1;
     padding:100px 0 0 0;
-    width: 1000px;	
+    width: 1000px;
+    overflow: hidden;	
 }
 .table{
 border-top: 2px solid #969696;

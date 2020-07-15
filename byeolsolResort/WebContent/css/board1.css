@@ -29,6 +29,7 @@ table {
 	font-size:14px;
 	margin-bottom:30px;
 	border:0;
+	overflow: hidden;
 }
 
 tr{
@@ -229,7 +230,28 @@ display: flex;
 	text-align: left;
 }
 
-.imgs{
-	width: 300px;
-	height: 300px;
+.keyword_nameBox{
+	border: 2px solid #EBEAEA;
+	border-radius: 5px;
+	padding:5px;
+	float:right;
+	display:flex;
+	align-items: center;
+	margin:10px 0px 10px 10px;
 }
+.keyword_nameBox>div{
+	display:flex;
+	padding:3px 5px 3px 5px;
+	border-radius: 5px;
+	background:#C1C1C1;
+	font-size:14px;
+	font-weight:bold;
+}
+.keyword_nameBox>input{
+	display:flex;
+	margin-left:3px;
+	border: 1px solid #C1C1C1;
+	height:20px;
+	border-radius: 5px;
+}
+

@@ -337,7 +337,7 @@ address ul>li {
 	padding: 0 5px;
 }
 
-img {
+.imgForm{
 	width: 97%;
 	height: 600px;
 }
@@ -443,4 +443,8 @@ div .comment{
 	margin: 30px 0px 30px 0px;
 	font-weight: bold;
 	font-size: 20px;
+}
+
+.subbanner{
+	margin-top: 150px;
 }

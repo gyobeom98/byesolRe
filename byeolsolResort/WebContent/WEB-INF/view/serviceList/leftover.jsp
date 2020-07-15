@@ -24,7 +24,9 @@
 			<header class="header">
 				<jsp:include page="../header/sub.jsp"/>
 			</header>
+			<div class="subbanner">
 			<img class="subbanner" src="https://gyonewproject.000webhostapp.com/byeolsolResort/reserv/reservSub.jpg">
+			</div>
 			<section>
 				<div class="writ">
 					<div class="route">

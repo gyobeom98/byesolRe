@@ -18,7 +18,10 @@
 			<header class="header">
 				<jsp:include page="../header/sub.jsp" />
 			</header>
-			<img class="subbanner" src="https://gyonewproject.000webhostapp.com/byeolsolResort/board/byeolsolnewssub.jpg">
+			<div class="subbanner">
+				<img class="subbanner"
+					src="https://gyonewproject.000webhostapp.com/byeolsolResort/board/byeolsolnewssub.jpg">
+			</div>
 			<section>
 				<div class="writ">
 					<div class="route">
@@ -62,13 +65,13 @@
 					<c:if test="${board.firstPath!=null }">
 						<div>
 							<c:if test="${board.firstPath!=null }">
-								<img class="updateForm" src="${board.firstPath }">
+								<img class="imgForm" src="${board.firstPath }">
 							</c:if>
 							<c:if test="${board.secondPath!=null }">
-								<img class="updateForm" src="${board.secondPath }">
+								<img class="imgForm" src="${board.secondPath }">
 							</c:if>
 							<c:if test="${board.thirdPath!=null }">
-								<img class="updateForm" src="${board.thirdPath }">
+								<img class="imgForm" src="${board.thirdPath }">
 							</c:if>
 						</div>
 					</c:if>
@@ -193,7 +196,8 @@
 			</footer>
 		</div>
 		<c:if test='${userId=="admin"}'>
-		<button onclick='updateImg("board","byeolsolnewssub")'>배너이미지 수정</button>
+			<button onclick='updateImg("board","byeolsolnewssub")'>배너이미지
+				수정</button>
 		</c:if>
 	</div>
 </body>

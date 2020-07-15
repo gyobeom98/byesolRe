@@ -29,7 +29,7 @@ select * from question where writer = #{writer} order by reg_date desc limit #{f
 select * from question
 </select>
 
-<select id="countQuestionByState">
+<select id="countQuestionByState" resultType="int">
 select count(*) from question where state = "yet"
 </select>
 

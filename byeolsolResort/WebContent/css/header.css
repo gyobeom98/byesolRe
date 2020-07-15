@@ -208,6 +208,7 @@ header:hover #logo>a{
 	float: left;
 	padding: 5px;
 }
+
 .route>ul>li::after{
 	clear: both;
 }

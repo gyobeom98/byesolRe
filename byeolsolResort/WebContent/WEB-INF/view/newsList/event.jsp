@@ -50,7 +50,7 @@
 							<div class="event_area">
 								<c:set var="x" value="0" />
 								<c:set var="y" value="3" />
-								<table>
+								<table class="eventTable">
 									<c:forEach var="i" items="${eventView.eventWithThumbList}">
 										<c:if test="${x%y==0 }">
 											<tr>

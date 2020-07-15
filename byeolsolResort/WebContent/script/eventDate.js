@@ -1,13 +1,3 @@
-function LoadImg(value) {
-	if (value.files && value.files[0]) {
-		var reader = new FileReader();
-		reader.onload = function(e) {
-			$('#LoadImg').attr('src', e.target.result);
-		}
-		reader.readAsDataURL(value.files[0]);
-	}
-}
-
 $(function() {
 	$.datepicker.setDefaults($.datepicker.regional['ko']);
 	// 시작일(date1)은 종료일(date2) 이후 날짜 선택 불가
@@ -22,7 +12,11 @@ $(function() {
 				buttonImage : "/jdAdmin/images/calendar.png", // 버튼 이미지
 				buttonImageOnly : true, // 버튼 이미지만 표시할지 여부
 				buttonText : "날짜선택", // 버튼의 대체 텍스트
-				yearRange : 'c-100:c+10',
+				yearRange : 'c0:c+200',
+				currentText : '오늘 날짜',
+				showButtonPanel : true, 
+				closeText : '닫기',
+				showAnim : "slide",
 				dateFormat : "yy-mm-dd", // 날짜의 형식
 				showMonthAfterYear : true,
 				changeYear : true,
@@ -46,10 +40,14 @@ $(function() {
 						"8월", "9월", "10월", "11월", "12월" ],
 				dayNamesMin : [ "일", "월", "화", "수", "목", "금", "토" ],
 				dateFormat : "yy-mm-dd",
-				yearRange : 'c-100:c+10',
+				yearRange : 'c0:c+200',
 				showMonthAfterYear : true,
+				currentText : '오늘 날짜',
+				showButtonPanel : true, 
+				closeText : '닫기',
 				changeYear : true,
 				changeMonth : true,
+				showAnim : "slide",
 				maxDate : 0,
 				onClose : function(selectedDate) {
 					// 종료일(date2) datepicker가 닫힐때

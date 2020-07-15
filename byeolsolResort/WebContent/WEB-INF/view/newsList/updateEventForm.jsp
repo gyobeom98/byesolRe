@@ -13,6 +13,13 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" src="/script/sub.js"></script>
 <script type="text/javascript" src="/script/event.js"></script>
+<script type="text/javascript" src="/script/eventDate.js"></script>
+<link rel="stylesheet"
+	href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css"
+	type="text/css" />
+<script
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
 </head>
 <body>
 	<div class="allwrap">
@@ -52,8 +59,8 @@
 								<tr>
 									<td class="tdTitle">이벤트 기간</td>
 									<td>
-									<input type="date" name="start" value="${event.startDate}">
-									<input type="date" name="end" value="${event.endDate}">
+									<input type="date" id="date1" name="start" value="${event.startDate}" readonly="readonly">
+									<input type="date" id="date2" name="end" value="${event.endDate}" readonly="readonly">
 									미상시<input type="radio" name="state" value="미상시">
 									상시<input type="radio" name="state" value="상시">
 									</td>

@@ -49,11 +49,11 @@
 						<div class="detailForm">
 							<table class="detailTable">
 								<tr>
-									<td class="eventTitle">${event.title}</td>
-									<td class="eventRegDate">${event.regDate }</td>
+									<td class="eventTitle" style="border:none;">${event.title}</td>
+									<td class="eventRegDate" style="border:none;">${event.regDate }</td>
 								</tr>
 								<tr>
-									<td colspan="2"><img class="imgeSize"
+									<td colspan="2" style="border:none;"><img class="imgeSize"
 										src="${event.imgPath}"></td>
 								</tr>
 							</table>

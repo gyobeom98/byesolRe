@@ -8,7 +8,6 @@
 <title>별솔리조트</title>
 <link rel="stylesheet" href="/css/board1.css">
 <link rel="stylesheet" href="/css/notice.css">
-<link rel="stylesheet" href="/css/footer.css">
 <link rel="stylesheet" href="/css/header.css">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -28,8 +27,8 @@
 			</div>
 			<section>
 				<div class="writ">
-					<div class="route">
-						<ul>
+					<div class="route" style="padding:0;">
+						<ul style="padding-left: 650px;">
 							<li>HOME</li>
 							<li>》</li>
 							<li>별솔소식</li>
@@ -55,27 +54,23 @@
 							</tr>
 							<tr>
 								<td colspan="2" style="width:100%;padding-top: 50px; padding-bottom: 50px;">
-								<table>
-									<tr>
 										<td class="text"><textarea rows="8" cols="150" name="context" class="context">${board.content}</textarea> </td>
-									</tr>
-								</table>
 								</td>
 							</tr>
 							<c:if test="${board.firstPath!=null }">
 							<tr id="photo" class="photo">
 								<c:if test="${board.firstPath!=null }">
-								<td><img src="${board.firstPath}"></td>
+								<td><img class="detailImg" src="${board.firstPath}"></td>
 								</c:if>
 							</tr>
 							<tr class="photo">
 								<c:if test="${board.secondPath!=null }">
-								<td><img src="${board.secondPath }"></td>
+								<td><img class="detailImg" src="${board.secondPath }"></td>
 								</c:if>
 							</tr>
 							<tr class="photo">
 								<c:if test="${board.thirdPath!=null }">
-								<td><img src="${board.thirdPath }"></td>
+								<td><img class="detailImg" src="${board.thirdPath }"></td>
 								</c:if>
 							</tr>
 							</c:if>

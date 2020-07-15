@@ -25,7 +25,7 @@
 				<div class="error_main">
 					<div class="error_404">404</div>
 					<div class="error_img">
-						<img src="http://tjteam.dothome.co.kr/byeolsolResort/error/errorImg.png" alt="">
+						<img src="http://tjteam.dothome.co.kr/byeolsolResort/error/errorImg" alt="">
 					</div>
 					<div class="error_info">
 						<div class="title">죄송합니다. 현재 찾을 수 없는 페이지를 요청 하셨습니다.</div>

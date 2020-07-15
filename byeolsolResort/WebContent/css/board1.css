@@ -1,5 +1,8 @@
 .writ{
+	display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
     max-width: 1000px;
     text-align: center;
     margin: 50px auto 0;
@@ -207,6 +210,7 @@ display: flex;
 	border-top: 2px solid #969696;
 	border-bottom: 2px solid #969696;
 	width:1000px;
+	overflow: hidden;
 
 }
 
@@ -223,4 +227,9 @@ display: flex;
 	width:1000px;
 	padding: 20px;
 	text-align: left;
+}
+
+.imgs{
+	width: 300px;
+	height: 300px;
 }

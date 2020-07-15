@@ -320,6 +320,7 @@ table {
     border-bottom: 1px solid #d1d1d1;
     padding:100px 0 70px 0;
     width: 1000px;	
+    overflow: hidden;
 }
 
 .tableborder2{
@@ -328,7 +329,7 @@ table {
     border-bottom: 1px solid #d1d1d1;
     padding:100px 0 30px 0;
     width: 1000px;
-	
+	overflow: hidden;
 }
 .notice_top{
     border-bottom: 1px solid #d1d1d1;
@@ -365,4 +366,25 @@ tr{
 .numbermap>a{
 	display:flex;
 	padding: 0 3px 0 3px;
+}
+
+tbody{
+	width: 100%
+}
+
+.detailImg{
+	width: 1000px;
+	height: 500px;
+}
+
+.writing{
+	background-color: #d4d4d4;
+	border: none;
+	width: 130px;
+	height: 40px;
+	float: right;
+}
+
+.writingForm{
+	width: 1000px;
 }

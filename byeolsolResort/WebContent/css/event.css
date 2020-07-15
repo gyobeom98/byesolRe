@@ -66,7 +66,7 @@ form[method="post"]{
 .imgeSize{
 	width: 800px;
 	height: 1500px;
-	margin: 0 100px;
+	margin: 0 8%;
 }
 
 .hide{
@@ -88,20 +88,19 @@ section{
     background: #E8E3E3;
     padding: 30px 10px;
     text-align: center;
-    margin:0 15px 35px;
     border-radius: 80px / 40px;
 }
 
 .eventTitle{
-	width: 20%;
+	width: 13%;
 	padding-left: 10%;
 	border-right: 1px solid;
 }
 
 .eventRegDate{
-	padding-right: 10%;
+	padding-right: 11%;
 	text-align: right;
-	width: 11%
+	width: 8%
 }
 
 .eventTitle, .eventRegDate{
@@ -147,6 +146,7 @@ td{
 table{
 	border-collapse: collapse;
 	margin: 0 auto;
+	width: 1000px;
 }
 .submitBtn{
 	width: 130px;
@@ -159,10 +159,20 @@ table{
 .submitBtn_mom{
 	text-align: center;
 }
+
 .imgs{
 	width: 100%;
+	height: 300px;
 }
 
 .bottomNone{
 	border-bottom:  none;
+}
+
+.eventTable{
+	width: 0;
+}
+
+tbody{
+	width: 100%
 }

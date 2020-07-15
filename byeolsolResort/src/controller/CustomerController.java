@@ -41,6 +41,7 @@ import model.service.BoardService;
 import model.service.CustomerService;
 import model.service.HolyDayService;
 import model.service.ReservService;
+import model.view.CustomerView;
 
 @Controller
 @RequestMapping("/cus")
@@ -229,7 +230,7 @@ public class CustomerController {
 				m.addAttribute("customer", customer);
 				return "/mypage/mypage";
 			} else {
-				return "redirect:/index/adminUser";
+				return "redirect:/cus/adminUserInfo";
 			}
 		} else {
 			m.addAttribute("errorMessage", "로그인이 되어 있지 않습니다.");
@@ -496,6 +497,10 @@ public class CustomerController {
 			if (userId.equals("admin")) {
 				if (!errorMessage.equals(""))
 					m.addAttribute("errorMessage", errorMessage);
+				CustomerView view  = customerService.getCustomerView(pageNum);
+				for (Customer customer : view.getCustomerList()) {
+					System.out.println(customer);
+				}
 				m.addAttribute("customerView", customerService.getCustomerView(pageNum));
 				return "/adminPage/adminUser";
 			} else {

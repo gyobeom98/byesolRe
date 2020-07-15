@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,7 @@ import model.dto.Room;
 import model.service.CustomerService;
 import model.service.FtpService;
 import model.service.IndexService;
+import model.service.QuestionService;
 import model.service.ReservService;
 import model.service.RoomService;
 
@@ -36,11 +38,27 @@ public class IndexController {
 	@Autowired
 	IndexService indexService;
 	
+	@Autowired
+	QuestionService questionService;
+	
+	
 	// 어드민페이지
 	// Q&A현황
 	@GetMapping("/adminQnA")
-	public String adminQnAPage() {
-		return "/adminPage/adminQnA";
+	public String adminQnAPage(HttpSession session, Model m , @RequestParam(defaultValue = "1")int pageNum) {
+		if(session.getAttribute("userId") != null) {
+			String userId = (String)session.getAttribute("userId");
+			if(userId.equals("admin")) {
+				m.addAttribute("questionView",questionService.getQuestionViewWithState(pageNum));
+				return "/adminPage/adminQnA";
+			}else {
+				m.addAttribute("errorMessage","권한이 없는 접근입니다.");
+				return "redirect:/index/main";
+			}
+		}else {
+			m.addAttribute("errorMessage","로그인이 되어 있지 않습니다.");
+			return "redirect:/index/main";
+		}
 	}
 	
 	
@@ -85,11 +103,9 @@ public class IndexController {
 
 	// 메인페이지
 	@GetMapping("/main")
-	public String mainPage(@RequestParam(required = false) String errorMessage, Model m , @RequestParam(defaultValue = "0")int randome) {
+	public String mainPage(@RequestParam(required = false) String errorMessage, Model m) {
 		if(errorMessage != null)
 		m.addAttribute("errorMessage", errorMessage);
-		if(randome>0)
-		m.addAttribute("randome",randome);
 		return "/main/main";
 	}
 
@@ -257,9 +273,7 @@ public class IndexController {
 				if (!uploadFile.isEmpty() || !dumpImg.equals("")) {
 					if (!uploadFile.isEmpty() && dumpImg.equals("") && ftpService.fileTypeCheck(uploadFile)) {
 						ftpService.ftpAdminImg(uploadFile, classification, value);
-						int randome = (int)(Math.random()*45)+1;
 						m.addAttribute("value",value);
-						m.addAttribute("randome",randome);
 						return "redirect:"+indexService.returnPath(classification, value);
 					} else if (uploadFile.isEmpty() && !dumpImg.equals("") ) {
 						System.out.println(value);
@@ -271,9 +285,6 @@ public class IndexController {
 						}else {
 						ftpService.ftpAdminImgRename(classification, value, dumpImg);
 						}
-						
-						int randome = (int)(Math.random()*45)+1;
-						m.addAttribute("randome",randome);
 						return "redirect:/index/main";
 					}else {
 						System.out.println(dumpImg);
@@ -298,5 +309,6 @@ public class IndexController {
 			return "redirect:/index/main";
 		}
 	}
+	
 
 }

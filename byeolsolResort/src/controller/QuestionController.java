@@ -38,8 +38,7 @@ public class QuestionController {
 			if(!userId.equals("admin")) {
 			return "/mypage/qna";
 			}else {
-				m.addAttribute("errorMessage","관리자는 접근 할 수 없습니다.");
-				return "redirect:/index/main";
+				return "redirect:/index/adminQnA";
 			}
 		} else {
 			m.addAttribute("errorMessage","로그인이 되어 있지 않습니다.");

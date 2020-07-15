@@ -38,7 +38,7 @@ public class QuestionController {
 			if(!userId.equals("admin")) {
 			return "/mypage/qna";
 			}else {
-				return "redirect:/index/adminQnA";
+				return "redirect:/cus/myPage";
 			}
 		} else {
 			m.addAttribute("errorMessage","로그인이 되어 있지 않습니다.");
@@ -135,7 +135,7 @@ public class QuestionController {
 				}
 			} else {
 				m.addAttribute("errorMessage", "잘못된 접근 입니다.");
-				return "redirect:/question/list";
+				return "redirect:/index/adminQnA";
 			}
 
 		} else {
@@ -198,7 +198,7 @@ public class QuestionController {
 				}
 			} else {
 				m.addAttribute("errorMessage", "잘못된 접근 입니다.");
-				return "redirect:/index/main";
+				return "redirect:/question/list";
 			}
 		} else {
 			m.addAttribute("errorMessage", "로그인이 되어 있지 않습니다.");
@@ -296,7 +296,7 @@ public class QuestionController {
 					}
 				} else {
 					m.addAttribute("errorMessage", "잘못된 접근 입니다.");
-					return "redirect:/index/main";
+					return "redirect:/question/list";
 				}
 			} else {
 				m.addAttribute("errorMessage", "잘못된 접근 입니다.");

@@ -17,9 +17,8 @@
 			<header class="header">
 				<jsp:include page="../header/sub.jsp"/>
 			</header>
-			<div class="subimage">
-				<h2>서브 이미지 들어가야함.</h2>
-			</div>
+			<img class="subbanner"
+					src="https://gyonewproject.000webhostapp.com/byeolsolResort/myPage/myPageSubimg.jpg">
 			<section>
 				<div class="writ">
 					<div class="route">
@@ -48,7 +47,7 @@
 			</footer>
 		</div>
 		<c:if test='${userId=="admin"}'>
-		<button onclick='updateImg("about","main")'>배너이미지 수정</button>
+		<button onclick='updateImg("myPage","myPageSub")'>배너이미지 수정</button>
 		</c:if>
 	</div>
 </body>

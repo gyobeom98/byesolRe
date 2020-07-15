@@ -40,10 +40,6 @@ public class RoomController {
 	
 	
 	
-//	@GetMapping("/updateRoom")
-//	public String goUpdateRoomForm(HttpSession session, Model m,) {
-//		
-//	}
 	
 	
 	

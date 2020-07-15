@@ -82,7 +82,6 @@ public class ReservController {
 					return errorMessage.getResult();
 				} else {
 					m.addAttribute("errorMessage", "예약 정보를 다시 확인 해 주세요");
-
 					return "redirect:/reserv/addReserv";
 
 				}
@@ -149,11 +148,11 @@ public class ReservController {
 					}
 				} else {
 					m.addAttribute("errorMessage", "잘못된 접근 입니다.");
-					return "redirect:/index/main";
+					return "redirect:/cus/myReserv";
 				}
 			} else {
 				m.addAttribute("errorMessage", "잘못된 접근 입니다.");
-				return "redirect:/index/main";
+				return "redirect:/cus/myReserv";
 			}
 
 		} else {
@@ -170,7 +169,6 @@ public class ReservController {
 			@RequestParam(defaultValue = "0") int reservId, Model m) {
 		if (reservService.roomNumCheck(roomNum) && !startDate.toString().equals(DEFAULT_START_DATE)
 				&& !endDate.toString().equals(DEFAULT_END_DATE)) {
-			System.out.println("ss");
 			ErrorMessage errorMessage = reservService.updateReserv(session, reservId, startDate, endDate, roomNum,
 					peopleCount);
 			if (errorMessage.getErrorMessage() != null) {
@@ -183,7 +181,7 @@ public class ReservController {
 			return errorMessage.getResult();
 		} else {
 			m.addAttribute("errorMessage", "잘못된 접근 입니다");
-			return "redirect:/index/main";
+			return "redirect:/reserv/updateReserv";
 		}
 	}
 
@@ -201,8 +199,13 @@ public class ReservController {
 					return "redirect:/index/main";
 				}
 			} else {
+				if(!userId.equals("admin")) {
 				m.addAttribute("errorMessage", "예약 정보를 다시 확인 해주세요");
-				return "redirect:/index/main";
+				return "redirect:/cus/myReserv";
+				}else {
+					m.addAttribute("errorMessage","예약 정보를 다시 확인 해주세요");
+					return "redirect:/index/adminRoom";
+				}
 			}
 		} else {
 			m.addAttribute("errorMessage", "로그인이 되어 있지 않습니다.");

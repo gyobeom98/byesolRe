@@ -23,7 +23,7 @@
 			<div id="headerblank"></div>
 			<div class="fee_mainImg">
 				<img class="subbanner"
-					src="http://tjteam.dothome.co.kr/byeolsolResort/byeolsolinfo/infosub.jpg">
+					src="https://gyonewproject.000webhostapp.com/byeolsolResort/byeolsolinfo/infosub.jpg">
 			</div>
 			<section>
 				<div class="writ">
@@ -43,7 +43,7 @@
 						<div class="byeolsolInfo">
 							<div class="infoImg">
 								<img
-									src="http://tjteam.dothome.co.kr/byeolsolResort/byeolsolinfo/info1.jpg">
+									src="https://gyonewproject.000webhostapp.com/byeolsolResort/byeolsolinfo/info1.jpg">
 							</div>
 							<div class="infoTitle">
 								<div class="infotitle">
@@ -58,7 +58,7 @@
 								<div class="infoImg__2">
 									<div class="concept">
 										<img
-											src="http://tjteam.dothome.co.kr/byeolsolResort/byeolsolinfo/nature.jpg" />
+											src="https://gyonewproject.000webhostapp.com/byeolsolResort/byeolsolinfo/nature.jpg" />
 
 										<p class="padding">
 											<strong>에코힐링 리조트</strong>
@@ -69,7 +69,7 @@
 									</div>
 									<div class="concept">
 										<img
-											src="http://tjteam.dothome.co.kr/byeolsolResort/byeolsolinfo/spa.jpg" />
+											src="https://gyonewproject.000webhostapp.com/byeolsolResort/byeolsolinfo/spa.jpg" />
 										<p class="padding">
 											<strong>스파 리조트</strong>
 										</p>
@@ -79,7 +79,7 @@
 									</div>
 									<div class="concept">
 										<img
-											src="http://tjteam.dothome.co.kr/byeolsolResort/byeolsolinfo/infof.jpg" />
+											src="https://gyonewproject.000webhostapp.com/byeolsolResort/byeolsolinfo/infof.jpg" />
 										<p class="padding">
 											<strong>가족사랑 리조트</strong>
 										</p>
@@ -98,7 +98,7 @@
 			</footer>
 		</div>
 		<c:if test='${userId=="admin"}'>
-		<button onclick='updateImg("byeolsolInfo","main")'>배너이미지 수정</button>
+		<button onclick='updateImg("byeolsolInfo","infosub.jpg")'>배너이미지 수정</button>
 		</c:if>
 	</div>
 </body>

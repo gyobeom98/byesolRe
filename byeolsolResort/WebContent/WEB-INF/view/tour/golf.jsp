@@ -22,7 +22,7 @@
 			</header>
 			<div id="headerblank"></div>
 			<img class="subbanner"
-				src="http://tjteam.dothome.co.kr/byeolsolResort/golf/golfsub.jpg">
+				src="https://gyonewproject.000webhostapp.com/byeolsolResort/golf/golfsub.jpg">
 			<section>
 				<div class="writ">
 					<div id="secheader">
@@ -64,7 +64,7 @@
 							</div>
 							<div class="map">
 								<img
-									src="http://tjteam.dothome.co.kr/byeolsolResort/golf/golf3.jpg">
+									src="https://gyonewproject.000webhostapp.com/byeolsolResort/golf/golf3.jpg">
 							</div>
 						</div>
 
@@ -76,7 +76,7 @@
 						<div class="course">
 							<div class="map">
 								<img
-									src="http://tjteam.dothome.co.kr/byeolsolResort/golf/golf2.jpg">
+									src="https://gyonewproject.000webhostapp.com/byeolsolResort/golf/golf2.jpg">
 							</div>
 							<div class="text">
 								<p class="texttitle">산바람 코스</p>
@@ -110,7 +110,7 @@
 							</div>
 							<div class="map">
 								<img
-									src="http://tjteam.dothome.co.kr/byeolsolResort/golf/golf1.jpg">
+									src="https://gyonewproject.000webhostapp.com/byeolsolResort/golf/golf1.jpg">
 							</div>
 						</div>
 					</div>
@@ -122,7 +122,7 @@
 			</footer>
 		</div>
 		<c:if test='${userId=="admin"}'>
-		<button onclick='updateImg("golf","main")'>배너이미지 수정</button>
+		<button onclick='updateImg("golf","golftsub")'>배너이미지 수정</button>
 		</c:if>
 	</div>
 </body>

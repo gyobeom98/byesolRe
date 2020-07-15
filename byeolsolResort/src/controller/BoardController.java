@@ -148,7 +148,7 @@ public class BoardController {
 				return "/newsList/addNews";
 			} else {
 				m.addAttribute("errorMessage", "권한이 없는 접근 입니다.");
-				return "redirect:/board/adminBoardMain";
+				return "redirect:/board/adminList";
 			}
 		} else {
 			m.addAttribute("errorMessage", "로그인이 되어 있지 않습니다.");
@@ -268,7 +268,7 @@ public class BoardController {
 						} else { // 비어있지 않다면 파일의 이미지를 체크하고
 							if (boardService.checkImg(uploadFile01)) {
 								if (b.getFirstPath() != null) { // 아까 가져온 board b의 path의 시간을 가져와서 path설정
-									String Time = b.getFirstPath().substring(b.getFirstPath().indexOf('/', 46) + 1,
+									String Time = b.getFirstPath().substring(b.getFirstPath().indexOf('/', b.getFirstPath().indexOf("board")) + 1, // 이벤트 추가시 이미지 저장 폴더의 이름
 											b.getFirstPath().lastIndexOf('/'));
 									// ftp 이미지 삭제
 									ftpService.ftpdelete(b.getFirstPath(), Time);
@@ -291,7 +291,7 @@ public class BoardController {
 						else {
 							if (boardService.checkImg(uploadFile02)) {
 								if (b.getSecondPath() != null) {
-									String Time = b.getFirstPath().substring(b.getFirstPath().indexOf('/', 46) + 1,
+									String Time = b.getFirstPath().substring(b.getFirstPath().indexOf('/', b.getFirstPath().indexOf("board")) + 1, // 이벤트 추가시 이미지 저장 폴더의 이름
 											b.getFirstPath().lastIndexOf('/'));
 									ftpService.ftpdelete(b.getSecondPath(), Time);
 									board = boardService.imgUpAndSetPath(board, 1, uploadFile02, Time, "second");
@@ -312,7 +312,7 @@ public class BoardController {
 						} else {
 							if (boardService.checkImg(uploadFile03)) {
 								if (b.getThirdPath() != null) {
-									String Time = b.getFirstPath().substring(b.getFirstPath().indexOf('/', 46) + 1,
+									String Time = b.getFirstPath().substring(b.getFirstPath().indexOf('/', b.getFirstPath().indexOf("board")) + 1, // 이벤트 추가시 이미지 저장 폴더의 이름
 											b.getFirstPath().lastIndexOf('/'));
 									ftpService.ftpdelete(b.getThirdPath(), Time);
 									board = boardService.imgUpAndSetPath(board, 2, uploadFile03, Time, "third");
@@ -367,19 +367,19 @@ public class BoardController {
 						return "/newsList/updateNews";
 					} else {
 						m.addAttribute("errorMessage", "잘못된 접근 입니다.");
-						return "redirect:/index/main";
+						return "redirect:/board/adminList";
 					}
 				} else {
 					m.addAttribute("errorMessage", "권한이 없는 접근 입니다.");
 					return "redirect:/index/main";
 				}
 			} else {
-				m.addAttribute("errorMessage", "로그인이 되어 있지 않습니다.");
-				return "redirect:/index/main";
+				m.addAttribute("errorMessage", "잘못된 접근 입니다.");
+				return "redirect:/board/adminList";
 			}
 		} else {
-			m.addAttribute("errorMessage", "잘못된 접근 입니다.");
-			return "redirect:/board/adminList";
+			m.addAttribute("errorMessage", "로그인이 되어 있지 않습니다.");
+			return "redirect:/index/main";
 		}
 
 	}
@@ -405,7 +405,7 @@ public class BoardController {
 						} else {
 							if (boardService.checkImg(uploadFile01)) {
 								if (b.getFirstPath() != null) {
-									String Time = b.getFirstPath().substring(b.getFirstPath().indexOf('/', 46) + 1,
+									String Time = b.getFirstPath().substring(b.getFirstPath().indexOf('/', b.getFirstPath().indexOf("board")) + 1, // 이벤트 추가시 이미지 저장 폴더의 이름
 											b.getFirstPath().lastIndexOf('/'));
 									ftpService.ftpdelete(b.getFirstPath(), Time);
 									board = boardService.imgUpAndSetPath(board, 0, uploadFile01, Time, "first");
@@ -427,7 +427,7 @@ public class BoardController {
 						else {
 							if (boardService.checkImg(uploadFile02)) {
 								if (b.getSecondPath() != null) {
-									String Time = b.getFirstPath().substring(b.getFirstPath().indexOf('/', 46) + 1,
+									String Time = b.getFirstPath().substring(b.getFirstPath().indexOf('/', b.getFirstPath().indexOf("board")) + 1, // 이벤트 추가시 이미지 저장 폴더의 이름
 											b.getFirstPath().lastIndexOf('/'));
 									ftpService.ftpdelete(b.getSecondPath(), Time);
 									board = boardService.imgUpAndSetPath(board, 1, uploadFile02, Time, "second");
@@ -448,7 +448,7 @@ public class BoardController {
 						} else {
 							if (boardService.checkImg(uploadFile03)) {
 								if (b.getThirdPath() != null) {
-									String Time = b.getFirstPath().substring(b.getFirstPath().indexOf('/', 46) + 1,
+									String Time = b.getFirstPath().substring(b.getFirstPath().indexOf('/', b.getFirstPath().indexOf("board")) + 1, // 이벤트 추가시 이미지 저장 폴더의 이름
 											b.getFirstPath().lastIndexOf('/'));
 									ftpService.ftpdelete(b.getThirdPath(), Time);
 									board = boardService.imgUpAndSetPath(board, 2, uploadFile03, Time, "third");
@@ -473,15 +473,15 @@ public class BoardController {
 					}
 				} else {
 					m.addAttribute("errorMessage", "권한이 없는 접근 입니다.");
-					return "redirect:/board/list";
+					return "redirect:/board/adminList";
 				}
 			} else {
 				m.addAttribute("errorMessage", "잘못된 접근 입니다.");
-				return "redirect:/board/list";
+				return "redirect:/board/adminList";
 			}
 		} else {
 			m.addAttribute("errorMessage", "로그인이 되어 있지 않습니다.");
-			return "redirect:/board/list";
+			return "redirect:/board/adminList";
 		}
 	}
 

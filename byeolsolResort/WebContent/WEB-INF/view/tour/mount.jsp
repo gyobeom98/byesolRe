@@ -21,7 +21,7 @@
 				<jsp:include page="../header/sub.jsp"/>
 			</header>
 			<div id="headerblank"></div>
-				<img class="subbanner" src="http://tjteam.dothome.co.kr/byeolsolResort/moun/moun2.jpg">
+				<img class="subbanner" src="https://gyonewproject.000webhostapp.com/byeolsolResort/moun/moun2.jpg">
 			<section>
 				<div class="writ">
 					<div id="secheader">
@@ -55,7 +55,7 @@
                 <div class="mountainimgs">
                   <div class="imgshadow"></div>
                   <div class="imgtext">두릉산 자연휴양림</div>
-                  <img class="mountainImg" src="http://tjteam.dothome.co.kr/byeolsolResort/moun/drung.jpg" alt="">
+                  <img class="mountainImg" src="https://gyonewproject.000webhostapp.com/byeolsolResort/moun/drung.jpg" alt="">
                 </div>
 
                 <div class="mountainInfo1">
@@ -107,7 +107,7 @@
                   <div class="mountainimgs">
                     <div class="imgshadow"></div>
                     <div class="imgtext">팔봉산 제 8봉우리</div>
-                    <img class="mountainImg" src="http://tjteam.dothome.co.kr/byeolsolResort/moun/palbong.jpg" alt="">
+                    <img class="mountainImg" src="https://gyonewproject.000webhostapp.com/byeolsolResort/moun/palbong.jpg" alt="">
                   </div>
                 </div>
               <hr>
@@ -125,7 +125,7 @@
 			</footer>
 		</div>
 		<c:if test='${userId=="admin"}'>
-		<button onclick='updateImg("mount","main")'>배너이미지 수정</button>
+		<button onclick='updateImg("moun","moun2")'>배너이미지 수정</button>
 		</c:if>
 	</div>
 </body>

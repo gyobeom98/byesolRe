@@ -21,7 +21,7 @@
 				<jsp:include page="../header/sub.jsp"/>
 			</header>
 			<div id="headerblank"></div>
-				<img class="subbanner" src="http://tjteam.dothome.co.kr/byeolsolResort/trip/tripsub.jpg">
+				<img class="subbanner" src="https://gyonewproject.000webhostapp.com/byeolsolResort/trip/tripsub.jpg">
 			<section>
 				<div class="writ">
 					<div id="secheader">
@@ -51,7 +51,7 @@
 						<div class="triplist">
                 <div class="trip">
                   <div class="tripimg">
-                    <img src="http://tjteam.dothome.co.kr/byeolsolResort/trip/nami.PNG">
+                    <img src="https://gyonewproject.000webhostapp.com/byeolsolResort/trip/nami.PNG">
                   </div>
                   <div class="content">
                     <div class="title"><i class="fas fa-check"></i> 남이섬</div>
@@ -72,7 +72,7 @@
 
                 <div class="trip">
                   <div class="tripimg">
-                    <img src="http://tjteam.dothome.co.kr/byeolsolResort/trip/rail.PNG">
+                    <img src="https://gyonewproject.000webhostapp.com/byeolsolResort/trip/rail.PNG">
                   </div>
                   <div class="content">
                     <div class="title"><i class="fas fa-check"></i> 강촌레일파크</div>
@@ -93,7 +93,7 @@
 
                 <div class="trip">
                   <div class="tripimg">
-                    <img src="http://tjteam.dothome.co.kr/byeolsolResort/trip/jade.PNG">
+                    <img src="https://gyonewproject.000webhostapp.com/byeolsolResort/trip/jade.PNG">
                   </div>
                   <div class="content">
                     <div class="title"><i class="fas fa-check"></i> 제이드가든</div>
@@ -125,7 +125,7 @@
 			</footer>
 		</div>
 		<c:if test='${userId=="admin"}'>
-		<button onclick='updateImg("trip","main")'>배너이미지 수정</button>
+		<button onclick='updateImg("trip","tripsub")'>배너이미지 수정</button>
 		</c:if>
 	</div>
 </body>

@@ -26,7 +26,7 @@
 					<div class="error_404">404</div>
 					<div class="error_img">
 						<img
-							src="http://tjteam.dothome.co.kr/byeolsolResort/error/errorImg.png"
+							src="https://gyonewproject.000webhostapp.com/byeolsolResort/error/errorImg.png"
 							alt="">
 					</div>
 					<div class="error_info">

@@ -61,7 +61,6 @@ public class IndexController {
 		}
 	}
 	
-	
 	@Autowired
 	ReservService reservService;
 

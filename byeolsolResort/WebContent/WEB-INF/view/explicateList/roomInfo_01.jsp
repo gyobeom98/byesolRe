@@ -25,7 +25,7 @@
 			<div id="headerblank"></div>
 			<div class="roomInfo_01_mainImg">
 				<img class="subbanner"
-					src="http://tjteam.dothome.co.kr/byeolsolResort/healingRoom/R1subimg.jpg">
+					src="https://gyonewproject.000webhostapp.com/byeolsolResort/healingRoom/R1subimg.jpg">
 			</div>
 			<section>
 				<div class="writ">
@@ -49,13 +49,13 @@
 						<div class="img_slide">
 							<ul>
 								<li><img
-									src="http://tjteam.dothome.co.kr/byeolsolResort/healingRoom/img7-1.jpg"
+									src="https://gyonewproject.000webhostapp.com/byeolsolResort/healingRoom/img7-1.jpg"
 									alt=""></li>
 								<li><img
-									src="http://tjteam.dothome.co.kr/byeolsolResort/healingRoom/img7-2.jpg"
+									src="https://gyonewproject.000webhostapp.com/byeolsolResort/healingRoom/img7-2.jpg"
 									alt=""></li>
 								<li><img
-									src="http://tjteam.dothome.co.kr/byeolsolResort/healingRoom/img7-3.jpg"
+									src="https://gyonewproject.000webhostapp.com/byeolsolResort/healingRoom/img7-3.jpg"
 									alt=""></li>
 							</ul>
 							<div class="slidebtn" id="next">
@@ -76,7 +76,7 @@
 									<tbody>
 										<tr>
 											<td><img
-												src="http://tjteam.dothome.co.kr/byeolsolResort/healingRoom/room1.PNG"></td>
+												src="https://gyonewproject.000webhostapp.com/byeolsolResort/healingRoom/room1.PNG"></td>
 										</tr>
 									</tbody>
 								</table>
@@ -139,7 +139,7 @@
 			</footer>
 		</div>
 		<c:if test='${userId=="admin"}'>
-		<button onclick='updateImg("roomInfo_01","main")'>배너이미지 수정</button>
+		<button onclick='updateImg("healingRoom","R1subimg.jpg")'>배너이미지 수정</button>
 		</c:if>
 	</div>
 </body>

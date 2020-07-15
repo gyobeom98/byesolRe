@@ -23,7 +23,7 @@
 			<div id="headerblank"></div>
 			<div class="fee_mainImg">
 				<img class="subbanner"
-					src="http://tjteam.dothome.co.kr/byeolsolResort/event/byeolsolnewssub.jpg">
+					src="https://gyonewproject.000webhostapp.com/byeolsolResort/event/byeolsolnewssub.jpg">
 			</div>
 			<section>
 				<div class="writ">
@@ -157,7 +157,7 @@
 			</footer>
 		</div>
 		<c:if test='${userId=="admin"}'>
-		<button onclick='updateImg("event","main")'>배너이미지 수정</button>
+		<button onclick='updateImg("event","byeolsolnewssub")'>배너이미지 수정</button>
 		</c:if>
 	</div>
 </body>

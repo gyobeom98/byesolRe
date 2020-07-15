@@ -28,7 +28,7 @@
 			<div id="headerblank"></div>
 			<div class="roomInfo_01_mainImg">
 				<img class="subbanner"
-					src="http://tjteam.dothome.co.kr/byeolsolResort/gameRoom/R3subimg.jpg">
+					src="https://gyonewproject.000webhostapp.com/byeolsolResort/gameRoom/R3subimg.jpg">
 			</div>
 			<section>
 				<div class="writ">
@@ -52,13 +52,13 @@
 						<div class="img_slide">
 							<ul>
 								<li><img
-									src="http://tjteam.dothome.co.kr/byeolsolResort/gameRoom/img9-1.jpg"
+									src="https://gyonewproject.000webhostapp.com/byeolsolResort/gameRoom/img9-1.jpg"
 									alt=""></li>
 								<li><img
-									src="http://tjteam.dothome.co.kr/byeolsolResort/gameRoom/img9-2.jpg"
+									src="https://gyonewproject.000webhostapp.com/byeolsolResort/gameRoom/img9-2.jpg"
 									alt=""></li>
 								<li><img
-									src="http://tjteam.dothome.co.kr/byeolsolResort/gameRoom/img9-3.jpg"
+									src="https://gyonewproject.000webhostapp.com/byeolsolResort/gameRoom/img9-3.jpg"
 									alt=""></li>
 							</ul>
 							<div class="slidebtn" id="next">
@@ -141,7 +141,7 @@
 			</footer>
 		</div>
 		<c:if test='${userId=="admin"}'>
-		<button onclick='updateImg("roomInfo_02","main")'>배너이미지 수정</button>
+		<button onclick='updateImg("gameRoom","R3subimg.jpg")'>배너이미지 수정</button>
 		</c:if>
 	</div>
 </body>

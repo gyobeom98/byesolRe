@@ -26,7 +26,7 @@
 			<div id="headerblank"></div>
 			<div class="roomInfo_01_mainImg">
 				<img class="subbanner"
-					src="http://tjteam.dothome.co.kr/byeolsolResort/roomMain/RMsubimg.jpg">
+					src="https://gyonewproject.000webhostapp.com/byeolsolResort/roomMain/RMsubimg.jpg">
 			</div>
 			<section>
 				<div class="writ">
@@ -50,7 +50,7 @@
 									<ul class="room_content">
 										<li>
 											<div class="roomname">Healing room</div> <img
-											src="http://tjteam.dothome.co.kr/byeolsolResort/healingRoom/room1main.png"
+											src="https://gyonewproject.000webhostapp.com/byeolsolResort/healingRoom/room1main.png"
 											alt="">
 											<div class="roomcom">
 												<i class="fab fa-pagelines"></i> 조용하고 편안한 분위기를 만끽하며 나 자신을
@@ -60,7 +60,7 @@
 										</li>
 										<li>
 											<div class="roomname">Kids room</div> <img
-											src="http://tjteam.dothome.co.kr/byeolsolResort/kidsRoom/room2main.png"
+											src="https://gyonewproject.000webhostapp.com/byeolsolResort/kidsRoom/room2main.png"
 											alt="">
 											<div class="roomcom">
 												<i class="fab fa-pagelines"></i> 아이친화적 가구와 물품들로 사랑하는 가족과 함께
@@ -68,7 +68,7 @@
 													보기</a>
 											</div>
 											<div class="roomname">Pastime room</div> <img
-											src="http://tjteam.dothome.co.kr/byeolsolResort/gameRoom/room3main.png"
+											src="https://gyonewproject.000webhostapp.com/byeolsolResort/gameRoom/room3main.png"
 											alt="">
 											<div class="roomcom">
 												<i class="fab fa-pagelines"></i> 고급스러운 인테리어와 구비된 보드게임들로 친구들과
@@ -88,7 +88,7 @@
 			</footer>
 		</div>
 		<c:if test='${userId=="admin"}'>
-		<button onclick='updateImg("roomMain","main")'>배너이미지 수정</button>
+		<button onclick='updateImg("roomMain","RMsubimg.jpg")'>배너이미지 수정</button>
 		</c:if>
 	</div>
 </body>

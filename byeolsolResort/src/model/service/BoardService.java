@@ -64,17 +64,17 @@ public class BoardService {
 			boardMapper.deleteBoard(id);		// 게시글 삭제
 			String Time = "";
 			if(b.getFirstPath()!=null) {			// 게시글의 이미지 패스가 비어 있지 않다면 ftp 서버에 있는  해당 이미지 삭제
-			 Time = b.getFirstPath().substring(b.getFirstPath().indexOf('/', 46) + 1, // 이벤트 추가시 이미지 저장 폴더의 이름
+			 Time = b.getFirstPath().substring(b.getFirstPath().indexOf('/', b.getFirstPath().indexOf("board")) + 1, // 이벤트 추가시 이미지 저장 폴더의 이름
 					b.getFirstPath().lastIndexOf('/'));
 			 ftpService.ftpdelete(b.getFirstPath(), Time); // ftp서버에 있는 이미지 삭제
 			}
 			else if(b.getSecondPath()!=null) {
-				Time = b.getSecondPath().substring(b.getSecondPath().indexOf('/', 46) + 1,
-						b.getSecondPath().lastIndexOf('/'));
+				Time = b.getFirstPath().substring(b.getFirstPath().indexOf('/', b.getFirstPath().indexOf("board")) + 1, // 이벤트 추가시 이미지 저장 폴더의 이름
+						b.getFirstPath().lastIndexOf('/'));
 				ftpService.ftpdelete(b.getSecondPath(), Time);
 			}else if(b.getThirdPath()!=null) {
-				Time = b.getThirdPath().substring(b.getThirdPath().indexOf('/', 46) + 1,
-						b.getThirdPath().lastIndexOf('/'));
+				Time = b.getFirstPath().substring(b.getFirstPath().indexOf('/', b.getFirstPath().indexOf("board")) + 1, // 이벤트 추가시 이미지 저장 폴더의 이름
+						b.getFirstPath().lastIndexOf('/'));
 				ftpService.ftpdelete(b.getThirdPath(), Time);
 			}
 			return "삭제 완료";
@@ -94,7 +94,7 @@ public class BoardService {
 		case 0:	
 			// 이미지 올리기가 성공이면 board에 경로 셋팅
 			if(isSuccess.equals("성공")) {
-			board.setFirstPath("http://tjteam.dothome.co.kr/byeolsolResort/board/" + addTime + "/"
+			board.setFirstPath("https://gyonewproject.000webhostapp.com/byeolsolResort/board/" + addTime + "/"
 										+ "first" + uploadFile.getOriginalFilename());
 			}else {
 				board.setFirstPath(null);
@@ -102,7 +102,7 @@ public class BoardService {
 			break;
 		case 1:	
 			if(isSuccess.equals("성공")) {
-			board.setSecondPath("http://tjteam.dothome.co.kr/byeolsolResort/board/" + addTime + "/"
+			board.setSecondPath("https://gyonewproject.000webhostapp.com/byeolsolResort/board/" + addTime + "/"
 										+ "second" + uploadFile.getOriginalFilename());
 			}else {
 				board.setSecondPath(null);
@@ -110,7 +110,7 @@ public class BoardService {
 			break;
 		case 2:	
 			if(isSuccess.equals("성공")) {
-			board.setThirdPath("http://tjteam.dothome.co.kr/byeolsolResort/board/" + addTime + "/"
+			board.setThirdPath("https://gyonewproject.000webhostapp.com/byeolsolResort/board/" + addTime + "/"
 										+ "third" + uploadFile.getOriginalFilename());
 			}else {
 				board.setThirdPath(null);

@@ -69,13 +69,13 @@ public class EventService {
 			// ftp에 이미지 업로드
 			ftpService.ftpEventImg(uploadFile, addTime);
 			// event db에 imgPath에 저장
-			event.setImgPath("http://tjteam.dothome.co.kr/byeolsolResort/event/" + addTime + "/"
+			event.setImgPath("https://gyonewproject.000webhostapp.com/byeolsolResort/event/" + addTime + "/"
 					+ uploadFile.getOriginalFilename());
 				eventMapper.insertEvent(event);
 				// 업로드 실패시 IOExeption발생
 				if(!addEventImgThumbnail(thumbnail,event.getId())) {
-					String Time = event.getImgPath().substring(event.getImgPath().indexOf('/', 46) + 1,
-							event.getImgPath().lastIndexOf('/'));
+					String Time = event.getImgPath().substring(event.getImgPath().indexOf('/', event.getImgPath().indexOf("event")) + 1,
+							event.getImgPath().lastIndexOf('/')); //시간가져오고
 					ftpService.ftpdeleteEvent(event.getImgPath(), Time);
 					eventMapper.deleteEvent(event.getId());
 				}
@@ -107,11 +107,11 @@ public class EventService {
 	// 파일이 있는 업데이트
 	public boolean updateEventWithFile(MultipartFile uploadFile, Event event) {
 		if (typeCheck(uploadFile)) {// 이미지 타입 이면
-			String Time = event.getImgPath().substring(event.getImgPath().indexOf('/', 46) + 1,
-					event.getImgPath().lastIndexOf('/')); // 시간을 구함
+			String Time = event.getImgPath().substring(event.getImgPath().indexOf('/', event.getImgPath().indexOf("event")) + 1,
+					event.getImgPath().lastIndexOf('/')); //시간가져오고
 			ftpService.ftpdeleteEvent(event.getImgPath(), Time); // 이미 있는 이미지 삭제
 			ftpService.ftpEventImg(uploadFile, Time);	// 이미지 올리기
-			event.setImgPath("http://tjteam.dothome.co.kr/byeolsolResort/event/" + Time + "/"
+			event.setImgPath("https://gyonewproject.000webhostapp.com/byeolsolResort/event/" + Time + "/"
 					+ uploadFile.getOriginalFilename()); // event의 이미지 setting 
 			eventMapper.updateEvent(event);
 			return true;
@@ -129,7 +129,7 @@ public class EventService {
 		
 		Event event = eventMapper.selectEventById(id);
 		if(event!=null) {	// null이 아닐때
-		String Time = event.getImgPath().substring(event.getImgPath().indexOf('/', 46) + 1,
+		String Time = event.getImgPath().substring(event.getImgPath().indexOf('/', event.getImgPath().indexOf("event")) + 1,
 				event.getImgPath().lastIndexOf('/')); //시간가져오고
 		if(!ftpService.ftpdeleteEvent(event.getImgPath(), Time)) { // ftp 에 있는 이미지 삭제
 			throw new IOException();
@@ -150,7 +150,7 @@ public class EventService {
 		if (ftpService.fileTypeCheck(thumbnail)) { // 썸네일 이미지 타입 체크
 			if (ftpService.ftpEventThumbImg(thumbnail, eventId)) { // 썸네일 추가
 				eventImgMapper.insertEventImg(	// 
-						new EventImg(0, eventId, "http://tjteam.dothome.co.kr/byeolsolResort/event/event_" + eventId
+						new EventImg(0, eventId, "https://gyonewproject.000webhostapp.com/byeolsolResort/event/event_" + eventId
 								+ "_thumbnail/" + thumbnail.getOriginalFilename())); // eventImg추가
 				return true; 
 			} else {

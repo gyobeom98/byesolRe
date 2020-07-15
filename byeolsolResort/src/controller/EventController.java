@@ -186,7 +186,7 @@ public class EventController {
 								return "redirect:/event/list";
 							} else {
 								m.addAttribute("errorMessage", "업로드할 썸네일 이미지를 확인하여 주세요");
-								return "redirect:/event/addEvent";
+								return "redirect:/event/updateEvent";
 							}
 						} else {
 							event.setImgPath(ev.getImgPath());

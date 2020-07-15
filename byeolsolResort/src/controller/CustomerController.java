@@ -45,7 +45,7 @@ import model.service.ReservService;
 @Controller
 @RequestMapping("/cus")
 public class CustomerController {
-	
+
 	// default value들
 	private static final String DEFAULT_VALUE_ID = "defaultValueId";
 	private static final String DEFAULT_VALUE_PASSWORD = "defaultValuePassword";
@@ -59,11 +59,11 @@ public class CustomerController {
 	private Validator validator;
 
 	@GetMapping("/regis")
-	public String getRegisForm(HttpSession session, Model m, @RequestParam(defaultValue = "")String errorMessage) {
+	public String getRegisForm(HttpSession session, Model m, @RequestParam(defaultValue = "") String errorMessage) {
 		if (session.getAttribute("userId") == null) {
 			// session에 userId가 null이라면
-			if(!errorMessage.equals(""))
-				m.addAttribute("errorMessage",errorMessage);
+			if (!errorMessage.equals(""))
+				m.addAttribute("errorMessage", errorMessage);
 			return "/sideform/signup";
 		} else {
 			// session에 userId가 null이 아니라면
@@ -71,7 +71,6 @@ public class CustomerController {
 			return "redirect:/index/main";
 		}
 	}
-
 
 	@PostMapping("/regis")
 	// CustomerVo를 통해 유효성 검사를 함 + birth를 받는데 없다면 deleteValue로 설정
@@ -85,7 +84,7 @@ public class CustomerController {
 				customerVo.setBirthDate(birth.toLocalDate());
 
 				System.out.println(customerVo);
-				
+
 				// 유효성 검사를 해서 error가 나는 지 확인후 fieldError를 이용해 에러가 난 필드 앞에 e를 추가 하고 page로 이동
 				if (result.hasErrors()) {
 					List<FieldError> errors = result.getFieldErrors();
@@ -95,7 +94,7 @@ public class CustomerController {
 					}
 					return "/sideform/signup";
 				} else {
-					
+
 					// id가 중복인지 확인후
 					String idCheck = customerService.idCheck(customerVo.getUserId());
 					if (idCheck.equals("중복")) {
@@ -104,9 +103,11 @@ public class CustomerController {
 
 					} else { // email이 중복인지 아닌지 확인
 						String emailCheck = customerService.emailCheck(customerVo.getEmail());
-						if (!emailCheck.equals("중복")) {  // 중복이 아니라면
+						if (!emailCheck.equals("중복")) { // 중복이 아니라면
 							if (!customerService.phoneCheck(customerVo.getPhone()).equals("중복")) { // 전화번호 중복 체크
-								if (LocalDate.now().getYear() - birth.toLocalDate().getYear() >= 5) { // 입력한 생일이 현재 날짜와 비교후 5미만이라면 return false
+								if (LocalDate.now().getYear() - birth.toLocalDate().getYear() >= 5) { // 입력한 생일이 현재 날짜와
+																										// 비교후 5미만이라면
+																										// return false
 									Customer customer = new Customer(customerVo.getId(), customerVo.getUserId(),
 											customerVo.getPassword(), customerVo.getName(), customerVo.getZipCode(),
 											customerVo.getEmail(), customerVo.getAddress(),
@@ -166,11 +167,11 @@ public class CustomerController {
 	}
 
 	@GetMapping("/login")
-	public String loginForm(HttpSession session, Model m, @RequestParam(required = false)String errorMessage) {
+	public String loginForm(HttpSession session, Model m, @RequestParam(required = false) String errorMessage) {
 		// 로그인이 되어있지 않다면
 		if (session.getAttribute("userId") == null) {
-			if(errorMessage != null) {
-				m.addAttribute("errorMessage",errorMessage);
+			if (errorMessage != null) {
+				m.addAttribute("errorMessage", errorMessage);
 			}
 			return "/sideform/login";
 		} else {
@@ -218,14 +219,18 @@ public class CustomerController {
 	}
 
 	@GetMapping("/myPage")
-	public String goMyPage(HttpSession session, Model m , @RequestParam(defaultValue = "")String errorMessage) {
+	public String goMyPage(HttpSession session, Model m, @RequestParam(defaultValue = "") String errorMessage) {
 		if (session.getAttribute("userId") != null) {
 			String userId = (String) session.getAttribute("userId");
-			Customer customer = customerService.getCustomerById(userId);
-			if(!errorMessage.equals(""))
-				m.addAttribute("errorMessage",errorMessage);
-			m.addAttribute("customer", customer);
-			return "/mypage/mypage";
+			if (!userId.equals("admin")) {
+				Customer customer = customerService.getCustomerById(userId);
+				if (!errorMessage.equals(""))
+					m.addAttribute("errorMessage", errorMessage);
+				m.addAttribute("customer", customer);
+				return "/mypage/mypage";
+			} else {
+				return "redirect:/index/adminUser";
+			}
 		} else {
 			m.addAttribute("errorMessage", "로그인이 되어 있지 않습니다.");
 			return "redirect:/index/main";
@@ -295,13 +300,21 @@ public class CustomerController {
 
 	@GetMapping(value = "/mailCheck", produces = "application/text; charset=utf-8")
 	public String mailSending(@RequestParam(required = false) String registEmail, HttpSession session, Model m) {
-		// userEmail이 null이 아니라면
+
+		// 회원가입 후 넘어온 이메일이 null이 아니라면
 		if (registEmail != null) {
 			m.addAttribute("userEmail", registEmail);
 			return "/mypage/emailCer";
-			// 회원가입 후 넘어온 이메일이 null이 아니라면
+			// userEmail이 null이 아니라면
 		} else if (session.getAttribute("userEmail") != null) {
-			return "/mypage/emailCer";
+			String userId = (String) session.getAttribute("userId");
+			Customer customer = customerService.getCustomerById(userId);
+			if (customer.getEmailState().equals("미인증")) {
+				return "/mypage/emailCer";
+			} else {
+				m.addAttribute("errorMessage", "잘못된 접근 입니다.");
+				return "/index/main";
+			}
 		} else {
 			m.addAttribute("errorMessage", "잘못된 접근 입니다.");
 			return "redirect:/index/main";
@@ -364,14 +377,20 @@ public class CustomerController {
 	}
 
 	@GetMapping("/deleteCustomer")
-	public String deleteCustomerForm(HttpSession session, Model m, @RequestParam(defaultValue = "")String errorMessage) {
+	public String deleteCustomerForm(HttpSession session, Model m,
+			@RequestParam(defaultValue = "") String errorMessage) {
 		if (session.getAttribute("userId") != null) {
-			String userId = (String)session.getAttribute("userId");
+			String userId = (String) session.getAttribute("userId");
 			Customer customer = customerService.getCustomerById(userId);
-			if(!errorMessage.equals(""))
-				m.addAttribute("errorMessage",errorMessage);
-			m.addAttribute("customer",customer);
-			return "/mypage/deleteForm";
+			if (customer != null && !userId.equals("admin")) {
+				if (!errorMessage.equals(""))
+					m.addAttribute("errorMessage", errorMessage);
+				m.addAttribute("customer", customer);
+				return "/mypage/deleteForm";
+			} else {
+				m.addAttribute("errorMessage","잘못된 접근 입니다.");
+				return "/cus/myPage";
+			}
 		} else {
 			m.addAttribute("errorMessage", "로그인이 되어 있지 않습니다.");
 			return "redirect:/index/main";
@@ -409,10 +428,10 @@ public class CustomerController {
 	}
 
 	@GetMapping("/findId")
-	public String findIdForm(HttpSession session, Model m , @RequestParam(defaultValue = "")String errorMessage) {
+	public String findIdForm(HttpSession session, Model m, @RequestParam(defaultValue = "") String errorMessage) {
 		if (session.getAttribute("userId") == null) {
-			if(!errorMessage.equals(""))
-				m.addAttribute("errorMessage",errorMessage);
+			if (!errorMessage.equals(""))
+				m.addAttribute("errorMessage", errorMessage);
 			return "/mypage/findInfo";
 		} else {
 			m.addAttribute("errorMessage", "잘못된 접근 입니다.");
@@ -430,7 +449,7 @@ public class CustomerController {
 				return "redirect:/cus/login";
 			} else {
 				m.addAttribute("errorMessage", "잘못된 접근 입니다.");
-				return "redirect:/index/main";
+				return "redirect:/cus/findId";
 			}
 		} else {
 			m.addAttribute("errorMessage", "잘못된 접근 입니다.");
@@ -460,29 +479,30 @@ public class CustomerController {
 				m.addAttribute("errorMessage", customerService.mailSendByPassword(mailSender, email, userId, name));
 				return "redirect:/cus/login";
 			} else {
-				m.addAttribute("errorMessage","잘못된 접근 입니다.");
-				return "redirect:/cus/login";
+				m.addAttribute("errorMessage", "잘못된 접근 입니다.");
+				return "redirect:/cus/findPassword";
 			}
 		} else {
-			m.addAttribute("errorMessage", "잘못된 접근 입니다.");
+			m.addAttribute("errorMessage", "로그인이 되어 있지 않습니다.");
 			return "redirect:/index/main";
 		}
 	}
-	
+
 	@GetMapping("/adminUserInfo")
-	public String goAdminUserInfo(HttpSession session, Model m , @RequestParam(defaultValue = "1")int pageNum, @RequestParam(defaultValue = "")String errorMessage) {
-		if(session.getAttribute("userId")!=null) {
+	public String goAdminUserInfo(HttpSession session, Model m, @RequestParam(defaultValue = "1") int pageNum,
+			@RequestParam(defaultValue = "") String errorMessage) {
+		if (session.getAttribute("userId") != null) {
 			String userId = (String) session.getAttribute("userId");
-			if(userId.equals("admin")) {
-				if(!errorMessage.equals(""))
-					m.addAttribute("errorMessage",errorMessage);
-				m.addAttribute("customerView",customerService.getCustomerView(pageNum));
+			if (userId.equals("admin")) {
+				if (!errorMessage.equals(""))
+					m.addAttribute("errorMessage", errorMessage);
+				m.addAttribute("customerView", customerService.getCustomerView(pageNum));
 				return "/adminPage/adminUser";
-			}else {
-				m.addAttribute("errorMessage","권한이 없는 접근 입니다.");
+			} else {
+				m.addAttribute("errorMessage", "권한이 없는 접근 입니다.");
 				return "/redirect:/index/main";
 			}
-		}else {
+		} else {
 			m.addAttribute("errorMessage", "로그인이 되어 있지 않습니다.");
 			return "/redirect:/index/main";
 		}

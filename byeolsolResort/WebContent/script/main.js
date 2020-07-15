@@ -35,17 +35,17 @@ $(function() {
 
 			})
 	$("#room1").hover(function() {
-		$(this).parent().parent().parent().children().eq(1).children().children().eq(1).css("background-image",'url("http://tjteam.dothome.co.kr/byeolsolResort/healingRoom/img7-3.jpg")');
+		$(this).parent().parent().parent().children().eq(1).children().children().eq(1).css("background-image",'url("https://gyonewproject.000webhostapp.com/byeolsolResort/healingRoom/img7-3.jpg")');
 		$(this).parent().parent().parent().children().eq(1).children().children().eq(0).children().children().eq(0).html("CONCEPT 1");
 		$(this).parent().parent().parent().children().eq(1).children().children().eq(0).children().children().eq(2).html("힐링룸 입니다.");
 	})
 	$("#room2").hover(function() {
-		$(this).parent().parent().parent().children().eq(1).children().children().eq(1).css("background-image",'url("http://tjteam.dothome.co.kr/byeolsolResort/kidsRoom/img8-1.jpg")');
+		$(this).parent().parent().parent().children().eq(1).children().children().eq(1).css("background-image",'url("https://gyonewproject.000webhostapp.com/byeolsolResort/kidsRoom/img8-1.jpg")');
 		$(this).parent().parent().parent().children().eq(1).children().children().eq(0).children().children().eq(0).html("CONCEPT 2");
 		$(this).parent().parent().parent().children().eq(1).children().children().eq(0).children().children().eq(2).html("키즈룸 입니다.");
 	})
 	$("#room3").hover(function() {
-		$(this).parent().parent().parent().children().eq(1).children().children().eq(1).css("background-image",'url("http://tjteam.dothome.co.kr/byeolsolResort/gameRoom/img9-1.jpg")');
+		$(this).parent().parent().parent().children().eq(1).children().children().eq(1).css("background-image",'url("https://gyonewproject.000webhostapp.com/byeolsolResort/gameRoom/img9-1.jpg")');
 		$(this).parent().parent().parent().children().eq(1).children().children().eq(0).children().children().eq(0).html("CONCEPT 3");
 		$(this).parent().parent().parent().children().eq(1).children().children().eq(0).children().children().eq(2).html("게임룸 입니다.");
 	})

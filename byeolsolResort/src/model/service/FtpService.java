@@ -22,11 +22,12 @@ import org.springframework.web.multipart.MultipartFile;
 public class FtpService {
 	
 	// 연결할 ftp ip, port, id, password
-	private final String server = "112.175.184.88";
+	private final String server = "files.000webhost.com";
 	private final int port = 21;
-	private final String user = "tjteam";
-	private final String pw = "tjpassword01!";
-
+	private final String user = "gyonewproject";
+	private final String pw = "password01!";
+	
+	
 	// path와 Time을 받아 ftp 에있는 이미지 삭제
 	public boolean ftpdeleteEvent(String path, String Time) {
 		FTPClient ftp = null;
@@ -48,10 +49,12 @@ public class FtpService {
 				System.out.println("연결 성공");
 			}
 			// ftp 서버 작업중인 directory 파라미터 받은 값으로 변경 
-			ftp.changeWorkingDirectory("/html/byeolsolResort/event/" + Time);
+			ftp.changeWorkingDirectory("/public_html/byeolsolResort/event/" + Time);
+			System.out.println(Time);
 			// 삭제할 파일 path
-			String deletePath = "/html/byeolsolResort/event/" + Time
+			String deletePath = "/public_html/byeolsolResort/event/" + Time
 					+ path.substring(path.lastIndexOf('/'), path.length());
+			System.out.println(deletePath);
 			// 제대로 삭제되면 true 반환
 			if(ftp.deleteFile(deletePath)) {
 				return true;
@@ -87,8 +90,8 @@ public class FtpService {
 			} else {
 				System.out.println("연결 성공");
 			}
-			ftp.changeWorkingDirectory("/html/byeolsolResort/board/" + Time);
-			String deletePath = "/html/byeolsolResort/board/" + Time
+			ftp.changeWorkingDirectory("/public_html/byeolsolResort/board/" + Time);
+			String deletePath = "/public_html/byeolsolResort/board/" + Time
 					+ path.substring(path.lastIndexOf('/'), path.length());
 			System.out.println(deletePath);
 			System.out.println(ftp.deleteFile(deletePath));
@@ -142,11 +145,11 @@ public class FtpService {
 			}
 			// 파일을 넣을 디렉토리를 설정해줍니다.
 			// 파일을 넣을 폴더 생성
-			ftp.mkd("/html/byeolsolResort/event");
-			ftp.mkd("/html/byeolsolResort/event/" + addTime);
+			ftp.mkd("/public_html/byeolsolResort/event");
+			ftp.mkd("/public_html/byeolsolResort/event/" + addTime);
 			System.out.println("성공?");
 			// makeDirectory는 directory 생성이 필요할 때만 해주시면 됩니다.
-			ftp.changeWorkingDirectory("/html/byeolsolResort/event/" + addTime);
+			ftp.changeWorkingDirectory("/public_html/byeolsolResort/event/" + addTime);
 			// 그 후 이전에 File로 변환한 업로드파일을 읽어 FTP로 전송합니다.
 			FileInputStream fis = new FileInputStream(file);
 			boolean isSucess = ftp.storeFile(uploadFile.getOriginalFilename(), fis);
@@ -206,11 +209,11 @@ public class FtpService {
 				System.out.println("연결 성공");
 			}
 			// 파일을 넣을 디렉토리를 설정해줍니다.
-			ftp.mkd("/html/byeolsolResort/board");
-			ftp.mkd("/html/byeolsolResort/board/" + addTime);
+			ftp.mkd("/public_html/byeolsolResort/board");
+			ftp.mkd("/public_html/byeolsolResort/board/" + addTime);
 			System.out.println("성공?");
 			// makeDirectory는 directory 생성이 필요할 때만 해주시면 됩니다.
-			ftp.changeWorkingDirectory("/html/byeolsolResort/board/" + addTime);
+			ftp.changeWorkingDirectory("/public_html/byeolsolResort/board/" + addTime);
 			// 그 후 이전에 File로 변환한 업로드파일을 읽어 FTP로 전송합니다.
 			FileInputStream fis = new FileInputStream(file);
 			boolean isSucess = ftp.storeFile(count + uploadFile.getOriginalFilename(), fis);
@@ -258,11 +261,11 @@ public class FtpService {
 			} else {
 				System.out.println("연결 성공");
 			}
-			ftp.changeWorkingDirectory("/html/byeolsolResort/" + what);
+			ftp.changeWorkingDirectory("/public_html/byeolsolResort/" + what);
 			FTPFile[] ftpFiles = ftp.listFiles();
 			for (FTPFile ftpFile : ftpFiles) {
 				System.out.println(ftpFile.getName());
-				imgPath.add("http://tjteam.dothome.co.kr/byeolsolResort/" + what + "/" + ftpFile.getName());
+				imgPath.add("https://gyonewproject.000webhostapp.com/byeolsolResort/" + what + "/" + ftpFile.getName());
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -311,11 +314,11 @@ public class FtpService {
 				System.out.println("연결 성공");
 			}
 			// 파일을 넣을 디렉토리를 설정해줍니다.
-			ftp.mkd("/html/byeolsolResort/event");
-			ftp.mkd("/html/byeolsolResort/event/event_"+eventId+"_thumbnail");
+			ftp.mkd("/public_html/byeolsolResort/event");
+			ftp.mkd("/public_html/byeolsolResort/event/event_"+eventId+"_thumbnail");
 			System.out.println("성공?");
 			// makeDirectory는 directory 생성이 필요할 때만 해주시면 됩니다.
-			ftp.changeWorkingDirectory("/html/byeolsolResort/event/event_" + eventId + "_thumbnail");
+			ftp.changeWorkingDirectory("/public_html/byeolsolResort/event/event_" + eventId + "_thumbnail");
 			// 그 후 이전에 File로 변환한 업로드파일을 읽어 FTP로 전송합니다.
 			FileInputStream fis = new FileInputStream(file);
 			boolean isSucess = ftp.storeFile(uploadFile.getOriginalFilename(), fis);
@@ -364,7 +367,7 @@ public class FtpService {
 			}
 			// 파일을 갖고 있는지 가지고 있지  않은지 확인후
 			boolean isHave = false;
-			FTPFile[] ftpFiles = ftp.listDirectories("/html/byeolsolResort/event");
+			FTPFile[] ftpFiles = ftp.listDirectories("/public_html/byeolsolResort/event");
 			for (FTPFile ftpFile : ftpFiles) {
 				System.out.println("폴더 경로 : " + ftpFile.getName());
 				if (ftpFile.getName().equals("event_" + eventId + "_thumbnail")) {
@@ -374,8 +377,8 @@ public class FtpService {
 				}
 			}
 			if (isHave) {
-				ftp.changeWorkingDirectory("/html/byeolsolResort/event/event_" + eventId + "_thumbnail");
-				String deletePath = "/html/byeolsolResort/event/event_" + eventId + "_thumbnail"
+				ftp.changeWorkingDirectory("/public_html/byeolsolResort/event/event_" + eventId + "_thumbnail");
+				String deletePath = "/public_html/byeolsolResort/event/event_" + eventId + "_thumbnail"
 						+ imgPath.substring(imgPath.lastIndexOf('/'), imgPath.length());
 				System.out.println("deletePath : " + deletePath);
 				// 가지고 있다면 삭제
@@ -421,7 +424,7 @@ public class FtpService {
 				System.out.println("연결 성공");
 			}
 			boolean isHave = false;
-			FTPFile[] ftpFiles = ftp.listDirectories("/html/byeolsolResort/event");
+			FTPFile[] ftpFiles = ftp.listDirectories("/public_html/byeolsolResort/event");
 			for (FTPFile ftpFile : ftpFiles) {
 				System.out.println("폴더 경로 : " + ftpFile.getName());
 				if (ftpFile.getName().equals("event_" + eventId + "_thumbnail")) {
@@ -431,8 +434,8 @@ public class FtpService {
 				}
 			}
 			if (isHave) {
-				ftp.changeWorkingDirectory("/html/byeolsolResort/event/event_" + eventId + "_thumbnail");
-				String deletePath = "/html/byeolsolResort/event/event_" + eventId + "_thumbnail"
+				ftp.changeWorkingDirectory("/public_html/byeolsolResort/event/event_" + eventId + "_thumbnail");
+				String deletePath = "/public_html/byeolsolResort/event/event_" + eventId + "_thumbnail"
 						+ imgPath.substring(imgPath.lastIndexOf('/'),imgPath.length());
 				
 				if (ftp.deleteFile(deletePath)) {
@@ -492,10 +495,10 @@ public class FtpService {
 				System.out.println("연결 성공");
 			}
 			// 파일을 넣을 디렉토리를 설정해줍니다.
-			ftp.mkd("/html/byeolsolResort/"+classification);
+			ftp.mkd("/public_html/byeolsolResort/"+classification);
 			System.out.println("성공?");
 			// makeDirectory는 directory 생성이 필요할 때만 해주시면 됩니다.
-			ftp.changeWorkingDirectory("/html/byeolsolResort/"+classification);
+			ftp.changeWorkingDirectory("/public_html/byeolsolResort/"+classification);
 			FTPFile[] ftpFiles = ftp.listFiles();
 			// 그 후 이전에 File로 변환한 업로드파일을 읽어 FTP로 전송합니다.
 			System.out.println(classification);
@@ -566,10 +569,10 @@ public class FtpService {
 				System.out.println("연결 성공");
 			}
 			// 파일을 넣을 디렉토리를 설정해줍니다.
-			ftp.mkd("/html/byeolsolResort/"+classification);
+			ftp.mkd("/public_html/byeolsolResort/"+classification);
 			System.out.println("성공?");
 			// makeDirectory는 directory 생성이 필요할 때만 해주시면 됩니다.
-			ftp.changeWorkingDirectory("/html/byeolsolResort/"+classification);
+			ftp.changeWorkingDirectory("/public_html/byeolsolResort/"+classification);
 			FTPFile[] ftpFiles = ftp.listFiles();
 			// 그 후 이전에 File로 변환한 업로드파일을 읽어 FTP로 전송합니다.
 			System.out.println("classification : " + classification);

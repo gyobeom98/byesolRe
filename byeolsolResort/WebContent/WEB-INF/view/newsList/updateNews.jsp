@@ -23,7 +23,7 @@
 			</header>
 			<div>
 				<img class="subimage"
-					src="https://byeolsol.000webhostapp.com/css/img/byeolsolnewssub.jpg">
+					src="https://gyonewproject.000webhostapp.com/byeolsolResort/board/byeolsolnewssub.jpg">
 			</div>
 			<section>
 				<div class="writ">
@@ -73,7 +73,7 @@
 			</footer>
 		</div>
 		<c:if test='${userId=="admin"}'>
-		<button onclick='updateImg("updateNews","main")'>배너이미지 수정</button>
+		<button onclick='updateImg("board","byeolsolnewssub")'>배너이미지 수정</button>
 		</c:if>
 	</div>
 </body>

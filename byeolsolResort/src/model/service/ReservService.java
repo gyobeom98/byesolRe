@@ -301,7 +301,7 @@ public class ReservService {
 		if(reserv.getState().equals("입금")) { // 예약이 입금 된 상태라면 
 			Customer customer = customerService.getCustomerById(reserv.getUserId());
 			// remove추가
-			Remove remove = new Remove(0, reserv.getUserId(), reserv.getRoomId(), reserv.getStartDate(), reserv.getEndDate(), reserv.getTotalPrice(),customer.getName(), customer.getPhone(), null);
+			Remove remove = new Remove(0, reserv.getUserId(), reserv.getRoomId(), reserv.getStartDate(), reserv.getEndDate(), reserv.getTotalPrice()/10,customer.getName(), customer.getPhone(), null);
 			removeMapper.insertRemove(remove);
 		}
 		

@@ -28,7 +28,7 @@ window.addEventListener("DOMContentLoaded",function(){
 	var errorMessage = "${errorMessage}";
 	if(errorMessage != ""){
 		alert(errorMessage)
-		location.href="/index/main"
+		location.href="/cus/myReserv"
 	}
 })
 </script>

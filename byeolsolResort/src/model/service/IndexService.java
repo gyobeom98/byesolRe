@@ -27,6 +27,7 @@ public class IndexService {
 		case "RMsubimg": path += "/roomMain"; break;
 		case "byeolsolnewssub" : path+="/list"; break;
 		case "" : path+="adminUserInfo"; break;
+		case "golfsub" : path += "/golf"; break;
 		}
 		
 		return path;

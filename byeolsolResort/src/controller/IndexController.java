@@ -294,7 +294,7 @@ public class IndexController {
 						}else {
 						ftpService.ftpAdminImgRename(classification, value, dumpImg);
 						}
-						return "redirect:/index/main";
+						return "redirect:"+indexService.returnPath(classification, value);
 					}else {
 						System.out.println(dumpImg);
 						m.addAttribute("classification",classification);

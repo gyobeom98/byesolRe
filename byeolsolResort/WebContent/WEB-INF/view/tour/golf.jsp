@@ -1,6 +1,8 @@
+<%@page import="java.util.Random"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<% Random random = new Random(); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,7 +24,7 @@
 			</header>
 			<div id="headerblank"></div>
 			<img class="subbanner"
-				src="https://gyonewproject.000webhostapp.com/byeolsolResort/golf/golfsub.jpg">
+				src="https://gyonewproject.000webhostapp.com/byeolsolResort/golf/golfsub.jpg?version=<%=random.nextInt(500)%>">
 			<section>
 				<div class="writ">
 					<div id="secheader">

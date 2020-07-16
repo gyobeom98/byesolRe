@@ -1,13 +1,8 @@
+<%@page import="java.util.Random"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
-<%
-response.setHeader("Cache-Control", "no-store");
-response.setHeader("Pragma", "no-cache");
-response.setDateHeader("Expires", 0);
-if(request.getProtocol().equals("HTTP/1.1"))
-	response.setHeader("Cache-Control", "no-cache");
-%>
+<% Random random = new Random(); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -47,7 +42,7 @@ function updateImg(classification,value){
 			<header class="header">
 			<jsp:include page="../header/header.jsp"></jsp:include>
 			</header>
-			<div class="mainImg">
+			<div class="mainImg" style="background: url('https://gyonewproject.000webhostapp.com/byeolsolResort/mainImg/main.jpg?<%=random.nextInt(500)%>');">
 				<div id="center">
 					<div class="img1info">
 						<div>
@@ -106,7 +101,8 @@ function updateImg(classification,value){
 	<!--  -->
 	<c:if test='${userId=="admin"}'>
 	<button onclick='updateImg("mainImg","main")'>메인이미지 수정</button>
-	<button onclick='updateImg("mainImg","logo")'>로고이미지 수정</button>	
+	<button onclick='updateImg("logo","title1")'>로고이미지 수정(마우스 안올렸을  때)</button>
+	<button onclick='updateImg("logo","title2")'>로고이미지 수정(마우스 올렸을 때)</button>	
 	</c:if>
 </body>
 </html>

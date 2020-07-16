@@ -267,8 +267,10 @@ public class FtpService {
 				if (ftpFile.getType() == 0) {
 					if (!ftpFile.getName().equals("public_html") && !ftpFile.getName().equals("tmp")) {
 						if (!ftpFile.getName().equals(".") && !ftpFile.getName().equals("..")) {
+							if(ftpFile.getName().contains(value)) {
 							imgPath.add("https://gyonewproject.000webhostapp.com/byeolsolResort/" + what + "/"
 									+ ftpFile.getName());
+							}
 						}
 					}
 				}
@@ -515,9 +517,10 @@ public class FtpService {
 			// 그 후 이전에 File로 변환한 업로드파일을 읽어 FTP로 전송합니다.
 			System.out.println(classification);
 			System.out.println(value);
+			System.out.println(ftpFiles.length);
 			for (FTPFile ftpFile : ftpFiles) {
-				System.out.println("자름 : " + ftpFile.getName().substring(0, ftpFile.getName().lastIndexOf('.') - 1));
-
+				System.out.println(ftpFile.getName().lastIndexOf('.'));
+//				System.out.println("자름 : " + ftpFile.getName().substring(0, ftpFile.getName().lastIndexOf('.')-1));
 				if (ftpFile.getName().substring(0, ftpFile.getName().lastIndexOf('.')).equals(value)) {
 					System.out.println("aaa");
 					fileName = ftpFile.getName().substring(0, ftpFile.getName().lastIndexOf('.'));
@@ -529,6 +532,7 @@ public class FtpService {
 			System.out.println(fileName + type);
 			System.out.println("dump" + fileName + ftpFiles.length + type);
 			System.out.println(ftp.rename(fileName + type, "dump" + fileName + ftpFiles.length + type));
+			int random = (int)(Math.random()*500)+1;
 			boolean isSucess = ftp.storeFile(value + type, fis);
 			if (isSucess) {
 				System.out.println("성공");

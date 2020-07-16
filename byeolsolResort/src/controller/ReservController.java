@@ -306,6 +306,7 @@ public class ReservController {
 			m.addAttribute("errorMessage", "로그인이 되어 있지 않습니다.");
 			return "redirect:/index/main";
 		}
+		
 	}
 
 	@GetMapping("/adminDeleteRemove")

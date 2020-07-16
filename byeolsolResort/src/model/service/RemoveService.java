@@ -11,7 +11,7 @@ import model.view.RemoveView;
 
 @Service("removeService")
 public class RemoveService {
-	private static final int REMOVE_COUNT_PER_PAGE = 5;
+	private static final int REMOVE_COUNT_PER_PAGE = 10;
 	
 
 	@Autowired

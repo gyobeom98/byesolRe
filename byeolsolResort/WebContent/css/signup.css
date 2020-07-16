@@ -28,7 +28,7 @@ header>div::after{
 }
 
 header:hover{
-	height: 450px;
+	height: 350px;
 	background: linear-gradient(to bottom, white 70% , rgba(255, 255, 255, 0.7) );
 	position: fixed;
 	transition: 1.5s;

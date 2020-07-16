@@ -364,6 +364,7 @@ public class CustomerController {
 	public String myReservPage(HttpSession session, @RequestParam(defaultValue = "1") int pageNum, Model m) {
 		if (session.getAttribute("userId") != null) {
 			String userId = (String) session.getAttribute("userId");
+			if(!userId.equals("admin")) {
 			Customer customer = customerService.getCustomerById(userId);
 			if (customer.getEmailState().equals("인증")) {
 				m.addAttribute("reservWithRoomNumView", reservService.getReservWithRoomNumView(pageNum, userId));
@@ -371,6 +372,10 @@ public class CustomerController {
 			} else {
 				m.addAttribute("errorMessage", "이메일 인증이 되어있지 않은 계정입니다.");
 				return "redirect:/cus/myPage";
+			}
+			}else {
+				m.addAttribute("errorMessage","잘못된 접근 입니다.");
+				return "redirect:/index/main";
 			}
 		} else {
 			m.addAttribute("errorMessage", "로그인이 되어 있지 않습니다.");

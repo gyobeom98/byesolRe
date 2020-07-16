@@ -77,7 +77,8 @@ public class QuestionController {
 					return "redirect:/index/main";
 				}
 			} else {
-				return "";
+				m.addAttribute("errorMessage","잘못된 접근 입니다.");
+				return "redirect:/index/main";
 			}
 		} else {
 			m.addAttribute("errorMessage", "로그인이 되어 있지 않습니다.");

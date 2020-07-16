@@ -197,7 +197,11 @@ public class ReservController {
 				Reserv reserv = reservService.getReservById(reservId);
 				if (reserv.getUserId().equals(userId) || userId.equals("admin")) {
 					reservService.deleteReserv(reservId);
+					if(!userId.equals("admin")) {
 					return "redirect:/cus/myReserv";
+					}else {
+						return "redirect:/index/adminRoom";
+					}
 				} else {
 					m.addAttribute("errorMessage", "권한이 없습니다.");
 					return "redirect:/index/main";

@@ -423,4 +423,5 @@ tr.room>td:not (:first-child )>a {
 
 .subbanner{
 	margin-top: 150px;
+	width: 100%
 }

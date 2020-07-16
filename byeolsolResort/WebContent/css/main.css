@@ -344,7 +344,7 @@ header:hover #side>ul>li>span{
 #mainNotice>.mainNotic_list{
 	display: block;
 	line-height: 70px;
-	padding: 0 400px 0 200px;
+	padding: 0 300px 0 80px;
 }
 
 footer{
@@ -381,4 +381,8 @@ address ul>li{
 	display: list-item;
 	padding-right: 10px;
 	padding-left: 10px;
+}
+
+.centerNotice{
+	display: flex;
 }

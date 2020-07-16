@@ -72,15 +72,13 @@ window.addEventListener("DOMContentLoaded",function(){
 			</div>
 			<div class="scrolldown">SCROLL DOWN</div>
 			<div id="mainNotice">
-				<div class="inbox">공지사항</div>
 				<div class="mainNotic_list">
-					<ul>
-						<li><a href="공지사항1">공지사항1</a></li>
-					</ul>
+					<a href="/board/adminList">별솔뉴스</a>
 				</div>
 				<div class="more">
-					<a href="더보기"><i style="color: lightgrey;" class="fas fa-plus"></i>
-						MORE...</a>
+				<span style="color:lightgrey">｜</span>
+					<a style="padding-left:300px;" href="/event/list">
+						이벤트</a>
 				</div>
 			</div>
 			<footer>

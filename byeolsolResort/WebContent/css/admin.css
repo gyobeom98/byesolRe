@@ -454,7 +454,7 @@ h1 {
 
 .flotBox_my_tap>li>a {
 	float: left;
-	padding: 0 12%;
+	padding: 0 79px;
 	border: 1px solid #e6e6e6;
 	height: 60px;
 	line-height: 60px;
@@ -583,4 +583,12 @@ table .number {
 
 .hide{
 	display: none;
+}
+
+.keywordForm{
+	margin-bottom: 3%;
+}
+
+.textCenter{
+	text-align: center;
 }

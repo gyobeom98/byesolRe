@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" href="/css/admin.css">
+<!-- <link rel="stylesheet" href="/css/admin.css"> -->
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript">
@@ -25,7 +25,7 @@ function select(dumpImg){
 </head>
 <body>
 <header>
-<jsp:include page="../header/header.jsp"/>
+<%-- <jsp:include page="../header/header.jsp"/> --%>
 </header>
 <section>
 <form action="/index/imgUpdate" method="post" enctype="multipart/form-data">
@@ -41,7 +41,7 @@ function select(dumpImg){
 </section>
 
 <footer>
-<jsp:include page="../footer/footer.jsp"/>
+<%-- <jsp:include page="../footer/footer.jsp"/> --%>
 </footer>
 </body>
 </html>

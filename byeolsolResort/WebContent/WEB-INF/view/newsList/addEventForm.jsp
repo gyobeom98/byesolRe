@@ -60,7 +60,7 @@
 									<td>
 									<input type="Date" id="date1" name="start" readonly="readonly">
 									<input type="Date" id="date2" name="end" readonly="readonly">
-									미상시<input type="radio" name="state" value="미상시">
+									미상시<input type="radio" name="state" value="미상시" checked="checked">
 									상시<input type="radio" name="state" value="상시">
 									</td>
 								</tr>

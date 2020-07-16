@@ -523,7 +523,7 @@ public class BoardController {
 				if (board != null && board.getState().equals("admin")) {
 					if (userId.equals("admin")) {
 						boardService.deleteBoard(id, userId);
-						return "redirect:/board/adminBoardList";
+						return "redirect:/board/adminList";
 					} else {
 						m.addAttribute("errorMessage", "권한이 없습니다.");
 						return "redirect:/index/main";

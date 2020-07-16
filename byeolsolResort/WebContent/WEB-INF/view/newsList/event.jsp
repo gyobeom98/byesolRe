@@ -40,12 +40,6 @@
 						<div class="sibtitle">
 							<h3 class="stitle">이벤트</h3>
 						</div>
-						<div>
-							<c:if test='${userId=="admin" }'>
-								<button class="addEventButton" onclick="adEvent()">글쓰기</button>
-							</c:if>
-						</div>
-						
 						<div class="allevent">
 							<div class="event_area">
 								<c:set var="x" value="0" />
@@ -148,6 +142,12 @@
 									<a href="/event/list?pageNum=${eventView.currentPageNum+1}">다음</a>
 								</c:if>
 							</c:if>
+							<br>
+							<div>
+							<c:if test='${userId=="admin" }'>
+								<button class="addEventButton" onclick="adEvent()">글쓰기</button>
+							</c:if>
+						</div>
 						</div>
 					</div>
 				</div>

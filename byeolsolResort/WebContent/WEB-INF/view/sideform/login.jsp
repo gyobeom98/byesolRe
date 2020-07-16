@@ -31,10 +31,8 @@ window.addEventListener("DOMContentLoaded",function(){
 			<header class="header">
 				<jsp:include page="../header/sub.jsp" />
 			</header>
-			<div class="subbanner">
-				<img
+				<img class="subbanner"
 					src="https://gyonewproject.000webhostapp.com/byeolsolResort/myPage/myPageSub.jpg?<%=random.nextInt(500)%>">
-			</div>
 			<section>
 				<div class="writ">
 					<div class="route">

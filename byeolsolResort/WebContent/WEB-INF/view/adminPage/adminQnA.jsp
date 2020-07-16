@@ -75,7 +75,7 @@ window.addEventListener("DOMContentLoaded",function(){
 								<td>내용</td>
 								<td>name</td>
 								<td>작성일</td>
-								<td>답변여부</td>
+								<td class="hide">답변여부</td>
 							</tr>
 						</thead>
 						<tbody>
@@ -86,7 +86,7 @@ window.addEventListener("DOMContentLoaded",function(){
 									<td>${q.message }</td>
 									<td>${q.writer }</td>
 									<td>${q.regDate }</td>
-									<td>${q.state }</td>
+									<td class="hide">${q.state }</td>
 								</tr>
 							</c:forEach>
 						</tbody>

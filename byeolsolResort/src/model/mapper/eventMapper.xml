@@ -28,7 +28,7 @@ select * from event
 </select>
 
 <select id="selectEventListWithLimit" resultType="Event">
-select * from event limit #{firstRow},#{eventCountPerPage}
+select * from event order by reg_date desc limit #{firstRow},#{eventCountPerPage}
 </select>
 
 <select id="countEvent" resultType="int">

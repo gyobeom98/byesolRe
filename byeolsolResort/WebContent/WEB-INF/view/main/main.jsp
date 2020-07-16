@@ -14,9 +14,8 @@
 <script src="https://kit.fontawesome.com/c945c12587.js"
 	crossorigin="anonymous"></script>
 <script type="text/javascript" src="/script/main.js"></script>
-
+<script type="text/javascript" src="/script/updateImg.js"></script>
 <script type="text/javascript">
-
 window.addEventListener("DOMContentLoaded",function(){
 	
 	var errorMessage = "${errorMessage}";
@@ -25,16 +24,7 @@ window.addEventListener("DOMContentLoaded",function(){
 		location.href="/index/main"
 	}
 })
-
-
-function updateImg(classification,value){
-	console.log(classification,value)
-	location.href="/index/imgUpdate?classification="+classification+"&value="+value;
-	
-}
-
 </script>
-
 </head>
 <body>
 	<div class="allwrap">

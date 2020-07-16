@@ -1,6 +1,8 @@
+<%@page import="java.util.Random"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%Random random = new Random(); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,6 +18,17 @@
 <script type="text/javascript" src="/script/roomInfo.js"></script>
 <script src="https://kit.fontawesome.com/c945c12587.js"
 	crossorigin="anonymous">
+<script type="text/javascript" src="/script/updateImg.js"></script>
+<script type="text/javascript">
+window.addEventListener("DOMContentLoaded",function(){
+	
+	var errorMessage = "${errorMessage}";
+	if(errorMessage != ""){
+		alert(errorMessage)
+		location.href="/index/main"
+	}
+})
+</script>
 	
 </script>
 </head>
@@ -28,7 +41,7 @@
 			<div id="headerblank"></div>
 			<div class="roomInfo_01_mainImg">
 				<img class="subbanner"
-					src="https://gyonewproject.000webhostapp.com/byeolsolResort/gameRoom/R3subimg.jpg">
+					src="https://gyonewproject.000webhostapp.com/byeolsolResort/gameRoom/R3subimg.jpg?<%=random.nextInt(500)%>">
 			</div>
 			<section>
 				<div class="writ">

@@ -15,6 +15,17 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" src="/script/sub.js"></script>
+<script type="text/javascript" src="/script/updateImg.js"></script>
+<script type="text/javascript">
+window.addEventListener("DOMContentLoaded",function(){
+	
+	var errorMessage = "${errorMessage}";
+	if(errorMessage != ""){
+		alert(errorMessage)
+		location.href="/index/main"
+	}
+})
+</script>
 </head>
 <body>
 	<div class="allwrap">

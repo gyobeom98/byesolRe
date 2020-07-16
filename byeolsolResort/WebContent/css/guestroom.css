@@ -420,3 +420,7 @@ tr.room>td:not (:first-child )>a {
 .gr{
 	margin-bottom: 5%;
 }
+
+.subbanner{
+	margin-top: 150px;
+}

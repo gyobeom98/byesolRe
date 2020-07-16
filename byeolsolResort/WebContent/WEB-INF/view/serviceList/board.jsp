@@ -1,7 +1,9 @@
+<%@page import="java.util.Random"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
  <%@ taglib uri="http://sargue.net/jsptags/time" prefix="jt" %>  
  <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>   
+ <%Random random = new Random(); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,6 +14,17 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" src="/script/sub.js"></script>
 <script type="text/javascript" src="/script/board.js"></script>
+<script type="text/javascript" src="/script/updateImg.js"></script>
+<script type="text/javascript">
+window.addEventListener("DOMContentLoaded",function(){
+	
+	var errorMessage = "${errorMessage}";
+	if(errorMessage != ""){
+		alert(errorMessage)
+		location.href="/index/main"
+	}
+})
+</script>
 </head>
 <body>
 	<div class="allwrap">
@@ -19,9 +32,7 @@
 			<header class="header">
 				<jsp:include page="../header/sub.jsp"/>
 			</header>
-			<div class="subbanner">
-			<img src="https://gyonewproject.000webhostapp.com/byeolsolResort/board/byeolsolnewssub.jpg">
-			</div>
+			<img class="subbanner" src="https://gyonewproject.000webhostapp.com/byeolsolResort/board/byeolsolnewssub.jpg?<%=random.nextInt(500)%>">
 			<section>
 				<div class="writ">
 					<div class="route">

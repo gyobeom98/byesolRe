@@ -1,6 +1,8 @@
+<%@page import="java.util.Random"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%Random random = new Random(); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,9 +10,21 @@
 <title>Insert title here</title>
 <title>별솔리조트</title>
 <link rel="stylesheet" href="/css/test1.css">
+<link rel="stylesheet" href="/css/footer.css">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" src="/script/sub.js"></script>
+<script type="text/javascript" src="/script/updateImg.js"></script>
+<script type="text/javascript">
+window.addEventListener("DOMContentLoaded",function(){
+	
+	var errorMessage = "${errorMessage}";
+	if(errorMessage != ""){
+		alert(errorMessage)
+		location.href="/index/main"
+	}
+})
+</script>
 </head>
 <body>
 	<div class="allwrap">
@@ -19,7 +33,7 @@
 				<jsp:include page="../header/sub.jsp"/>
 			</header>
 			<img class="subbanner"
-					src="https://gyonewproject.000webhostapp.com/byeolsolResort/myPage/myPageSubimg.jpg">
+					src="https://gyonewproject.000webhostapp.com/byeolsolResort/myPage/myPageSub.jpg?<%=random.nextInt(500)%>">
 			<section>
 				<div class="writ">
 					<div class="route">

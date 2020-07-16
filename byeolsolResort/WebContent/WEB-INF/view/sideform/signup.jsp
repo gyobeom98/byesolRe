@@ -1,3 +1,4 @@
+<%@page import="java.util.Random"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -5,7 +6,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>   
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %> 
-
+<%Random random = new Random();%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,6 +22,17 @@
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />  
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>  
 <script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
+<script type="text/javascript" src="/script/updateImg.js"></script>
+<script type="text/javascript">
+window.addEventListener("DOMContentLoaded",function(){
+	
+	var errorMessage = "${errorMessage}";
+	if(errorMessage != ""){
+		alert(errorMessage)
+		location.href="/index/main"
+	}
+})
+</script>
 </head>
 <body>
 	<div class="allwrap">
@@ -28,7 +40,7 @@
 			<header class="header">
 				<jsp:include page="../header/sub.jsp"/>
 			</header>
-			<img class="subbanner" src="https://gyonewproject.000webhostapp.com/byeolsolResort/myPage/myPageSub.jpg">
+			<img class="subbanner" src="https://gyonewproject.000webhostapp.com/byeolsolResort/myPage/myPageSub.jpg?<%=random.nextInt(500)%>">
 			<section>
 				<div class="writ">
 					<div class="route">

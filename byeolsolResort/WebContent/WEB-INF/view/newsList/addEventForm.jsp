@@ -1,6 +1,8 @@
+<%@page import="java.util.Random"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<% Random random = new Random(); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,6 +22,17 @@
 <script
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
+<script type="text/javascript" src="/script/updateImg.js"></script>
+<script type="text/javascript">
+window.addEventListener("DOMContentLoaded",function(){
+	
+	var errorMessage = "${errorMessage}";
+	if(errorMessage != ""){
+		alert(errorMessage)
+		location.href="/index/main"
+	}
+})
+</script>
 </head>
 <body>
 	<div class="allwrap">
@@ -30,7 +43,7 @@
 			<div id="headerblank"></div>
 			<div class="fee_mainImg">
 				<img class="subbanner"
-					src="https://gyonewproject.000webhostapp.com/byeolsolResort/event/byeolsolnewssub.jpg">
+					src="https://gyonewproject.000webhostapp.com/byeolsolResort/event/byeolsolnewssub.jpg?<%=random.nextInt(500)%>">
 			</div>
 			<section>
 				<div class="writ">

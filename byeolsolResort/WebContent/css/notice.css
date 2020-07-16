@@ -58,7 +58,7 @@ header>div::after {
 }
 
 header:hover {
-	height: 350px;
+	height: 450px;
 	background: linear-gradient(to bottom, white 70%, rgba(255, 255, 255, 0.7));
 	position: fixed;
 	transition: 1.5s;
@@ -340,14 +340,12 @@ section{
 }
 
 #addAdminBoard{
-	float: right;
     width: 80px;
     height: 30px;
     background: #d4d4d4;
     border: 2px solid #969696;
     font-weight:bold;
-    top: -5px;
-    right: 30px;
+    margin-left:800px;
 }
 
 tr{
@@ -358,8 +356,7 @@ tr{
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	position:relative;
-	margin:30px;
+	margin: 30px 30px 0 30px;
 }
 .numbermap>a{
 	display:flex;

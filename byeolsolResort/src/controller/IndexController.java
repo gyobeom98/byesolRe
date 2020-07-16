@@ -250,7 +250,7 @@ public class IndexController {
 				List<String> imgList = ftpService.ftpImgPath(classification,value);
 				if(imgList.size()>0) {
 				m.addAttribute("imgList", imgList);
-				return "testForm";
+				return "/adminPage/adminUpdateImg.jsp";
 				}else {
 					m.addAttribute("errorMessage","잘못된 접근 입니다.");
 					return "redirect:/index/main";

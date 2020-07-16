@@ -99,7 +99,7 @@ window.addEventListener("DOMContentLoaded",function(){
 			</footer>
 		</div>
 		<c:if test='${userId=="admin"}'>
-		<button onclick='updateImg("roomMain","RMsubimg.jpg")'>배너이미지 수정</button>
+		<button onclick='updateImg("roomMain","RMsubimg")'>배너이미지 수정</button>
 		</c:if>
 	</div>
 </body>

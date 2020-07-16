@@ -74,8 +74,15 @@ window.addEventListener("DOMContentLoaded",function(){
 									<td>
 									<input type="date" id="date1" name="start" value="${event.startDate}" readonly="readonly">
 									<input type="date" id="date2" name="end" value="${event.endDate}" readonly="readonly">
-									미상시<input type="radio" name="state" value="미상시">
-									상시<input type="radio" name="state" value="상시">
+									<c:if test='${event.state == "미상시" }'>
+										미상시<input type="radio" name="state" value="미상시" checked="checked">
+										상시<input type="radio" name="state" value="상시">
+									</c:if>
+									
+									<c:if test='${event.state == "상시" }'>
+										미상시<input type="radio" name="state" value="미상시">
+										상시<input type="radio" name="state" value="상시" checked="checked">
+									</c:if>
 									</td>
 								</tr>
 								<tr>

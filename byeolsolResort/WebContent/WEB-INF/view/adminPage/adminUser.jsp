@@ -27,7 +27,7 @@
 		var errorMessage = "${errorMessage}";
 		if (errorMessage != "") {
 			alert(errorMessage)
-			location.href = "/index/main"
+			location.href = "/cus/adminUserInfo"
 		}
 	})
 </script>

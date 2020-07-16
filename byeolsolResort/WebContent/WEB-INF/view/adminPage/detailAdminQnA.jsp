@@ -109,6 +109,7 @@ window.addEventListener("DOMContentLoaded",function(){
 						</c:forEach>
 					</table>
 				</div>
+				<div class="pageForm">
 				<!-- 현재 페이지가 총 페이지 수와 보다 작거나 같으면 -->
 				<c:if
 					test="${answerView.currentPageNum<answerView.pageTotalCount+1}">
@@ -177,6 +178,7 @@ window.addEventListener("DOMContentLoaded",function(){
 							href="/question/detailAdminQuestion?id=${question.id}&pageNum=${answerView.currentPageNum+1}">다음</a>
 					</c:if>
 				</c:if>
+				</div>
 			</section>
 			<footer>
 				<jsp:include page="../footer/footer.jsp" />

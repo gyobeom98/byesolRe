@@ -598,3 +598,9 @@ table .number {
 	margin-top: 150px;
 	width: 100%;
 }
+
+.pageForm{
+	width: 1000px;
+	margin: auto;
+	text-align: center;
+}

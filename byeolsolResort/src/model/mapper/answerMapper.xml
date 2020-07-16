@@ -18,7 +18,7 @@ delete from answer where id = #{id}
 </delete>
 
 <select id="countAnswer" resultType="int">
-select count(*) from answer
+select count(*) from answer where question_id = #{questionId}
 </select>
 
 <select id="selectAnswerByQuestionIdWithLimit" resultType="Answer">

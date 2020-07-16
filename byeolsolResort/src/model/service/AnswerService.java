@@ -30,7 +30,7 @@ public class AnswerService {
 		int firstRow = 0;
 		List<Answer> answerList = null;
 		// answer의 총 수를 answerMapper를 통해 db에서 select count를 함
-		int answerCnt = answerMapper.countAnswer();
+		int answerCnt = answerMapper.countAnswer(questionId);
 		// answer의 수 가 0보다 크다면
 		if(answerCnt>0) {
 			// firstRow 를 (현재 페이지 -1) * 페이지당 보여 줄 answer의 수 

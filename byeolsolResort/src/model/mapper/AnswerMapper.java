@@ -16,7 +16,7 @@ public interface AnswerMapper {
 	
 	public List<Answer> selectAnswerByQuestionIdWithLimit(@Param("questionId")int questionId, @Param("firstRow")int firstRow, @Param("answerCountPerPage")int answerCountPerPage);
 	
-	public int countAnswer();
+	public int countAnswer(int questionId);
 	
 	public Answer selectAnswerById(int id);
 	

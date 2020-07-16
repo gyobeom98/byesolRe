@@ -79,7 +79,7 @@ window.addEventListener("DOMContentLoaded",function(){
 									</td>
 								</tr>
 								<tr>
-									<td class="tdTitle">메인이미지</td>
+									<td class="tdTitle">썸네일이미지</td>
 									<td><input type="file" name="thumbnail" id="upload"></td>
 								</tr>
 								<tr>

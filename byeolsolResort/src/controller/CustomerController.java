@@ -310,11 +310,12 @@ public class CustomerController {
 		} else if (session.getAttribute("userEmail") != null) {
 			String userId = (String) session.getAttribute("userId");
 			Customer customer = customerService.getCustomerById(userId);
-			if (customer.getEmailState().equals("미인증")) {
+			if (!customer.getEmailState().equals("인증")) {
+				customerService.updateCustomerEmailState(customer.getEmail(), "미인증");
 				return "/mypage/emailCer";
 			} else {
 				m.addAttribute("errorMessage", "잘못된 접근 입니다.");
-				return "/index/main";
+				return "redirect:/index/main";
 			}
 		} else {
 			m.addAttribute("errorMessage", "잘못된 접근 입니다.");

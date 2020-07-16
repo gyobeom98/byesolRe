@@ -243,12 +243,14 @@ public class ReservController {
 
 	@GetMapping("/updateReservState")
 	public String adminUpdateReservState(@RequestParam(defaultValue = "0")int id, HttpSession session, Model m) {
+		System.out.println(session.getAttribute("userId")!=null);
 		if (session.getAttribute("userId") != null) {
 			String userId = (String) session.getAttribute("userId");
 			if (userId.equals("admin")) {
 				if(id>0) {
 				reservService.updateReservState(id);
-				return "redirect:/reserv/adminReservPage";
+				System.out.println(userId);
+				return "redirect:/index/adminRoom";
 				}else {
 					m.addAttribute("errorMessage","잘못된 접근 입니다.");
 					return"";
@@ -265,8 +267,8 @@ public class ReservController {
 
 	@GetMapping("/adminReservPage")
 	public String adminReservPage(HttpSession session, Model m, @RequestParam(defaultValue = "1") int pageNum) {
-
-		if (session.getAttribute("userid") != null) {
+		System.out.println(session.getAttribute("userId"));
+		if (session.getAttribute("userId") != null) {
 			String userId = (String) session.getAttribute("userId");
 			if (userId.equals("admin")) {
 				m.addAttribute("reservInfoView", reservService.getAdminReservInfoView(pageNum));

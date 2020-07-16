@@ -11,7 +11,7 @@
 	<div class="main">
 		<div id="logo">
 			<a id="logoimg" href="/index/main"> <img class="logo1"
-				src="https://byeolsol.000webhostapp.com/css/title2.png">
+				src="https://gyonewproject.000webhostapp.com/byeolsolResort/logo/title2.png">
 			</a>
 		</div>
 		<div class="navi">

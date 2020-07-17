@@ -92,7 +92,7 @@ window.addEventListener("DOMContentLoaded",function(){
 						</tr>
 						<tr class="formTr">
 							<td onclick="phone()" class="formTd1">*전화번호</td>
-							<td class="formTd2"><input type="text" name="phone" id="phone"></td>
+							<td class="formTd2"><input type="text" name="phone" id="phone" placeholder="01012345678"></td>
 						</tr>
 						<tr class="formTr">
 							<td onclick="dbclick()" class="formTd1">*생일</td>
@@ -213,7 +213,7 @@ window.addEventListener("DOMContentLoaded",function(){
 2. 제1항의 규정에도 불구하고, 동 분쟁으로 인해 소송이 제기될 경우, 동 소송은 회사의 본사 소재지를 관할하는 법원의 관할로 합니다.
                   </textarea>
 							<p>
-								<label><input type="checkbox" id="check_1" name="" /> 위의 약관에 동의 합니다.</label><br />
+								<label><input type="checkbox" id="check_1" name="check1" value="checke1 checked" /> 위의 약관에 동의 합니다.</label><br/>
 							</p>
 							<br>
 							<h4 class="scheme-g">●개인정보 수집, 이용 동의</h4>(필수동의)
@@ -244,7 +244,7 @@ window.addEventListener("DOMContentLoaded",function(){
 * 상기 보유 기간은 전자상거래 등에서의 소비자보호에 관한법률 시행령 제 6조 1항에 의거합니다.
                   			</textarea>
 							<p>
-								<label><input type="checkbox" id="check_2" name="" /> 위의 약관에 동의 합니다.</label><br />
+								<label><input type="checkbox" id="check_2" name="check2" value="checke2 checked" /> 위의 약관에 동의 합니다.</label><br />
 							</p>
 							<br>
 							<h4 class="scheme-g">●개인정보 취급위탁 동의</h4>(필수동의)
@@ -256,7 +256,7 @@ window.addEventListener("DOMContentLoaded",function(){
 4) ㈜다우기술 : 회사 문자 메시지 전송
                   </textarea>
 							<p>
-								<label><input type="checkbox" id="check_3" name="" /> 위의 약관에 동의 합니다.</label><br />
+								<label><input type="checkbox" id="check_3" name="check3" value="checke3 checked"/> 위의 약관에 동의 합니다.</label><br />
 							</p>
 						</div>
 					</article>

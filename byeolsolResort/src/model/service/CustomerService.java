@@ -2,6 +2,7 @@ package model.service;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import javax.mail.internet.MimeMessage;
 
@@ -65,14 +66,21 @@ public class CustomerService {
 		return c;
 	}
 
-	// userId customerdb에 있는 지 확인 후 결과값 반환
+	// userId customer db에 있는 지 확인 후 결과값 반환
 	public String idCheck(String userId) {
+		// pattern 과 match 되는지 결과 확인후 결과 값 반환
+		String pattern = "[a-zA-Z]{2}+[a-z0-9]{3,10}";
+		boolean result = Pattern.matches(pattern, userId);
+		
+		if(!userId.contains("admin") && result) {
 		Customer c = customerMapper.selectCustomerWithId(userId);
 		if (c != null) {
 			return "중복";
 		} else
 			return "중복 아님";
-
+		}else {
+			return "사용 불가";
+		}
 	}
 
 	// 커스터머 있는지 확인

@@ -16,14 +16,42 @@ $(function() {
 									},
 									success : function(d) {
 										if (d == "중복") {
-											alert("중복되었습니다. 아이디를 확인해주세요")
-											document
-													.querySelector("input[type=submit]").disabled = 'disabled';
-										} else {
-											alert("사용가능합니다.")
+											if($(".formTd2").eq(0).children("span").length>0){
+												$(".formTd2").eq(0).children("span").text("중복된 ID입니다.");
+												$(".formTd2").eq(0).children("span").css("color","#ff0000");
+											}else{
+											var sp = document.createElement("span");
+											sp.innerHTML = "중복된 ID입니다.";
+											sp.style="color:#ff0000; font-size:12px";
+											document.getElementsByClassName("formTd2")[0].insertBefore(sp,document.getElementsByClassName("formTd2")[0].children[2]);
+											}
+											document.querySelector("input[type=submit]").disabled = 'disabled';
+										} else if(d=="사용 불가"){
+											if($(".formTd2").eq(0).children("span").length>0){
+												$(".formTd2").eq(0).children("span").text("사용이 불가능한 ID입니다. 아이디를 확인 해 주세요");
+												$(".formTd2").eq(0).children("span").css("color","#ff0000");
+											}else{
+											var sp = document.createElement("span");
+											sp.innerHTML = "사용이 불가능한 ID입니다. 아이디를 확인 해 주세요";
+											sp.style="color:#ff0000; font-size:12px";
+											document.getElementsByClassName("formTd2")[0].insertBefore(sp,document.getElementsByClassName("formTd2")[0].children[2]);
+										}
+											document.querySelector("input[type=submit]").disabled = 'disabled';
+										}
+										
+										else {
+											
+											if($(".formTd2").eq(0).children("span").length>0){
+												$(".formTd2").eq(0).children("span").text("사용 가능한 ID 입니다.");
+												$(".formTd2").eq(0).children("span").css("color","#418B5B");
+											}else{
+												var sp = document.createElement("span");
+												sp.innerHTML = "사용 가능한 ID 입니다.";
+												sp.style="color:#418B5B; font-size:12px";
+											document.getElementsByClassName("formTd2")[0].insertBefore(sp,document.getElementsByClassName("formTd2")[0].children[2]);
+											}
 											idCheck= true;
-											document
-													.querySelector("input[type=submit]").disabled = '';
+											document.querySelector("input[type=submit]").disabled = '';
 										}
 									}
 								})
@@ -65,8 +93,65 @@ $(function() {
 		
 	})
 	
-	console.dir(document.querySelector("input[name=phone]"));
-					
+	$("#userId").change(function(){
+		idCheck= false;
+		idCheckClick = false;
+		if($(".formTd2").eq(0).children("span").length>0){
+			$(".formTd2").eq(0).children("span").text("");
+		}
+		
+	})
+	
+	$("#password").change(function(){
+		if($(".formTd2").eq(1).children("span").length>0){
+			$(".formTd2").eq(1).children("span").text("");
+		}
+		
+	})
+	
+	$("#passwordCheck").change(function(){
+		if($(".formTd2").eq(2).children("span").length>0){
+			$(".formTd2").eq(2).children("span").text("");
+		}
+		
+	})
+	
+	$("#name").change(function(){
+		if($(".formTd2").eq(3).children("span").length>0){
+			$(".formTd2").eq(3).children("span").text("");
+		}
+		
+	})
+	
+	$("#email").change(function(){
+		if($(".formTd2").eq(4).children("span").length>0){
+			$(".formTd2").eq(4).children("span").text("");
+		}
+		
+	})
+	
+	$("#sample6_postcode").change(function(){
+		if($(".formTd2").eq(5).children("span").length>0){
+			$(".formTd2").eq(5).children("span").text("");
+		}
+		
+	})
+	
+		$("#phone").change(function(){
+		if($(".formTd2").eq(6).children("span").length>0){
+			$(".formTd2").eq(6).children("span").text("");
+		}
+		
+	})
+	
+		$("#birth").change(function(){
+		if($(".formTd2").eq(7).children("span").length>0){
+			$(".formTd2").eq(7).children("span").text("");
+		}
+		
+	})
+	
+	
 
 })
 
@@ -147,10 +232,12 @@ function dbclick() {
 	}
 }
 
+
+
 function check() {
 	var email = $("#email");
 	// 정규식
-	var userIdPattern = /^[a-zA-Z0-9]{4,12}$/;
+	var userIdPattern = /^[a-zA-Z0-9]{3,10}$/;
 	var passwordPattern = /^[A-Za-z0-9]{9,14}$/;
 	var namePattern = /^[가-힣]{2,6}|[a-zA-Z]{2,10}$/;
 	var emailPattern = /^[A-Za-z0-9]([-_.]?[A-Za-z0-9])*@[a-zA-Z0-9]([-_.]?[a-zA-Z0-9])*.[a-zA-Z]{2,3}$/i;
@@ -158,28 +245,70 @@ function check() {
 
 	// 아이디 공백확인
 	if ($("#userId").val() == "") {
-		alert("아이디를 입력해주세요.");
 		$("#userId").focus();
+		if($(".formTd2").eq(0).children("span").length>0){
+			$(".formTd2").eq(0).children("span").text("아이디를 입력 해주세요.");
+		}else{
+			var sp = $('<span style="color:red; font-size:12px">아이디를 입력 해주세요</span>')
+			sp.insertBefore($(".formTd2").eq(0).children("p"))
+		}
+		
 		return false;
 	}
 
 	// 아이디의 유효성 검사
-	if (!userIdPattern.test($("#userId").val())) {
-		alert("아이디를 올바르게 입력해주세요.");
+	if (!userIdPattern.test($("#userId").val()) || $("#userId").val().indexOf("admin")!=-1) {
 		$("#userId").val("");
+		$("#userId").focus();
+		if($(".formTd2").eq(0).children("span").length>0){
+			$(".formTd2").eq(0).children("span").text("아이디를 올바르게 입력 해주세요.");
+		}
+		return false;
+	}
+	
+	if(!idCheckClick){
+		if($(".formTd2").eq(0).children("span").length>0){
+			$(".formTd2").eq(0).children("span").text("아이디 중복 확인을 해주세요.");
+		}else{
+			var sp = $('<span style="color:red; font-size:12px">아이디 중복 확인을 해주세요.</span>')
+			sp.insertBefore($(".formTd2").eq(0).children("p"))
+		}
+		$("#userId").focus();		
+		return false;
+	}
+	
+	if(!idCheck){
+		if($(".formTd2").eq(0).children("span").length>0){
+			$(".formTd2").eq(0).children("span").text("아이디 중복가 중복 되었습니다.");
+		}else{
+			var sp = $('<span style="color:red; font-size:12px">"아이디 중복가 중복 되었습니다.</span>')
+			sp.insertBefore($(".formTd2").eq(0).children("p"))
+		}
 		$("#userId").focus();
 		return false;
 	}
+	
 
 	// 비밀번호 공백 확인
 	if ($("#password").val() == "") {
-		alert("비밀번호를 입력하세요");
+		
+		if($(".formTd2").eq(1).children("span").length>0){
+			$(".formTd2").eq(1).children("span").text("비밀번호를 입력하세요.");
+		}else{
+			var sp = $('<span style="color:red; font-size:12px">비밀번호를 입력하세요.</span>')
+			sp.insertBefore($(".formTd2").eq(1).children("p"))
+		}
 		$("#password").focus();
 		return false;
 	}
 	// 비밀번호 유효성 검사
 	if (!passwordPattern.test($("#password").val())) {
-		alert("비밀번호 형식에 맞게 입력해주세요");
+		if($(".formTd2").eq(1).children("span").length>0){
+			$(".formTd2").eq(1).children("span").text("비밀번호 형식에 맞게 입력해주세요.");
+		}else{
+			var sp = $('<span style="color:red; font-size:12px">비밀번호 형식에 맞게 입력해주세요.</span>')
+			sp.insertBefore($(".formTd2").eq(1).children("p"))
+		}
 		$("#password").val("");
 		$("#password").focus();
 		return false;
@@ -187,33 +316,57 @@ function check() {
 
 	// 아이디랑 비밀번호랑 같은지
 	if ($("#userId").val() == ($("#password").val())) {
-		alert("ID와 비밀번호를 다르게 입력하세요");
+		if($(".formTd2").eq(1).children("span").length>0){
+			$(".formTd2").eq(1).children("span").text(" ID와 비밀번호를 다르게 입력하세요");
+		}else{
+			var sp = $('<span style="color:red; font-size:12px"> ID와 비밀번호를 다르게 입력하세요</span>')
+			sp.insertBefore($(".formTd2").eq(1).children("p"))
+		}
 		$("#password").val("");
 		$("#password").focus();
 	}
 	// 비밀번호확인 공백 확인
 	if ($("#passwordCheck").val() == "") {
-		alert("비밀번호를 확인하세요");
+		if($(".formTd2").eq(2).children("span").length>0){
+			$(".formTd2").eq(2).children("span").text(" 입력 하지 않으셨습니다. 비밀번호를 확인 하여 입력 하여 주세요");
+		}else{
+			var sp = $('<span style="color:red; font-size:12px"> 입력하지 않으셨습니다. 비밀번호를 확인 하여 입력 하여 주세요</span>')
+			sp.appendTo($(".formTd2").eq(2))
+		}
 		$("#passwordCheck").focus();
 		return false;
 	}
 	// 비밀번호 똑같은지
 	if ($("#password").val() != ($("#passwordCheck").val())) {
-		alert("비밀번호가 같지 않습니다.");
-		$("#password").val("");
+		if($(".formTd2").eq(2).children("span").length>0){
+			$(".formTd2").eq(2).children("span").text(" 비밀번호와 같지 않습니다.");
+		}else{
+			var sp = $('<span style="color:red; font-size:12px"> 비밀번호와 같지 않습니다.</span>')
+			sp.appendTo($(".formTd2").eq(2))
+		}
 		$("#passwordCheck").val("");
 		$("#passwordCheck").focus();
 		return false;
 	}
 	// 이름 공백확인
 	if ($("#name").val() == "") {
-		alert("이름을 입력하세요");
+		if($(".formTd2").eq(3).children("span").length>0){
+			$(".formTd2").eq(3).children("span").text("이름을  입력하세요.");
+		}else{
+			var sp = $('<span style="color:red; font-size:12px">이름을 입력하세요.</span>')
+			sp.insertBefore($(".formTd2").eq(3).children("p"))
+		}
 		$("#name").focus();
 		return false;
 	}
 	// 이름 유효성
-	if (!namePattern.test($("#name").val())) {
-		alert("이름을 올바르게 입력하세요.");
+	if (!namePattern.test($("#name").val()) || $("#name").val().length>=6 && $("#name").val()<=2) {
+		if($(".formTd2").eq(3).children("span").length>0){
+			$(".formTd2").eq(3).children("span").text("이름을 확인해 주세요.");
+		}else{
+			var sp = $('<span style="color:red; font-size:12px">이름을 확인해 주세요.</span>')
+			sp.insertBefore($(".formTd2").eq(3).children("p"))
+		}
 		$("#name").val("");
 		$("#name").focus();
 		return false;
@@ -221,55 +374,87 @@ function check() {
 
 	// 이메일 공백 확인
 	if ($("#email").val() == "") {
-		alert("이메일을 입력해주세요");
+		if($(".formTd2").eq(4).children("span").length>0){
+			$(".formTd2").eq(4).children("span").text("이메일을 입력 해 주세요.");
+		}else{
+			var sp = $('<span style="color:red; font-size:12px">이메일을 입력 해주세요.</span>')
+			sp.insertBefore($(".formTd2").eq(4).children("p"))
+		}
 		$("#email").focus();
 		return false;
 	}
 
 	// 이메일 유효성 검사
 	if (!emailPattern.test($("#email").val())) {
-		alert("이메일형식에 맞게 입력해주세요")
+		if($(".formTd2").eq(4).children("span").length>0){
+			$(".formTd2").eq(4).children("span").text("이메일을 형식에 맞게 입력 하세요.");
+		}else{
+			var sp = $('<span style="color:red; font-size:12px">이메일을 형식에 맞게 입력 하세요.</span>')
+			sp.insertBefore($(".formTd2").eq(4).children("p"))
+		}
 		$("#email").val("");
 		$("#email").focus();
 		return false;
 	}
 	// 주소 공백 확인
 	if ($("#sample6_postcode").val() == "") {
-		alert("주소를 입력해주세요");
+		if($(".formTd2").eq(5).children("span").length>0){
+			$(".formTd2").eq(5).children("span").text(" 주소를 입력 해주세요.");
+		}else{
+			var sp = $('<span style="color:red; font-size:12px"> 주소를 입력 해주세요.</span>')
+			sp.appendTo($(".formTd2").eq(5))
+		}
 		$("#sample6_postcode").focus();
 		return false;
 	}
 	// 전화번호 공백 확인
 	if ($("#phone").val() == "") {
-		alert("전화번호를 입력해주세요");
+		if($(".formTd2").eq(6).children("span").length>0){
+			$(".formTd2").eq(6).children("span").text(" 전화번호를 입력 해 주세요.");
+		}else{
+			var sp = $('<span style="color:red; font-size:12px"> 전화번호를 입력 해 주세요.</span>')
+			sp.appendTo($(".formTd2").eq(6))
+		}
 		$("#phone").focus();
 		return false;
 	}
 	// 전화번호 유효성 검사
 	if (!phonePattern.test($("#phone").val())) {
-		alert("전화번호 형식에 맞게 입력해주세요")
+		if($(".formTd2").eq(6).children("span").length>0){
+			$(".formTd2").eq(6).children("span").text(" 전화번호 형식에 맞게 입력 해 주세요.");
+		}else{
+			var sp = $('<span style="color:red; font-size:12px"> 전화번호 형식에 맞게 입력 해 주세요.</span>')
+			sp.appendTo($(".formTd2").eq(6))
+		}
 		$("#phone").val("");
 		$("#phone").focus();
 		return false;
 	}
 	// 생일 공백 확인
 	if ($("#birth").val() == "") {
-		alert("생년월일을 입력해주세요");
+		if($(".formTd2").eq(7).children("span").length>0){
+			$(".formTd2").eq(7).children("span").text(" 생년월일을 입력 해 주세요.");
+		}else{
+			var sp = $('<span style="color:red; font-size:12px"> 생년월일을 입력 해 주세요.</span>')
+			sp.appendTo($(".formTd2").eq(7))
+		}
 		$("#birth").focus();
 		return false;
 	}
 	
-	if(!idCheckClick){
-		alert("아이디 중복 확인을 해주세요.");
-		$("#userId").focus();
+	var date = new Date();
+	
+	if(date.getFullYear()-$("#birth").val().substring(0,4)<5){
+		if($(".formTd2").eq(7).children("span").length>0){
+			$(".formTd2").eq(7).children("span").text(" 생년월일을 입력 해 주세요.");
+		}else{
+			var sp = $('<span style="color:red; font-size:12px"> 생년월일을 입력 해 주세요.</span>')
+			sp.appendTo($(".formTd2").eq(7))
+		}
+		$("#birth").focus();
 		return false;
 	}
 	
-	if(!idCheck){
-		alert("아이디가 중복 되었습니다.")
-		$("#userId").focus();
-		return false;
-	}
 	
 	if ($("#check_1").is(":checked") == false) {
 		alert("모든 약관에 동의 하셔야 다음 단계로 진행 가능합니다.");
@@ -284,13 +469,23 @@ function check() {
 	
 	
 	if(!emailCheck){
-		alert("이메일이 중복 되었습니다.")
+		if($(".formTd2").eq(4).children("span").length>0){
+			$(".formTd2").eq(4).children("span").text("이메일이 중복 되었습니다. 다시 입력 해 주세요.");
+		}else{
+			var sp = $('<span style="color:red; font-size:12px">이메일이 중복 되었습니다. 다시 입력 해 주세요.</span>')
+			sp.insertBefore($(".formTd2").eq(4).children("p"))
+		}
 		$("#email").focus();
 		return false;
 	}
-	console.log(phoneCheck)
+	
 	if(!phoneCheck){
-		alert("전화번호가 중복 되었습니다.")
+		if($(".formTd2").eq(6).children("span").length>0){
+			$(".formTd2").eq(6).children("span").text(" 전화번호가 중복되었습니다. 다시 입력 해주세요.");
+		}else{
+			var sp = $('<span style="color:red; font-size:12px"> 전화번호가 중복되었습니다. 다시 입력 해주세요.</span>')
+			sp.appendTo($(".formTd2").eq(6))
+		}
 		$("#phone").focus();
 		return false;
 	}

@@ -76,7 +76,8 @@ public class CustomerController {
 	@PostMapping("/regis")
 	// CustomerVo를 통해 유효성 검사를 함 + birth를 받는데 없다면 deleteValue로 설정
 	public String getResultRegis(HttpServletRequest resq, @ModelAttribute("CustomerVo") @Valid CustomerVO customerVo,
-			BindingResult result, @RequestParam(defaultValue = DEFAULT_BIRTH_DATE) Date birth, Model m,
+			BindingResult result, @RequestParam(defaultValue = DEFAULT_BIRTH_DATE) Date birth, Model m, @RequestParam(defaultValue = "")String check1,
+			@RequestParam(defaultValue = "")String check2,@RequestParam(defaultValue = "")String check3,
 			HttpSession session) {
 		if (session.getAttribute("userId") == null) {
 			customerVo.setId(0);
@@ -109,6 +110,7 @@ public class CustomerController {
 								if (LocalDate.now().getYear() - birth.toLocalDate().getYear() >= 5) { // 입력한 생일이 현재 날짜와
 																										// 비교후 5미만이라면
 																										// return false
+									if(!check1.equals("") && !check2.equals("") && !check3.equals("")) {
 									Customer customer = new Customer(customerVo.getId(), customerVo.getUserId(),
 											customerVo.getPassword(), customerVo.getName(), customerVo.getZipCode(),
 											customerVo.getEmail(), customerVo.getAddress(),
@@ -117,6 +119,10 @@ public class CustomerController {
 									customerService.register(customer);
 									m.addAttribute("registEmail", customer.getEmail());
 									return "redirect:/cus/mailCheck";
+									}else {
+										m.addAttribute("errorMessage","이용약관을 모두 선택 해주셔야 회원가입을 하실 수 있습니다.");
+										return"redirect:/cus/regis";
+									}
 								} else {
 									System.out.println(LocalDate.now().compareTo(birth.toLocalDate()));
 									m.addAttribute("errorMessage", "생년월일을 확인 해주세요");
@@ -147,7 +153,6 @@ public class CustomerController {
 	@PostMapping(value = "/idcheck", produces = "application/text; charset=utf-8")
 	@ResponseBody
 	public String getIdCheck(String userId) {
-		System.out.println("체크");
 		return customerService.idCheck(userId);
 	}
 

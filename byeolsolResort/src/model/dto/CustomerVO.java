@@ -13,11 +13,11 @@ public class CustomerVO {
 	private Integer id;
 	@NotNull(message = "공백은 없어야 합니다.")
 	@Pattern(regexp = "(^(?!admin).*)")
-	@Pattern(regexp = "[a-z0-9]{5,12}")
+	@Pattern(regexp = "[a-zA-Z]{2}+[a-z0-9]{3,10}")
 	private String userId;
 
 	@NotEmpty
-	@Pattern(regexp = "^(?=.*[a-zA-Z])((?=.*\\d)|(?=.*\\W)).{6,20}$")
+	@Pattern(regexp = "^(?=.*[a-zA-Z])((?=.*\\d)|(?=.*\\W)).{9,14}$")
 	private String password;
 	
 	@NotEmpty

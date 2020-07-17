@@ -168,8 +168,20 @@ public class CustomerController {
 	@PostMapping(value = "/phoneCheck", produces = "application/text; charset=utf-8")
 	@ResponseBody
 	// 중복인지 아닌지 확인
-	public String getPhoneCheck(String phone) {
+	public String getPhoneCheck(String phone, HttpSession session) {
+		if(session.getAttribute("userId")==null) {
 		return customerService.phoneCheck(phone);
+		}else {
+			String userId = (String)session.getAttribute("userId");
+			Customer customer = customerService.getCustomerById(userId);
+			if(customer.getPhone().equals(phone)) {
+				System.out.println("중복아님");
+				return "중복 아님";
+			}else {
+				return customerService.phoneCheck(phone);
+			}
+			
+		}
 	}
 
 	@GetMapping("/login")
@@ -267,17 +279,29 @@ public class CustomerController {
 						if (customerService.phoneCheck(customerVo.getPhone()).equals("중복")) {
 							if (customer.getPhone().equals(customerVo.getPhone())) {
 								cust.setPhone(customerVo.getPhone());
+							}else {
+								cust.setPhone(customer.getPhone());
 							}
 						} else {
 							cust.setPhone(customerVo.getPhone());
 						}
+						if(customerService.emailCheck(customerVo.getEmail()).equals("중복")) {
+							if(customer.getEmail().equals(customerVo.getEmail())) {
+								cust.setEmail(customerVo.getEmail());
+							}else {
+								cust.setEmail(customer.getEmail());
+							}
+						}else {
+							cust.setEmail(customerVo.getEmail());
+						}
+						
+						
 						if (LocalDate.now().getYear() - birth.toLocalDate().getYear() >= 5) {
 							cust.setBirthDate(birth.toLocalDate());
 						}
 						cust.setAddress(customerVo.getAddress());
 						cust.setAddressDetail(customerVo.getAddressDetail());
 						cust.setEmailState(customer.getEmailState());
-						cust.setEmail(customer.getEmail());
 						cust.setName(customerVo.getName());
 						cust.setPassword(customerVo.getPassword());
 						cust.setZipCode(customerVo.getZipCode());

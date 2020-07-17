@@ -1,3 +1,4 @@
+var phoneChange = true;
 $(function() {
 	$('#manu>ul>li>a').css('color', '#000000');
 	$('#manu>ul>li>a').css('font-size', '18px');
@@ -63,6 +64,28 @@ $(function() {
 				,
 				maxDate : "D" // 최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)
 			});
+	
+	$("#phone").on("change",function(){
+		$.ajax({
+			url : "/cus/phoneCheck",
+			type : "post",
+			data : { "phone" :  $("#phone").val()},
+			success : function(d){
+				console.log(d)
+				if(d!="중복"){
+					console.log(d)
+					phoneChange = true;}
+				else {
+					phoneChange = false;
+				}
+			}
+				
+		})
+		
+	})
+	
+	
+	
 });
 
 function password() {
@@ -109,13 +132,23 @@ function check() {
 
 	// 비밀번호 공백 확인
 	if ($("#password").val() == "") {
-		alert("비밀번호를 입력하세요");
+		if($(".formTd2").eq(1).children("span").length>0){
+			$(".formTd2").eq(1).children("span").text("비밀번호를 입력하세요.");
+		}else{
+			var sp = $('<span style="color:red; font-size:12px">비밀번호를 입력하세요.</span>')
+			sp.insertBefore($(".formTd2").eq(1).children("p"))
+		}
 		$("#password").focus();
 		return false;
 	}
 	// 비밀번호 유효성 검사
 	if (!passwordPattern.test($("#password").val())) {
-		alert("비밀번호 형식에 맞게 입력해주세요");
+		if($(".formTd2").eq(1).children("span").length>0){
+			$(".formTd2").eq(1).children("span").text("비밀번호 형식에 맞게 입력해주세요.");
+		}else{
+			var sp = $('<span style="color:red; font-size:12px">비밀번호 형식에 맞게 입력해주세요.</span>')
+			sp.insertBefore($(".formTd2").eq(1).children("p"))
+		}
 		$("#password").val("");
 		$("#password").focus();
 		return false;
@@ -123,33 +156,57 @@ function check() {
 
 	// 아이디랑 비밀번호랑 같은지
 	if ($("#userId").val() == ($("#password").val())) {
-		alert("ID와 비밀번호를 다르게 입력하세요");
+		if($(".formTd2").eq(1).children("span").length>0){
+			$(".formTd2").eq(1).children("span").text(" ID와 비밀번호를 다르게 입력하세요");
+		}else{
+			var sp = $('<span style="color:red; font-size:12px"> ID와 비밀번호를 다르게 입력하세요</span>')
+			sp.insertBefore($(".formTd2").eq(1).children("p"))
+		}
 		$("#password").val("");
 		$("#password").focus();
 	}
 	// 비밀번호확인 공백 확인
 	if ($("#passwordCheck").val() == "") {
-		alert("비밀번호를 확인하세요");
+		if($(".formTd2").eq(2).children("span").length>0){
+			$(".formTd2").eq(2).children("span").text(" 입력 하지 않으셨습니다. 비밀번호를 확인 하여 입력 하여 주세요");
+		}else{
+			var sp = $('<span style="color:red; font-size:12px"> 입력하지 않으셨습니다. 비밀번호를 확인 하여 입력 하여 주세요</span>')
+			sp.appendTo($(".formTd2").eq(2))
+		}
 		$("#passwordCheck").focus();
 		return false;
 	}
 	// 비밀번호 똑같은지
 	if ($("#password").val() != ($("#passwordCheck").val())) {
-		alert("비밀번호가 같지 않습니다.");
-		$("#password").val("");
+		if($(".formTd2").eq(2).children("span").length>0){
+			$(".formTd2").eq(2).children("span").text(" 비밀번호와 같지 않습니다.");
+		}else{
+			var sp = $('<span style="color:red; font-size:12px"> 비밀번호와 같지 않습니다.</span>')
+			sp.appendTo($(".formTd2").eq(2))
+		}
 		$("#passwordCheck").val("");
 		$("#passwordCheck").focus();
 		return false;
 	}
 	// 이름 공백확인
 	if ($("#name").val() == "") {
-		alert("이름을 입력하세요");
+		if($(".formTd2").eq(3).children("span").length>0){
+			$(".formTd2").eq(3).children("span").text(" 이름을 입력 해주세요.");
+		}else{
+			var sp = $('<span style="color:red; font-size:12px"> 이름을 입력 해주세요.</span>')
+			sp.appendTo($(".formTd2").eq(3))
+		}
 		$("#name").focus();
 		return false;
 	}
 	// 이름 유효성
 	if (!namePattern.test($("#name").val())) {
-		alert("이름을 올바르게 입력하세요.");
+		if($(".formTd2").eq(3).children("span").length>0){
+			$(".formTd2").eq(3).children("span").text(" 이름을 올바르게 입력 해주세요.");
+		}else{
+			var sp = $('<span style="color:red; font-size:12px"> 이름을 올바르게 입력 해주세요.</span>')
+			sp.appendTo($(".formTd2").eq(3))
+		}
 		$("#name").val("");
 		$("#name").focus();
 		return false;
@@ -157,29 +214,75 @@ function check() {
 
 	// 주소 공백 확인
 	if ($("#sample6_postcode").val() == "") {
-		alert("주소를 입력해주세요");
+		if($(".formTd2").eq(5).children("span").length>0){
+			$(".formTd2").eq(5).children("span").text(" 주소를 입력 해주세요.");
+		}else{
+			var sp = $('<span style="color:red; font-size:12px"> 주소를 입력 해주세요.</span>')
+			sp.appendTo($(".formTd2").eq(5))
+		}
 		$("#sample6_postcode").focus();
 		return false;
 	}
 	// 전화번호 공백 확인
 	if ($("#phone").val() == "") {
-		alert("전화번호를 입력해주세요");
+		if($(".formTd2").eq(6).children("span").length>0){
+			$(".formTd2").eq(6).children("span").text(" 전화번호를 입력 해 주세요.");
+		}else{
+			var sp = $('<span style="color:red; font-size:12px"> 전화번호를 입력 해 주세요.</span>')
+			sp.appendTo($(".formTd2").eq(6))
+		}
 		$("#phone").focus();
 		return false;
 	}
 	// 전화번호 유효성 검사
 	if (!phonePattern.test($("#phone").val())) {
-		alert("전화번호 형식에 맞게 입력해주세요")
+		if($(".formTd2").eq(6).children("span").length>0){
+			$(".formTd2").eq(6).children("span").text(" 전화번호를 형식에 맞게 입력 해 주세요.");
+		}else{
+			var sp = $('<span style="color:red; font-size:12px"> 전화번호를 형식에 맞게 입력 해 주세요.</span>')
+			sp.appendTo($(".formTd2").eq(6))
+		}
 		$("#phone").val("");
 		$("#phone").focus();
 		return false;
 	}
+	
+	if(!phoneChange){
+		if($(".formTd2").eq(6).children("span").length>0){
+			$(".formTd2").eq(6).children("span").text(" 전화번호가 중복되었습니다. 다시 입력 해주세요.");
+		}else{
+			var sp = $('<span style="color:red; font-size:12px"> 전화번호가 중복되었습니다. 다시 입력 해주세요.</span>')
+			sp.appendTo($(".formTd2").eq(6))
+		}
+		$("#phone").focus();
+		return false;
+	}
+	
 	// 생일 공백 확인
 	if ($("#birth").val() == "") {
-		alert("생년월일을 입력해주세요");
+		if($(".formTd2").eq(7).children("span").length>0){
+		$(".formTd2").eq(7).children("span").text(" 생년월일을 입력 해 주세요.");
+	}else{
+		var sp = $('<span style="color:red; font-size:12px"> 생년월일을 입력 해 주세요.</span>')
+		sp.appendTo($(".formTd2").eq(7))
+	}
 		$("#birth").focus();
 		return false;
 	}
+	
+	var date = new Date();
+	
+	if(date.getFullYear()-$("#birth").val().substring(0,4)<5){
+		if($(".formTd2").eq(7).children("span").length>0){
+			$(".formTd2").eq(7).children("span").text(" 생년월일을 입력 해 주세요.");
+		}else{
+			var sp = $('<span style="color:red; font-size:12px"> 생년월일을 입력 해 주세요.</span>')
+			sp.appendTo($(".formTd2").eq(7))
+		}
+		$("#birth").focus();
+		return false;
+	}
+	
 }
 
 function sample6_execDaumPostcode() {

@@ -21,7 +21,7 @@ public class CustomerVO {
 	private String password;
 	
 	@NotEmpty
-	@Pattern(regexp = "^[가-힣]{2,6}|[a-zA-Z]{2,10}\\s[a-zA-Z]{2,10}$")
+	@Pattern(regexp = "^[가-힣]{2,6}|[a-zA-Z]{2,10}||s[a-zA-Z]{2,10}$")
 	private String name;
 	
 	@NotNull

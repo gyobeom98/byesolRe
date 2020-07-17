@@ -90,7 +90,6 @@ $(function() {
 				
 		})
 		
-		
 	})
 	
 	$("#userId").change(function(){
@@ -237,7 +236,7 @@ function dbclick() {
 function check() {
 	var email = $("#email");
 	// 정규식
-	var userIdPattern = /^[a-zA-Z0-9]{3,10}$/;
+	var userIdPattern = /^[a-zA-Z]{2}[a-zA-Z0-9]{3,10}$/;
 	var passwordPattern = /^[A-Za-z0-9]{9,14}$/;
 	var namePattern = /^[가-힣]{2,6}|[a-zA-Z]{2,10}$/;
 	var emailPattern = /^[A-Za-z0-9]([-_.]?[A-Za-z0-9])*@[a-zA-Z0-9]([-_.]?[a-zA-Z0-9])*.[a-zA-Z]{2,3}$/i;
@@ -291,7 +290,7 @@ function check() {
 
 	// 비밀번호 공백 확인
 	if ($("#password").val() == "") {
-		
+	
 		if($(".formTd2").eq(1).children("span").length>0){
 			$(".formTd2").eq(1).children("span").text("비밀번호를 입력하세요.");
 		}else{
